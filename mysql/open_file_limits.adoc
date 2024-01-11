@@ -1,0 +1,22 @@
+---
+sidebar: sidebar 
+permalink: mysql/open_file_limits.html 
+keywords: MySQL,MariaDB,open_file_limits 
+summary: 基于ONTAP的MySQL 
+---
+= open_file_极限 值
+:allow-uri-read: 
+
+
+[role="lead"]
+。 `open_file_limits` 参数用于确定操作系统允许myqld打开的文件数。
+
+运行时此参数的值是系统允许的实际值、可能与服务器启动时指定的值不同。在MySQL无法更改打开文件数量的系统上、此值为0。有效 `open_files_limit` 值基于系统启动时指定的值(如果有)和的值 `max_connections` 和 `table_open_cache` 使用以下公式：
+
+* 10 + `max_connections` + (`table_open_cache` x 2)
+* `max_connections` x 5.
+* 操作系统限制(如果为正数)
+* 如果操作系统限制为无限大： `open_files_limit` 值在启动时指定；如果无、则为5、000
+
+
+服务器将尝试使用这四个值中的最大值来获取文件描述符数量。如果无法获取多个描述符、则服务器会尝试获取系统允许的多个描述符。

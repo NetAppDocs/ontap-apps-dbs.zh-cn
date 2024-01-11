@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: mssql/overview.html 
+keywords: MS-SQL,mssql,SQL Server,TR-4590 
+summary: 基于ONTAP的Microsoft SQL Server 
+---
+= Microsoft SQL Server概述
+:allow-uri-read: 
+
+
+[role="lead"]
+SQL Server是Microsoft数据平台的基础、可通过内存技术提供任务关键型性能、并加快对任何数据(无论是内部数据还是云数据)的洞察力。
+
+
+NOTE: 本文档将取代先前发布的技术报告_TR-4590：《采用ONTAP的Microsoft SQL Server最佳实践指南》
+
+Microsoft SQL Server基于先前版本中提供的任务关键型功能构建、为任务关键型应用程序提供突破性的性能、可用性和易管理性。存储系统是影响SQL Server数据库整体性能的关键因素。NetApp提供了多种产品、使您的SQL Server数据库能够提供企业级性能、同时提供世界一流的工具来管理您的环境。
+
+
+
+== 目的和范围
+
+本节介绍在运行NetApp ONTAP软件的NetApp存储系统上部署SQL Server的最佳实践、并深入介绍相关设计注意事项、目的是实现高效的存储部署以及端到端数据保护和保留规划。本指南的范围仅限于根据NetApp在部署SQL Server时为存储基础架构建议的设计原则和首选标准制定的技术设计准则。端到端实施不在本报告的讨论范围之内。
+
+通过本指南中介绍的最佳实践和建议、SQL Server架构师和NetApp存储管理员可以规划高度可用且易于管理的SQL Server环境、并满足严格的SLA要求。NetApp假定读者具备以下方面的实践知识：
+
+* NetApp ONTAP软件
+* NetApp SnapCenter作为备份软件、其中包括：
++
+** 适用于 Microsoft Windows 的 SnapCenter 插件
+** 适用于SQL Server的SnapCenter插件
+
+
+* Microsoft SQL Server架构和管理
+
+
+有关整个NetApp堆栈的配置兼容性、请参见 link:http://mysupport.netapp.com/NOW/products/interoperability/["NetApp 互操作性表工具（ IMT ）"^]。

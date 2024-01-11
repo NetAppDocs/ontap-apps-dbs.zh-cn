@@ -1,0 +1,50 @@
+---
+section: mysql
+title: MySQL
+entries:
+- title: 概述
+  url: "/mysql/overview.html"
+- title: ONTAP 配置
+  url: "/mysql/ontap.html"
+- title: 数据库配置
+  entries:
+  - title: 文件结构
+    url: "/mysql/file-structure.html"
+  - title: 配置概述
+    url: "/mysql/configuration.html"
+  - title: InnoDB_log_file_size
+    url: "/mysql/innodb_log_file_size.html"
+  - title: INNODB_FLOG_AT_TRx_Commit
+    url: "/mysql/innodb_flush_log_at_trx_commit.html"
+  - title: InnoDB_doublewite
+    url: "/mysql/innodb_doublewrite.html"
+  - title: InnoDB_buffer_pool_size
+    url: "/mysql/innodb_buffer_pool_size.html"
+  - title: INNODB_FLUG_METHOD
+    url: "/mysql/innodb_flush_method.html"
+  - title: InnoDB_IO_Capacity
+    url: "/mysql/innodb_io_capacity.html"
+  - title: InnoDB_LRU_SCAN_深度
+    url: "/mysql/innodb_lru_scan_depth.html"
+  - title: open_file_极限 值
+    url: "/mysql/open_file_limits.html"
+- title: 主机配置
+  entries:
+  - title: 容器化
+    url: "/mysql/containers.html"
+  - title: 插槽表
+    url: "/mysql/slot-tables.html"
+  - title: I/O计划程序
+    url: "/mysql/schedulers.html"
+  - title: 文件描述符
+    url: "/mysql/file-descriptors.html"
+- title: 存储配置
+  entries:
+  - title: 常规存储配置
+    url: "/mysql/storage.html"
+  - title: 基于NFS的MySQL
+    url: "/mysql/mysql-over-nfs.html"
+  - title: 基于SAN的MySQL
+    url: "/mysql/mysql-over-san.html"
+  - title: 使用FabricPool进行MySQL层
+    url: "/mysql/tiering.html"

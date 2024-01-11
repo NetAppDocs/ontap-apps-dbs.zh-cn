@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: oracle/migration/oracle-datafile-move.html 
+keywords: migration, oracle, move datafile 
+summary: 迁移单个Oracle数据文件 
+---
+= 数据文件移动
+:allow-uri-read: 
+
+
+[role="lead"]
+单个Oracle数据文件只需使用一个命令即可移动。
+
+例如、以下命令将数据文件IOPST.dbf从文件系统中移动 `/oradata2` 文件系统 `/oradata3`。
+
+....
+SQL> alter database move datafile  '/oradata2/NTAP/IOPS002.dbf' to '/oradata3/NTAP/IOPS002.dbf';
+Database altered.
+....
+使用此方法移动数据文件可能会很慢、但通常不会产生足够的I/O、以致会干扰日常数据库工作负载。相比之下、通过ASM重新平衡进行迁移的速度会快得多、但代价是在移动数据时降低整个数据库的运行速度。
+
+可以通过创建测试数据文件并将其移动来轻松衡量移动数据文件所需的时间。操作所用时间记录在v$session数据中：
+
+....
+SQL> set linesize 300;
+SQL> select elapsed_seconds||':'||message from v$session_longops;
+ELAPSED_SECONDS||':'||MESSAGE
+-----------------------------------------------------------------------------------------
+351:Online data file move: data file 8: 22548578304 out of 22548578304 bytes done
+SQL> select bytes / 1024 / 1024 /1024 as GB from dba_data_files where FILE_ID = 8;
+        GB
+----------
+        21
+....
+在此示例中、移动的文件为数据文件8、该文件大小为21 GB、需要大约6分钟才能完成迁移。所需时间显然取决于存储系统的功能、存储网络以及迁移时发生的整体数据库活动。

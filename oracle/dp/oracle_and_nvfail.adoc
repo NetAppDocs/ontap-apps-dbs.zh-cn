@@ -1,0 +1,22 @@
+---
+sidebar: sidebar 
+permalink: oracle/dp/oracle_and_nvfail.html 
+keywords: oracle, metrocluster, nvfail 
+summary: 配置NVFAIL以保护Oracle数据库 
+---
+= Oracle和NVFAIL
+:allow-uri-read: 
+
+
+[role="lead"]
+NVFAIL是ONTAP中的一项功能、可确保在灾难性故障转移情形下的完整性。
+
+数据库在存储故障转移事件期间容易损坏、因为它们会维护大量内部缓存。如果在发生灾难性事件时需要强制执行ONTAP故障转移或强制执行MetroCluster切换、而不管整体配置的运行状况如何、则先前确认的结果可能会被有效丢弃。存储阵列的内容会及时向后跳转、数据库缓存的状态不再反映磁盘上数据的状态。此不一致性会导致数据损坏。
+
+缓存可以在应用程序层或服务器层进行。例如、如果Oracle Real Application Cluster (RAC)配置中的服务器在主站点和远程站点上都处于活动状态、则该配置会在Oracle SGA中缓存数据。如果强制切换操作导致数据丢失、则会使数据库面临损坏的风险、因为存储在SGA中的块可能与磁盘上的块不匹配。
+
+在操作系统文件系统层使用缓存不太明显。装载的NFS文件系统中的块可能会缓存在操作系统中。或者、可以将基于主站点上LUN的集群文件系统挂载到远程站点的服务器上、然后再次缓存数据。在这些情况下、NVRAM故障、强制接管或强制切换可能会导致文件系统损坏。
+
+ONTAP通过NVFAIL及其关联设置、保护数据库和操作系统免受这种情况的影响。
+
+有关重要追加信息、请阅读 link:../../common/dp/integrity.html#hardware-failure-protection-nvfail["具有HA对的NVFAIL"] 和 link:../../common/metrocluster/nvfail.html["采用MetroCluster的NVFAIL"]

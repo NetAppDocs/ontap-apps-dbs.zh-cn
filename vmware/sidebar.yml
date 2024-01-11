@@ -1,0 +1,60 @@
+---
+section: vmware
+title: VMware
+entries:
+- title: 采用ONTAP的VMware vSphere
+  entries:
+  - title: 概述
+    url: "/vmware/vsphere/overview.html"
+  - title: 统一存储
+    url: "/vmware/vsphere/unified.html"
+  - title: 虚拟化工具
+    url: "/vmware/vsphere/vtools.html"
+  - title: 基于虚拟卷和存储策略的管理
+    url: "/vmware/vsphere/vvols_and_spbm.html"
+  - title: 数据存储库和协议
+    url: "/vmware/vsphere/datastores.html"
+  - title: 网络配置：
+    url: "/vmware/vsphere/network.html"
+  - title: 克隆
+    url: "/vmware/vsphere/cloning.html"
+  - title: 数据保护
+    url: "/vmware/vsphere/dp.html"
+  - title: QoS
+    url: "/vmware/vsphere/qos.html"
+  - title: 基于存储策略的管理
+    url: "/vmware/vsphere/policy-and-vvols.html"
+  - title: VMware Storage Distributed Resource Scheduler
+    url: "/vmware/vsphere/sdrs.html"
+  - title: 建议设置
+    url: "/vmware/vsphere/settings.html"
+- title: 使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
+  entries:
+  - title: 概述
+    url: "/vmware/vvols/overview.html"
+  - title: 将ONTAP 与虚拟卷结合使用
+    url: "/vmware/vvols/ontap.html"
+  - title: 部署虚拟卷存储
+    url: "/vmware/vvols/deploy.html"
+  - title: 保护卷
+    url: "/vmware/vvols/protect.html"
+  - title: 故障排除
+    url: "/vmware/vvols/resources.html"
+- title: 采用ONTAP的VMware Site Recovery Manager
+  entries:
+  - title: 概述
+    url: "/vmware/srm/overview.html"
+  - title: 部署最佳实践
+    url: "/vmware/srm/deployment_best_practices.html"
+  - title: 操作最佳实践
+    url: "/vmware/srm/operational_best_practices.html"
+  - title: 复制拓扑
+    url: "/vmware/srm/replication_topologies.html"
+  - title: 对使用 VVol 复制的 SRM 进行故障排除
+    url: "/vmware/srm/appendix_a__troubleshooting_srm_when_using_vvols_replication.html"
+- title: 产品安全性
+  entries:
+  - title: 适用于 VMware vSphere 的 ONTAP 工具
+    url: "/vmware/security/tools.html"
+  - title: 适用于 VMware vSphere 的 SnapCenter 插件
+    url: "/vmware/security/snapcenter.html"

@@ -1,0 +1,32 @@
+---
+sidebar: sidebar 
+permalink: postgres/filesystems.html 
+keywords: PostgreSQL,database,postgres 
+summary: 基于ONTAP的PostgreSQL数据库 
+---
+= 文件系统
+:allow-uri-read: 
+
+
+[role="lead"]
+PostgreSQL可以托管在NFS或SAN文件系统上。
+
+
+
+== NFS
+
+
+TIP: *如果需要NFSv4功能、NetApp建议*使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高某些边缘情况下的故障恢复能力。
+
+挂载NFS文件系统时、请使用以下挂载选项：
+
+....
+nfs4 rw, hard,nointr,bg,vers=4,sync,proto=tcp,noatime,rsize=65536,wsize=65536
+....
+要提高NFS性能、请参见 link:../common/storage-configuration/nfs.html#ontap-nfs-transfer-sizes["NFS传输大小"]。
+
+
+
+== SAN
+
+有关SAN配置的指导以及有关LVM条带化和LUN计数的重要详细信息、请参见 link:..//common/storage-configuration/fcsan.html["FC SAN"]。

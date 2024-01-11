@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: sap-solutions.html 
+keywords: sap,hana,anydb 
+summary: 适用于SAP HANA和AnyDB的解决方案 
+---
+= SAP HANA和采用AnyDB的SAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+有关配置、管理和自动化SAP解决方案的最佳实践、请参见NetApp SAP解决方案页面。
+
+请单击 link:https://docs.netapp.com/us-en/netapp-solutions-sap/["此处"] 了解更多信息。

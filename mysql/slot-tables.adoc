@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: mysql/slot-tables.html 
+keywords: MySQL,MariaDB,TR-4722 
+summary: 基于ONTAP的MySQL 
+---
+= 插槽表
+:allow-uri-read: 
+
+
+[role="lead"]
+Linux上的NFS性能取决于一个名为的参数 `tcp_max_slot_table_entries`。
+
+此参数用于控制Linux操作系统上允许的未处理NFS操作的数量。
+
+在大多数2.6派生内核(包括R,5和OL5)中，默认值为16。但是、此默认值经常会导致性能问题。而在较新的内核上、则会出现相反问题 `tcp_max_slot_table_entries` 值默认为65536,并可发生原因通过向系统发送过多请求来解决存储问题。RHEL 7和RHEL 8的默认值为65536.解决方案将静态设置此值。对于使用NetApp NFS存储和MySQL数据库的任何Linux操作系统、请使用值128。要在Red Hat Enterprise Linux中设置此值、请将以下条目放在/etc/sysc特 立文件中：
+
+设置 `tcp_max_slot_table_entries`：
+
+....
+[root@host1 ~]# echo "sunrpc.tcp_max_slot_table_entries = 128" >> /etc/sysctl.conf
+[root@host1 ~]# sysctl -p
+....
+确认值已设置：
+
+....
+[root@host1 ~]# sysctl sunrpc.tcp_max_slot_table_entries
+sunrpc.tcp_max_slot_table_entries = 128
+....
+
+NOTE: 还有一个名称非常相似的参数 `tcp_slot_table_entries`。此值定义了首次建立TCP会话时分配给该会话的插槽数。您无需修改此值。

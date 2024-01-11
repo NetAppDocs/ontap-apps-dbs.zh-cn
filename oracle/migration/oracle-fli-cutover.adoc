@@ -1,0 +1,357 @@
+---
+sidebar: sidebar 
+permalink: oracle/migration/oracle-fli-cutover.html 
+keywords: migration, oracle, FLI 
+summary: FLI Cutover—Oracle 
+---
+= FLI Cutover—Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+由于需要更改FC网络配置、外部LUN导入期间不可避免地会发生某些中断。但是、中断的持续时间不必比重新启动数据库环境并更新FC分区以将主机FC连接从外部LUN切换到ONTAP所需的时间长。
+
+此过程可概括如下：
+
+. 将外部LUN上的所有LUN活动置于静噪状态。
+. 将主机FC连接重定向到新的ONTAP系统。
+. 触发导入过程。
+. 重新发现LUN。
+. 重新启动数据库。
+
+
+您无需等待迁移过程完成。给定LUN的迁移开始后、该LUN便可在ONTAP上使用、并可在数据复制过程继续期间提供数据。所有读取都会传递到外部LUN、所有写入都会同步写入到两个阵列。复制操作速度非常快、重定向FC流量的开销也非常小、因此对性能的任何影响都应该是瞬时的、并且最小化。如果有问题、您可以延迟重新启动环境、直到迁移过程完成并删除导入关系之后。
+
+
+
+== 关闭数据库
+
+在此示例中、静音环境的第一步是关闭数据库。
+
+....
+[oracle@host1 bin]$ . oraenv
+ORACLE_SID = [oracle] ? FLIDB
+The Oracle base remains unchanged with value /orabin
+[oracle@host1 bin]$ sqlplus / as sysdba
+SQL*Plus: Release 12.1.0.2.0
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, Automatic Storage Management, OLAP, Advanced Analytics
+and Real Application Testing options
+SQL> shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL>
+....
+
+
+== 关闭网格服务
+
+要迁移的基于SAN的文件系统之一还包括Oracle ASM服务。暂停底层LUN需要卸载文件系统、这反过来意味着停止此文件系统上具有已打开文件的所有进程。
+
+....
+[oracle@host1 bin]$ ./crsctl stop has -f
+CRS-2791: Starting shutdown of Oracle High Availability Services-managed resources on 'host1'
+CRS-2673: Attempting to stop 'ora.evmd' on 'host1'
+CRS-2673: Attempting to stop 'ora.DATA.dg' on 'host1'
+CRS-2673: Attempting to stop 'ora.LISTENER.lsnr' on 'host1'
+CRS-2677: Stop of 'ora.DATA.dg' on 'host1' succeeded
+CRS-2673: Attempting to stop 'ora.asm' on 'host1'
+CRS-2677: Stop of 'ora.LISTENER.lsnr' on 'host1' succeeded
+CRS-2677: Stop of 'ora.evmd' on 'host1' succeeded
+CRS-2677: Stop of 'ora.asm' on 'host1' succeeded
+CRS-2673: Attempting to stop 'ora.cssd' on 'host1'
+CRS-2677: Stop of 'ora.cssd' on 'host1' succeeded
+CRS-2793: Shutdown of Oracle High Availability Services-managed resources on 'host1' has completed
+CRS-4133: Oracle High Availability Services has been stopped.
+[oracle@host1 bin]$
+....
+
+
+== 卸载文件系统
+
+如果所有进程均已关闭、则卸载操作将成功。如果权限被拒绝、则文件系统上必须存在一个具有锁定的进程。。 `fuser` 命令有助于识别这些进程。
+
+....
+[root@host1 ~]# umount /orabin
+[root@host1 ~]# umount /backups
+....
+
+
+== 停用卷组
+
+卸载给定卷组中的所有文件系统后、可以停用该卷组。
+
+....
+[root@host1 ~]# vgchange --activate n sanvg
+  0 logical volume(s) in volume group "sanvg" now active
+[root@host1 ~]#
+....
+
+
+== FC网络更改
+
+现在、可以更新FC分区、以删除主机对外部阵列的所有访问权限、并建立对ONTAP的访问权限。
+
+
+
+== 启动导入过程
+
+要启动LUN导入过程、请运行 `lun import start` 命令：
+
+....
+Cluster01::lun import*> lun import start -vserver vserver1 -path /vol/new_asm/LUN0
+Cluster01::lun import*> lun import start -vserver vserver1 -path /vol/new_asm/LUN1
+...
+Cluster01::lun import*> lun import start -vserver vserver1 -path /vol/new_lvm/LUN8
+Cluster01::lun import*> lun import start -vserver vserver1 -path /vol/new_lvm/LUN9
+Cluster01::lun import*>
+....
+
+
+== 监控导入进度
+
+可以使用监控导入操作 `lun import show` 命令：如下图所示、所有20个LUN的导入正在进行中、这意味着现在可以通过ONTAP访问数据、即使数据复制操作仍在进行。
+
+....
+Cluster01::lun import*> lun import show -fields path,percent-complete
+vserver   foreign-disk path              percent-complete
+--------- ------------ ----------------- ----------------
+vserver1  800DT$HuVWB/ /vol/new_asm/LUN4 5
+vserver1  800DT$HuVWBW /vol/new_asm/LUN0 5
+vserver1  800DT$HuVWBX /vol/new_asm/LUN1 6
+vserver1  800DT$HuVWBY /vol/new_asm/LUN2 6
+vserver1  800DT$HuVWBZ /vol/new_asm/LUN3 5
+vserver1  800DT$HuVWBa /vol/new_asm/LUN5 4
+vserver1  800DT$HuVWBb /vol/new_asm/LUN6 4
+vserver1  800DT$HuVWBc /vol/new_asm/LUN7 4
+vserver1  800DT$HuVWBd /vol/new_asm/LUN8 4
+vserver1  800DT$HuVWBe /vol/new_asm/LUN9 4
+vserver1  800DT$HuVWBf /vol/new_lvm/LUN0 5
+vserver1  800DT$HuVWBg /vol/new_lvm/LUN1 4
+vserver1  800DT$HuVWBh /vol/new_lvm/LUN2 4
+vserver1  800DT$HuVWBi /vol/new_lvm/LUN3 3
+vserver1  800DT$HuVWBj /vol/new_lvm/LUN4 3
+vserver1  800DT$HuVWBk /vol/new_lvm/LUN5 3
+vserver1  800DT$HuVWBl /vol/new_lvm/LUN6 4
+vserver1  800DT$HuVWBm /vol/new_lvm/LUN7 3
+vserver1  800DT$HuVWBn /vol/new_lvm/LUN8 2
+vserver1  800DT$HuVWBo /vol/new_lvm/LUN9 2
+20 entries were displayed.
+....
+如果需要脱机进程、请将重新发现或重新启动服务延迟到 `lun import show` 命令表示所有迁移均已成功完成。然后、您可以按照中所述完成迁移过程 link:../migration/migration_options.html#foreign-lun-import-fli["外部LUN导入—完成"]。
+
+如果需要联机迁移、请继续在新主目录中重新发现LUN并启动服务。
+
+
+
+== 扫描SCSI设备更改
+
+在大多数情况下、重新发现新LUN的最简单方法是重新启动主机。这样做会自动删除旧的陈旧设备、正确发现所有新LUN并构建关联的设备、例如多路径设备。此处的示例显示了一个完全联机的流程、用于演示目的。
+
+注意：重新启动主机之前、请确保中的所有条目都已启用 `/etc/fstab` 此参考迁移的SAN资源已被注释掉。如果不执行此操作、并且LUN访问出现问题、则操作系统可能无法启动。这种情况不会损坏数据。但是、启动到救援模式或类似模式并更正可能会非常不方便 `/etc/fstab` 以便可以启动操作系统以启用故障排除。
+
+可以使用重新扫描此示例中使用的Linux版本上的LUN `rescan-scsi-bus.sh` 命令：如果命令成功、则输出中应显示每个LUN路径。输出可能难以解释、但如果分区和igrop配置正确、则应显示许多LUN包含 `NETAPP` 供应商字符串。
+
+....
+[root@host1 /]# rescan-scsi-bus.sh
+Scanning SCSI subsystem for new devices
+Scanning host 0 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+ Scanning for device 0 2 0 0 ...
+OLD: Host: scsi0 Channel: 02 Id: 00 Lun: 00
+      Vendor: LSI      Model: RAID SAS 6G 0/1  Rev: 2.13
+      Type:   Direct-Access                    ANSI SCSI revision: 05
+Scanning host 1 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+ Scanning for device 1 0 0 0 ...
+OLD: Host: scsi1 Channel: 00 Id: 00 Lun: 00
+      Vendor: Optiarc  Model: DVD RW AD-7760H  Rev: 1.41
+      Type:   CD-ROM                           ANSI SCSI revision: 05
+Scanning host 2 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+Scanning host 3 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+Scanning host 4 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+Scanning host 5 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+Scanning host 6 for  SCSI target IDs  0 1 2 3 4 5 6 7, all LUNs
+Scanning host 7 for  all SCSI target IDs, all LUNs
+ Scanning for device 7 0 0 10 ...
+OLD: Host: scsi7 Channel: 00 Id: 00 Lun: 10
+      Vendor: NETAPP   Model: LUN C-Mode       Rev: 8300
+      Type:   Direct-Access                    ANSI SCSI revision: 05
+ Scanning for device 7 0 0 11 ...
+OLD: Host: scsi7 Channel: 00 Id: 00 Lun: 11
+      Vendor: NETAPP   Model: LUN C-Mode       Rev: 8300
+      Type:   Direct-Access                    ANSI SCSI revision: 05
+ Scanning for device 7 0 0 12 ...
+...
+OLD: Host: scsi9 Channel: 00 Id: 01 Lun: 18
+      Vendor: NETAPP   Model: LUN C-Mode       Rev: 8300
+      Type:   Direct-Access                    ANSI SCSI revision: 05
+ Scanning for device 9 0 1 19 ...
+OLD: Host: scsi9 Channel: 00 Id: 01 Lun: 19
+      Vendor: NETAPP   Model: LUN C-Mode       Rev: 8300
+      Type:   Direct-Access                    ANSI SCSI revision: 05
+0 new or changed device(s) found.
+0 remapped or resized device(s) found.
+0 device(s) removed.
+....
+
+
+== 检查多路径设备
+
+LUN发现过程还会触发多路径设备的重新创建、但已知Linux多路径驱动程序偶尔会出现问题。的输出 `multipath - ll` 应进行检查、以验证输出是否如预期。例如、以下输出显示了与关联的多路径设备 `NETAPP` 供应商字符串。每个设备都有四个路径、其中两个路径的优先级为50、两个路径的优先级为10。尽管不同版本的Linux的确切输出可能会有所不同、但此输出看起来与预期一致。
+
+
+NOTE: 请参考用于验证的Linux版本的Host Utilities文档 `/etc/multipath.conf` 设置正确。
+
+....
+[root@host1 /]# multipath -ll
+3600a098038303558735d493762504b36 dm-5 NETAPP  ,LUN C-Mode
+size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_handle' hwhandler='1 alua' wp=rw
+|-+- policy='service-time 0' prio=50 status=active
+| |- 7:0:1:4  sdat 66:208 active ready running
+| `- 9:0:1:4  sdbn 68:16  active ready running
+`-+- policy='service-time 0' prio=10 status=enabled
+  |- 7:0:0:4  sdf  8:80   active ready running
+  `- 9:0:0:4  sdz  65:144 active ready running
+3600a098038303558735d493762504b2d dm-10 NETAPP  ,LUN C-Mode
+size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_handle' hwhandler='1 alua' wp=rw
+|-+- policy='service-time 0' prio=50 status=active
+| |- 7:0:1:8  sdax 67:16  active ready running
+| `- 9:0:1:8  sdbr 68:80  active ready running
+`-+- policy='service-time 0' prio=10 status=enabled
+  |- 7:0:0:8  sdj  8:144  active ready running
+  `- 9:0:0:8  sdad 65:208 active ready running
+...
+3600a098038303558735d493762504b37 dm-8 NETAPP  ,LUN C-Mode
+size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_handle' hwhandler='1 alua' wp=rw
+|-+- policy='service-time 0' prio=50 status=active
+| |- 7:0:1:5  sdau 66:224 active ready running
+| `- 9:0:1:5  sdbo 68:32  active ready running
+`-+- policy='service-time 0' prio=10 status=enabled
+  |- 7:0:0:5  sdg  8:96   active ready running
+  `- 9:0:0:5  sdaa 65:160 active ready running
+3600a098038303558735d493762504b4b dm-22 NETAPP  ,LUN C-Mode
+size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_handle' hwhandler='1 alua' wp=rw
+|-+- policy='service-time 0' prio=50 status=active
+| |- 7:0:1:19 sdbi 67:192 active ready running
+| `- 9:0:1:19 sdcc 69:0   active ready running
+`-+- policy='service-time 0' prio=10 status=enabled
+  |- 7:0:0:19 sdu  65:64  active ready running
+  `- 9:0:0:19 sdao 66:128 active ready running
+....
+
+
+== 重新激活LVM卷组
+
+如果已正确发现LVM LUN、则 `vgchange --activate y` 命令应成功。这是一个很好的逻辑卷管理器价值示例。更改LUN的WWN甚至序列号并不重要、因为卷组元数据会写入LUN本身。
+
+操作系统扫描了LUN、发现写入LUN上的少量数据、将其标识为属于的物理卷 `sanvg volumegroup`。然后构建所有必需的设备。只需重新激活卷组即可。
+
+....
+[root@host1 /]# vgchange --activate y sanvg
+  Found duplicate PV fpCzdLTuKfy2xDZjai1NliJh3TjLUBiT: using /dev/mapper/3600a098038303558735d493762504b46 not /dev/sdp
+  Using duplicate PV /dev/mapper/3600a098038303558735d493762504b46 from subsystem DM, ignoring /dev/sdp
+  2 logical volume(s) in volume group "sanvg" now active
+....
+
+
+== 重新挂载文件系统
+
+重新激活卷组后、可以在挂载文件系统时保持所有原始数据完好无损。如前文所述、即使数据复制在后端组中仍处于活动状态、文件系统也能完全正常运行。
+
+....
+[root@host1 /]# mount /orabin
+[root@host1 /]# mount /backups
+[root@host1 /]# df -k
+Filesystem                       1K-blocks      Used Available Use% Mounted on
+/dev/mapper/rhel-root             52403200   8837100  43566100  17% /
+devtmpfs                          65882776         0  65882776   0% /dev
+tmpfs                              6291456        84   6291372   1% /dev/shm
+tmpfs                             65898668      9884  65888784   1% /run
+tmpfs                             65898668         0  65898668   0% /sys/fs/cgroup
+/dev/sda1                           505580    224828    280752  45% /boot
+fas8060-nfs-public:/install      199229440 119368256  79861184  60% /install
+fas8040-nfs-routable:/snapomatic   9961472     30528   9930944   1% /snapomatic
+tmpfs                             13179736        16  13179720   1% /run/user/42
+tmpfs                             13179736         0  13179736   0% /run/user/0
+/dev/mapper/sanvg-lvorabin        20961280  12357456   8603824  59% /orabin
+/dev/mapper/sanvg-lvbackups       73364480  62947536  10416944  86% /backups
+....
+
+
+== 重新扫描ASM设备
+
+重新扫描SCSI设备时、应已重新发现ASMlib设备。可以通过重新启动ASMlib并扫描磁盘来联机验证重新发现。
+
+
+NOTE: 此步骤仅与使用ASMlib的ASM配置相关。
+
+注意：如果未使用ASMlib、则为 `/dev/mapper` 设备应已自动重新创建。但是、权限可能不正确。如果没有ASMlib、则必须在底层设备上为ASM设置特殊权限。通常通过任一中的特殊条目来完成此操作 `/etc/multipath.conf` 或 `udev` 规则、或者可能同时位于这两个规则集中。可能需要更新这些文件、以反映环境中的WWN或序列号变化、从而确保ASM设备仍具有正确的权限。
+
+在此示例中、重新启动ASMlib并扫描磁盘会显示与原始环境相同的10个ASM LUN。
+
+....
+[root@host1 /]# oracleasm exit
+Unmounting ASMlib driver filesystem: /dev/oracleasm
+Unloading module "oracleasm": oracleasm
+[root@host1 /]# oracleasm init
+Loading module "oracleasm": oracleasm
+Configuring "oracleasm" to use device physical block size
+Mounting ASMlib driver filesystem: /dev/oracleasm
+[root@host1 /]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "ASM0"
+Instantiating disk "ASM1"
+Instantiating disk "ASM2"
+Instantiating disk "ASM3"
+Instantiating disk "ASM4"
+Instantiating disk "ASM5"
+Instantiating disk "ASM6"
+Instantiating disk "ASM7"
+Instantiating disk "ASM8"
+Instantiating disk "ASM9"
+....
+
+
+== 重新启动网格服务
+
+现在LVM和ASM设备已联机且可用、可以重新启动网格服务。
+
+....
+[root@host1 /]# cd /orabin/product/12.1.0/grid/bin
+[root@host1 bin]# ./crsctl start has
+....
+
+
+== 重新启动数据库
+
+重新启动网格服务后、可以启动数据库。在尝试启动数据库之前、可能需要等待几分钟、以便ASM服务完全可用。
+
+....
+[root@host1 bin]# su - oracle
+[oracle@host1 ~]$ . oraenv
+ORACLE_SID = [oracle] ? FLIDB
+The Oracle base has been set to /orabin
+[oracle@host1 ~]$ sqlplus / as sysdba
+SQL*Plus: Release 12.1.0.2.0
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to an idle instance.
+SQL> startup
+ORACLE instance started.
+Total System Global Area 3221225472 bytes
+Fixed Size                  4502416 bytes
+Variable Size            1207962736 bytes
+Database Buffers         1996488704 bytes
+Redo Buffers               12271616 bytes
+Database mounted.
+Database opened.
+SQL>
+....

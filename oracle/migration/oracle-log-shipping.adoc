@@ -1,0 +1,1229 @@
+---
+sidebar: sidebar 
+permalink: oracle/migration/oracle-log-shipping.html 
+keywords: migration, oracle, log shipping 
+summary: 通过日志传送实现Oracle迁移 
+---
+= Oracle日志传送
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+使用日志传送进行迁移的目标是、在新位置创建原始数据文件的副本、然后建立将更改传送到新环境的方法。
+
+建立日志后、可以自动进行日志传输和重放、以使副本数据库与源数据库大致保持同步。例如、可以计划cron作业：(a)将最新日志复制到新位置、(b)每15分钟重放一次。这样做可以最大程度地减少转换时的中断、因为回写的归档日志不能超过15分钟。
+
+下面显示的操作步骤本质上也是一个数据库克隆操作。显示的逻辑类似于NetApp SnapManager for Oracle (SMO)和NetApp SnapCenter Oracle插件中的引擎。某些客户已使用脚本或WFA工作流中显示的操作步骤执行自定义克隆操作。虽然此操作步骤比使用SMO或SnapCenter更需要手动操作、但仍可随时编写脚本、ONTAP中的数据管理API进一步简化了此过程。
+
+
+
+== 日志传送-文件系统到文件系统
+
+此示例演示了将名为waffle的数据库从普通文件系统迁移到位于不同服务器上的另一个普通文件系统的过程。同时、还展示了如何使用SnapMirror快速复制数据文件、但这并不是整个操作步骤不可或缺的一部分。
+
+
+
+=== 创建数据库备份
+
+第一步是创建数据库备份。具体来说、此操作步骤需要一组数据文件、可用于归档日志重放。
+
+
+
+=== environment
+
+在此示例中、源数据库位于ONTAP系统上。创建数据库备份的最简单方法是使用Snapshot副本。数据库将处于热备份模式几秒钟、而处于 `snapshot create` 在托管数据文件的卷上执行此操作。
+
+....
+SQL> alter database begin backup;
+Database altered.
+....
+....
+Cluster01::*> snapshot create -vserver vserver1 -volume jfsc1_oradata hotbackup
+Cluster01::*>
+....
+....
+SQL> alter database end backup;
+Database altered.
+....
+其结果是在名为的磁盘上生成一个Snapshot副本 `hotbackup` 该映像包含处于热备份模式时的数据文件映像。如果将此Snapshot副本中的数据与相应的归档日志结合使用以使数据文件保持一致、则可以将其用作还原或克隆的基础。在这种情况下、它会复制到新服务器。
+
+
+
+=== 还原到新环境
+
+现在、必须在新环境中还原备份。这可以通过多种方式实现、包括Oracle RMAN、从备份应用程序(如NetBackup)还原、或者对处于热备份模式的数据文件执行简单的复制操作。
+
+在此示例中、使用SnapMirror将名为热备份的Snapshot副本复制到新位置。
+
+. 创建新卷以接收快照数据。从初始化镜像 `jfsc1_oradata` to `vol_oradata`。
++
+....
+Cluster01::*> volume create -vserver vserver1 -volume vol_oradata -aggregate data_01 -size 20g -state online -type DP -snapshot-policy none -policy jfsc3
+[Job 833] Job succeeded: Successful
+....
++
+....
+Cluster01::*> snapmirror initialize -source-path vserver1:jfsc1_oradata -destination-path vserver1:vol_oradata
+Operation is queued: snapmirror initialize of destination "vserver1:vol_oradata".
+Cluster01::*> volume mount -vserver vserver1 -volume vol_oradata -junction-path /vol_oradata
+Cluster01::*>
+....
+. 在SnapMirror设置状态(指示同步已完成)后、请根据所需的快照专门更新镜像。
++
+....
+Cluster01::*> snapmirror show -destination-path vserver1:vol_oradata -fields state
+source-path             destination-path        state
+----------------------- ----------------------- ------------
+vserver1:jfsc1_oradata vserver1:vol_oradata Snapmirrored
+....
++
+....
+Cluster01::*> snapmirror update -destination-path vserver1:vol_oradata -source-snapshot hotbackup
+Operation is queued: snapmirror update of destination "vserver1:vol_oradata".
+....
+. 可以通过查看来验证同步是否成功 `newest-snapshot` 字段。
++
+....
+Cluster01::*> snapmirror show -destination-path vserver1:vol_oradata -fields newest-snapshot
+source-path             destination-path        newest-snapshot
+----------------------- ----------------------- ---------------
+vserver1:jfsc1_oradata vserver1:vol_oradata hotbackup
+....
+. 然后、可以断开镜像。
++
+....
+Cluster01::> snapmirror break -destination-path vserver1:vol_oradata
+Operation succeeded: snapmirror break for destination "vserver1:vol_oradata".
+Cluster01::>
+....
+. 挂载新文件系统。对于基于块的文件系统、具体过程因使用的LVM而异。必须配置FC分区或iSCSI连接。与LUN建立连接后、可以使用Linux等命令 `pvscan` 可能需要查找哪些卷组或LUN需要正确配置才能被ASM发现。
++
+在此示例中、使用的是简单的NFS文件系统。可以直接挂载此文件系统。
+
++
+....
+fas8060-nfs1:/vol_oradata        19922944   1639360   18283584   9% /oradata
+fas8060-nfs1:/vol_logs            9961472       128    9961344   1% /logs
+....
+
+
+
+
+=== 创建控制文件创建模板
+
+接下来必须创建控制文件模板。。 `backup controlfile to trace` 命令用于创建文本命令以重新创建控制文件。在某些情况下、此功能对于从备份还原数据库非常有用、并且通常与执行数据库克隆等任务的脚本结合使用。
+
+. 以下命令的输出用于为迁移的数据库重新创建控制文件。
++
+....
+SQL> alter database backup controlfile to trace as '/tmp/waffle.ctrl';
+Database altered.
+....
+. 创建控制文件后，将文件复制到新服务器。
++
+....
+[oracle@jfsc3 tmp]$ scp oracle@jfsc1:/tmp/waffle.ctrl /tmp/
+oracle@jfsc1's password:
+waffle.ctrl                                              100% 5199     5.1KB/s   00:00
+....
+
+
+
+
+=== 备份参数文件
+
+在新环境中、还需要一个参数文件。最简单的方法是从当前的spfile或pfile创建一个pfile。在此示例中、源数据库使用的是spfile。
+
+....
+SQL> create pfile='/tmp/waffle.tmp.pfile' from spfile;
+File created.
+....
+
+
+=== 创建oratab条目
+
+要使oraenv等实用程序正常运行、必须创建oratab条目。要创建oratab条目、请完成以下步骤。
+
+....
+WAFFLE:/orabin/product/12.1.0/dbhome_1:N
+....
+
+
+=== 准备目录结构
+
+如果所需目录不存在、则必须创建它们、否则数据库启动操作步骤将失败。要准备目录结构、请满足以下最低要求。
+
+....
+[oracle@jfsc3 ~]$ . oraenv
+ORACLE_SID = [oracle] ? WAFFLE
+The Oracle base has been set to /orabin
+[oracle@jfsc3 ~]$ cd $ORACLE_BASE
+[oracle@jfsc3 orabin]$ cd admin
+[oracle@jfsc3 admin]$ mkdir WAFFLE
+[oracle@jfsc3 admin]$ cd WAFFLE
+[oracle@jfsc3 WAFFLE]$ mkdir adump dpdump pfile scripts xdb_wallet
+....
+
+
+=== 参数文件更新
+
+. 要将参数文件复制到新服务器、请运行以下命令。默认位置为 `$ORACLE_HOME/dbs` 目录。在这种情况下、pfile可以放置在任何位置。它仅用作迁移过程中的中间步骤。
+
+
+....
+[oracle@jfsc3 admin]$ scp oracle@jfsc1:/tmp/waffle.tmp.pfile $ORACLE_HOME/dbs/waffle.tmp.pfile
+oracle@jfsc1's password:
+waffle.pfile                                             100%  916     0.9KB/s   00:00
+....
+. 根据需要编辑文件。例如、如果归档日志位置已更改、则必须更改pfile以反映新位置。在此示例中、仅重新定位控制文件、部分目的是在日志和数据文件系统之间分布控制文件。
++
+....
+[root@jfsc1 tmp]# cat waffle.pfile
+WAFFLE.__data_transfer_cache_size=0
+WAFFLE.__db_cache_size=507510784
+WAFFLE.__java_pool_size=4194304
+WAFFLE.__large_pool_size=20971520
+WAFFLE.__oracle_base='/orabin'#ORACLE_BASE set from environment
+WAFFLE.__pga_aggregate_target=268435456
+WAFFLE.__sga_target=805306368
+WAFFLE.__shared_io_pool_size=29360128
+WAFFLE.__shared_pool_size=234881024
+WAFFLE.__streams_pool_size=0
+*.audit_file_dest='/orabin/admin/WAFFLE/adump'
+*.audit_trail='db'
+*.compatible='12.1.0.2.0'
+*.control_files='/oradata//WAFFLE/control01.ctl','/oradata//WAFFLE/control02.ctl'
+*.control_files='/oradata/WAFFLE/control01.ctl','/logs/WAFFLE/control02.ctl'
+*.db_block_size=8192
+*.db_domain=''
+*.db_name='WAFFLE'
+*.diagnostic_dest='/orabin'
+*.dispatchers='(PROTOCOL=TCP) (SERVICE=WAFFLEXDB)'
+*.log_archive_dest_1='LOCATION=/logs/WAFFLE/arch'
+*.log_archive_format='%t_%s_%r.dbf'
+*.open_cursors=300
+*.pga_aggregate_target=256m
+*.processes=300
+*.remote_login_passwordfile='EXCLUSIVE'
+*.sga_target=768m
+*.undo_tablespace='UNDOTBS1'
+....
+. 编辑完成后、根据此pfile创建一个spfile。
++
+....
+SQL> create spfile from pfile='waffle.tmp.pfile';
+File created.
+....
+
+
+
+
+=== 重新创建控制文件
+
+在上一步中、是的输出 `backup controlfile to trace` 已复制到新服务器。所需输出的具体部分是 `controlfile recreation` 命令：此信息可在标记的部分下的文件中找到 `Set #1. NORESETLOGS`。它从行开始 `create controlfile reuse database` 并应包含该词 `noresetlogs`。以分号(;)字符结尾。
+
+. 在此示例操作步骤中、该文件如下所示。
++
+....
+CREATE CONTROLFILE REUSE DATABASE "WAFFLE" NORESETLOGS  ARCHIVELOG
+    MAXLOGFILES 16
+    MAXLOGMEMBERS 3
+    MAXDATAFILES 100
+    MAXINSTANCES 8
+    MAXLOGHISTORY 292
+LOGFILE
+  GROUP 1 '/logs/WAFFLE/redo/redo01.log'  SIZE 50M BLOCKSIZE 512,
+  GROUP 2 '/logs/WAFFLE/redo/redo02.log'  SIZE 50M BLOCKSIZE 512,
+  GROUP 3 '/logs/WAFFLE/redo/redo03.log'  SIZE 50M BLOCKSIZE 512
+-- STANDBY LOGFILE
+DATAFILE
+  '/oradata/WAFFLE/system01.dbf',
+  '/oradata/WAFFLE/sysaux01.dbf',
+  '/oradata/WAFFLE/undotbs01.dbf',
+  '/oradata/WAFFLE/users01.dbf'
+CHARACTER SET WE8MSWIN1252
+;
+....
+. 根据需要编辑此脚本、以反映各种文件的新位置。例如、某些已知支持高I/O的数据文件可能会重定向到高性能存储层上的文件系统。在其他情况下、更改可能纯粹出于管理员原因、例如、将给定PDB的数据文件隔离到专用卷中。
+. 在此示例中、将显示 `DATAFILE` 虽然保持不变、但重做日志会移动到中的新位置 `/redo` 而不是与归档登录共享空间 `/logs`。
++
+....
+CREATE CONTROLFILE REUSE DATABASE "WAFFLE" NORESETLOGS  ARCHIVELOG
+    MAXLOGFILES 16
+    MAXLOGMEMBERS 3
+    MAXDATAFILES 100
+    MAXINSTANCES 8
+    MAXLOGHISTORY 292
+LOGFILE
+  GROUP 1 '/redo/redo01.log'  SIZE 50M BLOCKSIZE 512,
+  GROUP 2 '/redo/redo02.log'  SIZE 50M BLOCKSIZE 512,
+  GROUP 3 '/redo/redo03.log'  SIZE 50M BLOCKSIZE 512
+-- STANDBY LOGFILE
+DATAFILE
+  '/oradata/WAFFLE/system01.dbf',
+  '/oradata/WAFFLE/sysaux01.dbf',
+  '/oradata/WAFFLE/undotbs01.dbf',
+  '/oradata/WAFFLE/users01.dbf'
+CHARACTER SET WE8MSWIN1252
+;
+....
++
+....
+SQL> startup nomount;
+ORACLE instance started.
+Total System Global Area  805306368 bytes
+Fixed Size                  2929552 bytes
+Variable Size             331353200 bytes
+Database Buffers          465567744 bytes
+Redo Buffers                5455872 bytes
+SQL> CREATE CONTROLFILE REUSE DATABASE "WAFFLE" NORESETLOGS  ARCHIVELOG
+  2      MAXLOGFILES 16
+  3      MAXLOGMEMBERS 3
+  4      MAXDATAFILES 100
+  5      MAXINSTANCES 8
+  6      MAXLOGHISTORY 292
+  7  LOGFILE
+  8    GROUP 1 '/redo/redo01.log'  SIZE 50M BLOCKSIZE 512,
+  9    GROUP 2 '/redo/redo02.log'  SIZE 50M BLOCKSIZE 512,
+ 10    GROUP 3 '/redo/redo03.log'  SIZE 50M BLOCKSIZE 512
+ 11  -- STANDBY LOGFILE
+ 12  DATAFILE
+ 13    '/oradata/WAFFLE/system01.dbf',
+ 14    '/oradata/WAFFLE/sysaux01.dbf',
+ 15    '/oradata/WAFFLE/undotbs01.dbf',
+ 16    '/oradata/WAFFLE/users01.dbf'
+ 17  CHARACTER SET WE8MSWIN1252
+ 18  ;
+Control file created.
+SQL>
+....
+
+
+如果任何文件放错位置或参数配置错误、则会生成错误、指示必须修复的问题。数据库已挂载、但尚未打开、无法打开、因为正在使用的数据文件仍标记为处于热备份模式。必须先应用归档日志、以使数据库保持一致。
+
+
+
+=== 初始日志复制
+
+要使数据文件保持一致、至少需要执行一个日志回复操作。有许多选项可用于重放日志。在某些情况下、可以通过NFS共享原始服务器上的原始归档日志位置、并且可以直接进行日志回复。在其他情况下、必须复制归档日志。
+
+例如、一个简单的 `scp` 此操作可以将所有当前日志从源服务器复制到迁移服务器：
+
+....
+[oracle@jfsc3 arch]$ scp jfsc1:/logs/WAFFLE/arch/* ./
+oracle@jfsc1's password:
+1_22_912662036.dbf                                       100%   47MB  47.0MB/s   00:01
+1_23_912662036.dbf                                       100%   40MB  40.4MB/s   00:00
+1_24_912662036.dbf                                       100%   45MB  45.4MB/s   00:00
+1_25_912662036.dbf                                       100%   41MB  40.9MB/s   00:01
+1_26_912662036.dbf                                       100%   39MB  39.4MB/s   00:00
+1_27_912662036.dbf                                       100%   39MB  38.7MB/s   00:00
+1_28_912662036.dbf                                       100%   40MB  40.1MB/s   00:01
+1_29_912662036.dbf                                       100%   17MB  16.9MB/s   00:00
+1_30_912662036.dbf                                       100%  636KB 636.0KB/s   00:00
+....
+
+
+=== 初始日志重放
+
+文件位于归档日志位置后、可以发出命令来重新显示它们 `recover database until cancel` 然后是响应 `AUTO` 自动重放所有可用日志。
+
+....
+SQL> recover database until cancel;
+ORA-00279: change 382713 generated at 05/24/2016 09:00:54 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_23_912662036.dbf
+ORA-00280: change 382713 for thread 1 is in sequence #23
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+AUTO
+ORA-00279: change 405712 generated at 05/24/2016 15:01:05 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_24_912662036.dbf
+ORA-00280: change 405712 for thread 1 is in sequence #24
+ORA-00278: log file '/logs/WAFFLE/arch/1_23_912662036.dbf' no longer needed for
+this recovery
+...
+ORA-00279: change 713874 generated at 05/26/2016 04:26:43 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_31_912662036.dbf
+ORA-00280: change 713874 for thread 1 is in sequence #31
+ORA-00278: log file '/logs/WAFFLE/arch/1_30_912662036.dbf' no longer needed for
+this recovery
+ORA-00308: cannot open archived log '/logs/WAFFLE/arch/1_31_912662036.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+....
+最终归档日志回复报告错误、但这是正常的。日志指示 `sqlplus` 正在查找特定日志文件、但未找到它。原因很可能是日志文件尚不存在。
+
+如果可以在复制归档日志之前关闭源数据库、则只能执行此步骤一次。归档日志会进行复制和重做、然后、该过程可以直接继续执行转换过程、以复制关键重做日志。
+
+
+
+=== 增量日志复制和重放
+
+在大多数情况下、不会立即执行迁移。迁移过程可能需要几天甚至几周才能完成、这意味着必须将日志持续运送到副本数据库并进行重新显示。因此、在转换完成后、必须传输和回显示最少的数据。
+
+这样做可以通过多种方式编写脚本、但更常见的方法之一是使用rsync、这是一个常见的文件复制实用程序。使用此实用程序的最安全方法是将其配置为守护进程。例如、 `rsyncd.conf` 下面的文件显示了如何创建名为的资源 `waffle.arch` 可通过Oracle用户凭据访问并映射到 `/logs/WAFFLE/arch`。最重要的是、资源设置为只读、这样可以读取生产数据、但不会对其进行更改。
+
+....
+[root@jfsc1 arch]# cat /etc/rsyncd.conf
+[waffle.arch]
+   uid=oracle
+   gid=dba
+   path=/logs/WAFFLE/arch
+   read only = true
+[root@jfsc1 arch]# rsync --daemon
+....
+以下命令将新服务器的归档日志目标与rsync资源同步 `waffle.arch` 在原始服务器上。。 `t` 中的参数 `rsync - potg` 根据时间戳比较文件列表、并且仅复制新文件。此过程会对新服务器进行增量更新。也可以在cron中计划定期运行此命令。
+
+....
+[oracle@jfsc3 arch]$ rsync -potg --stats --progress jfsc1::waffle.arch/* /logs/WAFFLE/arch/
+1_31_912662036.dbf
+      650240 100%  124.02MB/s    0:00:00 (xfer#1, to-check=8/18)
+1_32_912662036.dbf
+     4873728 100%  110.67MB/s    0:00:00 (xfer#2, to-check=7/18)
+1_33_912662036.dbf
+     4088832 100%   50.64MB/s    0:00:00 (xfer#3, to-check=6/18)
+1_34_912662036.dbf
+     8196096 100%   54.66MB/s    0:00:00 (xfer#4, to-check=5/18)
+1_35_912662036.dbf
+    19376128 100%   57.75MB/s    0:00:00 (xfer#5, to-check=4/18)
+1_36_912662036.dbf
+       71680 100%  201.15kB/s    0:00:00 (xfer#6, to-check=3/18)
+1_37_912662036.dbf
+     1144320 100%    3.06MB/s    0:00:00 (xfer#7, to-check=2/18)
+1_38_912662036.dbf
+    35757568 100%   63.74MB/s    0:00:00 (xfer#8, to-check=1/18)
+1_39_912662036.dbf
+      984576 100%    1.63MB/s    0:00:00 (xfer#9, to-check=0/18)
+Number of files: 18
+Number of files transferred: 9
+Total file size: 399653376 bytes
+Total transferred file size: 75143168 bytes
+Literal data: 75143168 bytes
+Matched data: 0 bytes
+File list size: 474
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 204
+Total bytes received: 75153219
+sent 204 bytes  received 75153219 bytes  150306846.00 bytes/sec
+total size is 399653376  speedup is 5.32
+....
+收到日志后、必须对其进行重新显示。前面的示例显示了如何使用sqlplus手动运行 `recover database until cancel`，一个可以轻松实现自动化的过程。此处显示的示例使用中所述的脚本 link:oracle-migration-sample-scripts.html#replay-logs-on-database["重放数据库上的日志"]。这些脚本接受一个参数、用于指定需要重放操作的数据库。这样就可以在多数据库迁移工作中使用相同的脚本。
+
+....
+[oracle@jfsc3 logs]$ ./replay.logs.pl WAFFLE
+ORACLE_SID = [WAFFLE] ? The Oracle base remains unchanged with value /orabin
+SQL*Plus: Release 12.1.0.2.0 Production on Thu May 26 10:47:16 2016
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+SQL> ORA-00279: change 713874 generated at 05/26/2016 04:26:43 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_31_912662036.dbf
+ORA-00280: change 713874 for thread 1 is in sequence #31
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 814256 generated at 05/26/2016 04:52:30 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_32_912662036.dbf
+ORA-00280: change 814256 for thread 1 is in sequence #32
+ORA-00278: log file '/logs/WAFFLE/arch/1_31_912662036.dbf' no longer needed for
+this recovery
+ORA-00279: change 814780 generated at 05/26/2016 04:53:04 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_33_912662036.dbf
+ORA-00280: change 814780 for thread 1 is in sequence #33
+ORA-00278: log file '/logs/WAFFLE/arch/1_32_912662036.dbf' no longer needed for
+this recovery
+...
+ORA-00279: change 1120099 generated at 05/26/2016 09:59:21 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_40_912662036.dbf
+ORA-00280: change 1120099 for thread 1 is in sequence #40
+ORA-00278: log file '/logs/WAFFLE/arch/1_39_912662036.dbf' no longer needed for
+this recovery
+ORA-00308: cannot open archived log '/logs/WAFFLE/arch/1_40_912662036.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+SQL> Disconnected from Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+....
+
+
+=== 转换
+
+准备好转换到新环境后、必须执行一次最终同步、其中包括归档日志和重做日志。如果原始重做日志位置尚不已知、则可按如下方式进行标识：
+
+....
+SQL> select member from v$logfile;
+MEMBER
+--------------------------------------------------------------------------------
+/logs/WAFFLE/redo/redo01.log
+/logs/WAFFLE/redo/redo02.log
+/logs/WAFFLE/redo/redo03.log
+....
+. 关闭源数据库。
+. 使用所需的方法在新服务器上对归档日志执行一次最终同步。
+. 必须将源重做日志复制到新服务器。在此示例中、重做日志已重新定位到的新目录中 `/redo`。
++
+....
+[oracle@jfsc3 logs]$ scp jfsc1:/logs/WAFFLE/redo/* /redo/
+oracle@jfsc1's password:
+redo01.log                                                              100%   50MB  50.0MB/s   00:01
+redo02.log                                                              100%   50MB  50.0MB/s   00:00
+redo03.log                                                              100%   50MB  50.0MB/s   00:00
+....
+. 在此阶段、新数据库环境包含将其恢复到与源完全相同状态所需的所有文件。归档日志必须最后一次重新显示。
++
+....
+SQL> recover database until cancel;
+ORA-00279: change 1120099 generated at 05/26/2016 09:59:21 needed for thread 1
+ORA-00289: suggestion : /logs/WAFFLE/arch/1_40_912662036.dbf
+ORA-00280: change 1120099 for thread 1 is in sequence #40
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+AUTO
+ORA-00308: cannot open archived log '/logs/WAFFLE/arch/1_40_912662036.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+ORA-00308: cannot open archived log '/logs/WAFFLE/arch/1_40_912662036.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+....
+. 完成后、必须重做日志。如果消息 `Media recovery complete` 将返回、此过程将成功、数据库将同步并可打开。
++
+....
+SQL> recover database;
+Media recovery complete.
+SQL> alter database open;
+Database altered.
+....
+
+
+
+
+== 日志传送- ASM到文件系统
+
+此示例演示了如何使用Oracle RMAN迁移数据库。它与前面的文件系统到文件系统日志传送示例非常相似、但主机无法识别ASM上的文件。迁移ASM设备上的数据的唯一方法是重新定位ASM LUN或使用Oracle RMAN执行复制操作。
+
+虽然从Oracle ASM复制文件时需要使用RMAN、但RMAN的使用并不限于ASM。RMAN可用于从任何类型的存储迁移到任何其他类型。
+
+此示例显示了将名为pancake的数据库从ASM存储重新定位到位于路径不同服务器上的常规文件系统 `/oradata` 和 `/logs`。
+
+
+
+=== 创建数据库备份
+
+第一步是为要迁移到备用服务器的数据库创建备份。由于源使用Oracle ASM、因此必须使用RMAN。可以按如下所示执行简单的RMAN备份。此方法会创建一个带标记的备份、稍后可通过RMAN在操作步骤中轻松识别该备份。
+
+第一个命令用于定义备份的目标类型以及要使用的位置。第二个选项仅启动数据文件的备份。
+
+....
+RMAN> configure channel device type disk format '/rman/pancake/%U';
+using target database control file instead of recovery catalog
+old RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/%U';
+new RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/%U';
+new RMAN configuration parameters are successfully stored
+RMAN> backup database tag 'ONTAP_MIGRATION';
+Starting backup at 24-MAY-16
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=251 device type=DISK
+channel ORA_DISK_1: starting full datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00001 name=+ASM0/PANCAKE/system01.dbf
+input datafile file number=00002 name=+ASM0/PANCAKE/sysaux01.dbf
+input datafile file number=00003 name=+ASM0/PANCAKE/undotbs101.dbf
+input datafile file number=00004 name=+ASM0/PANCAKE/users01.dbf
+channel ORA_DISK_1: starting piece 1 at 24-MAY-16
+channel ORA_DISK_1: finished piece 1 at 24-MAY-16
+piece handle=/rman/pancake/1gr6c161_1_1 tag=ONTAP_MIGRATION comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:03
+channel ORA_DISK_1: starting full datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+including current SPFILE in backup set
+channel ORA_DISK_1: starting piece 1 at 24-MAY-16
+channel ORA_DISK_1: finished piece 1 at 24-MAY-16
+piece handle=/rman/pancake/1hr6c164_1_1 tag=ONTAP_MIGRATION comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+Finished backup at 24-MAY-16
+....
+
+
+=== 备份控制文件
+
+稍后需要在的操作步骤中为备份控制文件 `duplicate database` 操作。
+
+....
+RMAN> backup current controlfile format '/rman/pancake/ctrl.bkp';
+Starting backup at 24-MAY-16
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting full datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_1: starting piece 1 at 24-MAY-16
+channel ORA_DISK_1: finished piece 1 at 24-MAY-16
+piece handle=/rman/pancake/ctrl.bkp tag=TAG20160524T032651 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+Finished backup at 24-MAY-16
+....
+
+
+=== 备份参数文件
+
+在新环境中、还需要一个参数文件。最简单的方法是从当前的spfile或pfile创建一个pfile。在此示例中、源数据库使用spfile。
+
+....
+RMAN> create pfile='/rman/pancake/pfile' from spfile;
+Statement processed
+....
+
+
+=== ASM文件重命名脚本
+
+移动数据库时，控制文件中当前定义的几个文件位置会发生变化。以下脚本将创建一个RMAN脚本、以便于执行此过程。此示例显示了一个数据文件数量非常少的数据库、但数据库通常包含数百甚至数千个数据文件。
+
+此脚本可在中找到 link:oracle-migration-sample-scripts.html#asm-to-file-system-name-conversion["ASM到文件系统名称转换"] 它做了两件事。
+
+首先、它会创建一个参数来重新定义重做日志位置、该位置称为 `log_file_name_convert`。它本质上是一个交替字段的列表。第一个字段是当前重做日志的位置、第二个字段是新服务器上的位置。然后、重复执行此模式。
+
+第二个功能是为数据文件重命名提供模板。该脚本循环显示数据文件、提取名称和文件编号信息、并将其格式化为RMAN脚本。然后、它会对临时文件执行相同的操作。结果是生成一个简单的RMAN脚本、可以根据需要进行编辑、以确保文件还原到所需位置。
+
+....
+SQL> @/rman/mk.rename.scripts.sql
+Parameters for log file conversion:
+*.log_file_name_convert = '+ASM0/PANCAKE/redo01.log',
+'/NEW_PATH/redo01.log','+ASM0/PANCAKE/redo02.log',
+'/NEW_PATH/redo02.log','+ASM0/PANCAKE/redo03.log', '/NEW_PATH/redo03.log'
+rman duplication script:
+run
+{
+set newname for datafile 1 to '+ASM0/PANCAKE/system01.dbf';
+set newname for datafile 2 to '+ASM0/PANCAKE/sysaux01.dbf';
+set newname for datafile 3 to '+ASM0/PANCAKE/undotbs101.dbf';
+set newname for datafile 4 to '+ASM0/PANCAKE/users01.dbf';
+set newname for tempfile 1 to '+ASM0/PANCAKE/temp01.dbf';
+duplicate target database for standby backup location INSERT_PATH_HERE;
+}
+PL/SQL procedure successfully completed.
+....
+捕获此屏幕的输出。。 `log_file_name_convert` 参数将按如下所述放置在pfile中。必须相应地编辑RMAN数据文件重命名和重复脚本、才能将数据文件放置在所需位置。在此示例中、它们全部置于中 `/oradata/pancake`。
+
+....
+run
+{
+set newname for datafile 1 to '/oradata/pancake/pancake.dbf';
+set newname for datafile 2 to '/oradata/pancake/sysaux.dbf';
+set newname for datafile 3 to '/oradata/pancake/undotbs1.dbf';
+set newname for datafile 4 to '/oradata/pancake/users.dbf';
+set newname for tempfile 1 to '/oradata/pancake/temp.dbf';
+duplicate target database for standby backup location '/rman/pancake';
+}
+....
+
+
+=== 准备目录结构
+
+这些脚本几乎已准备就绪、可以执行、但首先必须设置好目录结构。如果所需目录不存在、则必须创建它们、否则数据库启动操作步骤将失败。以下示例反映了最低要求。
+
+....
+[oracle@jfsc2 ~]$ mkdir /oradata/pancake
+[oracle@jfsc2 ~]$ mkdir /logs/pancake
+[oracle@jfsc2 ~]$ cd /orabin/admin
+[oracle@jfsc2 admin]$ mkdir PANCAKE
+[oracle@jfsc2 admin]$ cd PANCAKE
+[oracle@jfsc2 PANCAKE]$ mkdir adump dpdump pfile scripts xdb_wallet
+....
+
+
+=== 创建oratab条目
+
+要使oraenv等实用程序正常运行、需要使用以下命令。
+
+....
+PANCAKE:/orabin/product/12.1.0/dbhome_1:N
+....
+
+
+=== 参数更新
+
+必须更新保存的pfile、以反映新服务器上的任何路径更改。数据文件路径更改由RMAN复制脚本进行更改、几乎所有数据库都需要对进行更改 `control_files` 和 `log_archive_dest` parameters此外、还可能需要更改审核文件位置以及参数、例如 `db_create_file_dest` 在ASM之外可能不相关。经验丰富的DBA应在继续操作之前仔细查看建议的变更。
+
+在此示例中、主要更改包括控制文件位置、日志归档目标以及的添加 `log_file_name_convert` 参数。
+
+....
+PANCAKE.__data_transfer_cache_size=0
+PANCAKE.__db_cache_size=545259520
+PANCAKE.__java_pool_size=4194304
+PANCAKE.__large_pool_size=25165824
+PANCAKE.__oracle_base='/orabin'#ORACLE_BASE set from environment
+PANCAKE.__pga_aggregate_target=268435456
+PANCAKE.__sga_target=805306368
+PANCAKE.__shared_io_pool_size=29360128
+PANCAKE.__shared_pool_size=192937984
+PANCAKE.__streams_pool_size=0
+*.audit_file_dest='/orabin/admin/PANCAKE/adump'
+*.audit_trail='db'
+*.compatible='12.1.0.2.0'
+*.control_files='+ASM0/PANCAKE/control01.ctl','+ASM0/PANCAKE/control02.ctl'
+*.control_files='/oradata/pancake/control01.ctl','/logs/pancake/control02.ctl'
+*.db_block_size=8192
+*.db_domain=''
+*.db_name='PANCAKE'
+*.diagnostic_dest='/orabin'
+*.dispatchers='(PROTOCOL=TCP) (SERVICE=PANCAKEXDB)'
+*.log_archive_dest_1='LOCATION=+ASM1'
+*.log_archive_dest_1='LOCATION=/logs/pancake'
+*.log_archive_format='%t_%s_%r.dbf'
+'/logs/path/redo02.log'
+*.log_file_name_convert = '+ASM0/PANCAKE/redo01.log', '/logs/pancake/redo01.log', '+ASM0/PANCAKE/redo02.log', '/logs/pancake/redo02.log', '+ASM0/PANCAKE/redo03.log',  '/logs/pancake/redo03.log'
+*.open_cursors=300
+*.pga_aggregate_target=256m
+*.processes=300
+*.remote_login_passwordfile='EXCLUSIVE'
+*.sga_target=768m
+*.undo_tablespace='UNDOTBS1'
+....
+确认新参数后、必须将这些参数生效。虽然存在多个选项、但大多数客户都会根据文本pfile创建spfile。
+
+....
+bash-4.1$ sqlplus / as sysdba
+SQL*Plus: Release 12.1.0.2.0 Production on Fri Jan 8 11:17:40 2016
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to an idle instance.
+SQL> create spfile from pfile='/rman/pancake/pfile';
+File created.
+....
+
+
+=== 启动非挂载
+
+复制数据库前的最后一步是启动数据库进程、但不挂载文件。在此步骤中、spfile可能会出现明显问题。如果 `startup nomount` 命令因参数错误而失败、关闭、更正pfile模板、将其重新加载为spfile并重试非常简单。
+
+....
+SQL> startup nomount;
+ORACLE instance started.
+Total System Global Area  805306368 bytes
+Fixed Size                  2929552 bytes
+Variable Size             373296240 bytes
+Database Buffers          423624704 bytes
+Redo Buffers                5455872 bytes
+....
+
+
+=== 复制数据库
+
+与此过程中的其他步骤相比、将先前的RMAN备份还原到新位置所需的时间更长。必须在不更改数据库ID (DBID)或不重置日志的情况下复制数据库。这样可以防止应用日志、而这是完全同步副本所必需的步骤。
+
+使用在上一步中创建的脚本、使用RMAN作为aux连接到数据库、并使用问题描述the DUKATE DATABASE命令。
+
+....
+[oracle@jfsc2 pancake]$ rman auxiliary /
+Recovery Manager: Release 12.1.0.2.0 - Production on Tue May 24 03:04:56 2016
+Copyright (c) 1982, 2014, Oracle and/or its affiliates.  All rights reserved.
+connected to auxiliary database: PANCAKE (not mounted)
+RMAN> run
+2> {
+3> set newname for datafile 1 to '/oradata/pancake/pancake.dbf';
+4> set newname for datafile 2 to '/oradata/pancake/sysaux.dbf';
+5> set newname for datafile 3 to '/oradata/pancake/undotbs1.dbf';
+6> set newname for datafile 4 to '/oradata/pancake/users.dbf';
+7> set newname for tempfile 1 to '/oradata/pancake/temp.dbf';
+8> duplicate target database for standby backup location '/rman/pancake';
+9> }
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+Starting Duplicate Db at 24-MAY-16
+contents of Memory Script:
+{
+   restore clone standby controlfile from  '/rman/pancake/ctrl.bkp';
+}
+executing Memory Script
+Starting restore at 24-MAY-16
+allocated channel: ORA_AUX_DISK_1
+channel ORA_AUX_DISK_1: SID=243 device type=DISK
+channel ORA_AUX_DISK_1: restoring control file
+channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+output file name=/oradata/pancake/control01.ctl
+output file name=/logs/pancake/control02.ctl
+Finished restore at 24-MAY-16
+contents of Memory Script:
+{
+   sql clone 'alter database mount standby database';
+}
+executing Memory Script
+sql statement: alter database mount standby database
+released channel: ORA_AUX_DISK_1
+allocated channel: ORA_AUX_DISK_1
+channel ORA_AUX_DISK_1: SID=243 device type=DISK
+contents of Memory Script:
+{
+   set newname for tempfile  1 to
+ "/oradata/pancake/temp.dbf";
+   switch clone tempfile all;
+   set newname for datafile  1 to
+ "/oradata/pancake/pancake.dbf";
+   set newname for datafile  2 to
+ "/oradata/pancake/sysaux.dbf";
+   set newname for datafile  3 to
+ "/oradata/pancake/undotbs1.dbf";
+   set newname for datafile  4 to
+ "/oradata/pancake/users.dbf";
+   restore
+   clone database
+   ;
+}
+executing Memory Script
+executing command: SET NEWNAME
+renamed tempfile 1 to /oradata/pancake/temp.dbf in control file
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+executing command: SET NEWNAME
+Starting restore at 24-MAY-16
+using channel ORA_AUX_DISK_1
+channel ORA_AUX_DISK_1: starting datafile backup set restore
+channel ORA_AUX_DISK_1: specifying datafile(s) to restore from backup set
+channel ORA_AUX_DISK_1: restoring datafile 00001 to /oradata/pancake/pancake.dbf
+channel ORA_AUX_DISK_1: restoring datafile 00002 to /oradata/pancake/sysaux.dbf
+channel ORA_AUX_DISK_1: restoring datafile 00003 to /oradata/pancake/undotbs1.dbf
+channel ORA_AUX_DISK_1: restoring datafile 00004 to /oradata/pancake/users.dbf
+channel ORA_AUX_DISK_1: reading from backup piece /rman/pancake/1gr6c161_1_1
+channel ORA_AUX_DISK_1: piece handle=/rman/pancake/1gr6c161_1_1 tag=ONTAP_MIGRATION
+channel ORA_AUX_DISK_1: restored backup piece 1
+channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:07
+Finished restore at 24-MAY-16
+contents of Memory Script:
+{
+   switch clone datafile all;
+}
+executing Memory Script
+datafile 1 switched to datafile copy
+input datafile copy RECID=5 STAMP=912655725 file name=/oradata/pancake/pancake.dbf
+datafile 2 switched to datafile copy
+input datafile copy RECID=6 STAMP=912655725 file name=/oradata/pancake/sysaux.dbf
+datafile 3 switched to datafile copy
+input datafile copy RECID=7 STAMP=912655725 file name=/oradata/pancake/undotbs1.dbf
+datafile 4 switched to datafile copy
+input datafile copy RECID=8 STAMP=912655725 file name=/oradata/pancake/users.dbf
+Finished Duplicate Db at 24-MAY-16
+....
+
+
+=== 初始日志复制
+
+现在、您必须将更改从源数据库发送到新位置。这样做可能需要多个步骤。最简单的方法是让源数据库上的RMAN将归档日志写出到共享网络连接。如果共享位置不可用、另一种方法是使用RMAN写入本地文件系统、然后使用rcp或rsync复制文件。
+
+在此示例中、将显示 `/rman` 目录是一个NFS共享、可供原始数据库和迁移的数据库使用。
+
+其中一个重要的问题描述是 `disk format` 条款。备份的磁盘格式为 `%h_%e_%a.dbf`，表示必须使用数据库的线程编号、序列号和激活ID格式。尽管字母不同、但这与匹配 `log_archive_format='%t_%s_%r.dbf` 参数。此参数还以线程编号、序列号和激活ID的格式指定归档日志。最终结果是、源上的日志文件备份会采用数据库预期的命名约定。这样做会执行等操作 `recover database` 更简单、因为sqlplus可以正确地预测要回显的归档日志的名称。
+
+....
+RMAN> configure channel device type disk format '/rman/pancake/logship/%h_%e_%a.dbf';
+old RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/arch/%h_%e_%a.dbf';
+new RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/logship/%h_%e_%a.dbf';
+new RMAN configuration parameters are successfully stored
+released channel: ORA_DISK_1
+RMAN> backup as copy archivelog from time 'sysdate-2';
+Starting backup at 24-MAY-16
+current log archived
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=373 device type=DISK
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=54 RECID=70 STAMP=912658508
+output file name=/rman/pancake/logship/1_54_912576125.dbf RECID=123 STAMP=912659482
+channel ORA_DISK_1: archived log copy complete, elapsed time: 00:00:01
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=41 RECID=29 STAMP=912654101
+output file name=/rman/pancake/logship/1_41_912576125.dbf RECID=124 STAMP=912659483
+channel ORA_DISK_1: archived log copy complete, elapsed time: 00:00:01
+...
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=45 RECID=33 STAMP=912654688
+output file name=/rman/pancake/logship/1_45_912576125.dbf RECID=152 STAMP=912659514
+channel ORA_DISK_1: archived log copy complete, elapsed time: 00:00:01
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=47 RECID=36 STAMP=912654809
+output file name=/rman/pancake/logship/1_47_912576125.dbf RECID=153 STAMP=912659515
+channel ORA_DISK_1: archived log copy complete, elapsed time: 00:00:01
+Finished backup at 24-MAY-16
+....
+
+
+=== 初始日志重放
+
+文件位于归档日志位置后、可以发出命令来重新显示它们 `recover database until cancel` 然后是响应 `AUTO` 自动重放所有可用日志。参数文件当前正在将归档日志定向到 `/logs/archive`，但这与使用RMAN保存日志的位置不匹配。在恢复数据库之前、可以按如下所示临时重定向此位置。
+
+....
+SQL> alter system set log_archive_dest_1='LOCATION=/rman/pancake/logship' scope=memory;
+System altered.
+SQL> recover standby database until cancel;
+ORA-00279: change 560224 generated at 05/24/2016 03:25:53 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_49_912576125.dbf
+ORA-00280: change 560224 for thread 1 is in sequence #49
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+AUTO
+ORA-00279: change 560353 generated at 05/24/2016 03:29:17 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_50_912576125.dbf
+ORA-00280: change 560353 for thread 1 is in sequence #50
+ORA-00278: log file '/rman/pancake/logship/1_49_912576125.dbf' no longer needed
+for this recovery
+...
+ORA-00279: change 560591 generated at 05/24/2016 03:33:56 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_54_912576125.dbf
+ORA-00280: change 560591 for thread 1 is in sequence #54
+ORA-00278: log file '/rman/pancake/logship/1_53_912576125.dbf' no longer needed
+for this recovery
+ORA-00308: cannot open archived log '/rman/pancake/logship/1_54_912576125.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+....
+最终归档日志回复报告错误、但这是正常的。此错误指示sqlplus正在查找特定日志文件、但未找到该文件。原因很可能是日志文件尚不存在。
+
+如果可以在复制归档日志之前关闭源数据库、则只能执行此步骤一次。归档日志会进行复制和重做、然后、该过程可以直接继续执行转换过程、以复制关键重做日志。
+
+
+
+=== 增量日志复制和重放
+
+在大多数情况下、不会立即执行迁移。迁移过程可能需要几天甚至几周时间才能完成、这意味着必须将日志持续运送到副本数据库并进行重新显示。这样可以确保在转换到达时传输和回调的数据最少。
+
+可以轻松编写此过程的脚本。例如、可以在原始数据库上计划以下命令、以确保用于日志传送的位置持续更新。
+
+....
+[oracle@jfsc1 pancake]$ cat copylogs.rman
+configure channel device type disk format '/rman/pancake/logship/%h_%e_%a.dbf';
+backup as copy archivelog from time 'sysdate-2';
+....
+....
+[oracle@jfsc1 pancake]$ rman target / cmdfile=copylogs.rman
+Recovery Manager: Release 12.1.0.2.0 - Production on Tue May 24 04:36:19 2016
+Copyright (c) 1982, 2014, Oracle and/or its affiliates.  All rights reserved.
+connected to target database: PANCAKE (DBID=3574534589)
+RMAN> configure channel device type disk format '/rman/pancake/logship/%h_%e_%a.dbf';
+2> backup as copy archivelog from time 'sysdate-2';
+3>
+4>
+using target database control file instead of recovery catalog
+old RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/logship/%h_%e_%a.dbf';
+new RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/logship/%h_%e_%a.dbf';
+new RMAN configuration parameters are successfully stored
+Starting backup at 24-MAY-16
+current log archived
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=369 device type=DISK
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=54 RECID=123 STAMP=912659482
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:36:22
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_54_912576125.dbf
+continuing other job steps, job failed will not be re-run
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=41 RECID=124 STAMP=912659483
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:36:23
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_41_912576125.dbf
+continuing other job steps, job failed will not be re-run
+...
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=45 RECID=152 STAMP=912659514
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:36:55
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_45_912576125.dbf
+continuing other job steps, job failed will not be re-run
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=47 RECID=153 STAMP=912659515
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:36:57
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_47_912576125.dbf
+Recovery Manager complete.
+....
+收到日志后、必须对其进行重新显示。前面的示例显示了如何使用sqlplus手动运行 `recover database until cancel`，可以轻松实现自动化。此处显示的示例使用中所述的脚本 link:oracle-migration-sample-scripts.html#replay-logs-on-standby-database["在备用数据库上重放日志"]。该脚本接受一个参数、用于指定需要重放操作的数据库。此过程允许在多数据库迁移工作中使用相同的脚本。
+
+....
+[root@jfsc2 pancake]# ./replaylogs.pl PANCAKE
+ORACLE_SID = [oracle] ? The Oracle base has been set to /orabin
+SQL*Plus: Release 12.1.0.2.0 Production on Tue May 24 04:47:10 2016
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+SQL> ORA-00279: change 560591 generated at 05/24/2016 03:33:56 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_54_912576125.dbf
+ORA-00280: change 560591 for thread 1 is in sequence #54
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 562219 generated at 05/24/2016 04:15:08 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_55_912576125.dbf
+ORA-00280: change 562219 for thread 1 is in sequence #55
+ORA-00278: log file '/rman/pancake/logship/1_54_912576125.dbf' no longer needed for this recovery
+ORA-00279: change 562370 generated at 05/24/2016 04:19:18 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_56_912576125.dbf
+ORA-00280: change 562370 for thread 1 is in sequence #56
+ORA-00278: log file '/rman/pancake/logship/1_55_912576125.dbf' no longer needed for this recovery
+...
+ORA-00279: change 563137 generated at 05/24/2016 04:36:20 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_65_912576125.dbf
+ORA-00280: change 563137 for thread 1 is in sequence #65
+ORA-00278: log file '/rman/pancake/logship/1_64_912576125.dbf' no longer needed for this recovery
+ORA-00308: cannot open archived log '/rman/pancake/logship/1_65_912576125.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+SQL> Disconnected from Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+....
+
+
+=== 转换
+
+准备好转换到新环境后、必须执行一次最终同步。使用常规文件系统时、可以轻松确保迁移的数据库与原始数据库100%同步、因为原始重做日志会被复制和重做。使用ASM无法实现此目的。只能轻松地重新复制归档日志。为了确保不会丢失任何数据、必须谨慎地最终关闭原始数据库。
+
+. 首先、必须将数据库静机、以确保不会进行任何更改。此暂停可能包括禁用计划的操作、关闭侦听器和/或关闭应用程序。
+. 执行此步骤后、大多数数据库配置协议都会创建一个虚拟表、用作关闭标记。
+. 强制进行日志归档、以确保在归档日志中记录虚拟表的创建。为此、请运行以下命令：
++
+....
+SQL> create table cutovercheck as select * from dba_users;
+Table created.
+SQL> alter system archive log current;
+System altered.
+SQL> shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+....
+. 要复制最后一个归档日志、请运行以下命令。数据库必须可用、但未打开。
++
+....
+SQL> startup mount;
+ORACLE instance started.
+Total System Global Area  805306368 bytes
+Fixed Size                  2929552 bytes
+Variable Size             331353200 bytes
+Database Buffers          465567744 bytes
+Redo Buffers                5455872 bytes
+Database mounted.
+....
+. 要复制归档日志、请运行以下命令：
++
+....
+RMAN> configure channel device type disk format '/rman/pancake/logship/%h_%e_%a.dbf';
+2> backup as copy archivelog from time 'sysdate-2';
+3>
+4>
+using target database control file instead of recovery catalog
+old RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/logship/%h_%e_%a.dbf';
+new RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/rman/pancake/logship/%h_%e_%a.dbf';
+new RMAN configuration parameters are successfully stored
+Starting backup at 24-MAY-16
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=8 device type=DISK
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=54 RECID=123 STAMP=912659482
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:58:24
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_54_912576125.dbf
+continuing other job steps, job failed will not be re-run
+...
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=45 RECID=152 STAMP=912659514
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:58:58
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_45_912576125.dbf
+continuing other job steps, job failed will not be re-run
+channel ORA_DISK_1: starting archived log copy
+input archived log thread=1 sequence=47 RECID=153 STAMP=912659515
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 05/24/2016 04:59:00
+ORA-19635: input and output file names are identical: /rman/pancake/logship/1_47_912576125.dbf
+....
+. 最后、在新服务器上重放其余归档日志。
++
+....
+[root@jfsc2 pancake]# ./replaylogs.pl PANCAKE
+ORACLE_SID = [oracle] ? The Oracle base has been set to /orabin
+SQL*Plus: Release 12.1.0.2.0 Production on Tue May 24 05:00:53 2016
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+SQL> ORA-00279: change 563137 generated at 05/24/2016 04:36:20 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_65_912576125.dbf
+ORA-00280: change 563137 for thread 1 is in sequence #65
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 563629 generated at 05/24/2016 04:55:20 needed for thread 1
+ORA-00289: suggestion : /rman/pancake/logship/1_66_912576125.dbf
+ORA-00280: change 563629 for thread 1 is in sequence #66
+ORA-00278: log file '/rman/pancake/logship/1_65_912576125.dbf' no longer needed
+for this recovery
+ORA-00308: cannot open archived log '/rman/pancake/logship/1_66_912576125.dbf'
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+SQL> Disconnected from Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+....
+. 在此阶段、复制所有数据。数据库已准备好从备用数据库转换为活动操作数据库、然后再打开。
++
+....
+SQL> alter database activate standby database;
+Database altered.
+SQL> alter database open;
+Database altered.
+....
+. 确认是否存在假表、然后将其放下。
++
+....
+SQL> desc cutovercheck
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ USERNAME                                  NOT NULL VARCHAR2(128)
+ USER_ID                                   NOT NULL NUMBER
+ PASSWORD                                           VARCHAR2(4000)
+ ACCOUNT_STATUS                            NOT NULL VARCHAR2(32)
+ LOCK_DATE                                          DATE
+ EXPIRY_DATE                                        DATE
+ DEFAULT_TABLESPACE                        NOT NULL VARCHAR2(30)
+ TEMPORARY_TABLESPACE                      NOT NULL VARCHAR2(30)
+ CREATED                                   NOT NULL DATE
+ PROFILE                                   NOT NULL VARCHAR2(128)
+ INITIAL_RSRC_CONSUMER_GROUP                        VARCHAR2(128)
+ EXTERNAL_NAME                                      VARCHAR2(4000)
+ PASSWORD_VERSIONS                                  VARCHAR2(12)
+ EDITIONS_ENABLED                                   VARCHAR2(1)
+ AUTHENTICATION_TYPE                                VARCHAR2(8)
+ PROXY_ONLY_CONNECT                                 VARCHAR2(1)
+ COMMON                                             VARCHAR2(3)
+ LAST_LOGIN                                         TIMESTAMP(9) WITH TIME ZONE
+ ORACLE_MAINTAINED                                  VARCHAR2(1)
+SQL> drop table cutovercheck;
+Table dropped.
+....
+
+
+
+
+== 无中断重做日志迁移
+
+有时、除了重做日志之外、数据库整体组织正确。发生这种情况的原因有很多、其中最常见的原因是与快照有关。SnapManager for Oracle、SnapCenter和NetApp Snap Creator存储管理框架等产品可以近乎即时地恢复数据库、但前提是您还原数据文件卷的状态。如果重做日志与数据文件共享空间、则无法安全地执行还原、因为它会导致重做日志被销毁、这可能意味着数据丢失。因此、必须重新定位重做日志。
+
+此操作步骤非常简单、可以无干扰地执行。
+
+
+
+=== 当前重做日志配置
+
+. 确定重做日志组的数量及其相应的组编号。
++
+....
+SQL> select group#||' '||member from v$logfile;
+GROUP#||''||MEMBER
+--------------------------------------------------------------------------------
+1 /redo0/NTAP/redo01a.log
+1 /redo1/NTAP/redo01b.log
+2 /redo0/NTAP/redo02a.log
+2 /redo1/NTAP/redo02b.log
+3 /redo0/NTAP/redo03a.log
+3 /redo1/NTAP/redo03b.log
+rows selected.
+....
+. 输入重做日志的大小。
++
+....
+SQL> select group#||' '||bytes from v$log;
+GROUP#||''||BYTES
+--------------------------------------------------------------------------------
+1 524288000
+2 524288000
+3 524288000
+....
+
+
+
+
+=== 创建新日志
+
+. 对于每个重做日志、创建一个大小和成员数量匹配的新组。
++
+....
+SQL> alter database add logfile ('/newredo0/redo01a.log', '/newredo1/redo01b.log') size 500M;
+Database altered.
+SQL> alter database add logfile ('/newredo0/redo02a.log', '/newredo1/redo02b.log') size 500M;
+Database altered.
+SQL> alter database add logfile ('/newredo0/redo03a.log', '/newredo1/redo03b.log') size 500M;
+Database altered.
+SQL>
+....
+. 验证新配置。
++
+....
+SQL> select group#||' '||member from v$logfile;
+GROUP#||''||MEMBER
+--------------------------------------------------------------------------------
+1 /redo0/NTAP/redo01a.log
+1 /redo1/NTAP/redo01b.log
+2 /redo0/NTAP/redo02a.log
+2 /redo1/NTAP/redo02b.log
+3 /redo0/NTAP/redo03a.log
+3 /redo1/NTAP/redo03b.log
+4 /newredo0/redo01a.log
+4 /newredo1/redo01b.log
+5 /newredo0/redo02a.log
+5 /newredo1/redo02b.log
+6 /newredo0/redo03a.log
+6 /newredo1/redo03b.log
+12 rows selected.
+....
+
+
+
+
+=== 丢弃旧日志
+
+. 丢弃旧日志(组1、2和3)。
++
+....
+SQL> alter database drop logfile group 1;
+Database altered.
+SQL> alter database drop logfile group 2;
+Database altered.
+SQL> alter database drop logfile group 3;
+Database altered.
+....
+. 如果遇到错误、导致您无法删除活动日志、请强制切换到下一个日志以释放锁定并强制执行全局检查点。请参见以下此过程的示例。删除位于旧位置的日志文件组2的尝试被拒绝、因为此日志文件中仍有活动数据。
++
+....
+SQL> alter database drop logfile group 2;
+alter database drop logfile group 2
+*
+ERROR at line 1:
+ORA-01623: log 2 is current log for instance NTAP (thread 1) - cannot drop
+ORA-00312: online log 2 thread 1: '/redo0/NTAP/redo02a.log'
+ORA-00312: online log 2 thread 1: '/redo1/NTAP/redo02b.log'
+....
+. 日志归档后加上检查点可用于删除日志文件。
++
+....
+SQL> alter system archive log current;
+System altered.
+SQL> alter system checkpoint;
+System altered.
+SQL> alter database drop logfile group 2;
+Database altered.
+....
+. 然后从文件系统中删除日志。执行此过程时应格外小心。
+

@@ -1,0 +1,255 @@
+---
+sidebar: sidebar 
+permalink: oracle/migration/oracle-fli-planning.html 
+keywords: migration, oracle, fli 
+summary: 准备ONTAP以进行FLI迁移 
+---
+= FLI规划—Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp中介绍了使用FLI迁移SAN资源的过程 http://www.netapp.com/us/media/tr-4380.pdf["TR-4380：《使用外部LUN导入进行SAN迁移》"^]。
+
+从数据库和主机的角度来看、不需要执行任何特殊步骤。更新FC分区并使LUN在ONTAP上可用后、LVM应能够从LUN中读取LVM元数据。此外、卷组已准备就绪、无需执行其他配置步骤。在极少数情况下、环境可能会包含使用先前存储阵列的引用进行硬编码的配置文件。例如、包含的Linux系统 `/etc/multipath.conf` 必须更新引用给定设备的WWN的规则、以反映FLI所做的更改。
+
+
+NOTE: 有关支持的配置的信息、请参见NetApp兼容性列表。如果您的环境未包括在其中、请与NetApp代表联系以获得帮助。
+
+此示例显示了Linux服务器上托管的ASM和LVM LUN的迁移。FLI在其他操作系统上受支持、尽管主机端命令可能不同、但原则相同、ONTAP过程相同。
+
+
+
+== 确定LVM LUN
+
+准备工作的第一步是确定要迁移的LUN。在此处显示的示例中、两个基于SAN的文件系统挂载在上 `/orabin` 和 `/backups`。
+
+....
+[root@host1 ~]# df -k
+Filesystem                       1K-blocks      Used Available Use% Mounted on
+/dev/mapper/rhel-root             52403200   8811464  43591736  17% /
+devtmpfs                          65882776         0  65882776   0% /dev
+...
+fas8060-nfs-public:/install      199229440 119368128  79861312  60% /install
+/dev/mapper/sanvg-lvorabin        20961280  12348476   8612804  59% /orabin
+/dev/mapper/sanvg-lvbackups       73364480  62947536  10416944  86% /backups
+....
+可以从设备名称中提取卷组的名称、该名称采用格式(卷组名称)-(逻辑卷名称)。在这种情况下、卷组称为 `sanvg`。
+
+。 `pvdisplay` 命令可按如下所示来确定支持此卷组的LUN。在这种情况下、包含10个LUN `sanvg` 卷组。
+
+....
+[root@host1 ~]# pvdisplay -C -o pv_name,pv_size,pv_fmt,vg_name
+  PV                                            PSize   VG
+  /dev/mapper/3600a0980383030445424487556574266  10.00g sanvg
+  /dev/mapper/3600a0980383030445424487556574267  10.00g sanvg
+  /dev/mapper/3600a0980383030445424487556574268  10.00g sanvg
+  /dev/mapper/3600a0980383030445424487556574269  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426a  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426b  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426c  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426d  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426e  10.00g sanvg
+  /dev/mapper/3600a098038303044542448755657426f  10.00g sanvg
+  /dev/sda2                                     278.38g rhel
+....
+
+
+== 确定ASM LUN
+
+此外、还必须迁移ASM LUN。要以sysasm用户身份从sqlplus获取LUN和LUN路径数、请运行以下命令：
+
+....
+SQL> select path||' '||os_mb from v$asm_disk;
+PATH||''||OS_MB
+--------------------------------------------------------------------------------
+/dev/oracleasm/disks/ASM0 10240
+/dev/oracleasm/disks/ASM9 10240
+/dev/oracleasm/disks/ASM8 10240
+/dev/oracleasm/disks/ASM7 10240
+/dev/oracleasm/disks/ASM6 10240
+/dev/oracleasm/disks/ASM5 10240
+/dev/oracleasm/disks/ASM4 10240
+/dev/oracleasm/disks/ASM1 10240
+/dev/oracleasm/disks/ASM3 10240
+/dev/oracleasm/disks/ASM2 10240
+10 rows selected.
+SQL>
+....
+
+
+== FC网络更改
+
+当前环境包含20个要迁移的LUN。更新当前SAN、以便ONTAP可以访问当前LUN。尚未迁移数据、但ONTAP必须从当前LUN中读取配置信息、才能为该数据创建新的主目录。
+
+至少必须将AF/FAS系统上的一个HBA端口配置为启动程序端口。此外、必须更新FC分区、以便ONTAP可以访问外部存储阵列上的LUN。某些存储阵列配置了LUN屏蔽、用于限制哪些WWN可以访问给定LUN。在这种情况下、还必须更新LUN屏蔽以授予对ONTAP WWN的访问权限。
+
+完成此步骤后、ONTAP应能够使用查看外部存储阵列 `storage array show` 命令：它返回的关键字段是用于标识系统上的外部LUN的前缀。在以下示例中、是外部阵列上的LUN `FOREIGN_1` 在ONTAP中显示、并使用前缀 `FOR-1`。
+
+
+
+== 确定外部阵列
+
+....
+Cluster01::> storage array show -fields name,prefix
+name          prefix
+------------- ------
+FOREIGN_1     FOR-1
+Cluster01::>
+....
+
+
+== 确定外部LUN
+
+通过传递、可以列出这些LUN `array-name` 到 `storage disk show` 命令：在迁移操作步骤期间、系统会多次引用返回的数据。
+
+....
+Cluster01::> storage disk show -array-name FOREIGN_1 -fields disk,serial
+disk     serial-number
+-------- -------------
+FOR-1.1  800DT$HuVWBX
+FOR-1.2  800DT$HuVWBZ
+FOR-1.3  800DT$HuVWBW
+FOR-1.4  800DT$HuVWBY
+FOR-1.5  800DT$HuVWB/
+FOR-1.6  800DT$HuVWBa
+FOR-1.7  800DT$HuVWBd
+FOR-1.8  800DT$HuVWBb
+FOR-1.9  800DT$HuVWBc
+FOR-1.10 800DT$HuVWBe
+FOR-1.11 800DT$HuVWBf
+FOR-1.12 800DT$HuVWBg
+FOR-1.13 800DT$HuVWBi
+FOR-1.14 800DT$HuVWBh
+FOR-1.15 800DT$HuVWBj
+FOR-1.16 800DT$HuVWBk
+FOR-1.17 800DT$HuVWBm
+FOR-1.18 800DT$HuVWBl
+FOR-1.19 800DT$HuVWBo
+FOR-1.20 800DT$HuVWBn
+20 entries were displayed.
+Cluster01::>
+....
+
+
+== 将外部阵列LUN注册为候选导入阵列
+
+外部LUN最初归类为任何特定的LUN类型。在导入数据之前、必须将LUN标记为外部LUN、从而使其成为导入过程的候选LUN。此步骤可通过将序列号传递到来完成 `storage disk modify` 命令、如以下示例所示。请注意、此过程仅会将LUN标记为ONTAP中的外部LUN。不会向外部LUN本身写入任何数据。
+
+....
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBW} -is-foreign true
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBX} -is-foreign true
+...
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBn} -is-foreign true
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBo} -is-foreign true
+Cluster01::*>
+....
+
+
+== 创建卷以托管迁移的LUN
+
+托管迁移的LUN需要一个卷。确切的卷配置取决于利用ONTAP功能的整体计划。在此示例中、ASM LUN放置在一个卷中、而LVM LUN放置在另一个卷中。这样、您就可以将LUN作为独立的组进行管理、以实现分层、创建快照或设置QoS控制等目的。
+
+设置 `snapshot-policy `to `none`。迁移过程中可能会涉及大量的数据周转。因此、如果由于在快照中捕获不需要的数据而意外创建快照、则空间消耗可能会大幅增加。
+
+....
+Cluster01::> volume create -volume new_asm -aggregate data_02 -size 120G -snapshot-policy none
+[Job 1152] Job succeeded: Successful
+Cluster01::> volume create -volume new_lvm -aggregate data_02 -size 120G -snapshot-policy none
+[Job 1153] Job succeeded: Successful
+Cluster01::>
+....
+
+
+== 创建ONTAP LUN
+
+创建卷后、必须创建新的LUN。通常、创建LUN需要用户指定LUN大小等信息、但在这种情况下、外部磁盘参数会传递到命令。因此、ONTAP会从指定序列号复制当前LUN配置数据。它还会使用LUN几何结构和分区表数据来调整LUN对齐并建立最佳性能。
+
+在此步骤中、必须对照外部阵列交叉引用序列号、以确保正确的外部LUN与正确的新LUN匹配。
+
+....
+Cluster01::*> lun create -vserver vserver1 -path /vol/new_asm/LUN0 -ostype linux -foreign-disk 800DT$HuVWBW
+Created a LUN of size 10g (10737418240)
+Cluster01::*> lun create -vserver vserver1 -path /vol/new_asm/LUN1 -ostype linux -foreign-disk 800DT$HuVWBX
+Created a LUN of size 10g (10737418240)
+...
+Created a LUN of size 10g (10737418240)
+Cluster01::*> lun create -vserver vserver1 -path /vol/new_lvm/LUN8 -ostype linux -foreign-disk 800DT$HuVWBn
+Created a LUN of size 10g (10737418240)
+Cluster01::*> lun create -vserver vserver1 -path /vol/new_lvm/LUN9 -ostype linux -foreign-disk 800DT$HuVWBo
+Created a LUN of size 10g (10737418240)
+....
+
+
+== 创建导入关系
+
+LUN现在已创建、但尚未配置为复制目标。在执行此步骤之前、必须先将LUN置于脱机状态。这一额外步骤旨在保护数据免受用户错误的影响。如果ONTAP允许对联机LUN执行迁移、则会存在一个风险、即因出现输入错误而可能会覆盖活动数据。强制用户首先使LUN脱机这一额外步骤有助于验证是否将正确的目标LUN用作迁移目标。
+
+....
+Cluster01::*> lun offline -vserver vserver1 -path /vol/new_asm/LUN0
+Warning: This command will take LUN "/vol/new_asm/LUN0" in Vserver
+         "vserver1" offline.
+Do you want to continue? {y|n}: y
+Cluster01::*> lun offline -vserver vserver1 -path /vol/new_asm/LUN1
+Warning: This command will take LUN "/vol/new_asm/LUN1" in Vserver
+         "vserver1" offline.
+Do you want to continue? {y|n}: y
+...
+Warning: This command will take LUN "/vol/new_lvm/LUN8" in Vserver
+         "vserver1" offline.
+Do you want to continue? {y|n}: y
+Cluster01::*> lun offline -vserver vserver1 -path /vol/new_lvm/LUN9
+Warning: This command will take LUN "/vol/new_lvm/LUN9" in Vserver
+         "vserver1" offline.
+Do you want to continue? {y|n}: y
+....
+LUN脱机后、您可以通过将外部LUN序列号传递到来建立导入关系 `lun import create` 命令：
+
+....
+Cluster01::*> lun import create -vserver vserver1 -path /vol/new_asm/LUN0 -foreign-disk 800DT$HuVWBW
+Cluster01::*> lun import create -vserver vserver1 -path /vol/new_asm/LUN1 -foreign-disk 800DT$HuVWBX
+...
+Cluster01::*> lun import create -vserver vserver1 -path /vol/new_lvm/LUN8 -foreign-disk 800DT$HuVWBn
+Cluster01::*> lun import create -vserver vserver1 -path /vol/new_lvm/LUN9 -foreign-disk 800DT$HuVWBo
+Cluster01::*>
+....
+建立所有导入关系后、可以将LUN重新置于联机状态。
+
+....
+Cluster01::*> lun online -vserver vserver1 -path /vol/new_asm/LUN0
+Cluster01::*> lun online -vserver vserver1 -path /vol/new_asm/LUN1
+...
+Cluster01::*> lun online -vserver vserver1 -path /vol/new_lvm/LUN8
+Cluster01::*> lun online -vserver vserver1 -path /vol/new_lvm/LUN9
+Cluster01::*>
+....
+
+
+== 创建启动程序组
+
+启动程序组(igroGroup)是ONTAP LUN屏蔽架构的一部分。除非先授予主机访问权限、否则无法访问新创建的LUN。为此、可创建一个igrop、其中列出应授予访问权限的FC WWN或iSCSI启动程序名称。编写此报告时、只有FC LUN支持FLI。但是、迁移后转换为iSCSI是一项简单的任务、如所示 link:oracle-protocol-conversion.html["协议转换"]。
+
+在此示例中、创建了一个igrop、其中包含两个WWN、分别对应于主机HBA上的两个可用端口。
+
+....
+Cluster01::*> igroup create linuxhost -protocol fcp -ostype linux -initiator 21:00:00:0e:1e:16:63:50 21:00:00:0e:1e:16:63:51
+....
+
+
+== 将新LUN映射到主机
+
+创建igroup后、LUN将映射到定义的igroup。这些LUN仅可供此igrop中包含的WWN使用。在迁移过程的这一阶段、NetApp会假定主机尚未分区到ONTAP。这一点非常重要、因为如果将主机同时分区到外部阵列和新的ONTAP系统、则可能会在每个阵列上发现具有相同序列号的LUN。这种情况可能会导致多路径故障或数据损坏。
+
+....
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_asm/LUN0 -igroup linuxhost
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_asm/LUN1 -igroup linuxhost
+...
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_lvm/LUN8 -igroup linuxhost
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_lvm/LUN9 -igroup linuxhost
+Cluster01::*>
+....

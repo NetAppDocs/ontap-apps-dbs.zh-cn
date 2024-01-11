@@ -1,0 +1,46 @@
+---
+indexpage:
+  lead: ONTAP是许多企业级应用程序和数据库技术的数据管理和数据保护基础。以下几页提供了有关ONTAP以及企业级应用程序和基础架构的最佳实践和实施过程的指导。
+  tiles:
+  - title: Microsoft SQL Server
+    links:
+    - title: 基于ONTAP的Microsoft SQL Server
+      url: "/mssql/overview.html"
+    - title: Microsoft SQL Server存储注意事项
+      url: "/mssql/Storage-considerations.html"
+    - title: Microsoft SQL Server数据保护
+      url: "/mssql/Data-protection.html"
+    - title: Microsoft SQL Server灾难恢复
+      url: "/mssql/SQL-disaster-recovery.html"
+  - title: 开源数据库
+    links:
+    - title: 基于ONTAP的MariaDB和MySQL
+      url: "/mysql/overview.html"
+    - title: ONTAP上的PostgreSQL
+      url: "/postgres/overview.html"
+  - title: Oracle 数据库
+    links:
+    - title: 基于ONTAP的Oracle
+      url: "/oracle/overview.html"
+    - title: Oracle数据保护
+      url: "/oracle/dp/oracle-data-protection-introduction.html"
+    - title: Oracle灾难恢复
+      url: "/oracle/dr/oracle-dr-overview.html"
+    - title: Oracle迁移
+      url: "/oracle/migration/oracle-migration-overview.html"
+  - title: SAP HANA
+    links:
+    - title: SAP 解决方案
+      url: https://docs.netapp.com/us-en/netapp-solutions-sap/index.html
+    - title: 采用AFF和FC的SAP HANA
+      url: https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana_aff_fc_introduction.html
+    - title: 采用AFF和NFS的SAP HANA
+      url: https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana_aff_nfs_introduction.html
+  - title: VMware
+    links:
+    - title: 采用ONTAP的VMware vSphere
+      url: "/vmware/vsphere/overview.html"
+    - title: 使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
+      url: "/vmware/vvols/overview.html"
+    - title: 采用ONTAP的VMware Site Recovery Manager
+      url: "/vmware/srm/overview.html"

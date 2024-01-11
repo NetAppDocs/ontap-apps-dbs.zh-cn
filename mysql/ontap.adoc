@@ -1,0 +1,14 @@
+---
+sidebar: sidebar 
+permalink: mysql/ontap.html 
+keywords: MS-SQL,mssql,SQL Server,TR-4590 
+summary: ONTAP 配置 
+---
+= ONTAP 配置
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP提供了许多专为应用程序和数据库工作负载设计的功能。
+
+您可以查看ONTAP重要功能的概述、包括从数据保护功能、存储效率建议到灾难恢复选项的所有内容 link:../common/overview.html["此处。"] 此信息对于在ONTAP存储系统上正确构建和管理应用程序环境至关重要。

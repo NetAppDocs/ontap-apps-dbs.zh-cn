@@ -1,0 +1,12 @@
+---
+permalink: postgres/tiering.html 
+sidebar: sidebar 
+keywords: storage, tiering, fabricpool 
+summary: FabricPool 概述 
+---
+= 分层
+:allow-uri-read: 
+
+
+[role="lead"]
+要了解FabricPool层如何影响应用程序和数据库、需要了解低级别FabricPool架构。

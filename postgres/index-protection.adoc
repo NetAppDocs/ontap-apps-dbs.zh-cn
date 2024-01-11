@@ -1,0 +1,12 @@
+---
+sidebar: sidebar 
+permalink: postgres/index-protection.html 
+keywords: PostgreSQL,database,postgres 
+summary: 基于ONTAP的PostgreSQL数据库 
+---
+= 数据保护
+:allow-uri-read: 
+
+
+[role="lead"]
+索引保护

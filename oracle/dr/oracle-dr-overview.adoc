@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: oracle/dr/oracle-dr-overview.html 
+keywords: metrocluster, syncmirror, oracle 
+summary: 借助ONTAP实现Oracle灾难恢复 
+---
+= 使用ONTAP进行灾难恢复
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+灾难恢复是指在发生灾难性事件(例如火灾、导致存储系统甚至整个站点遭到破坏)后恢复数据服务。
+
+
+NOTE: 本文档可替代先前发布的技术报告_TR-4591：《Oracle数据保护》_和_TR-4592：《基于MetroCluster的Oracle》
+
+灾难恢复可以通过使用SnapMirror轻松复制数据来实现、当然、许多客户每小时更新一次镜像副本。
+
+对于大多数客户而言、灾难恢复不仅需要拥有远程数据副本、还需要能够快速利用这些数据。NetApp提供了两种技术来满足这一需求—MetroCluster和SnapMirror业务连续性(SM-BC)
+
+MetroCluster是指硬件配置中的ONTAP、其中包括低级同步镜像存储和许多附加功能。MetroCluster等集成解决方案简化了当今复杂的横向扩展数据库、应用程序和虚拟化基础架构。它将多个外部数据保护产品和策略替换为一个简单的中央存储阵列。此外、它还可以在一个集群模式存储系统中提供集成的备份、恢复、灾难恢复和高可用性(HA)功能。
+
+SnapMirror业务连续性(SM-BC)基于SnapMirror同步。通过MetroCluster、每个ONTAP控制器都负责将其驱动器数据复制到远程位置。使用SM-BC、您实际上拥有两个不同的ONTAP系统、这些系统维护LUN数据的独立副本、但会合作提供该LUN的一个实例。从主机角度来看、它是一个LUN实体。
+
+尽管SM-BC和MetroCluster在内部的工作方式截然不同、但对于主机来说、结果却非常相似。主要区别在于粒度。如果您只需要选择要同步复制的工作负载、则SM-BC是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SM-BC目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。

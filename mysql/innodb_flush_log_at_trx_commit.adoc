@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: mysql/innodb_flush_log_at_trx_commit.html 
+keywords: MySQL,MariaDB,innodb_doublewrite 
+summary: 基于ONTAP的MySQL 
+---
+= INNODB_FLOG_AT_TRx_Commit
+:allow-uri-read: 
+
+
+[role="lead"]
+数据发生更改时、更改不会立即写入存储。
+
+相反、数据会记录在日志缓冲区中、日志缓冲区是InnoDB分配给缓冲区的内存的一部分、用于缓冲日志文件中记录的更改。在提交事务时、缓冲区已满时或每秒一次(以先发生的事件为准)、InnoDB会将缓冲区转至日志文件。用于控制此过程的配置变量为InnoDB_F冲_LOG_AT_TRx_commit。值选项包括：
+
+* 设置时 `innodb_flush_log_trx_at_commit=0`，InnoDB会将修改后的数据(位于InnoDB缓冲池中)写入日志文件(ib_logfile)，并每秒刷新日志文件(写入存储)。但是、提交事务时、它不会执行任何操作。如果发生电源故障或系统崩溃、则未转储的数据都不可恢复、因为它不会写入日志文件或驱动器。
+* 设置时 `innodb_flush_log_trx_commit=1`，则InnoDB会将日志缓冲区写入事务日志，并将每个事务转储到持久存储。例如、对于所有事务提交、InnoDB先写入日志、然后再写入存储。存储速度较慢会对性能产生负面影响；例如、每秒InnoDB事务数会减少。
+* 设置时 `innodb_flush_log_trx_commit=2`，InnoDB会在每次提交时将日志缓冲区写入日志文件；但是，它不会将数据写入存储。InnoDB每秒刷新一次数据。即使出现电源故障或系统崩溃、选项2数据也会显示在日志文件中、并且可以恢复。
+
+
+如果性能是主要目标、请将该值设置为2。由于InnoDB每秒向驱动器写入一次、而不是每次提交事务、因此性能会显著提高。如果发生电源故障或崩溃、可以从事务日志中恢复数据。
+
+如果数据安全是主要目标、请将该值设置为1、以便每次提交事务时、InnoDB都会转至驱动器。但是、性能可能会受到影响。
+
+
+TIP: * NetApp建议*将InnoDB_F冲_LOG_TRx_commit值设置为2以提高性能。

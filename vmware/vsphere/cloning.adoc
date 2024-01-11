@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: vmware/vsphere/cloning.html 
+keywords: Data protection, Space reclamation, VM and datastore cloning, Storage efficiency, thin provisioning, QoS, SIOC, Storage Distributed Resource Scheduler, DRS, Active IQ Unified Manager, Encryption 
+summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。 
+---
+= 虚拟机和数据存储库克隆
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./../media/
+
+
+[role="lead"]
+通过克隆存储对象，您可以快速创建副本以供将来使用，例如配置其他 VM ，备份 / 恢复操作等。
+
+在 vSphere 中，您可以克隆虚拟机，虚拟磁盘， VVol 或数据存储库。克隆后，通常可以通过自动化过程进一步自定义对象。vSphere 既支持完整副本克隆，也支持链接克隆，在这些克隆中，它可以独立于原始对象跟踪更改。
+
+链接克隆非常有助于节省空间，但它们会增加 vSphere 为虚拟机处理的 I/O 量，从而影响该虚拟机的性能，甚至整个主机的性能。因此、NetApp客户经常使用基于存储系统的克隆来充分利用这两种环境：高效利用存储和提高性能。
+
+下图显示了 ONTAP 克隆。
+
+image:vsphere_ontap_image5.png["错误：缺少图形映像"]
+
+可以通过多种机制将克隆卸载到运行 ONTAP 软件的系统，通常是在 VM ， VVOL 或数据存储库级别。其中包括：
+
+* 使用 NetApp vSphere APIs for Storage Awareness （ VASA ） Provider 的 VVOL 。  ONTAP克隆用于支持由vCenter管理的VVol快照、这些快照可节省空间、并且创建和删除这些快照时的I/O影响极小。  此外，还可以使用 vCenter 克隆 VM ，这些 VM 也会卸载到 ONTAP ，无论是在单个数据存储库 / 卷中还是在数据存储库 / 卷之间。
+* 使用 vSphere API —阵列集成（ VAAI ）进行 vSphere 克隆和迁移。在 SAN 和 NAS 环境中， VM 克隆操作均可卸载到 ONTAP （ NetApp 提供了一个 ESXi 插件，用于为 NFS 启用 VAAI ）。  vSphere 仅会卸载 NAS 数据存储库中冷（已关闭） VM 上的操作，而热 VM （克隆和存储 vMotion ）上的操作也会卸载到 SAN 上。ONTAP 会根据源，目标和已安装的产品许可证使用最高效的方法。VMware Horizon View 也使用此功能。
+* SRA （与 VMware Site Recovery Manager 结合使用）。此处，克隆用于无中断测试灾难恢复副本的恢复情况。
+* 使用 SnapCenter 等 NetApp 工具进行备份和恢复。VM 克隆用于验证备份操作以及挂载 VM 备份，以便可以复制单个文件。
+
+
+VMware ， NetApp 和第三方工具可以调用 ONTAP 卸载克隆。卸载到 ONTAP 的克隆具有多个优势。在大多数情况下，它们节省空间，只需要存储即可更改对象；读取和写入它们不会产生额外的性能影响，在某些情况下，通过在高速缓存中共享块来提高性能。它们还会从 ESXi 服务器卸载 CPU 周期和网络 I/O 。使用 FlexVol 卷在使用 FlexClone 的传统数据存储库中进行副本卸载速度快，效率高，但 FlexVol 卷之间的副本卸载速度可能较慢。如果您将 VM 模板维护为克隆源，请考虑将其放置在数据存储库卷中（使用文件夹或内容库对其进行组织），以实现节省空间的快速克隆。
+
+您也可以直接在 ONTAP 中克隆卷或 LUN 以克隆数据存储库。使用 NFS 数据存储库时， FlexClone 技术可以克隆整个卷，并且可以从 ONTAP 导出克隆并由 ESXi 作为另一个数据存储库挂载该克隆。对于 VMFS 数据存储库， ONTAP 可以克隆卷或整个卷中的 LUN ，包括其中的一个或多个 LUN 。包含 VMFS 的 LUN 必须映射到 ESXi 启动程序组（ igroup ），然后由 ESXi 重新签名，才能挂载并用作常规数据存储库。对于某些临时使用情形，可以挂载克隆的 VMFS 而无需重新签名。克隆数据存储库后，可以注册，重新配置和自定义数据存储库中的 VM ，就像它们是单独克隆的 VM 一样。
+
+在某些情况下，可以使用其他许可功能来增强克隆功能，例如用于备份的 SnapRestore 或 FlexClone 。这些许可证通常包含在许可证包中，无需额外付费。要执行vVol克隆操作以及支持vVol的受管快照(从虚拟机管理程序卸载到ONTAP)、需要FlexClone许可证。在数据存储库 / 卷中使用 FlexClone 许可证还可以改进某些基于 VAAI 的克隆（创建节省空间的即时副本，而不是块副本）。  此外， SRA 还会使用它来测试灾难恢复副本的恢复，并使用 SnapCenter 来执行克隆操作，以及浏览备份副本以还原单个文件。

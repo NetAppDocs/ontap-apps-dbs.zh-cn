@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: postgres/initialization.html 
+keywords: PostgreSQL,database,postgres 
+summary: PostgreSQL初始化 
+---
+= 初始化
+:allow-uri-read: 
+
+
+[role="lead"]
+您可以使用创建新的数据库集群 `initdb` 计划。一个 `initdb` 脚本将创建用于定义集群的数据文件、系统表和模板数据库(template0和template1)。
+
+模板数据库表示一个常用数据库。它包含系统表、标准视图、函数和数据类型的定义。 `pgdata` 用作的参数 `initdb` 指定数据库集群位置的脚本。
+
+PostgreSQL中的所有数据库对象都由各自的OID在内部管理。表和索引也由各个OID管理。数据库对象及其各自的OID之间的关系存储在相应的系统目录表中、具体取决于对象类型。例如、数据库和堆表的OID存储在中 `pg_database` 和`pg_class。您可以通过在PostgreSQL客户端上发出查询来确定这些OID。
+
+每个数据库都有自己的表和索引文件、这些表和索引文件的大小限制为1 GB。每个表都有两个关联文件、后缀分别为 `_fsm` 和 `_vm`。它们称为可用空间映射和可见性映射。这些文件用于存储有关可用空间容量的信息、并可查看表文件中的每个页面。索引只具有单个可用空间映射、而不具有可见性映射。
+
+。 `pg_xlog/pg_wal` 目录包含预写日志。预写日志用于提高数据库可靠性和性能。每当您更新表中的某一行时、PostgreSQL都会首先将更改写入预写日志、然后将修改写入实际数据页面到磁盘。。 `pg_xlog` 目录通常包含多个文件、但initdb仅创建第一个文件。根据需要添加其他文件。每个xlog文件的长度为16 MB。

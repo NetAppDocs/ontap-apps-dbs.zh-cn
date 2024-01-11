@@ -1,0 +1,32 @@
+---
+section: postgres
+title: PostgreSQL
+entries:
+- title: 概述
+  url: "/postgres/overview.html"
+- title: ONTAP 配置
+  url: "/postgres/ontap.html"
+- title: 数据库配置
+  entries:
+  - title: 架构
+    url: "/postgres/architecture.html"
+  - title: 初始化
+    url: "/postgres/initialization.html"
+  - title: 设置
+    url: "/postgres/db-config.html"
+  - title: 表空间
+    url: "/postgres/tablespaces.html"
+- title: 存储配置
+  entries:
+  - title: 文件系统配置
+    url: "/postgres/filesystems.html"
+  - title: 分层
+    url: "/postgres/tiering.html"
+- title: 数据保护
+  entries:
+  - title: 本机数据保护
+    url: "/postgres/native-dp.html"
+  - title: Snapshot技术
+    url: "/postgres/snapshot-dp.html"
+  - title: 数据保护软件
+    url: "/postgres/snapcenter-dp.html"

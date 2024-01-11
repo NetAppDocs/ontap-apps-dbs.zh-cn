@@ -1,0 +1,203 @@
+---
+sidebar: sidebar 
+permalink: oracle/notes/oracle-wafl-alignment-verification.html 
+keywords: oracle, database, ontap, wafl, alignment 
+summary: Oracle数据库的WAFL对齐 
+---
+= Oracle数据库的WAFL对齐验证
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+正确对齐WAFL对于获得良好性能至关重要。尽管ONTAP以4 KB单位管理块、但这并不意味着ONTAP以4 KB单位执行所有操作。事实上、ONTAP支持不同大小的块操作、但底层记帐由WAFL以4 KB单位进行管理。
+
+术语"对齐"是指Oracle I/O与这些4 KB单位的对应关系。要获得最佳性能、需要将一个Oracle 8 KB块驻留在驱动器上的两个4 KB WAFL物理块上。如果块偏移2 KB、则此块位于一个4 KB块的一半、一个单独的完整4 KB块、然后是第三个4 KB块的一半。这种排列会导致性能下降。
+
+对齐不是NAS文件系统的问题。Oracle数据文件会根据Oracle块的大小与文件开头对齐。因此、8 KB、16 KB和32 KB的块大小始终对齐。所有块操作都会与文件开头偏移、以4 KB为单位。
+
+与此相反、LUN通常在开始时包含某种类型的驱动程序标头或文件系统元数据、以创建偏移。在现代操作系统中、对齐很少会成为问题、因为这些操作系统专为可能使用本机4 KB扇区的物理驱动器而设计、这也需要将I/O与4 KB边界对齐以获得最佳性能。
+
+但也有一些例外情况。数据库可能是从未针对4 KB I/O进行优化的旧版操作系统迁移的、或者分区创建期间的用户错误可能导致偏移量大小不以4 KB为单位。
+
+以下示例是Linux专用的、但操作步骤可适用于任何操作系统。
+
+
+
+== 已对齐
+
+以下示例显示了对具有单个分区的单个LUN的对齐检查。
+
+首先、创建使用驱动器上所有可用分区的分区。
+
+....
+[root@host0 iscsi]# fdisk /dev/sdb
+Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
+Building a new DOS disklabel with disk identifier 0xb97f94c1.
+Changes will remain in memory only, until you decide to write them.
+After that, of course, the previous content won't be recoverable.
+The device presents a logical sector size that is smaller than
+the physical sector size. Aligning to a physical sector (or optimal
+I/O) size boundary is recommended, or performance may be impacted.
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4): 1
+First cylinder (1-10240, default 1):
+Using default value 1
+Last cylinder, +cylinders or +size{K,M,G} (1-10240, default 10240):
+Using default value 10240
+Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@host0 iscsi]#
+....
+可以使用以下命令以数学方式检查对齐情况：
+
+....
+[root@host0 iscsi]# fdisk -u -l /dev/sdb
+Disk /dev/sdb: 10.7 GB, 10737418240 bytes
+64 heads, 32 sectors/track, 10240 cylinders, total 20971520 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 65536 bytes
+Disk identifier: 0xb97f94c1
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1              32    20971519    10485744   83  Linux
+....
+输出显示单位为512字节、分区起始单位为32。这是总共32 x 512 = 16、834字节、是4 KB WAFL块的整数倍。此分区已正确对齐。
+
+要验证是否正确对齐、请完成以下步骤：
+
+. 确定LUN的通用唯一标识符(UUID)。
++
+....
+FAS8040SAP::> lun show -v /vol/jfs_luns/lun0
+              Vserver Name: jfs
+                  LUN UUID: ed95d953-1560-4f74-9006-85b352f58fcd
+                    Mapped: mapped`                `
+....
+. 在ONTAP控制器上输入节点Shell。
++
+....
+FAS8040SAP::> node run -node FAS8040SAP-02
+Type 'exit' or 'Ctrl-D' to return to the CLI
+FAS8040SAP-02> set advanced
+set not found.  Type '?' for a list of commands
+FAS8040SAP-02> priv set advanced
+Warning: These advanced commands are potentially dangerous; use
+         them only when directed to do so by NetApp
+         personnel.
+....
+. 对第一步中确定的目标UUID启动统计收集。
++
+....
+FAS8040SAP-02*> stats start lun:ed95d953-1560-4f74-9006-85b352f58fcd
+Stats identifier name is 'Ind0xffffff08b9536188'
+FAS8040SAP-02*>
+....
+. 执行一些I/O使用非常重要 `iflag` 用于确保I/O是同步的且不缓冲的参数。
++
+
+NOTE: 使用此命令时请格外小心。反转 `if` 和 `of` 参数会销毁数据。
+
++
+....
+[root@host0 iscsi]# dd if=/dev/sdb1 of=/dev/null iflag=dsync count=1000 bs=4096
+1000+0 records in
+1000+0 records out
+4096000 bytes (4.1 MB) copied, 0.0186706 s, 219 MB/s
+....
+. 停止统计信息并查看对齐直方图。所有I/O都应位于中 `.0` 存储分段、表示I/O与4 KB块边界对齐。
++
+....
+FAS8040SAP-02*> stats stop
+StatisticsID: Ind0xffffff08b9536188
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:instance_uuid:ed95d953-1560-4f74-9006-85b352f58fcd
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.0:186%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.1:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.2:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.3:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.4:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.5:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.6:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.7:0%
+....
+
+
+
+
+== 未对齐
+
+以下示例显示了未对齐的I/O：
+
+. 创建不与4 KB边界对齐的分区。这不是现代操作系统上的默认行为。
++
+....
+[root@host0 iscsi]# fdisk -u /dev/sdb
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4): 1
+First sector (32-20971519, default 32): 33
+Last sector, +sectors or +size{K,M,G} (33-20971519, default 20971519):
+Using default value 20971519
+Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+....
+. 创建分区时使用的是33扇区偏移、而不是默认的32扇区偏移。重复中所述的操作步骤 link:./oracle-wafl-alignment-verification.html#aligned["已对齐"]。直方图显示如下：
++
+....
+FAS8040SAP-02*> stats stop
+StatisticsID: Ind0xffffff0468242e78
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:instance_uuid:ed95d953-1560-4f74-9006-85b352f58fcd
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.0:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.1:136%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.2:4%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.3:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.4:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.5:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.6:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_align_histo.7:0%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:read_partial_blocks:31%
+....
++
+未对齐情况很明显。I/O大部分落在*中 *`.1` 存储分段、与预期偏移匹配。创建分区时、该分区会比优化默认值更远地移动到设备中512字节、这意味着直方图偏移512字节。
+
++
+此外、还可以使用 `read_partial_blocks` 统计信息不为零、这意味着执行的I/O未填满整个4 KB块。
+
+
+
+
+
+== 重做日志记录
+
+此处介绍的过程适用于数据文件。Oracle重做日志和归档日志具有不同的I/O模式。例如、重做日志记录是对单个文件的循环覆盖。如果使用默认的512字节块大小、则写入统计信息如下所示：
+
+....
+FAS8040SAP-02*> stats stop
+StatisticsID: Ind0xffffff0468242e78
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:instance_uuid:ed95d953-1560-4f74-9006-85b352f58fcd
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.0:12%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.1:8%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.2:4%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.3:10%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.4:13%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.5:6%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.6:8%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_align_histo.7:10%
+lun:ed95d953-1560-4f74-9006-85b352f58fcd:write_partial_blocks:85%
+....
+I/O将分布在所有直方图分段中、但这不是性能问题。但是、使用4 KB块大小可能会有利于极高的重做日志记录速率。在这种情况下、需要确保重做日志记录LUN正确对齐。但是、这对于获得良好性能并不像数据文件对齐那样重要。

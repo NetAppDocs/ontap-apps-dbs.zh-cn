@@ -1,0 +1,96 @@
+---
+sidebar: sidebar 
+permalink: oracle/host-configuration/hp-ux.html 
+keywords: oracle, database, ontap, hp-ux 
+summary: 使用HP-UX在ONTAP上运行Oracle 
+---
+= HP-UX
+:allow-uri-read: 
+
+
+[role="lead"]
+特定于HP-UX操作系统的配置主题。
+
+
+
+== HP-UX NFS挂载选项
+
+下表列出了单个实例的HP-UX NFS挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+suid` 
+
+
+| 控制文件
+数据文件
+重做日志 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,forcedirectio, nointr,suid` 
+
+
+| `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+suid` 
+|===
+下表列出了RAC的HP-UX NFS挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+noac,suid` 
+
+
+| 控制文件
+数据文件
+重做日志 | `rw, bg,hard, [vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr,noac,forcedirectio,suid` 
+
+
+| CRS/表决 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr,noac,
+forcedirectio,suid` 
+
+
+| 专用 `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+suid` 
+
+
+| 共享 `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr,noac,suid` 
+|===
+单实例挂载选项与RAC挂载选项之间的主要区别在于添加了 `noac` 和 `forcedirectio` 挂载选项。这种添加的效果是禁用主机操作系统缓存、从而使RAC集群中的所有实例都能获得一致的数据状态视图。但使用 `init.ora` 参数 `filesystemio_options=setall` 与禁用主机缓存具有相同的效果、但仍需要使用 `noac` 和 `forcedirectio`。
+
+原因 `noac` 对于共享为必填项 `ORACLE_HOME` 部署是为了提高Oracle密码文件和spfile等文件的一致性。RAC集群中的每个实例都有一个专用 `ORACLE_HOME`，则不需要此参数。
+
+
+
+== HP-UX VxFS挂载选项
+
+对于托管Oracle二进制文件的文件系统、请使用以下挂载选项：
+
+....
+delaylog,nodatainlog
+....
+对于包含数据文件、重做日志、归档日志和控制文件的文件系统、如果HP-UX版本不支持并发I/O、请使用以下挂载选项：
+
+....
+nodatainlog,mincache=direct,convosync=direct
+....
+如果支持并发I/O (VxFS 5.0.1及更高版本或ServiceGuard Storage Management Suite)、请对包含数据文件、重做日志、归档日志和控制文件的文件系统使用以下挂载选项：
+
+....
+delaylog,cio
+....
+
+NOTE: 参数 `db_file_multiblock_read_count` 在VxFS环境中尤其重要。Oracle建议在Oracle 10g R1及更高版本中保持此参数未设置、除非另有明确指示。Oracle 8 KB块大小的默认值为128。如果此参数的值强制设置为16或更低、请删除 `convosync=direct` 挂载选项、因为它可能会损坏顺序I/O性能。此步骤会损害性能的其他方面、仅当的值为时才应执行此步骤 `db_file_multiblock_read_count` 必须更改默认值。

@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: vmware/vsphere/vtools.html 
+keywords: protocols, licensing, virtualization, NFS Plug-In for VMware VAAI, VASA Provider, Storage Replication Adapter 
+summary: ONTAP 支持用于虚拟化的所有主要存储协议，例如 iSCSI ，光纤通道（ FC ），以太网光纤通道（ FCoE ）或适用于 SAN 环境的非易失性光纤通道快速内存（ NVMe/FC ），以及 NFS （ v3 和 v4.1 ）和 SMB 或 S3 （用于子系统连接）。客户可以自由选择最适合其环境的协议，并可以根据需要在一个系统上组合协议。 
+---
+= 适用于 ONTAP 的虚拟化工具
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./../media/
+
+
+[role="lead"]
+NetApp 提供了多种独立软件工具，可与 ONTAP 和 vSphere 结合使用来管理虚拟化环境。
+
+ONTAP 许可证附带了以下工具，无需额外付费。有关这些工具在 vSphere 环境中如何协同工作的说明，请参见图 1 。
+
+
+
+== 适用于 VMware vSphere 的 ONTAP 工具
+
+适用于 VMware vSphere 的 ONTAP 工具是一组用于将 ONTAP 存储与 vSphere 结合使用的工具。无论您使用的是 SAN 还是 NAS ， vCenter 插件（以前称为 Virtual Storage Console （ VSC ））均可简化存储管理和效率功能，提高可用性并降低存储成本和运营开销。它使用最佳实践配置数据存储库，并为 NFS 和块存储环境优化 ESXi 主机设置。为了获得所有这些优势， NetApp 建议在将 vSphere 与运行 ONTAP 软件的系统结合使用时，最佳做法是使用这些 ONTAP 工具。它包括服务器设备、vCenter的用户界面扩展、VASA Provider和Storage Replication Adapter。ONTAP 工具中的几乎所有内容都可以通过简单的REST API实现自动化、而大多数现代自动化工具都可以使用这些API。
+
+* * vCenter UI扩展。* ONTAP 工具UI扩展通过直接在vCenter UI中加入易于使用的上下文相关菜单来管理主机和存储、信息Portlet以及本机警报功能、简化了操作团队和vCenter管理员的工作、从而简化了工作流。
+* *适用于ONTAP 的VASA Provider。*适用于ONTAP 的VASA Provider支持VMware vStorage APIs for Storage Awareness (VASA)框架。它作为适用于 VMware vSphere 的 ONTAP 工具的一部分提供，作为一个虚拟设备，易于部署。VASA Provider 可将 vCenter Server 与 ONTAP 连接起来，以帮助配置和监控 VM 存储。它支持 VMware 虚拟卷（ VVOL ）支持，管理存储功能配置文件和单个 VM VVOL 性能，并提供警报以监控容量和配置文件合规性。
+* *存储复制适配器。* SRA与VMware Site Recovery Manager (SRM)结合使用、用于管理生产站点和灾难恢复站点之间的数据复制、并无中断地测试灾难恢复副本。它有助于自动执行发现，恢复和重新保护任务。它包括适用于 Windows SRM 服务器和 SRM 设备的 SRA 服务器设备和 SRA 适配器。
+
+
+下图显示了适用于 vSphere 的 ONTAP 工具。
+
+image:vsphere_ontap_image1.png["错误：缺少图形映像"]
+
+
+
+== 适用于 VMware VAAI 的 NFS 插件
+
+适用于VMware VAAI的NetApp NFS插件是一个适用于ESXi主机的插件、可用于在ONTAP 上对NFS数据存储库使用VAAI功能。它支持克隆操作的副本卸载、厚虚拟磁盘文件的空间预留以及快照卸载。将副本操作卸载到存储不一定会更快完成、但它会降低网络带宽要求、并减轻CPU周期、缓冲区和队列等主机资源的负载。您可以使用适用于VMware vSphere的ONTAP 工具在ESXi主机或vSphere Lifecycle Manager (如果支持)上安装此插件。

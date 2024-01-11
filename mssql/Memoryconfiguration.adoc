@@ -1,0 +1,121 @@
+---
+sidebar: sidebar 
+permalink: mssql/Memoryconfiguration.html 
+keywords: MS-SQL,mssql,SQL Server 
+summary: 基于ONTAP的Microsoft SQL Server 
+---
+= Microsoft SQL Server内存配置
+:allow-uri-read: 
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+
+
+
+
+== 最大服务器内存
+
+最大服务器内存选项用于设置SQL Server实例可以使用的最大内存量。
+
+通常、如果多个应用程序运行在运行SQL Server的同一服务器上、并且您希望保证这些应用程序具有足够的内存来正常运行、则使用此方法。
+
+某些应用程序仅在启动时使用可用的内存、即使需要也不会请求更多内存。这就是最大服务器内存设置的作用所在。
+
+在包含多个SQL Server实例的SQL Server集群上、每个实例可能会争用资源。为每个SQL Server实例设置内存限制有助于保证每个实例的最佳性能。
+
+
+TIP: *RAM NetApp建议*为操作系统至少保留4GB到6GB的内存，以避免出现性能问题。
+
+image:./media/max-server-memory.png["错误：缺少图形映像"]
+
+
+
+=== 使用SQL Server Management Studio调整最小和最大服务器内存。
+
+使用SQL Server Management Studio调整最小或最大服务器内存需要重新启动SQL Server服务。您可以使用Transact SQL (T-SQL)通过以下代码调整服务器内存：
+
+....
+EXECUTE sp_configure 'show advanced options', 1
+
+GO
+
+EXECUTE sp_configure 'min server memory (MB)', 2048
+
+GO
+
+EXEC sp_configure 'max server memory (MB)', 120832
+
+GO
+
+RECONFIGURE WITH OVERRIDE
+....
+
+
+== 非一致内存访问
+
+非一致内存访问(Nonun均匀 内存访问、NMA)是一种内存访问优化方法、可帮助提高处理器速度、而不增加处理器总线上的负载。
+
+如果在安装了SQL Server的服务器上配置了NUMA、则无需进行其他配置、因为SQL Server可以识别NUMA、并且在NUMA硬件上性能良好。
+
+
+
+== 索引创建内存
+
+index create memory选项是另一个高级选项、通常不应更改。
+
+它控制最初为创建索引而分配的最大RAM量。此选项的默认值为0、这意味着它由SQL Server自动管理。但是，如果在创建索引时遇到困难，请考虑增加此选项的值。
+
+
+
+== 每个查询的最小内存
+
+运行查询时、SQL Server会尝试分配最佳内存量、以使其高效运行。
+
+默认情况下、每个查询的最小内存设置会为要运行的每个查询分配>或=到1024KB的空间。最佳做法是、将此设置保留为默认值0、以允许SQL Server动态管理为索引创建操作分配的内存量。但是、如果SQL Server的RAM超过高效运行所需的RAM、则提高此设置可以提高某些查询的性能。因此、只要SQL Server、任何其他应用程序或操作系统未使用服务器上的可用内存、则提高此设置就可以提高SQL Server的整体性能。如果没有可用内存，则增加此设置可能会影响整体性能。
+
+image:./media/min-memory-per-query.png["错误：缺少图形映像"]
+
+
+
+== 缓冲池扩展
+
+通过缓冲池扩展、可以将NVRAM扩展与数据库引擎缓冲池无缝集成、从而显著提高I/O吞吐量。
+
+并非每个SQL Server版本都提供缓冲池扩展。它仅适用于64位SQL Server Standard、Business Intelligence和Enterprise版本。
+
+缓冲池扩展功能可使用非易失性存储(通常为SSD)扩展缓冲池缓存。扩展后、缓冲池可以容纳更大的数据库工作集、从而强制在RAM和SSD之间分页I/O、并有效地将小型随机I/O从机械磁盘卸载到SSD。由于SSD的延迟较低且随机I/O性能较高、因此缓冲池扩展功能可显著提高I/O吞吐量。
+
+缓冲池扩展功能具有以下优势：
+
+* 提高了随机I/O吞吐量
+* 降低I/O延迟
+* 提高了事务处理吞吐量
+* 利用更大的混合缓冲池提高读取性能
+* 一种可利用现有和未来低成本内存的缓存架构
+
+
+[TIP]
+====
+* NetApp建议*将缓冲池扩展配置为：
+
+* 确保向SQL Server主机提供SSD支持的LUN (例如NetApp AFF)、以便将其用作缓冲池扩展目标磁盘。
+* 扩展文件的大小必须等于或大于缓冲池。
+
+
+====
+以下示例显示了一个T-SQL命令、用于设置32 GB的缓冲池扩展名。
+
+....
+USE master
+
+GO
+
+ALTER SERVER CONFIGURATION
+
+SET BUFFER POOL EXTENSION ON
+
+  (FILENAME = ‘P:\BUFFER POOL EXTENSION\SQLServerCache.BUFFER POOL EXTENSION', SIZE = 32 GB);
+
+GO
+....
