@@ -618,7 +618,6 @@
   <block id="2c8c2171fc87c96e58fb40d8714f85cf" category="doc">PostgreSQL架构</block>
   <block id="ee62b4420d426c21a46d892ac084872a" category="paragraph">PostgreSQL是基于客户端和服务器架构的RDBMS。PostgreSQL实例称为数据库集群、它是一组数据库、而不是一组服务器。</block>
   <block id="89c30c326e106773af32af40255b92a8" category="inline-image-macro">错误：未找到图形</block>
-  <block id="b481f7d5d88ac812bb1a1d3d939b593b" category="paragraph"><block ref="b481f7d5d88ac812bb1a1d3d939b593b" category="inline-image-macro-rx" type="image"></block></block>
   <block id="54c2dd41fd1ad3efa25e80bee0bae549" category="paragraph">PostgreSQL数据库中有三个主要元素：PostMAIN、前端(客户端)和后端客户端向邮件服务器发送请求、并提供IP协议和要连接到的数据库等信息。邮件服务器对连接进行身份验证，并将其传递到后端进程以进行进一步的通信。后端进程执行查询并将结果直接发送到前端(客户端)。</block>
   <block id="9f96e07bbaf7c0237047d6d0f95301a8" category="paragraph">PostgreSQL实例基于多进程模型、而不是多线程模型。它会为不同的作业生成多个进程、每个进程都有自己的功能。主要进程包括客户端进程、WAL写入程序进程、后台写入程序进程和检查指针进程：</block>
   <block id="6aebf901bd4be26a765c56e4133b3798" category="list-text">当客户端(前台)进程向PostgreSQL实例发送读取或写入请求时、它不会直接向磁盘读取或写入数据。它首先将数据缓冲在共享缓冲区和预写日志记录(Write-Ahead Logging、WAL)缓冲区中。</block>
@@ -4050,4 +4049,5 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="4e0d7e0587bf99c9b7a64a84fd42f6bd" category="paragraph">请参见NetApp和VMware针对您选择的协议提供的其他最佳实践指南。一般而言，除了上述情况外，没有任何其他变化。</block>
   <block id="97f87e9ab1d660463c63beb8745fd9e5" category="paragraph">*使用基于NFS v3*的Vvol的网络配置示例</block>
   <block id="c80b3cc8b5013bd4039769fb0f783e60" category="paragraph"><block ref="c80b3cc8b5013bd4039769fb0f783e60" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="d81c587aad705c1101db78ffea8e5bc3" category="paragraph"><block ref="d81c587aad705c1101db78ffea8e5bc3" category="inline-image-macro-rx" type="image"></block></block>
 </blocks>

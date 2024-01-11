@@ -11,7 +11,7 @@ summary: 基于ONTAP的PostgreSQL数据库
 [role="lead"]
 PostgreSQL是基于客户端和服务器架构的RDBMS。PostgreSQL实例称为数据库集群、它是一组数据库、而不是一组服务器。
 
-image:./media/architecture.png["错误：未找到图形"]
+image:architecture.png["错误：未找到图形"]
 
 PostgreSQL数据库中有三个主要元素：PostMAIN、前端(客户端)和后端客户端向邮件服务器发送请求、并提供IP协议和要连接到的数据库等信息。邮件服务器对连接进行身份验证，并将其传递到后端进程以进行进一步的通信。后端进程执行查询并将结果直接发送到前端(客户端)。
 
