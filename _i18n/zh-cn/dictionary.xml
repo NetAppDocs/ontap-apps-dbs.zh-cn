@@ -2652,7 +2652,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="4adf016da96258b45a1cf762298729b5" category="inline-image-macro">ONTAP 工具、vols信息板、400</block>
   <block id="73c1e14ddf3f32984f869ac3f122b2ca" category="paragraph"><block ref="73c1e14ddf3f32984f869ac3f122b2ca" category="inline-image-macro-rx" type="image"></block></block>
   <block id="cd47dd01745339787e4c7300389401f2" category="section-title">最佳实践</block>
-  <block id="e359caf0e19df1a0e93e8e30cbef2100" category="paragraph">本节将收集将ONTAP 与虚拟卷结合使用的已知最佳实践以及其他信息。</block>
   <block id="9ae938622297e9d4b14dd0006a8f0bf4" category="paragraph">*限制*</block>
   <block id="b4f52a4fd0b07c9d904b95fc98a1cd45" category="inline-link">配置最大值</block>
   <block id="bc8259e306c73b2969e7ac6297000e64" category="paragraph">一般来说、ONTAP 支持VMware定义的vvol限制(请参见已发布的<block ref="a6efdd9b1a19df6105024b4869e0582b" category="inline-link-rx"></block>）。下表汇总了ONTAP 在大小和数量方面的特定限制。请始终检查<block ref="bb9c67b5a4c15a85b5e6aa6c9afd0285" category="inline-link-rx"></block> 更新了有关LUN和文件数量和大小的限制。</block>
@@ -2676,9 +2675,7 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="26890bd9dcb27c05f1ab5bcc859501b8" category="cell">12、000到ONTAP 9.3；40、000到ONTAP 9.4及更高版本</block>
   <block id="0e38f856cb713ce9eea79fa1c6b7dc32" category="list-text">大小限制取决于运行ONTAP 9.12.1P2及更高版本的ASA 系统或AFF 和FAS 系统。</block>
   <block id="d27c43bb3cdcbfa3852bb91192ffb849" category="list-text">SAN VMvol (NVMe命名库或LUN)的数量因平台而异。请始终检查<block ref="bb9c67b5a4c15a85b5e6aa6c9afd0285" category="inline-link-rx"></block> 更新了有关LUN和文件数量和大小的限制。</block>
-  <block id="304d5a3dcf64bf05141ead00f7ec768a" category="paragraph">*最佳实践*</block>
   <block id="72e0ee397942f7233122887584f94b8b" category="paragraph">在vSphere中使用ONTAP vvol非常简单、并且遵循已发布的vSphere方法(请参见适用于您的ESXi版本的VMware文档中的在vSphere存储下使用虚拟卷)。以下是与ONTAP 结合使用时需要考虑的一些其他实践。</block>
-  <block id="d7c0472e9975808c3f2c3ea3a1cdd812" category="paragraph">将ONTAP 与VMware结合使用的最佳实践。</block>
   <block id="83583580d98b69cb8317f9b285f3c8df" category="cell">*使用适用于VMware vSphere的UI扩展或REST API的ONTAP 工具来配置vvol数据存储库*和协议端点*</block>
   <block id="9507d4f97aceb8d05fc962dd53f082af" category="cell">虽然可以使用常规vSphere界面创建vvol数据存储库、但使用ONTAP工具将根据需要自动创建协议端点、并根据您定义的存储功能配置文件根据ONTAP最佳实践创建FlexVol卷。只需右键单击主机/集群/数据中心、然后选择_ ONTAP tools_和_配置数据存储库_。您只需在向导中选择所需的卷选项即可。</block>
   <block id="e8d5f9dc0bff953a9e59755813c7e8bf" category="cell">*切勿将ONTAP 工具设备或vCenter Server设备(VCSA)存储在其所管理的VVOLs数据存储库中。*</block>
@@ -2689,36 +2686,13 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="cd7bf0e1e61341c1aa3fa23401af8a27" category="inline-image-macro">具有四个节点的单个启动程序分区、400</block>
   <block id="51591d05b7e084ba8e5ae7f63172177e" category="inline-link">_TR-4080：《现代SAN ONTAP 9_最佳实践》</block>
   <block id="c1723e6a0e1d3dd28232b33e0cb6e61d" category="inline-link">_TR-4684使用NVMe-oF实施和配置现代SAN</block>
-  <block id="9d25011ed03b51fddde47a3c3a337cc8" category="cell">ONTAP 工具的VASA提供程序负责根据已发现的受管ESXi主机启动程序管理ONTAP 中的FCP和iSCSI igrou以及NVMe子系统。但是、它不会与光纤通道交换机集成来管理分区。必须先根据最佳实践进行分区、然后才能进行任何配置。以下是单个启动程序分区到四个ONTAP系统的示例：
-
-单个启动程序分区：
-
-<block ref="17ccf64e30cb518fd7ca87ce752ad738" category="inline-image-macro-rx" type="image"></block>
-
-有关更多最佳实践、请参见以下文档：
-
-<block ref="fc9e4d789d968936f8ff5ae5a99847e0" category="inline-link-rx"></block>
-
-<block ref="d748a2834a7220eef4ec4775a51632f9" category="inline-link-rx"></block></block>
   <block id="9a36c8f0464a7ffce114044f1859c7ff" category="cell">*根据需要规划您的后备FlexVol。*</block>
   <block id="03d2e894fa9a05efefa4e8d6b2008a19" category="cell">最好向您的ONTAP 数据存储库添加多个后备卷、以便在集群中分布工作负载、支持不同的策略选项或增加允许的LUN或文件数量。但是、如果需要最大的存储效率、请将所有备份卷放在一个聚合上。或者、如果需要最大的克隆性能、则可以考虑使用一个FlexVol 卷、并将模板或内容库保留在同一个卷中。VASA Provider会将许多VVOLs存储操作(包括迁移、克隆和快照)卸载到ONTAP。如果在一个FlexVol 卷中执行此操作、则会使用节省空间的文件克隆、并且这些克隆几乎可以即时使用。在FlexVol 卷之间执行此操作时、这些副本可以快速可用并使用实时重复数据删除和数据压缩、但只有在使用后台重复数据删除和数据压缩的卷上运行后台作业后、才能最大程度地恢复存储效率。根据源和目标、某些效率可能会降级。</block>
   <block id="80b15469535d95a1690f308427545c7e" category="cell">*保持存储功能配置文件(SCP)简单。*</block>
   <block id="33e2905cb722c14575a9bff81ba78b39" category="cell">通过将功能设置为任何、避免指定不需要的功能。这样可以最大程度地减少选择或创建FlexVol 卷时出现的问题。例如、在VASA Provider 7.1及更早版本中、如果将数据压缩保留在默认SCP设置为No、则会尝试禁用数据压缩、即使在AFF 系统上也是如此。</block>
   <block id="5a6d5fdddf6fbd82f1952b532b03c9ef" category="cell">*使用默认的SCP作为示例模板来创建您自己的模板。*</block>
-  <block id="9ab96500ef87d6c0457f87322f3b0d05" category="cell">随附的SRP适用于大多数通用用途、但您的要求可能有所不同。
-
-*请考虑使用最大IOPS来控制未知或测试VM。*</block>
-  <block id="c0905f7932cce129e5491ca16a6f00a8" category="cell">最大IOPS首次在VASA Provider 7.1中推出、可用于将未知工作负载的IOPS限制为特定VVOR、以避免对其他更关键的工作负载产生影响。有关性能管理的详细信息、请参见表4。
-
-*确保您具有足够的数据Lifs。*</block>
-  <block id="f5a3607cd11e645cf22997a47fc7a5d5" category="cell">每个HA对的每个节点至少创建两个生命周期。根据您的工作负载、可能需要更多资源。</block>
   <block id="ee3cbda1c3c4a14ae024478c7ada6d11" category="cell">*遵循所有协议最佳实践。*</block>
   <block id="6a2c1ac1da51eca0c1a65afffab8dfab" category="inline-image-macro">使用基于NFS v3、500的vvol进行网络配置</block>
-  <block id="47d7186fd54c7409af85f706bd49bb21" category="cell">请参见NetApp和VMware针对您选择的协议提供的其他最佳实践指南。一般而言，除了上述情况外，没有任何其他变化。
-[[Figure _6]]
-使用基于NFS v3的Vvol的网络配置示例：
-
-<block ref="c80b3cc8b5013bd4039769fb0f783e60" category="inline-image-macro-rx" type="image"></block></block>
   <block id="6cacb3f1edd09835a2ad07d72f488e2a" category="paragraph">二十年来、NetApp ONTAP软件一直是适用于VMware vSphere环境的领先存储解决方案、并不断增加创新功能、以简化管理并降低成本。</block>
   <block id="918febfed3d070cf1250909e5cdcf31d" category="paragraph">本文档介绍了适用于VMware vSphere虚拟卷(vvol)的ONTAP 功能、包括最新的产品信息和用例以及最佳实践和其他可简化部署和减少错误的信息。</block>
   <block id="c7448b194ba68bddce48f1d11d5d7db7" category="admonition">本文档将取代先前发布的技术报告_TR-4400：《使用NetApp ONTAP的VMware vSphere虚拟卷(Vvol)》_</block>
@@ -4062,4 +4036,18 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="62a004b95946bb97541afa471dcca73a" category="sidebar">MySQL</block>
   <block id="7f1a6761f7160e33a32105202e47303b" category="sidebar">容器化</block>
   <block id="bc65796c5a1bad360243a1bbe58272c2" category="sidebar">常规存储配置</block>
+  <block id="bd57f4f74ca087a92a48b23d45753729" category="paragraph">ONTAP 工具的VASA提供程序负责根据已发现的受管ESXi主机启动程序管理ONTAP 中的FCP和iSCSI igrou以及NVMe子系统。但是、它不会与光纤通道交换机集成来管理分区。必须先根据最佳实践进行分区、然后才能进行任何配置。以下是单个启动程序分区到四个ONTAP系统的示例：</block>
+  <block id="6b14e3f4a37881185acf7a766f8f6272" category="paragraph">单个启动程序分区：</block>
+  <block id="17ccf64e30cb518fd7ca87ce752ad738" category="paragraph"><block ref="17ccf64e30cb518fd7ca87ce752ad738" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="58b5cd2a94730c2e044c14891f1e0e87" category="paragraph">有关更多最佳实践、请参见以下文档：</block>
+  <block id="fc9e4d789d968936f8ff5ae5a99847e0" category="paragraph"><block ref="fc9e4d789d968936f8ff5ae5a99847e0" category="inline-link-rx"></block></block>
+  <block id="d748a2834a7220eef4ec4775a51632f9" category="paragraph"><block ref="d748a2834a7220eef4ec4775a51632f9" category="inline-link-rx"></block></block>
+  <block id="4047245d73abc6e3ae8bf58ec063e52e" category="paragraph">随附的SRP适用于大多数通用用途、但您的要求可能有所不同。</block>
+  <block id="80dad10df0d1a031764e7c648c46aa23" category="paragraph">*请考虑使用最大IOPS来控制未知或测试VM。*</block>
+  <block id="93e4f73afe8b787b33161ec273ca087f" category="paragraph">最大IOPS首次在VASA Provider 7.1中推出、可用于将未知工作负载的IOPS限制为特定VVOR、以避免对其他更关键的工作负载产生影响。有关性能管理的详细信息、请参见表4。</block>
+  <block id="bdbd10905a1446f944699405bca52654" category="paragraph">*确保您具有足够的数据Lifs。*
+每个HA对的每个节点至少创建两个生命周期。根据您的工作负载、可能需要更多资源。</block>
+  <block id="4e0d7e0587bf99c9b7a64a84fd42f6bd" category="paragraph">请参见NetApp和VMware针对您选择的协议提供的其他最佳实践指南。一般而言，除了上述情况外，没有任何其他变化。</block>
+  <block id="97f87e9ab1d660463c63beb8745fd9e5" category="paragraph">*使用基于NFS v3*的Vvol的网络配置示例</block>
+  <block id="c80b3cc8b5013bd4039769fb0f783e60" category="paragraph"><block ref="c80b3cc8b5013bd4039769fb0f783e60" category="inline-image-macro-rx" type="image"></block></block>
 </blocks>
