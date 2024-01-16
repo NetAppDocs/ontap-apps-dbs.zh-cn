@@ -10,7 +10,7 @@ summary: 数据库和ONTAP存储容量和可用空间
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

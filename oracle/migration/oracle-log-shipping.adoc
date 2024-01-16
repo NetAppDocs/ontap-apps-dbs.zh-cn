@@ -10,7 +10,7 @@ summary: 通过日志传送实现Oracle迁移
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

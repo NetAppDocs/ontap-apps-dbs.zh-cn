@@ -10,12 +10,13 @@ summary: NetApp ONTAP 自 2002 年引入现代数据中心以来，一直是 VMw
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revdate: == ONTAP for vSphere
 
-
-
-
-== 适用于 vSphere 的 ONTAP
 
 
 NOTE: 本文档将取代先前发布的技术报告_TR-4900:《使用ONTAP的VMware Site Recovery Manager_》

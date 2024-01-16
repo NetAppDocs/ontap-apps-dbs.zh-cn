@@ -6,6 +6,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = Microsoft SQL Server数据库文件和文件组
 :allow-uri-read: 
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -19,7 +20,7 @@ SQL Server数据库是一组对象、可用于存储和操作数据。
 
 所有数据库文件都分组到文件组中。文件组是逻辑单元、可简化数据库管理。它们允许在逻辑对象放置和物理数据库文件之间进行隔离。创建数据库对象表时、您可以指定应将其放置在哪个文件组中、而不必担心基础数据文件配置。
 
-image:./media/filegroups.png["错误：缺少图形映像"]
+image:mssql-filegroups.png["错误：缺少图形映像"]
 
 通过将多个数据文件放在文件组中、您可以将负载分布在不同的存储设备上、这有助于提高系统的I/O性能。相反、事务日志不会从多个文件中受益、因为SQL Server会按顺序写入事务日志。
 
@@ -41,7 +42,7 @@ SQL Server始终将事务日志零、并且此行为无法更改。但是、您�
 
 您可以通过向SQL Server启动帐户添加SA_Manage_volume_name权限(也称为"执行卷维护任务")来启用即时文件初始化。您可以在本地安全策略管理应用程序(secpol.msc)下执行此操作、如下图所示。打开"Perform volume Maintenance Task (执行卷维护任务)"权限的属性、并将SQL Server启动帐户添加到其中的用户列表中。
 
-image:./media/security-policy.png["错误：缺少图形映像"]
+image:mssql-security-policy.png["错误：缺少图形映像"]
 
 要检查权限是否已启用、您可以使用以下示例中的代码。此代码设置了两个跟踪标志、用于强制SQL Server将追加信息写入错误日志、创建小型数据库以及读取日志内容。
 
@@ -68,10 +69,10 @@ GO
 ....
 如果未启用即时文件初始化、则SQL Server错误日志会显示、除了将ldf日志文件置零之外、SQL Server还会将MDF数据文件置零、如以下示例所示。启用即时文件初始化后、它仅显示日志文件置零。
 
-image:./media/zeroing.png["错误：缺少图形映像"]
+image:mssql-zeroing.png["错误：缺少图形映像"]
 
 执行卷维护任务在SQL Server 2016中得到了简化、稍后在安装过程中作为一个选项提供。此图显示了为SQL Server数据库引擎服务授予执行卷维护任务权限的选项。
 
-image:./media/maintenance.png["错误：缺少图形映像"]
+image:mssql-maintenance.png["错误：缺少图形映像"]
 
 控制数据库文件大小的另一个重要数据库选项是自动缩放。启用此选项后、SQL Server会定期缩减数据库文件、减小其大小并向操作系统释放空间。此操作会占用大量资源、并且很少有用、因为新数据进入系统一段时间后、数据库文件会再次增长。绝不能在数据库上启用自动缩放。

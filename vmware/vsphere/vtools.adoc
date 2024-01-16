@@ -10,7 +10,7 @@ summary: ONTAP 支持用于虚拟化的所有主要存储协议，例如 iSCSI �
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

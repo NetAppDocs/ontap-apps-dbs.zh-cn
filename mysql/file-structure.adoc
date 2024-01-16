@@ -11,7 +11,7 @@ summary: MySQL文件结构
 [role="lead"]
 InnoDB充当存储和MySQL服务器之间的中间层、它将数据存储到驱动器。
 
-image:./media/file-structure1.png["错误：未找到图形图像"]
+image:mysql-file-structure1.png["错误：未找到图形图像"]
 
 MySQL I/O分为两类：
 
@@ -19,7 +19,7 @@ MySQL I/O分为两类：
 * 顺序文件I/O
 
 
-image:./media/file-structure2.png["错误：未找到图形图像"]
+image:mysql-file-structure2.png["错误：未找到图形图像"]
 
 数据文件会随机读取和覆盖、从而导致IOPS较高。因此、建议使用SSD存储。
 

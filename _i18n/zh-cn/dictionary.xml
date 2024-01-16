@@ -525,12 +525,8 @@
   <block id="804d5b1f06570b4d242be0c2f0c3392c" category="paragraph">条带化配置的主要目标是确保单文件I/O可作为一个单元执行、多块I/O (大小应为1 MB)可在条带化卷中的所有LUN之间均匀并行。这意味着条带大小不能小于数据库块大小、条带大小乘以LUN数量应为1 MB。</block>
   <block id="0598f393baefd05d48b48076cc7df606" category="paragraph">下图显示了三个可能的条带大小和宽度调整选项。选择LUN数量是为了满足上述性能要求、但在所有情况下、单个条带内的总数据均为1 MB。</block>
   <block id="9ca503fae9ccd4d6d8e67806b23adfa0" category="paragraph"><block ref="9ca503fae9ccd4d6d8e67806b23adfa0" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="d36647d06b353fcd6fedc60898e43187" category="summary">ONTAP配置</block>
   <block id="0353522b39b87d54d40d3f09ec668851" category="doc">ONTAP 配置</block>
-  <block id="ccaea53c3be76af327e8e6f9c496a3ac" category="paragraph">ONTAP提供了许多专为应用程序和数据库工作负载设计的功能。</block>
   <block id="8e52de0d4b03d5fe87dc88da09616c7f" category="inline-link-macro">此处。</block>
-  <block id="0940bb4f1fb97b40821b7a3be456f149" category="paragraph">您可以简要了解ONTAP的重要功能、包括数据保护功能、存储效率建议和灾难恢复选项等所有功能 <block ref="f7503abce54bbe0e3218519d659c8356" category="inline-link-macro-rx"></block></block>
-  <block id="99e4610a4e3d81b01970dbfd92973f0a" category="paragraph">此信息对于在ONTAP存储系统上正确构建和管理应用程序环境至关重要。</block>
   <block id="9fe343788d08130f46e418bb81928479" category="summary">FabricPool 概述</block>
   <block id="337c62c6b6eb7319bae58701105e889c" category="doc">分层</block>
   <block id="cec4b296aaf93974a98a5d3b3f27ff9e" category="paragraph">要了解FabricPool层如何影响应用程序和数据库、需要了解低级别FabricPool架构。</block>
@@ -612,9 +608,7 @@
   <block id="789a6c7dd865d16eb1df122bcc5c9a3a" category="admonition">*如果需要NFSv4功能、NetApp建议*使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高某些边缘情况下的故障恢复能力。</block>
   <block id="36772d6dfc6e102eff552ffad6b98690" category="paragraph">挂载NFS文件系统时、请使用以下挂载选项：</block>
   <block id="8e86e0aee135afb67c6a1d3d6e0f3306" category="inline-link-macro">NFS传输大小</block>
-  <block id="8952190775a545f4f8fdf241a9359455" category="paragraph">要提高NFS性能、请参见 <block ref="4e8f03f35a599a194f36d03d2b8495dd" category="inline-link-macro-rx"></block>。</block>
   <block id="d84b41126744795c4ee82f7b256e7234" category="inline-link-macro">FC SAN</block>
-  <block id="b69b3938a2935a6c5ad8e3f696efd637" category="paragraph">有关SAN配置的指导以及有关LVM条带化和LUN计数的重要详细信息、请参见 <block ref="588ec6ef762c46d35337665cf518bf6a" category="inline-link-macro-rx"></block>。</block>
   <block id="2c8c2171fc87c96e58fb40d8714f85cf" category="doc">PostgreSQL架构</block>
   <block id="ee62b4420d426c21a46d892ac084872a" category="paragraph">PostgreSQL是基于客户端和服务器架构的RDBMS。PostgreSQL实例称为数据库集群、它是一组数据库、而不是一组服务器。</block>
   <block id="89c30c326e106773af32af40255b92a8" category="inline-image-macro">错误：未找到图形</block>
@@ -642,7 +636,6 @@
   <block id="beb3ca55ed0a53a38a2b97540b05d6e4" category="summary">基于ONTAP的Microsoft SQL Server</block>
   <block id="7636ae91f443b605f05bed59d7d57a02" category="doc">Microsoft SQL Server灾难恢复</block>
   <block id="810304d54e0a61663cfc457b0894037b" category="paragraph">NetApp提供了各种方法来提高硬件、软件或站点出现故障时的数据可用性。</block>
-  <block id="44665451998410d7d5e3e61e1785d112" category="paragraph">NetApp提供MetroCluster、SnapMirror业务连续性(SM-BC)、SnapMirror等技术。您可以找到这些功能的说明 <block ref="08de3f734af11bdee4de0329d4acad67" category="inline-link-macro-rx"></block>。</block>
   <block id="9c1e9d82d3220658621f72dca978adb0" category="section-title">NetApp SnapMirror</block>
   <block id="46983273062fdc8ce8561a9ce89cdc5b" category="paragraph">NetApp SnapMirror技术可提供快速灵活的企业级解决方案、用于通过LAN和广域网镜像或复制数据。在初始基本传输之后、SnapMirror技术仅会将修改后的4 KB数据块传输到目标、从而显著降低网络带宽要求。SnapMirror可根据所配置的复制更新间隔提供异步卷级复制。
 下面是有关适用于SQL Server的SnapMirror的建议：</block>
@@ -657,7 +650,6 @@
   <block id="3f0ff45bcce968caef3a216a79681533" category="paragraph">随着勒索软件或内部威胁案例的增加、业务数据和备份需要得到保护、并且应该能够从恶意攻击中快速恢复、并且保持一致。攻击者可能仍会想方设法劫持数据。
 ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="8b64c006213e96766bdb598b57396083" category="paragraph">ONTAP FlexVol允许通过在作为源的卷和作为目标的SnapLock卷之间创建SnapMirror关系、将灵活卷备份到SnapLock企业版或SnapLock合规性卷。使用SnapLock技术、备份到二级存储的Snapshot副本在其保留日期之前不会被修改或删除 在与关系关联的SnapMirror策略上、在该关系中、为目标SnapLock卷上保留的特定SnapMirror标签定义了Snapshot副本数。要还原包含LUN数据的快照、可以通过SnapMirror还原操作在非SnapLock卷上完成。在ONTAP 9.131中、可以通过将SnapLock类型指定为非SnapLock来创建FlexClone副本。有关 SnapLock 的详细信息，请参见 <block ref="ef172f6fa5e7e0d1ce81bd97ee5f82e3" category="inline-link-macro-rx"></block>。</block>
-  <block id="ccad2a7107c9ef5d1565c269187f32ef" category="paragraph"><block ref="ccad2a7107c9ef5d1565c269187f32ef" category="inline-image-macro-rx" type="image"></block></block>
   <block id="0b6dbdd1b25ffa8aa9efcccb98bb3fbe" category="paragraph">防篡改Snapshot副本或Snapshot副本锁定：Snapshot副本是保护和还原数据库的快速方法。攻击者可能会删除Snapshot副本、而这可能是在数据损坏时还原数据库的最后一个选项。启用防篡改Snapshot副本会锁定主或二级ONTAP系统上的Snapshot副本、以防止路由管理员或不可信管理员在指定时间段内删除快照。ONTAP 9.12.1提供了防篡改Snapshot副本功能、该功能需要SnapLock许可证并初始化Compliance时钟。</block>
   <block id="310ba850db6109a11c606bdc5224be97" category="paragraph">ONTAP具有多管理员验证(MAV)功能、这意味着任何一个管理员都不具有删除Snapshot副本或修改卷的完整权限。这可作为额外的安全性、以避免卷或Snapshot副本再次被不可信的管理员篡改。</block>
   <block id="77641f4a3e4406855e878235cbd89b87" category="doc">CPU配置</block>
@@ -667,7 +659,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="673c216e20d1cf8827f347c01dace664" category="paragraph">此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息、请参见计算容量限制(按SQL Server版本)。</block>
   <block id="932a9271c08db114962ce3791480f371" category="paragraph">在许可SQL Server时、主要有两种思路。第一种称为服务器+客户端访问许可证(CAL)模式；第二种是按处理器核心模式。尽管使用server + CAL策略可以访问SQL Server中提供的所有产品功能、但每个插槽的硬件限制为20个CPU核心。即使每个插槽的CPU核心数超过20个的服务器具有SQL Server Enterprise Edition + CAL、应用程序也无法在该实例上一次使用所有这些核心。图显示了启动后指示核心限制强制实施的SQL Server日志消息。</block>
   <block id="d06fce44fdcf20791141e7585205a477" category="section-title">日志条目表示SQL Server启动后使用的核心数。</block>
-  <block id="f172c98eb1173f29e1d98efffb0e63f9" category="paragraph"><block ref="f172c98eb1173f29e1d98efffb0e63f9" category="inline-image-macro-rx" type="image"></block></block>
   <block id="cf0e2551e639758cc3c4d82df655eccd" category="inline-link-macro">SQL Server 2022：您的现代数据平台</block>
   <block id="809c9e1f6ce0bc82bf42fae361c6f43e" category="paragraph">因此、要使用所有CPU、应使用每个处理器的核心许可证。有关SQL Server许可的详细信息、请参见 <block ref="457abfaf1083b1cbfc49f2783069c6cd" category="inline-link-macro-rx"></block>。</block>
   <block id="cb8d56a3511d402b7355db8502a54c5a" category="section-title">CPU关联性</block>
@@ -687,7 +678,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="decd79137325e1efbc7b994f946ea24f" category="paragraph">默认值为0、这允许SQL Server在启动时自动配置工作线程数。这适用于大多数系统。最大工作线程数是一个高级选项、没有经验丰富的数据库管理员(Database Administrator、DBa)的帮助、不得更改。</block>
   <block id="030a270970f70c1bd91d3689b6f95f3f" category="inline-link-macro">配置最大工作线程数服务器配置选项</block>
   <block id="2a0c648df721b9bc2643d59c4a3a310a" category="paragraph">应在何时配置SQL Server以使用更多工作线程？如果每个计划程序的平均工作队列长度超过1、则向系统添加更多线程可能会更有用、但前提是负载不受CPU制约或遇到任何其他繁重等待。如果出现上述任一情况、添加更多线程将毫无帮助、因为它们最终会等待其他系统瓶颈。有关最大工作线程数的详细信息、请参见 <block ref="77c391df5f9f06cdf367c2a7314ce351" category="inline-link-macro-rx"></block>。</block>
-  <block id="67028b81f2fa3e41f3a791718fec0fc7" category="paragraph"><block ref="67028b81f2fa3e41f3a791718fec0fc7" category="inline-image-macro-rx" type="image"></block></block>
   <block id="29d04e616d2293c4c7538dd6226feac5" category="section-title">使用SQL Server Management Studio配置最大工作线程数。</block>
   <block id="5962130d833e0408cf58a87e342bc1f9" category="doc">Microsoft SQL Server tempdb文件</block>
   <block id="625156cc6cef9a3c56b1b535579bd2c9" category="paragraph">NetApp建议主动将tempdb文件增大到其全满大小、以避免磁盘碎片化。</block>
@@ -764,7 +754,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="1ceeb5f5f18aefbc39e34d0d3c7b7e1c" category="paragraph">某些应用程序仅在启动时使用可用的内存、即使需要也不会请求更多内存。这就是最大服务器内存设置的作用所在。</block>
   <block id="6e345f11e9b2856a7ac40d6cf283606b" category="paragraph">在包含多个SQL Server实例的SQL Server集群上、每个实例可能会争用资源。为每个SQL Server实例设置内存限制有助于保证每个实例的最佳性能。</block>
   <block id="318b34a3511a1be6d179a73303da2077" category="admonition">*RAM NetApp建议*为操作系统至少保留4GB到6GB的内存，以避免出现性能问题。</block>
-  <block id="bc34e8cb14e602c11eab57e5d4131989" category="paragraph"><block ref="bc34e8cb14e602c11eab57e5d4131989" category="inline-image-macro-rx" type="image"></block></block>
   <block id="cd151dbdf946ad6bd27e1d55ea1cd029" category="section-title">使用SQL Server Management Studio调整最小和最大服务器内存。</block>
   <block id="2e0d4de7d927936246f5537ba48015d2" category="paragraph">使用SQL Server Management Studio调整最小或最大服务器内存需要重新启动SQL Server服务。您可以使用Transact SQL (T-SQL)通过以下代码调整服务器内存：</block>
   <block id="998c5e632fa0f987c20c182fc9322f67" category="section-title">非一致内存访问</block>
@@ -776,7 +765,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="8c91aa3f5264c57bd2d2e66bd70f2ad1" category="section-title">每个查询的最小内存</block>
   <block id="027d5a3eabe88aa0ab705b9c4a2fe096" category="paragraph">运行查询时、SQL Server会尝试分配最佳内存量、以使其高效运行。</block>
   <block id="4c7836a7e63c3ecb3f6860ec19643561" category="paragraph">默认情况下、每个查询的最小内存设置会为要运行的每个查询分配&gt;或=到1024KB的空间。最佳做法是、将此设置保留为默认值0、以允许SQL Server动态管理为索引创建操作分配的内存量。但是、如果SQL Server的RAM超过高效运行所需的RAM、则提高此设置可以提高某些查询的性能。因此、只要SQL Server、任何其他应用程序或操作系统未使用服务器上的可用内存、则提高此设置就可以提高SQL Server的整体性能。如果没有可用内存，则增加此设置可能会影响整体性能。</block>
-  <block id="280cb8402bda4f652caf7bab6f9d2c6d" category="paragraph"><block ref="280cb8402bda4f652caf7bab6f9d2c6d" category="inline-image-macro-rx" type="image"></block></block>
   <block id="d2a88da9a0fcc96168f8f051909d5599" category="section-title">缓冲池扩展</block>
   <block id="11a3fdcfeb0715eaf26e855034f6ab9a" category="paragraph">通过缓冲池扩展、可以将NVRAM扩展与数据库引擎缓冲池无缝集成、从而显著提高I/O吞吐量。</block>
   <block id="c722da593d2f37b2c1ffc91a10c03dad" category="paragraph">并非每个SQL Server版本都提供缓冲池扩展。它仅适用于64位SQL Server Standard、Business Intelligence和Enterprise版本。</block>
@@ -793,10 +781,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="c7e0d87e723625072015431887edf349" category="paragraph">以下示例显示了一个T-SQL命令、用于设置32 GB的缓冲池扩展名。</block>
   <block id="7ef20d2374bc8b734222e4ec2f0f3643" category="doc">Microsoft SQL Server的ONTAP存储效率</block>
   <block id="e5bc122522e9ae1409590d9944ec4421" category="paragraph">存储效率是指存储和管理SQL Server数据的能力、其占用的存储空间最少、对系统整体性能几乎没有影响、甚至没有影响。</block>
-  <block id="c2a147b6be5d033c4eb55813488dbcc1" category="inline-link-macro">配置建议</block>
-  <block id="ff824cee2c3b7ec7f7581d5dc93d1444" category="paragraph">存储效率是RAID、配置(整体布局和利用率)、镜像和其他数据保护技术的组合。NetApp技术(如Snapshot副本、精简配置、FlexClone)可优化基础架构中的现有存储、推迟或避免未来的存储支出、从而帮助实现成本优势。将这些技术结合使用的次数越多、节省的空间就越大。有关详细信息，请参见 <block ref="b5384d52b6e3305a2c57340dbe087476" category="inline-link-macro-rx"></block></block>
-  <block id="6a10562f7a321860904cbd17167319df" category="inline-link-macro">效率最佳实践</block>
-  <block id="5c7e263278e678895b97dc11f2a3cc36" category="paragraph">存储压缩、数据缩减和重复数据删除是其他存储效率选项、可增加给定物理存储量所需的逻辑数据量。有关更多详细信息，请参见 <block ref="2f4d6c4cfae5ce39369594d1e1758c5d" category="inline-link-macro-rx"></block>。</block>
   <block id="2d3c9d6f03cd640c224f5daf9c2352b0" category="paragraph">SQL Server还具有压缩和高效管理数据的功能。SQL Server目前支持两种类型的数据压缩：行压缩和页面压缩。</block>
   <block id="181341700086c5e2f2259774b2aaa59c" category="inline-link-macro">页面压缩实施</block>
   <block id="46c6aaf21d639d23d4f297a1f6922d9a" category="paragraph">行压缩会更改数据存储格式。例如、它会将整数和小数更改为可变长度格式、而不是其本机固定长度格式。此外、它还会通过消除空格将固定长度字符串更改为可变长度格式。页面压缩可实现行压缩和另外两种压缩策略(前缀压缩和词典压缩)。有关页面压缩的详细信息、请参见 <block ref="88eab602b149fe360da37498ad5cdeae" category="inline-link-macro-rx"></block>。</block>
@@ -810,7 +794,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="aa864feb1e600aa376e91ac119da387b" category="paragraph">如果需要运行空间回收、则应在活动较少的时段运行此过程、因为它最初会占用主机上的周期。</block>
   <block id="a356c94dff23a233551ff221e74a144d" category="summary">使用ONTAP保护Microsoft SQL Server数据</block>
   <block id="731c00fe6475fb22aece82ffa9d74ef3" category="paragraph">保护数据库对于任何组织都至关重要。随着数据大小和数据库数量的增加、维护恢复时间目标(RTO)和恢复点目标(RPO)至关重要。</block>
-  <block id="5cf56e0e8b1ff5cffb383d58615265e0" category="paragraph">数据库备份的主要注意事项是利用NetApp Snapshot技术。讨论了ONTAP上的数据保护规划 <block ref="8f339e5651f846037d94f72580710268" category="inline-link-macro-rx"></block>。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。</block>
   <block id="5c014f8939a89da0166a347a0237cf4f" category="section-title">SnapCenter</block>
   <block id="2ddb1872f6c378e74cb7269e9de4c4e5" category="paragraph">SnapCenter是适用于企业应用程序的NetApp数据保护软件。使用NetApp SnapCenter软件以及适用于SQL Server的插件和适用于Microsoft Windows的插件、可以快速轻松地保护SQL Server数据库。</block>
   <block id="bdc6c0cf646d837838203c2980eba84a" category="paragraph">此产品支持应用程序一致的备份、自动克隆以及SQL Server数据库、实例或可用性组的还原和恢复。</block>
@@ -852,7 +835,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="9a3f42cec243006996ab4580d3ce5d56" category="paragraph">每个数据库由一个或多个数据文件和一个或多个事务日志文件组成。事务日志存储有关数据库事务以及每个会话所做的所有数据修改的信息。每次修改数据时、SQL Server都会在事务日志中存储足够的信息、以便撤消(回滚)或重做(重放)操作。SQL Server事务日志是SQL Server在数据完整性和稳定性方面声誉的重要组成部分。事务日志对于SQL Server的运行异常、一致性、隔离和持久性(ACID)功能至关重要。一旦对数据页面进行任何更改、SQL Server就会写入事务日志。每个数据操作语言(DML)语句(例如SELECT、INSERT、UPDATE-DELETE)都是一个完整的事务、事务日志可确保执行整个基于集合的操作、从而确保事务的正常运行。</block>
   <block id="cbe6958e46fbab53cdbdb9deb2d75938" category="paragraph">每个数据库都有一个主数据文件、默认情况下、该文件的扩展名为.mdf。此外、每个数据库都可以具有二级数据库文件。默认情况下、这些文件的扩展名为.NDF。</block>
   <block id="811b578b6dfbb4a4ca16ba0c0911e3df" category="paragraph">所有数据库文件都分组到文件组中。文件组是逻辑单元、可简化数据库管理。它们允许在逻辑对象放置和物理数据库文件之间进行隔离。创建数据库对象表时、您可以指定应将其放置在哪个文件组中、而不必担心基础数据文件配置。</block>
-  <block id="cd2f60511a1a153b21b89b7c5c3ca326" category="paragraph"><block ref="cd2f60511a1a153b21b89b7c5c3ca326" category="inline-image-macro-rx" type="image"></block></block>
   <block id="3717596742d438a1c8e77b0aeb58fcec" category="paragraph">通过将多个数据文件放在文件组中、您可以将负载分布在不同的存储设备上、这有助于提高系统的I/O性能。相反、事务日志不会从多个文件中受益、因为SQL Server会按顺序写入事务日志。</block>
   <block id="c136ffb510a6a465d338ab0affc16641" category="paragraph">通过将文件组中的逻辑对象放置与物理数据库文件分隔开、您可以微调数据库文件布局、从而最大程度地利用存储子系统。例如、将产品部署到不同客户的独立软件供应商(ISV)可以在部署阶段根据底层I/O配置和预期数据量调整数据库文件数量。这些更改对于应用程序开发人员来说是透明的、他们将数据库对象放在文件组中、而不是数据库文件中。</block>
   <block id="3ac46c2f04dec9d215efbe44d307a020" category="admonition">* NetApp建议*避免将主文件组用于除系统对象之外的任何其他对象。为用户对象创建单独的文件组或一组文件组可简化数据库管理和灾难恢复、尤其是在大型数据库的情况下。</block>
@@ -862,12 +844,9 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="54db492ee9e4d356cc8722d1f4126f77" category="paragraph">SQL Server始终将事务日志零、并且此行为无法更改。但是、您可以通过启用或禁用即时文件初始化来控制数据文件是否置零。启用即时文件初始化有助于加快数据文件增长速度、并减少创建或还原数据库所需的时间。</block>
   <block id="92208bd4d9c6fec3f7c1dedeca62e135" category="paragraph">即时文件初始化会带来较小的安全风险。启用此选项后、数据文件的未分配部分可能包含先前删除的操作系统文件中的信息。数据库管理员可以检查此类数据。</block>
   <block id="2b222ad4000e6e966783fd7bc480180e" category="paragraph">您可以通过向SQL Server启动帐户添加SA_Manage_volume_name权限(也称为"执行卷维护任务")来启用即时文件初始化。您可以在本地安全策略管理应用程序(secpol.msc)下执行此操作、如下图所示。打开"Perform volume Maintenance Task (执行卷维护任务)"权限的属性、并将SQL Server启动帐户添加到其中的用户列表中。</block>
-  <block id="f5127c997811da26d32c454a19000117" category="paragraph"><block ref="f5127c997811da26d32c454a19000117" category="inline-image-macro-rx" type="image"></block></block>
   <block id="c622e0142ed854a10f98fcaa8b3487f8" category="paragraph">要检查权限是否已启用、您可以使用以下示例中的代码。此代码设置了两个跟踪标志、用于强制SQL Server将追加信息写入错误日志、创建小型数据库以及读取日志内容。</block>
   <block id="eba8c32bde087b29aaa1fe0d3bb32ef3" category="paragraph">如果未启用即时文件初始化、则SQL Server错误日志会显示、除了将ldf日志文件置零之外、SQL Server还会将MDF数据文件置零、如以下示例所示。启用即时文件初始化后、它仅显示日志文件置零。</block>
-  <block id="b38fa7baf9ceb53ef15ca3677d3cdfa5" category="paragraph"><block ref="b38fa7baf9ceb53ef15ca3677d3cdfa5" category="inline-image-macro-rx" type="image"></block></block>
   <block id="cf346325be0652c6b6e9a04b9352bda3" category="paragraph">执行卷维护任务在SQL Server 2016中得到了简化、稍后在安装过程中作为一个选项提供。此图显示了为SQL Server数据库引擎服务授予执行卷维护任务权限的选项。</block>
-  <block id="aea48caa289e2e488286fae0515eb9d9" category="paragraph"><block ref="aea48caa289e2e488286fae0515eb9d9" category="inline-image-macro-rx" type="image"></block></block>
   <block id="638b283700120d26a838f9cb56fca59d" category="paragraph">控制数据库文件大小的另一个重要数据库选项是自动缩放。启用此选项后、SQL Server会定期缩减数据库文件、减小其大小并向操作系统释放空间。此操作会占用大量资源、并且很少有用、因为新数据进入系统一段时间后、数据库文件会再次增长。绝不能在数据库上启用自动缩放。</block>
   <block id="3b6c913908f5844ccb31a4d3775cb34e" category="doc">Microsoft SQL Server共享实例与专用实例</block>
   <block id="8b58192b54b5dc25444ace0536a34893" category="paragraph">如果应用程序具有许多模式和存储过程、则可能会影响共享SQL Server实例的其他应用程序。</block>
@@ -1029,7 +1008,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="edc9f0a5a5d57797bf68e37364743831" category="doc">Linux</block>
   <block id="dfc95ed5e895617bbd0d4b1a8bfba8ca" category="paragraph">特定于Linux操作系统的配置主题。</block>
   <block id="5ecd4a6f4aedfdd45cce80a18b1a7942" category="section-title">插槽表</block>
-  <block id="cb0b01337e8f6bf9d06b70a95f74501e" category="paragraph">Linux上的NFS性能取决于一个名为的参数<block ref="453f2cc2326f82af1053f4aa4b75400b" prefix=" " category="inline-code"></block>。请参见 <block ref="77039a327377cbf65e33c7c5d3766672" category="inline-link-macro-rx"></block> 关键信息。</block>
   <block id="2518e65e64213437c921c39a097db167" category="section-title">Linux NFS挂载选项</block>
   <block id="29cd2e6d4fc96e749c4a0e622cad7f50" category="paragraph">下表列出了单个实例的Linux NFS挂载选项。</block>
   <block id="9fafd031075cede0e8a5a796ec45fbff" category="paragraph">下表列出了RAC的Linux NFS挂载选项。</block>
@@ -2100,7 +2078,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="c4cb2c6af5d7b6c38cd7e588d846e8b4" category="doc">Oracle I/O的LUN对齐</block>
   <block id="3e00e4d28b17eedd6f6c2c38233e06a8" category="paragraph">LUN对齐是指针对底层文件系统布局优化I/O。</block>
   <block id="a6c7e85d51ae3b98197ceb3eafa3686a" category="inline-link-macro">效率</block>
-  <block id="8b91f52c07f84050ec607efaba519342" category="paragraph">另请参见一节中有关数据压缩块对齐的讨论 <block ref="507b43f44c8d150acacbc8cc7264d717" category="inline-link-macro-rx"></block>。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。</block>
   <block id="6e2524d5663b2bdc0c7985fa3e57cc55" category="section-title">未对齐警告</block>
   <block id="79e721357e358d77c4700c25c863fc37" category="inline-link">ONTAP SAN 主机配置</block>
   <block id="268b1da3f1ff11d32e385d0223101718" category="paragraph">Solaris环境中的对齐更为复杂。请参见<block ref="2d33e0364c07dc165b4079892340d4fe" category="inline-link-rx"></block> 有关详细信息 ...</block>
@@ -2131,9 +2108,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="68114defc717054e7e3b02df438cdbe1" category="paragraph">缓存可以在应用程序层或服务器层进行。例如、如果Oracle Real Application Cluster (RAC)配置中的服务器在主站点和远程站点上都处于活动状态、则该配置会在Oracle SGA中缓存数据。如果强制切换操作导致数据丢失、则会使数据库面临损坏的风险、因为存储在SGA中的块可能与磁盘上的块不匹配。</block>
   <block id="162de6d405c04ce8f152f1d246ed9187" category="paragraph">在操作系统文件系统层使用缓存不太明显。装载的NFS文件系统中的块可能会缓存在操作系统中。或者、可以将基于主站点上LUN的集群文件系统挂载到远程站点的服务器上、然后再次缓存数据。在这些情况下、NVRAM故障、强制接管或强制切换可能会导致文件系统损坏。</block>
   <block id="04ca8d9ad570a3bdf1d76e23bc108ae5" category="paragraph">ONTAP通过NVFAIL及其关联设置、保护数据库和操作系统免受这种情况的影响。</block>
-  <block id="41392c0810a247913390639ac55b02f3" category="inline-link-macro">具有HA对的NVFAIL</block>
-  <block id="c85e3cf60aca3604436a612414b4862b" category="inline-link-macro">采用MetroCluster的NVFAIL</block>
-  <block id="4c81a151f262848af64b7c3617f2957f" category="paragraph">有关重要追加信息、请阅读 <block ref="7dd171303802b4fd88eb6286775f7e90" category="inline-link-macro-rx"></block> 和 <block ref="d70bba050e7743789ce865415fea7eaf" category="inline-link-macro-rx"></block></block>
   <block id="45293b650c7dacd88d269bebf219b8ef" category="summary">NetApp SnapRestore技术可在ONTAP中从Snapshot副本快速恢复Oracle数据库。</block>
   <block id="82ef718f4ebe0c276814ee3d51e33361" category="doc">SnapRestore</block>
   <block id="863696626734d6591db8be57b41c7eec" category="paragraph">NetApp SnapRestore技术可在ONTAP中从快照快速恢复数据。</block>
@@ -2831,7 +2805,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="04e7bb0411c1c8f56ca4fc8000c62ad8" category="inline-link">部署适用于 VMware vSphere 的 SnapCenter 插件</block>
   <block id="d4ba0aa084ae1145248006481c881d29" category="paragraph"><block ref="d4ba0aa084ae1145248006481c881d29" category="inline-link-rx"></block></block>
   <block id="231cf4c70d866b616c21baddaeed0696" category="doc">故障排除</block>
-  <block id="87e6f97c8ec2f31df616ef84401ffaf4" category="paragraph">追加信息 提供了多种故障排除资源。</block>
   <block id="9d2169c1c2855b78a7aeaa4f42d27dc7" category="section-title">NetApp 支持站点</block>
   <block id="ed9018b2e8611a3d2c03bb6a205b9715" category="inline-link">适用于 VMware vSphere 的 ONTAP 工具</block>
   <block id="890eb741924c425abbb11e4618560181" category="paragraph">除了有关NetApp虚拟化产品的各种知识库文章之外、NetApp 支持站点 还为提供了一个方便的登录页面<block ref="6e90053136fd326e5d581844ca21966d" category="inline-link-rx"></block> 产品。此门户可通过链接访问NetApp社区中的文章、下载内容、技术报告和VMware解决方案讨论。可从以下位置获取：</block>
@@ -2850,7 +2823,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="3152add163cd8aaf116a259d85ebf8fb" category="section-title">升级Unified Appliance无法挂载ISO</block>
   <block id="ffaa56a3f5a1157f2eb3955773bb41da" category="paragraph">由于vCenter中的错误、用于将Unified Appliance从一个版本升级到下一个版本的ISO可能无法挂载。如果ISO能够连接到vCenter中的设备、请按照本知识库中的过程进行操作<block ref="9839383ed04f777c0132b57ad0cb14ac" category="inline-link-rx"></block> 以解决此问题。</block>
   <block id="cacba1b456347ce8f32c7f5ed0d81e64" category="doc">部署Virtual Storage</block>
-  <block id="4adcd8d9323839ff088dc4f8f0bdcce2" category="paragraph">为VM创建Vvol存储需要执行几个步骤。</block>
   <block id="2a5f3dc8d46246216b293c9e41979269" category="paragraph">对于对传统数据存储库使用ONTAP 的现有vSphere环境、可能不需要执行前两个步骤。您可能已经在使用ONTAP工具来管理、自动化和报告VMFS或基于NFS的传统存储。下一节将更详细地介绍这些步骤。</block>
   <block id="841db3655338a0c3dc36cf2761bfdafd" category="list-text">创建Storage Virtual Machine (SVM)及其协议配置。您将选择NVMe/FC、NFSv3、NFSv4.1、iSCSI、FCP、 或这些选项的组合。您可以使用ONTAP系统管理器向导或集群Shell命令行。</block>
   <block id="10818a8ad4f650a48d78d728278d4cb3" category="list-text">对于每个交换机/网络结构连接、每个节点至少需要一个LIF。作为最佳实践、为每个节点创建两个或更多基于FCP、iSCSI或NVMe的协议。</block>
@@ -2978,7 +2950,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="2902acda09b9786460c2dd928a2d8f1a" category="paragraph">ONTAP 在 VVOL 规模方面处于存储行业的领先地位，在一个集群中支持数十万个 VVOL ，而企业级阵列和小型闪存阵列供应商支持的每个阵列仅支持数千个 VVOL 。NetApp 还在推动 VM 粒度管理的发展，即将推出支持 VVOL 3.0 的功能。</block>
   <block id="fda9c21a4aefd4a1f42ad0b195e6ef0a" category="inline-link">TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷</block>
   <block id="69173613658292fc2adeb513b12f29ca" category="admonition">有关 VMware vSphere 虚拟卷， SPBM 和 ONTAP 的详细信息，请参见<block ref="354226c2546b1aed39f1c0c484e6a98a" category="inline-link-rx"></block>。</block>
-  <block id="4f46fffb0ac7017fd2b42c10d6aa03fc" category="paragraph">备份虚拟机并快速恢复虚拟机是 ONTAP for vSphere 的一项强大优势，使用适用于 VMware vSphere 的 SnapCenter 插件在 vCenter 中轻松管理此功能。</block>
   <block id="61823c0f572643e0ce2e4edcb74cae51" category="paragraph">使用快照快速创建虚拟机或数据存储库的副本而不影响性能、然后使用SnapMirror将其发送到二级系统、以实现长期异地数据保护。这种方法只存储更改后的信息，从而最大限度地减少存储空间和网络带宽。</block>
   <block id="0aef2da721f0ab14676f8d6ffb9e7e8c" category="inline-link">建议</block>
   <block id="022e604112aa3d1870f0da5e7806f48b" category="paragraph">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。  VMware 快照仅为<block ref="75f5ad475d959e2ecb55267e1a9a54f1" category="inline-link-rx"></block> 因性能和其他影响而短期使用。</block>
@@ -3118,7 +3089,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
 对于采用vSphere 7的NVMe-oF、有关详细信息、请参见<block ref="6c040a6e611e78bb9d0ad92946e613ea" category="inline-link-rx"></block>
 对于采用vSphere 8的NVMe-oF、有关详细信息、请参见<block ref="030788e4c7bbe3137759b534ea62d7d9" category="inline-link-rx"></block></block>
   <block id="99a66df20e19a8e18fae37a7f714750a" category="doc">虚拟机和数据存储库克隆</block>
-  <block id="2438f6a80b933cf058ad052d26ac0703" category="paragraph">通过克隆存储对象，您可以快速创建副本以供将来使用，例如配置其他 VM ，备份 / 恢复操作等。</block>
   <block id="fe12a277656562082ad50b980c227a84" category="paragraph">在 vSphere 中，您可以克隆虚拟机，虚拟磁盘， VVol 或数据存储库。克隆后，通常可以通过自动化过程进一步自定义对象。vSphere 既支持完整副本克隆，也支持链接克隆，在这些克隆中，它可以独立于原始对象跟踪更改。</block>
   <block id="883a97a36ab0c59ec785b03161a1cc32" category="paragraph">链接克隆非常有助于节省空间，但它们会增加 vSphere 为虚拟机处理的 I/O 量，从而影响该虚拟机的性能，甚至整个主机的性能。因此、NetApp客户经常使用基于存储系统的克隆来充分利用这两种环境：高效利用存储和提高性能。</block>
   <block id="17e1a153b5d05c5a642c93ba9ce3c6de" category="paragraph">下图显示了 ONTAP 克隆。</block>
@@ -3132,7 +3102,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="f3968368501d882b3969da59138db6e2" category="paragraph">您也可以直接在 ONTAP 中克隆卷或 LUN 以克隆数据存储库。使用 NFS 数据存储库时， FlexClone 技术可以克隆整个卷，并且可以从 ONTAP 导出克隆并由 ESXi 作为另一个数据存储库挂载该克隆。对于 VMFS 数据存储库， ONTAP 可以克隆卷或整个卷中的 LUN ，包括其中的一个或多个 LUN 。包含 VMFS 的 LUN 必须映射到 ESXi 启动程序组（ igroup ），然后由 ESXi 重新签名，才能挂载并用作常规数据存储库。对于某些临时使用情形，可以挂载克隆的 VMFS 而无需重新签名。克隆数据存储库后，可以注册，重新配置和自定义数据存储库中的 VM ，就像它们是单独克隆的 VM 一样。</block>
   <block id="2d506b6088a383ccf08479b0f80c0ff4" category="paragraph">在某些情况下，可以使用其他许可功能来增强克隆功能，例如用于备份的 SnapRestore 或 FlexClone 。这些许可证通常包含在许可证包中，无需额外付费。要执行vVol克隆操作以及支持vVol的受管快照(从虚拟机管理程序卸载到ONTAP)、需要FlexClone许可证。在数据存储库 / 卷中使用 FlexClone 许可证还可以改进某些基于 VAAI 的克隆（创建节省空间的即时副本，而不是块副本）。  此外， SRA 还会使用它来测试灾难恢复副本的恢复，并使用 SnapCenter 来执行克隆操作，以及浏览备份副本以还原单个文件。</block>
   <block id="5dd57c2a315d3af44c2eb40eefc47111" category="doc">网络配置：</block>
-  <block id="2b6203f34def274ff7424bf1d64a9bca" category="paragraph">在将 vSphere 与运行 ONTAP 软件的系统结合使用时，配置网络设置非常简单，与其他网络配置类似。</block>
   <block id="66507f357c74ee12194270cfe053b98d" category="paragraph">需要考虑以下几点：</block>
   <block id="b3752ab8dec37db2e30f4bf37fbdc112" category="list-text">将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。</block>
   <block id="7c4904daaa282388097ad83bf382e1a5" category="list-text">如果您的网络需要并支持巨型帧，则可以使用巨型帧，尤其是在使用 iSCSI 时。如果使用这些协议，请确保在存储和 ESXi 主机之间的路径中的所有网络设备， VLAN 等上对其进行相同的配置。否则，您可能会看到性能或连接问题。此外，还必须在 ESXi 虚拟交换机， VMkernel 端口以及每个 ONTAP 节点的物理端口或接口组上以相同的方式设置 MTU 。</block>
@@ -3240,7 +3209,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="45701e6ef9bc09dca07f8f4abe661dc6" category="cell">是（在 vSphere 6.5 及更高版本中进行了增强，可支持 AES ， krb5i ）</block>
   <block id="76969a36155d2f41fc6cc3bd3faff244" category="cell">多路径支持</block>
   <block id="8a18e0a50dc5755c294477cb16507a6c" category="doc">FlexGroup</block>
-  <block id="b6cd969550b5501b0f62a149fb7964ce" category="paragraph">ONTAP 9.8 增加了对 vSphere 中 FlexGroup 数据存储库的支持，并增加了适用于 VMware vSphere 9.8 版本的 ONTAP 工具。</block>
   <block id="f9ac230f370c7937167d25093c4ce9b9" category="paragraph">FlexGroup 简化了大型数据存储库的创建，并自动创建了大量成分卷，以便从 ONTAP 系统中获得最大性能。将 FlexGroup 与 vSphere 结合使用，可用于一个具有完整 ONTAP 集群功能的可扩展 vSphere 数据存储库。</block>
   <block id="6829bc8d3038be0130fd2b409ad5e560" category="paragraph">除了对 vSphere 工作负载进行大量系统测试之外， ONTAP 9.8 还为 FlexGroup 数据存储库添加了一种新的副本卸载机制。这样可以使用经过改进的复制引擎在后台的成分卷之间复制文件，同时允许在源和目标上进行访问。如果需要，多个副本会根据规模在成分卷中使用可立即使用且节省空间的文件克隆。</block>
   <block id="760383437e8e5cbe4a2560753da783fb" category="paragraph">ONTAP 9.8 还为 FlexGroup 文件添加了基于文件的新性能指标（ IOPS ，吞吐量和延迟），这些指标可在适用于 VMware vSphere 的 ONTAP 工具信息板和 VM 报告中查看。适用于 VMware vSphere 的 ONTAP 工具插件还允许您结合使用最大和 / 或最小 IOPS 来设置服务质量（ QoS ）规则。可以在数据存储库中的所有 VM 之间设置这些值，也可以为特定 VM 单独设置这些值。</block>
@@ -3255,7 +3223,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="ad971da24ec0a38449ebf31e4e2c9332" category="list-text">此时，可以在数据存储库中的各个 VM 或所有 VM 上设置 QoS （最大 / 最小 IOPS ）。在所有 VM 上设置 QoS 将取代任何单独的每 VM 设置。将来，设置不会扩展到新的或迁移的虚拟机；可以在新虚拟机上设置 QoS ，也可以将 QoS 重新应用于数据存储库中的所有虚拟机。</block>
   <block id="3c9d41390700cbdfb2c273f00df0d6fd" category="list-text">适用于 VMware vSphere 的 SnapCenter 插件 4.4 版支持在主存储系统上的 FlexGroup 数据存储库中备份和恢复 VM 。虽然可以手动使用 SnapMirror 将 FlexGroup 复制到二级系统，但 4 号选择控制器不管理二级副本。</block>
   <block id="be0ec3d9251292dd856ea0924ecc6873" category="doc">服务质量（ QoS ）</block>
-  <block id="f437881fa7e42bf0e4563bbec8176f81" category="paragraph">运行 ONTAP 软件的系统可以使用 ONTAP 存储服务质量功能来限制文件， LUN ，卷或整个 SVM 等不同存储对象的吞吐量（以 MBps 和 / 或每秒 I/O 数（ IOPS ）为单位）。</block>
   <block id="8fdd6138f63aa45f1c51b48d9a01b19d" category="paragraph">吞吐量限制对于在部署之前控制未知或测试工作负载非常有用、可确保它们不会影响其他工作负载。它们还可用于在确定抢占资源的工作负载后对其进行限制。此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。</block>
   <block id="3e4a2dc31acddb628ba286d25b1bd36e" category="paragraph">对于 NFS 数据存储库，可以将 QoS 策略应用于整个 FlexVol 卷或其中的单个 VMDK 文件。对于使用 ONTAP LUN 的 VMFS 数据存储库，可以将 QoS 策略应用于包含 LUN 或单个 LUN 的 FlexVol 卷，但不能应用于单个 VMDK 文件，因为 ONTAP 无法识别 VMFS 文件系统。使用 VVOL 时，可以使用存储功能配置文件和 VM 存储策略在各个 VM 上设置最小和 / 或最大 QoS 。</block>
   <block id="534ecd446aac2f9c809eef9064f44aab" category="paragraph">可以使用 MBps 和 / 或 IOPS 设置对象的 QoS 最大吞吐量限制。如果同时使用这两者，则 ONTAP 会强制实施达到的第一个限制。一个工作负载可以包含多个对象，一个 QoS 策略可以应用于一个或多个工作负载。将一个策略应用于多个工作负载时，这些工作负载将共享此策略的总限制。不支持嵌套对象（例如，卷中的文件不能各自具有自己的策略）。QoS 最小值只能以 IOPS 为单位进行设置。</block>
@@ -3328,7 +3295,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="d8a78b994fcd4e04901203a2e7bc6414" category="paragraph">以下屏幕截图显示了 AIQUM 扩展拓扑。</block>
   <block id="e9659be2b7d3d69eccdb443ed2acec75" category="paragraph"><block ref="e9659be2b7d3d69eccdb443ed2acec75" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f02207fb26160d7e47cf5ea35d07df03" category="doc">数据存储库和协议</block>
-  <block id="ff53ee8001042abcefe5c912d0b5012f" category="section-title">vSphere 数据存储库和协议功能</block>
   <block id="af8dcb8c7a1e8b7e614e570806d8dcee" category="paragraph">在运行ONTAP 软件的系统上、可以使用七种协议将VMware vSphere连接到数据存储库：</block>
   <block id="a7c815fafe60ae637d38216fa6300395" category="list-text">FCP</block>
   <block id="14eae6ee278098bfad4f8a10fd6c1195" category="list-text">FCoE</block>
@@ -3497,7 +3463,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="0065ce57adc813187a8e9c640ba6223a" category="paragraph">现在， SRA 服务器配置可通过 REST API 进行管理。我们添加了Swagger UI、可帮助您构建自动化工作流、您可以在ONTAP工具设备上找到此UI、网址为<block ref="579ce3ee0a7c1521f3dce6a507ea64a0" prefix=" " category="inline-code"></block>。</block>
   <block id="dcaf091737df278b1b4bdd2e37c10a75" category="summary">NetApp ONTAP 自 2002 年引入现代数据中心以来，一直是 VMware vSphere 环境中的领先存储解决方案，它不断增加创新功能来简化管理，同时降低成本。</block>
   <block id="0a0e655ee9ba6467857ebf014a268f29" category="doc">采用NetApp ONTAP的VMware Site Recovery Manager</block>
-  <block id="60398bdc931fc67a9b6d781434c3a15a" category="section-title">适用于 vSphere 的 ONTAP</block>
   <block id="5bdb12cbb14efa98a61e7c5e3b4de108" category="admonition">本文档将取代先前发布的技术报告_TR-4900:《使用ONTAP的VMware Site Recovery Manager_》</block>
   <block id="7659430738ccf1c5b8c8084a4003c709" category="paragraph">NetApp ONTAP 自 2002 年引入现代数据中心以来，一直是 VMware vSphere 环境中的领先存储解决方案，它不断增加创新功能来简化管理，同时降低成本。本文档介绍了VMware行业领先的灾难恢复(Disaster Recovery、DR)软件ONTAP 解决方案for VMware Site Recovery Manager (SRM)、其中包括可简化部署、降低风险和简化日常管理的最新产品信息和最佳实践。</block>
   <block id="e3445c3aa798f5ad98665e33d34dd952" category="paragraph">最佳实践是指南和兼容性工具等其他文档的补充。它们是根据 NetApp 工程师和客户的实验室测试和丰富的现场经验开发的。在某些情况下，建议的最佳实践可能不适合您的环境；但是，它们通常是最简单的解决方案，可满足大多数客户的需求。</block>
@@ -3778,7 +3743,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="2c87609dbbc3630573c64e271de8207d" category="list-text">所有凭据信息均使用SHA256哈希进行存储。</block>
   <block id="0f1a6fa0a65f9d5c3c4a16b070104d7a" category="list-text">*基本操作系统映像。*本产品随附Debian基础操作系统、用于OVA、但访问受限且Shell访问已禁用。这样可以减少攻击占用空间。每个SnapCenter 版本基础操作系统都会更新最新的安全修补程序、以最大限度地提高安全性。</block>
   <block id="83cd5867ba912e517fa1100299fd1cf3" category="paragraph">NetApp针对适用于VMware vSphere设备的SnapCenter 插件开发软件功能和安全修补程序、然后将其作为捆绑软件平台发布给客户。由于这些设备包括特定的Linux子操作系统依赖关系以及我们的专有软件、因此NetApp建议您不要更改子操作系统、因为这很可能会影响NetApp设备。这可能会影响NetApp支持此设备的能力。NetApp建议测试和部署我们最新的设备代码版本、因为发布这些代码版本是为了修补任何与安全相关的问题。</block>
-  <block id="5afeee4e3c6d47363e83195b12c74872" category="paragraph">您可以查看ONTAP重要功能的概述、包括从数据保护功能、存储效率建议到灾难恢复选项的所有内容 <block ref="f7503abce54bbe0e3218519d659c8356" category="inline-link-macro-rx"></block> 此信息对于在ONTAP存储系统上正确构建和管理应用程序环境至关重要。</block>
   <block id="c7eca250a9863785d63364853c46c00d" category="doc">使用FabricPool进行MySQL层</block>
   <block id="1bc6cee680286aae1b12889369b7f18a" category="summary">基于ONTAP的MySQL</block>
   <block id="dac8ea4fbfd87a535663c227b91f50e3" category="doc">I/O计划程序</block>
@@ -3787,8 +3751,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="6def78482bd1915cb81f0f5c19ee8fe6" category="paragraph">MySQL的InnoDB存储引擎使用Linux上的异步I/O子系统(本机AIO)对数据文件页面执行预读和写入请求。此行为由控制<block ref="2c03186a22d036ce7dad84be5de2f2ce" prefix=" " category="inline-code"></block> 配置选项、默认情况下处于启用状态。使用本机AIO时、I/O计划程序的类型对I/O性能的影响更大。执行基准测试、确定哪个I/O计划程序可以为您的工作负载和环境提供最佳结果。</block>
   <block id="e7b09beaf26efc7d8bee91786cf794b5" category="paragraph">有关配置I/O计划程序的说明、请参见相关的Linux和MySQL文档。</block>
   <block id="6e8775bd755a8835ce86806d669677ea" category="doc">存储配置</block>
-  <block id="f2d5298faec5552ae38d966f7d72f836" category="inline-link-macro">基于ONTAP存储配置的企业级应用程序</block>
-  <block id="7ed6bedda4cf07c9134434f7ec06939a" category="paragraph">有关配置用于MySQL数据库的存储的详细信息、请参见 <block ref="43de4a40eabec5647493f6e009ce9cb1" category="inline-link-macro-rx"></block></block>
   <block id="2f09ac000b4a1808cb795b7bdbb20ecc" category="doc">InnoDB_log_file_size</block>
   <block id="b8674b2897b288ca55b74328df4780b3" category="paragraph">为InnoDB日志文件大小选择合适的大小对于写入操作以及在服务器崩溃后有适当的恢复时间非常重要。</block>
   <block id="b61bad6f7bf48bf9abda0c86c9beed79" category="paragraph">由于登录到该文件的事务太多、因此日志文件大小对于写入操作非常重要。修改记录后、所做的更改不会立即写入表空间。而是将更改记录在日志文件的末尾、并将页面标记为脏。InnoDB使用其日志将随机I/O转换为顺序I/O</block>
@@ -3907,11 +3869,9 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="5713a921d815fd7d19875846450f8ea8" category="doc">文件结构</block>
   <block id="4955922857da5499a2f1be602a96b0ff" category="paragraph">InnoDB充当存储和MySQL服务器之间的中间层、它将数据存储到驱动器。</block>
   <block id="8a6fab0b8bb36427eda4071adfd7780b" category="inline-image-macro">错误：未找到图形图像</block>
-  <block id="ca9f55f63ab99a97723ebf2d32c2516c" category="paragraph"><block ref="ca9f55f63ab99a97723ebf2d32c2516c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="5d416cf65dd1e2c908bf430f957c89f8" category="paragraph">MySQL I/O分为两类：</block>
   <block id="e8a320970c929abda9ae744b0b9e8f5f" category="list-text">随机文件I/O</block>
   <block id="85430c0aa096ec282f2a14156baa312e" category="list-text">顺序文件I/O</block>
-  <block id="9251924a311c0050a0cc5b44a82c2b29" category="paragraph"><block ref="9251924a311c0050a0cc5b44a82c2b29" category="inline-image-macro-rx" type="image"></block></block>
   <block id="b7b9a4c6983139a2673988826094a3cf" category="paragraph">数据文件会随机读取和覆盖、从而导致IOPS较高。因此、建议使用SSD存储。</block>
   <block id="322f79fd77365edecd173807cb429ca2" category="paragraph">重做日志文件和二进制日志文件是事务日志。它们会按顺序写入、因此、您可以通过写入缓存在HDD上获得良好的性能。恢复时会发生顺序读取、但很少会导致性能问题、因为日志文件大小通常小于数据文件、顺序读取比随机读取(发生在数据文件上)速度快。</block>
   <block id="a898d206a27508975fea2e241af2f04e" category="paragraph">双写缓冲区是InnoDB的一项特殊功能。InnoDB首先将已刷新的页面写入双写入缓冲区、然后将这些页面写入数据文件上的正确位置。此过程可防止页面损坏。如果没有双写入缓冲区、则在向驱动器写入的过程中发生电源故障时、页面可能会损坏。由于写入双写入缓冲区是顺序的、因此针对HDD进行了高度优化。恢复时进行顺序读取。</block>
@@ -3923,11 +3883,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="7fd750411093ebd1faa0d99dd2608514" category="list-text">另一个卷、用于存储MySQL的纯顺序I/O导向文件</block>
   <block id="0561a3b014eef0e5125fa63e1626cf57" category="paragraph">此布局还有助于您设计数据保护策略和策略。</block>
   <block id="a53db665fd1a9734a7a0e119671a0cd0" category="paragraph">Linux上的NFS性能取决于一个名为的参数<block ref="453f2cc2326f82af1053f4aa4b75400b" prefix=" " category="inline-code"></block>。</block>
-  <block id="ffb6da058affe733896beb9aa49ecac8" category="paragraph">此参数用于控制Linux操作系统上允许的未处理NFS操作的数量。</block>
-  <block id="61b7a3955d9b57d4216605991a54fb5b" category="paragraph">在大多数2.6派生内核(包括R,5和OL5)中，默认值为16。但是、此默认值经常会导致性能问题。而在较新的内核上、则会出现相反问题<block ref="453f2cc2326f82af1053f4aa4b75400b" prefix=" " category="inline-code"></block> 值默认为65536,并可发生原因通过向系统发送过多请求来解决存储问题。RHEL 7和RHEL 8的默认值为65536.解决方案将静态设置此值。对于使用NetApp NFS存储和MySQL数据库的任何Linux操作系统、请使用值128。要在Red Hat Enterprise Linux中设置此值、请将以下条目放在/etc/sysc特 立文件中：</block>
-  <block id="0dc9054baf963698b15466653cd51cae" category="paragraph">设置<block ref="453f2cc2326f82af1053f4aa4b75400b" prefix=" " category="inline-code"></block>：</block>
-  <block id="2e7b2d8e38618228d5ef0f9f8709c045" category="paragraph">确认值已设置：</block>
-  <block id="1fabb1810f890946d2e0967a8f855598" category="admonition">还有一个名称非常相似的参数<block ref="9efd3427cde637b95ad2d74946670fee" prefix=" " category="inline-code"></block>。此值定义了首次建立TCP会话时分配给该会话的插槽数。您无需修改此值。</block>
   <block id="9166d970028a28a614af39e6286371b7" category="paragraph">您可以使用关闭此参数<block ref="8cafbd8d9096941261e87f4f9152ab92" prefix=" " category="inline-code"></block> 适用于基准测试、或者您更关心最高性能而非数据完整性或可能出现的故障。InnoDB使用一种称为双写的文件转储技术。在将页面写入数据文件之前、InnoDB会将其写入一个称为双写入缓冲区的连续区域。在完成对双写缓冲区的写入和刷新后、InnoDB会将页面写入到其在数据文件中的正确位置。如果操作系统或myqld进程在页面写入期间崩溃、则InnoDB稍后可以在崩溃恢复期间从双写入缓冲区中找到一个良好的页面副本。</block>
   <block id="3dfd4b9a526f8a8cf17021e34638b375" category="admonition">* NetApp建议*禁用双写缓冲区。ONTAP NVRAM具有相同的功能。双重缓冲会不必要地损害性能。</block>
   <block id="dd5a2a602f713562e0f9f0fd8385660e" category="doc">基于NFS的MySQL</block>
@@ -4034,7 +3989,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="3390e3575b3e341afa2b7172ff5b33a7" category="sidebar">适用于 VMware vSphere 的 SnapCenter 插件</block>
   <block id="62a004b95946bb97541afa471dcca73a" category="sidebar">MySQL</block>
   <block id="7f1a6761f7160e33a32105202e47303b" category="sidebar">容器化</block>
-  <block id="bc65796c5a1bad360243a1bbe58272c2" category="sidebar">常规存储配置</block>
   <block id="bd57f4f74ca087a92a48b23d45753729" category="paragraph">ONTAP 工具的VASA提供程序负责根据已发现的受管ESXi主机启动程序管理ONTAP 中的FCP和iSCSI igrou以及NVMe子系统。但是、它不会与光纤通道交换机集成来管理分区。必须先根据最佳实践进行分区、然后才能进行任何配置。以下是单个启动程序分区到四个ONTAP系统的示例：</block>
   <block id="6b14e3f4a37881185acf7a766f8f6272" category="paragraph">单个启动程序分区：</block>
   <block id="17ccf64e30cb518fd7ca87ce752ad738" category="paragraph"><block ref="17ccf64e30cb518fd7ca87ce752ad738" category="inline-image-macro-rx" type="image"></block></block>
@@ -4049,5 +4003,23 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="4e0d7e0587bf99c9b7a64a84fd42f6bd" category="paragraph">请参见NetApp和VMware针对您选择的协议提供的其他最佳实践指南。一般而言，除了上述情况外，没有任何其他变化。</block>
   <block id="97f87e9ab1d660463c63beb8745fd9e5" category="paragraph">*使用基于NFS v3*的Vvol的网络配置示例</block>
   <block id="c80b3cc8b5013bd4039769fb0f783e60" category="paragraph"><block ref="c80b3cc8b5013bd4039769fb0f783e60" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="d81c587aad705c1101db78ffea8e5bc3" category="paragraph"><block ref="d81c587aad705c1101db78ffea8e5bc3" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="dee28dd6d1a9ef7bf399f642fd9d588f" category="section-title">NFS传输大小</block>
+  <block id="d8299d00f914e35b80644e5781e47a77" category="paragraph"><block ref="d8299d00f914e35b80644e5781e47a77" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="14ce62ac76fa34a51093e6bcf11a2fd1" category="paragraph">数据库备份的主要注意事项是利用NetApp Snapshot技术。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。</block>
+  <block id="08ec4f226440b636860c1faf0bd1b98c" category="paragraph"><block ref="08ec4f226440b636860c1faf0bd1b98c" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2c024bdc7d0e87e8ba0f473024d45a4e" category="paragraph">修改服务器和数据库设置有助于实现更好、更高效的数据库性能。</block>
+  <block id="861f074a1ecd9d1cc088d2fe81903565" category="paragraph"><block ref="861f074a1ecd9d1cc088d2fe81903565" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="710e9cd79e3865d47122a799f425b31f" category="paragraph"><block ref="710e9cd79e3865d47122a799f425b31f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="5a656ddcc72bacc3a5900c23edf7a08e" category="paragraph"><block ref="5a656ddcc72bacc3a5900c23edf7a08e" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="073ce0a0568adc64d52dd9b1d8c02c54" category="paragraph"><block ref="073ce0a0568adc64d52dd9b1d8c02c54" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="d5e31e9b7075c2926dba10053509346b" category="paragraph">存储效率是RAID、配置(整体布局和利用率)、镜像和其他数据保护技术的组合。NetApp技术(如Snapshot副本、精简配置、FlexClone)可优化基础架构中的现有存储、推迟或避免未来的存储支出、从而帮助实现成本优势。将这些技术结合使用的次数越多、节省的空间就越大。</block>
+  <block id="3401a9880dfc322da8a56c4d632361f6" category="paragraph"><block ref="3401a9880dfc322da8a56c4d632361f6" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="87f823f4f3b4258445d5af029afe5ad9" category="paragraph"><block ref="87f823f4f3b4258445d5af029afe5ad9" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="9213fe9d391179276ff6c03552486255" category="paragraph"><block ref="9213fe9d391179276ff6c03552486255" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="3105b4c0642b9710179c18edcf8e8718" category="paragraph"><block ref="3105b4c0642b9710179c18edcf8e8718" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="1a43000eb9893bff7ab7b1ce1d3fd6a8" category="paragraph"><block ref="1a43000eb9893bff7ab7b1ce1d3fd6a8" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="4b7a8562c98b8c652bdfb6aa79788222" category="paragraph"><block ref="4b7a8562c98b8c652bdfb6aa79788222" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="25cec91f17a8619119f76c8adbace583" category="paragraph">另请参见一节中有关数据压缩块对齐的讨论 <block ref="0faffd62be034c86d531acfee84d252e" category="inline-link-macro-rx"></block>。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。</block>
+  <block id="38ac6f4e1538397bd4f659237ec03ebf" category="paragraph"><block ref="38ac6f4e1538397bd4f659237ec03ebf" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="f01518e5f3b18a9ea241bc63a3475dbd" category="paragraph"><block ref="f01518e5f3b18a9ea241bc63a3475dbd" category="inline-image-macro-rx" type="image"></block></block>
 </blocks>

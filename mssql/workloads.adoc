@@ -10,7 +10,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]

@@ -6,6 +6,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = Microsoft SQL Server共享实例与专用实例
 :allow-uri-read: 
+:imagesdir: ../media/
 
 
 [role="lead"]

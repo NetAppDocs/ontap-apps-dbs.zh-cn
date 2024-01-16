@@ -10,7 +10,7 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
 
 
 

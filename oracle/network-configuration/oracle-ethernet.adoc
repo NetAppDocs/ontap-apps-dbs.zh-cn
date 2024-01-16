@@ -10,7 +10,7 @@ summary: Oracle和TCP/IP以及以太网配置。
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

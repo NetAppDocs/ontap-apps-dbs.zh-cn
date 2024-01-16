@@ -1,17 +1,18 @@
 ---
 sidebar: sidebar 
-permalink: mssql/Data-protection.html 
+permalink: mssql/sql-data-protection.html 
 keywords: MS-SQL,mssql,SQL Server, SnapCenter, data protection 
 summary: 使用ONTAP保护Microsoft SQL Server数据 
 ---
 = 使用ONTAP保护Microsoft SQL Server数据
 :allow-uri-read: 
+:imagesdir: ../media/
 
 
 [role="lead"]
 保护数据库对于任何组织都至关重要。随着数据大小和数据库数量的增加、维护恢复时间目标(RTO)和恢复点目标(RPO)至关重要。
 
-数据库备份的主要注意事项是利用NetApp Snapshot技术。讨论了ONTAP上的数据保护规划 link:../common/dp/overview.html["此处"]。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。
+数据库备份的主要注意事项是利用NetApp Snapshot技术。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。
 
 
 

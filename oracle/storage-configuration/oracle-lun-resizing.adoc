@@ -10,7 +10,7 @@ summary: 使用Oracle数据库调整LUN和LVM大小
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

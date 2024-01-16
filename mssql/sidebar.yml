@@ -27,7 +27,7 @@ entries:
   - title: 存储效率
     url: "/mssql/storage-efficiency.html"
 - title: 数据保护
-  url: "/mssql/data-protection.html"
+  url: "/mssql/sql-data-protection.html"
 - title: 灾难恢复
   url: "/mssql/SQL-disaster-recovery.html"
 - title: 数据安全性

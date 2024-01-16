@@ -6,6 +6,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = Microsoft SQL Server tempdb文件
 :allow-uri-read: 
+:imagesdir: ../media/
 
 
 [role="lead"]

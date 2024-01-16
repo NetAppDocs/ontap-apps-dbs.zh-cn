@@ -6,6 +6,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = Microsoft SQL Server概述
 :allow-uri-read: 
+:imagesdir: ../media/
 
 
 [role="lead"]

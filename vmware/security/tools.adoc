@@ -10,7 +10,7 @@ summary: 本文档讨论适用于 VMware vSphere 的 ONTAP 工具的产品安全
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
 
 
 

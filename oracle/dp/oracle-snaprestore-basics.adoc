@@ -10,7 +10,7 @@ summary: NetApp SnapRestore技术可在ONTAP中从Snapshot副本快速恢复Orac
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

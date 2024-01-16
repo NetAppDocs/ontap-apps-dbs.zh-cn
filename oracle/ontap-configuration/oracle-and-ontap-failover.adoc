@@ -10,7 +10,7 @@ summary: 要确保Oracle数据库操作不会被这些操作中断、需要了�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

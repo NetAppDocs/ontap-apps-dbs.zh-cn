@@ -10,7 +10,7 @@ summary: 对象存储访问中断期间的数据库访问
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

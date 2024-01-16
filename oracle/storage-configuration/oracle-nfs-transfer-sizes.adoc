@@ -10,7 +10,7 @@ summary: 使用Oracle时的NFS传输大小
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

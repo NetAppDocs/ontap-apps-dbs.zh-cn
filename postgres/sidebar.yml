@@ -4,8 +4,6 @@ title: PostgreSQL
 entries:
 - title: 概述
   url: "/postgres/overview.html"
-- title: ONTAP 配置
-  url: "/postgres/ontap.html"
 - title: 数据库配置
   entries:
   - title: 架构

@@ -10,7 +10,7 @@ summary: 借助ONTAP实现Oracle灾难恢复
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

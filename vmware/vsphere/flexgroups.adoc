@@ -10,11 +10,14 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revnumber: 9.8 adds support for FlexGroup datastores in vSphere
+:revdate: along with the ONTAP tools for VMware vSphere 9.8 release.
 
-
-[role="lead"]
-ONTAP 9.8 增加了对 vSphere 中 FlexGroup 数据存储库的支持，并增加了适用于 VMware vSphere 9.8 版本的 ONTAP 工具。
 
 FlexGroup 简化了大型数据存储库的创建，并自动创建了大量成分卷，以便从 ONTAP 系统中获得最大性能。将 FlexGroup 与 vSphere 结合使用，可用于一个具有完整 ONTAP 集群功能的可扩展 vSphere 数据存储库。
 

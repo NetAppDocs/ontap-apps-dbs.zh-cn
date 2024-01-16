@@ -10,7 +10,7 @@ summary: Oracle数据库的WAFL对齐
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

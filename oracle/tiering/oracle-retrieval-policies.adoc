@@ -10,7 +10,7 @@ summary: Pr神奇 分层检索策略
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

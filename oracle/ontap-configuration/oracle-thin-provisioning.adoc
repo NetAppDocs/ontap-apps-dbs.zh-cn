@@ -10,7 +10,7 @@ summary: Oracle和ONTAP精简配置
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

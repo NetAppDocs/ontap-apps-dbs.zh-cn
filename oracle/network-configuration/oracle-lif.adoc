@@ -10,7 +10,7 @@ summary: Oracle数据库的逻辑接口设计
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

@@ -10,7 +10,7 @@ summary: 为Oracle数据库配置SVM
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

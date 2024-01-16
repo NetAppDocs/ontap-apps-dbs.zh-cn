@@ -10,7 +10,7 @@ summary: Oracle数据库和存储效率
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

@@ -10,7 +10,7 @@ summary: LUN与Oracle数据库对齐
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]
@@ -22,7 +22,7 @@ LUN对齐是指针对底层文件系统布局优化I/O。
 
 在Linux环境中、在整个驱动器设备上构建逻辑卷组。如果需要分区、请运行以检查对齐情况 `fdisk –u` 并验证每个分区的起始位置是否为八的倍数。这意味着分区从八个512字节扇区的倍数开始、即4 KB。
 
-另请参见一节中有关数据压缩块对齐的讨论 link:/oracle/ontap-configuration/oracle-efficiency.html["效率"]。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。
+另请参见一节中有关数据压缩块对齐的讨论 link:../ontap-configuration/oracle-efficiency.html["效率"]。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。
 
 
 

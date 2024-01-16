@@ -10,12 +10,13 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revdate: == vSphere datastore and protocol features
 
-
-
-
-== vSphere 数据存储库和协议功能
 
 在运行ONTAP 软件的系统上、可以使用七种协议将VMware vSphere连接到数据存储库：
 

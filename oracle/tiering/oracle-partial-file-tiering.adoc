@@ -10,7 +10,7 @@ summary: 使用FabricPool进行部分文件分层
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

@@ -10,11 +10,14 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revnumber: 
+:revdate: or entire SVMs.
 
-
-[role="lead"]
-运行 ONTAP 软件的系统可以使用 ONTAP 存储服务质量功能来限制文件， LUN ，卷或整个 SVM 等不同存储对象的吞吐量（以 MBps 和 / 或每秒 I/O 数（ IOPS ）为单位）。
 
 吞吐量限制对于在部署之前控制未知或测试工作负载非常有用、可确保它们不会影响其他工作负载。它们还可用于在确定抢占资源的工作负载后对其进行限制。此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。
 

@@ -10,7 +10,7 @@ summary: 适用于Oracle数据库的NFS配置
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

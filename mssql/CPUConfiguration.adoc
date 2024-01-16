@@ -6,12 +6,11 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = CPU配置
 :allow-uri-read: 
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
-:revdate: Modifying server and database settings can help achieve better and more efficient database performance.
+:imagesdir: ../media/
 
+
+[role="lead"]
+修改服务器和数据库设置有助于实现更好、更高效的数据库性能。
 
 
 
@@ -29,7 +28,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 === 日志条目表示SQL Server启动后使用的核心数。
 
-image:./media/hyperthreading.png["错误：缺少图形映像"]
+image:mssql-hyperthreading.png["错误：缺少图形映像"]
 
 因此、要使用所有CPU、应使用每个处理器的核心许可证。有关SQL Server许可的详细信息、请参见 link:https://www.microsoft.com/en-us/sql-server/sql-server-2022-comparison["SQL Server 2022：您的现代数据平台"^]。
 
@@ -72,7 +71,7 @@ TIP: * NetApp建议*对于数据仓库等DSS，请从50左右的设置开始，�
 
 应在何时配置SQL Server以使用更多工作线程？如果每个计划程序的平均工作队列长度超过1、则向系统添加更多线程可能会更有用、但前提是负载不受CPU制约或遇到任何其他繁重等待。如果出现上述任一情况、添加更多线程将毫无帮助、因为它们最终会等待其他系统瓶颈。有关最大工作线程数的详细信息、请参见 link:https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/configure-the-max-worker-threads-server-configuration-option?view=sql-server-ver16&redirectedfrom=MSDN["配置最大工作线程数服务器配置选项"^]。
 
-image:./media/max-worker-threads.png["错误：缺少图形映像"]
+image:mssql-max-worker-threads.png["错误：缺少图形映像"]
 
 
 

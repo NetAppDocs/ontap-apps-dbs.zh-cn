@@ -10,11 +10,13 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revdate: Configuring network settings when using vSphere with systems running ONTAP software is straightforward and similar to other network configuration.
 
-
-[role="lead"]
-在将 vSphere 与运行 ONTAP 软件的系统结合使用时，配置网络设置非常简单，与其他网络配置类似。
 
 需要考虑以下几点：
 

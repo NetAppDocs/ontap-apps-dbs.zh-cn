@@ -10,11 +10,14 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./../media/
+:imagesdir: ../../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revnumber: 
+:revdate: and it is easy to manage this ability inside vCenter with the SnapCenter Plug-In for VMware vSphere.
 
-
-[role="lead"]
-备份虚拟机并快速恢复虚拟机是 ONTAP for vSphere 的一项强大优势，使用适用于 VMware vSphere 的 SnapCenter 插件在 vCenter 中轻松管理此功能。
 
 使用快照快速创建虚拟机或数据存储库的副本而不影响性能、然后使用SnapMirror将其发送到二级系统、以实现长期异地数据保护。这种方法只存储更改后的信息，从而最大限度地减少存储空间和网络带宽。
 

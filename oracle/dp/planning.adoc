@@ -10,7 +10,7 @@ summary: ONTAP数据保护策略
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

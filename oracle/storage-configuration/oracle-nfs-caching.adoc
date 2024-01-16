@@ -10,7 +10,7 @@ summary: NFS属性缓存数据库
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]

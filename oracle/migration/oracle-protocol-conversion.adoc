@@ -10,7 +10,7 @@ summary: 在FLI迁移后更改SAN协议
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../../media/
 
 
 [role="lead"]
