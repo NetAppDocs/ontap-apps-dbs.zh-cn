@@ -18,8 +18,10 @@ entries:
 - title: 存储配置
   pdf-filename: PostgreSQL的存储配置
   entries:
-  - title: 文件系统配置
-    url: "/postgres/postgres-filesystems.html"
+  - title: NFS
+    url: "/postgres/postgres-nfs-filesystems.html"
+  - title: SAN
+    url: "/postgres/postgres-san-filesystems.html"
 - title: 数据保护
   pdf-filename: PostgreSQL的数据保护
   entries:

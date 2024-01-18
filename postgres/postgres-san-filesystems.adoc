@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
-permalink: postgres/postgres-filesystems.html 
+permalink: postgres/postgres-san-filesystems.html 
 keywords: PostgreSQL,database,postgres 
-summary: 基于ONTAP的PostgreSQL数据库 
+summary: 基于ONTAP使用SAN的PostgreSQL数据库 
 ---
-= 文件系统
+= 使用SAN文件系统的PostgreSQL
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,50 +14,13 @@ summary: 基于ONTAP的PostgreSQL数据库
 
 
 [role="lead"]
-PostgreSQL可以托管在NFS或SAN文件系统上。
+采用SAN的PostgreSQL数据库通常托管在xfs文件系统上、但如果操作系统供应商支持、则可以使用其他数据库
+
+虽然一个LUN通常可支持高达10万次IOPS、但IO密集型数据库通常需要使用带区化LVM。
 
 
 
-== NFS
-
-
-TIP: *如果需要NFSv4功能、NetApp建议*使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高某些边缘情况下的故障恢复能力。
-
-挂载NFS文件系统时、请使用以下挂载选项：
-
-....
-nfs4 rw, hard,nointr,bg,vers=4,sync,proto=tcp,noatime,rsize=65536,wsize=65536
-....
-
-
-=== NFS传输大小
-
-默认情况下、ONTAP会将NFS I/O大小限制为64K。
-
-默认情况下、ONTAP会将NFS I/O大小限制为64K。
-
-大多数应用程序和数据库的随机I/O使用的块大小要小得多、远远低于64K的最大值。大型块I/O通常会并行处理、因此最大64K也不会限制获得最大带宽。
-
-在某些工作负载中、最大64K会产生限制。特别是、如果数据库执行的I/O数量较少但规模较大、则单线程操作(例如备份或恢复操作或数据库完整表扫描)运行速度会更快、效率也会更高。ONTAP的最佳I/O处理大小为256K。
-
-给定ONTAP SVM的最大传输大小可按如下方式进行更改：
-
-....
-Cluster01::> set advanced
-Warning: These advanced commands are potentially dangerous; use them only when directed to do so by NetApp personnel.
-Do you want to continue? {y|n}: y
-Cluster01::*> nfs server modify -vserver vserver1 -tcp-max-xfer-size 262144
-Cluster01::*>
-....
-|===
-| 小心 
-
-
-| 请勿将ONTAP上允许的最大传输大小减小到低于当前挂载的NFS文件系统的rsize/wsize值。在某些操作系统中、这可能会导致挂起甚至数据损坏。例如、如果NFS客户端当前设置为rsize/wsize 65536,则ONTAP最大传输大小可以在65536- 1048576之间进行调整,但不会产生任何影响,因为客户端本身是有限的。将最大传输大小减小至65536,可能会损坏可用性或数据。 
-|===
-
-
-== SAN
+== LVM拼花
 
 在闪存驱动器时代之前、条带化用于帮助克服旋转驱动器的性能限制。例如、如果操作系统需要执行1 MB的读取操作、则从单个驱动器读取1 MB的数据将需要大量的驱动器磁头查找和读取、因为1 MB的传输速度较慢。如果在8个LUN上对1 MB的数据进行条带化、则操作系统可以问题描述并行执行8个128 K读取操作、从而减少完成1 MB传输所需的时间。
 

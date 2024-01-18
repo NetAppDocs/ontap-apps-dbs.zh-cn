@@ -1,0 +1,86 @@
+---
+sidebar: sidebar 
+permalink: postgres/postgres-nfs-filesystems.html 
+keywords: PostgreSQL,database,postgres 
+summary: PostgreSQL数据库NFS与ONTAP 
+---
+= 使用NFS文件系统的PostgreSQL
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+PostgreSQL数据库可以托管在NFSv3或NFSv4文件系统上。最佳选择取决于数据库以外的因素。
+
+例如、在某些集群环境中、NFSv4锁定行为可能更好。(请参见 link:../oracle/oracle-notes-stale-nfs-locks.html["此处"] 了解更多详细信息)
+
+否则、数据库功能(包括性能)应接近相同。唯一的要求是使用 `hard` 挂载选项。要确保软超时不会产生不可恢复的IO错误、必须执行此操作。
+
+如果选择NFSv4作为协议、NetApp建议使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高NFSv4.0的故障恢复能力。
+
+对常规数据库工作负载使用以下挂载选项：
+
+....
+rw, hard,nointr,bg,vers=[3|4],proto=tcp,rsize=65536,wsize=65536
+....
+如果预期顺序IO负载繁重、则可以增加NFS传输大小。
+
+
+
+== NFS传输大小
+
+默认情况下、ONTAP会将NFS I/O大小限制为64K。
+
+大多数应用程序和数据库的随机I/O使用的块大小要小得多、远远低于64K的最大值。大型块I/O通常会并行处理、因此最大64K也不会限制获得最大带宽。
+
+在某些工作负载中、最大64K会产生限制。特别是、如果数据库执行的I/O数量较少但规模较大、则单线程操作(例如备份或恢复操作或数据库完整表扫描)运行速度会更快、效率也会更高。ONTAP的最佳I/O处理大小为256K。
+
+给定ONTAP SVM的最大传输大小可按如下方式进行更改：
+
+....
+Cluster01::> set advanced
+Warning: These advanced commands are potentially dangerous; use them only when directed to do so by NetApp personnel.
+Do you want to continue? {y|n}: y
+Cluster01::*> nfs server modify -vserver vserver1 -tcp-max-xfer-size 262144
+Cluster01::*>
+....
+|===
+| 小心 
+
+
+| 请勿将ONTAP上允许的最大传输大小减小到低于当前挂载的NFS文件系统的rsize/wsize值。在某些操作系统中、这可能会导致挂起甚至数据损坏。例如、如果NFS客户端当前设置为rsize/wsize 65536,则ONTAP最大传输大小可以在65536- 1048576之间进行调整,但不会产生任何影响,因为客户端本身是有限的。将最大传输大小减小至65536,可能会损坏可用性或数据。 
+|===
+在ONTAP级别增加传输大小后、将使用以下挂载选项：
+
+....
+rw, hard,nointr,bg,vers=[3|4],proto=tcp,rsize=262144,wsize=262144
+....
+
+
+== NFSv3 TCP插槽表
+
+如果在Linux中使用NFSv3、则正确设置TCP插槽表至关重要。
+
+TCP插槽表相当于主机总线适配器(Host Bus Adapter、HBA)队列深度的NFSv3。这些表可控制任何时候都可以处理的NFS操作的数量。默认值通常为16、该值太低、无法实现最佳性能。在较新的Linux内核上会出现相反的问题、这会自动将TCP插槽表限制增加到使NFS服务器充满请求的级别。
+
+为了获得最佳性能并防止出现性能问题、请调整控制TCP插槽表的内核参数。
+
+运行 `sysctl -a | grep tcp.*.slot_table` 命令、并观察以下参数：
+
+....
+# sysctl -a | grep tcp.*.slot_table
+sunrpc.tcp_max_slot_table_entries = 128
+sunrpc.tcp_slot_table_entries = 128
+....
+所有Linux系统都应包括 `sunrpc.tcp_slot_table_entries`，但只有部分包括 `sunrpc.tcp_max_slot_table_entries`。它们都应设置为128。
+
+|===
+| 小心 
+
+
+| 如果未设置这些参数、可能会对性能产生显著影响。在某些情况下、性能会受到限制、因为Linux操作系统发出的I/O不足在其他情况下、随着Linux操作系统尝试问题描述的I/O数超过可处理的I/O数、I/O时间会增加。 
+|===

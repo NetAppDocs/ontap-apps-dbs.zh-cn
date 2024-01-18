@@ -602,10 +602,7 @@
   <block id="8fcd14822a5b94d212898fe3e006526e" category="paragraph">PostgreSQL中的所有数据库对象都由各自的OID在内部管理。表和索引也由各个OID管理。数据库对象及其各自的OID之间的关系存储在相应的系统目录表中、具体取决于对象类型。例如、数据库和堆表的OID存储在中<block ref="d0fcebb608269edbd5d67486884ebed7" prefix=" " category="inline-code"></block> 和`pg_class。您可以通过在PostgreSQL客户端上发出查询来确定这些OID。</block>
   <block id="d0e97e34fe92edd2facd0f7377b6340b" category="paragraph">每个数据库都有自己的表和索引文件、这些表和索引文件的大小限制为1 GB。每个表都有两个关联文件、后缀分别为<block ref="7b9b00c45b01f7b7c6d3a3c8ba2e9275" prefix=" " category="inline-code"></block> 和<block ref="a1d869a79e2f43693a6a416fcbdc2724" prefix=" " category="inline-code"></block>。它们称为可用空间映射和可见性映射。这些文件用于存储有关可用空间容量的信息、并可查看表文件中的每个页面。索引只具有单个可用空间映射、而不具有可见性映射。</block>
   <block id="048a7ed79caf84bb5c725efc5f474911" category="paragraph">。<block ref="c28f4f32219f5ff99fb4b116980b8549" prefix=" " category="inline-code"></block> 目录包含预写日志。预写日志用于提高数据库可靠性和性能。每当您更新表中的某一行时、PostgreSQL都会首先将更改写入预写日志、然后将修改写入实际数据页面到磁盘。。<block ref="f7223cfaa9416056a91e259e326ac5cf" prefix=" " category="inline-code"></block> 目录通常包含多个文件、但initdb仅创建第一个文件。根据需要添加其他文件。每个xlog文件的长度为16 MB。</block>
-  <block id="2bd2440a8b5fed6660918b5f10f685bb" category="doc">文件系统</block>
-  <block id="81d00501c34ba5f161f685a99dce0d13" category="paragraph">PostgreSQL可以托管在NFS或SAN文件系统上。</block>
   <block id="789a6c7dd865d16eb1df122bcc5c9a3a" category="admonition">*如果需要NFSv4功能、NetApp建议*使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高某些边缘情况下的故障恢复能力。</block>
-  <block id="36772d6dfc6e102eff552ffad6b98690" category="paragraph">挂载NFS文件系统时、请使用以下挂载选项：</block>
   <block id="8e86e0aee135afb67c6a1d3d6e0f3306" category="inline-link-macro">NFS传输大小</block>
   <block id="d84b41126744795c4ee82f7b256e7234" category="inline-link-macro">FC SAN</block>
   <block id="2c8c2171fc87c96e58fb40d8714f85cf" category="doc">PostgreSQL架构</block>
@@ -3889,7 +3886,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="2d2eef88dbdd0c34bde24e2632d9944f" category="sidebar">SAP HANA和AnyDB</block>
   <block id="399bd1ee587245ecac6f39beaa99886f" category="sidebar">PostgreSQL</block>
   <block id="f4f70727dc34561dfde1a3c529b6205c" category="sidebar">设置</block>
-  <block id="3dd7c32443d5846be0a8fd75cb08b70e" category="sidebar">文件系统配置</block>
   <block id="c476a4701643b158f9f5d57bcc91951d" category="sidebar">Snapshot技术</block>
   <block id="35084d885dea7b061e6894c1cf3036d9" category="sidebar">工作负载</block>
   <block id="7d219314ccabde6609510141bb175a6c" category="sidebar">共享实例与专用实例</block>
@@ -4020,4 +4016,19 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="ea9cdfcbfcf1906c15b6779f0f327028" category="sidebar">MySQL的数据库配置</block>
   <block id="308f8f580d0248ac023557cfd4b10d83" category="sidebar">MySQL的主机配置</block>
   <block id="830f353b3e6055499fac447b16b0c935" category="sidebar">MySQL的存储配置</block>
+  <block id="3106f8f17f2974fe05da16fb0cc50505" category="summary">基于ONTAP使用SAN的PostgreSQL数据库</block>
+  <block id="74cacb0c34a37e2859e3b054938a344d" category="doc">使用SAN文件系统的PostgreSQL</block>
+  <block id="1758f5c81d60f1a0ac8600fddc99a919" category="paragraph">采用SAN的PostgreSQL数据库通常托管在xfs文件系统上、但如果操作系统供应商支持、则可以使用其他数据库</block>
+  <block id="d73e7b56b7baa813a32c521ca074e7c4" category="paragraph">虽然一个LUN通常可支持高达10万次IOPS、但IO密集型数据库通常需要使用带区化LVM。</block>
+  <block id="5c24f0d1d447c2dfc01f2f2641e1d56c" category="summary">PostgreSQL数据库NFS与ONTAP</block>
+  <block id="3532099588a13fbccb2af22a75936454" category="doc">使用NFS文件系统的PostgreSQL</block>
+  <block id="f7cc8c4234952826818ad4d0c2050ac9" category="paragraph">PostgreSQL数据库可以托管在NFSv3或NFSv4文件系统上。最佳选择取决于数据库以外的因素。</block>
+  <block id="1482c42acc1dd31ee8496c71a805e73c" category="paragraph">例如、在某些集群环境中、NFSv4锁定行为可能更好。(请参见 <block ref="bc3a7e667477b8b3590fa1451dcb924c" category="inline-link-macro-rx"></block> 了解更多详细信息)</block>
+  <block id="9674525687765646f35916d0e569eda9" category="paragraph">否则、数据库功能(包括性能)应接近相同。唯一的要求是使用<block ref="d64a84456adc959f56de6af685d0dadd" prefix=" " category="inline-code"></block> 挂载选项。要确保软超时不会产生不可恢复的IO错误、必须执行此操作。</block>
+  <block id="0c6430fad6c643c444b5d6d52b18edb4" category="paragraph">如果选择NFSv4作为协议、NetApp建议使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高NFSv4.0的故障恢复能力。</block>
+  <block id="248212b04c23627e2719e106224d2eb3" category="paragraph">对常规数据库工作负载使用以下挂载选项：</block>
+  <block id="6daf9da65c1180ae710d4f437b5e4edc" category="paragraph">如果预期顺序IO负载繁重、则可以增加NFS传输大小。</block>
+  <block id="9efbdff43e91279291e95690414bec95" category="paragraph">在ONTAP级别增加传输大小后、将使用以下挂载选项：</block>
+  <block id="395201f6a339cc4cf6b345e0c259f383" category="section-title">NFSv3 TCP插槽表</block>
+  <block id="1f8260aa2c5a5b35bf771c26828d2096" category="paragraph">如果在Linux中使用NFSv3、则正确设置TCP插槽表至关重要。</block>
 </blocks>
