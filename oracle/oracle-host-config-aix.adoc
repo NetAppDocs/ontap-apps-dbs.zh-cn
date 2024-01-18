@@ -1,0 +1,113 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-host-config-aix.html 
+keywords: oracle, database, ontap, aix, cio 
+summary: 使用AIX在ONTAP上运行Oracle 
+---
+= IBM AIX
+:allow-uri-read: 
+
+
+[role="lead"]
+特定于IBM AIX操作系统的配置主题。
+
+
+
+== 并发I/O
+
+要在IBM AIX上实现最佳性能、需要使用并发I/O如果不使用并发I/O、则性能可能会受到限制、因为AIX会执行序列化的原子I/O、从而产生大量开销。
+
+最初、NetApp建议使用 `cio` 挂载选项、用于强制在文件系统上使用并发I/O、但此过程存在缺点、不再需要。自AIX 5.2和Oracle 10gR1推出以来、AIX上的Oracle可以打开单个文件以实现并发IO、而不是强制在整个文件系统上执行并发I/O。
+
+启用并发I/O的最佳方法是设置 `init.ora` 参数 `filesystemio_options` to `setall`。这样、Oracle就可以打开特定文件、以便用于并发I/O
+
+使用 `cio` 作为挂载选项、会强制使用并发I/O、这可能会产生负面影响。例如、强制执行并发I/O会在文件系统上禁用预读、这可能会损害Oracle数据库软件之外发生的I/O的性能、例如复制文件和执行磁带备份。此外，Oracle GoldenGate和SAP BR*Tools等产品与不兼容 `cio` 适用于某些Oracle版本的挂载选项。
+
+[TIP]
+====
+* NetApp建议*：
+
+* 请勿使用 `cio` 文件系统级别的挂载选项。而是通过使用来启用并发I/O `filesystemio_options=setall`。
+* 仅使用 `cio` 如果无法设置、则应设置挂载选项 `filesystemio_options=setall`。
+
+
+====
+
+
+== AIX NFS挂载选项
+
+下表列出了Oracle单实例数据库的AIX NFS挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144` 
+
+
+| 控制文件
+数据文件
+重做日志 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144` 
+
+
+| `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+intr` 
+|===
+下表列出了RAC的AIX NFS挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144` 
+
+
+| 控制文件
+数据文件
+重做日志 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr,noac` 
+
+
+| `CRS/Voting` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr,noac` 
+
+
+| 专用 `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144` 
+
+
+| 共享 `ORACLE_HOME` | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
+timeo=600,rsize=262144,wsize=262144,
+nointr` 
+|===
+单实例挂载选项与RAC挂载选项之间的主要区别在于添加了 `noac` 挂载选项。这种添加的效果是禁用主机操作系统缓存、从而使RAC集群中的所有实例都能获得一致的数据状态视图。
+
+但使用 `cio` 挂载选项和 `init.ora` 参数 `filesystemio_options=setall` 与禁用主机缓存具有相同的效果、但仍需要使用 `noac`。 `noac` 对于共享为必填项 `ORACLE_HOME` 部署以提高Oracle密码文件和等文件的一致性 `spfile` 参数文件。RAC集群中的每个实例都有一个专用 `ORACLE_HOME`，则不需要此参数。
+
+
+
+== AIX jfs/JFS2挂载选项
+
+下表列出了AIX jfs/jfs2挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | 默认值 
+
+
+| 控制文件
+数据文件
+重做日志 | 默认值 
+
+
+| ORACLE_HOME | 默认值 
+|===
+使用AIX之前 `hdisk` 在任何环境(包括数据库)中、设备都应检查参数 `queue_depth`。此参数不是HBA队列深度、而是与各个的SCSI队列深度相关 `hdisk device. Depending on how the LUNs are configured, the value for `queue_depth` 可能太低、无法获得良好性能。测试表明、最佳值为64。

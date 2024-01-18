@@ -1,0 +1,98 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-cpu-configuration.html 
+keywords: MS-SQL,mssql,SQL Server 
+summary: 基于ONTAP的Microsoft SQL Server 
+---
+= CPU配置
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+修改服务器和数据库设置有助于实现更好、更高效的数据库性能。
+
+
+
+== 超线程
+
+超线程是英特尔专有的同步多线程(SMT)实施、它可以改进在x86微处理器上执行的并行化(多任务处理)。
+
+使用超线程的硬件允许逻辑超线程CPU在操作系统中显示为物理CPU。然后、SQL Server会看到操作系统提供的物理CPU、因此可以使用超线程处理器。
+
+此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息、请参见计算容量限制(按SQL Server版本)。
+
+在许可SQL Server时、主要有两种思路。第一种称为服务器+客户端访问许可证(CAL)模式；第二种是按处理器核心模式。尽管使用server + CAL策略可以访问SQL Server中提供的所有产品功能、但每个插槽的硬件限制为20个CPU核心。即使每个插槽的CPU核心数超过20个的服务器具有SQL Server Enterprise Edition + CAL、应用程序也无法在该实例上一次使用所有这些核心。图显示了启动后指示核心限制强制实施的SQL Server日志消息。
+
+
+
+=== 日志条目表示SQL Server启动后使用的核心数。
+
+image:mssql-hyperthreading.png["错误：缺少图形映像"]
+
+因此、要使用所有CPU、应使用每个处理器的核心许可证。有关SQL Server许可的详细信息、请参见 link:https://www.microsoft.com/en-us/sql-server/sql-server-2022-comparison["SQL Server 2022：您的现代数据平台"^]。
+
+
+
+== CPU关联性
+
+除非遇到性能问题、否则您不太可能需要更改处理器关联性默认值、但仍然值得了解它们是什么以及它们的工作原理。
+
+SQL Server通过两个选项支持处理器关联性：
+
+* CPU相关性掩码
+* 相关性I/O掩码
+
+
+SQL Server使用操作系统中可用的所有CPU (如果选择了按处理器核心许可证)。它会在所有CPU上创建计划程序、以便充分利用任何给定工作负载的资源。多任务处理时，操作系统或服务器上的其他应用程序可以将进程线程从一个处理器切换到另一个处理器。SQL Server是一个资源密集型应用程序、因此、发生这种情况时、性能可能会受到影响。为了最大限度地降低影响、您可以对处理器进行配置、使所有SQL Server负载都定向到一组预先选择的处理器。这可通过使用CPU相关性掩码来实现。
+
+相关性I/O掩码选项可将SQL Server磁盘I/O绑定到一部分CPU。在SQL Server OLTP环境中、此扩展可以提高发出I/O操作的SQL Server线程的性能。
+
+
+
+== 最大平行度(MAXDOP)
+
+默认情况下、SQL Server会在查询执行期间使用所有可用的CPU (如果选择了按处理器的核心许可证)。
+
+尽管这非常适合大型查询、但它可能会出现发生原因性能问题并限制并发性。一种更好的方法是、将并行处理限制为单个CPU插槽中的物理核心数。例如、如果服务器具有两个物理CPU插槽、每个插槽具有12个核心、而不考虑超线程、则MAXDOP应设置为12。MAXDOP不能限制或指定要使用的CPU。相反、它会限制单个批处理查询可使用的CPU数量。
+
+
+TIP: * NetApp建议*对于数据仓库等DSS，请从50左右的设置开始，然后根据需要进行调整或下调。请确保测量应用程序中的关键查询、并在必要时进行调整。
+
+
+
+== 最大工作线程数
+
+最大工作线程数选项有助于在大量客户端连接到SQL Server时优化性能。
+
+通常、系统会为每个查询请求创建一个单独的操作系统线程。如果与SQL Server同时建立了数百个连接、则每个查询请求一个线程会占用大量系统资源。最大工作线程数选项可使SQL Server创建一个工作线程池来处理大量查询请求、从而有助于提高性能。
+
+默认值为0、这允许SQL Server在启动时自动配置工作线程数。这适用于大多数系统。最大工作线程数是一个高级选项、没有经验丰富的数据库管理员(Database Administrator、DBa)的帮助、不得更改。
+
+应在何时配置SQL Server以使用更多工作线程？如果每个计划程序的平均工作队列长度超过1、则向系统添加更多线程可能会更有用、但前提是负载不受CPU制约或遇到任何其他繁重等待。如果出现上述任一情况、添加更多线程将毫无帮助、因为它们最终会等待其他系统瓶颈。有关最大工作线程数的详细信息、请参见 link:https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/configure-the-max-worker-threads-server-configuration-option?view=sql-server-ver16&redirectedfrom=MSDN["配置最大工作线程数服务器配置选项"^]。
+
+image:mssql-max-worker-threads.png["错误：缺少图形映像"]
+
+
+
+=== 使用SQL Server Management Studio配置最大工作线程数。
+
+....
+The following example shows how to configure the max work threads option using T-SQL.
+
+EXEC sp_configure 'show advanced options', 1;
+
+GO
+
+RECONFIGURE ;
+
+GO
+
+EXEC sp_configure 'max worker threads', 900 ;
+
+GO
+
+RECONFIGURE;
+
+GO
+....

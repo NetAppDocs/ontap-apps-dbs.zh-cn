@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: mysql/mysql-innodb_log_file_size.html 
+keywords: MySQL,MariaDB,innodb_log_file_size 
+summary: 基于ONTAP的MySQL 
+---
+= InnoDB_log_file_size
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+为InnoDB日志文件大小选择合适的大小对于写入操作以及在服务器崩溃后有适当的恢复时间非常重要。
+
+由于登录到该文件的事务太多、因此日志文件大小对于写入操作非常重要。修改记录后、所做的更改不会立即写入表空间。而是将更改记录在日志文件的末尾、并将页面标记为脏。InnoDB使用其日志将随机I/O转换为顺序I/O
+
+日志已满时、脏页会按顺序写出到表空间中、以释放日志文件中的空间。例如、假设服务器在事务处理期间崩溃、而写入操作仅记录在日志文件中。在服务器恢复运行之前、它必须经过恢复阶段、在此阶段中、系统将重写记录在日志文件中的更改。日志文件中的条目越多、服务器恢复所需的时间就越长。
+
+在此示例中、日志文件大小会影响恢复时间和写入性能。在为日志文件大小选择正确的数字时、请平衡恢复时间与写入性能。通常、128 M到512 M之间的值都很好。

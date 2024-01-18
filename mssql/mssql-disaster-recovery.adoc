@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-disaster-recovery.html 
+keywords: MS-SQL,mssql,SQL Server, disaster recovery, snapmirror 
+summary: 基于ONTAP的Microsoft SQL Server 
+---
+= Microsoft SQL Server灾难恢复
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp提供了各种方法来提高硬件、软件或站点出现故障时的数据可用性。
+
+
+
+== NetApp SnapMirror
+
+NetApp SnapMirror技术可提供快速灵活的企业级解决方案、用于通过LAN和广域网镜像或复制数据。在初始基本传输之后、SnapMirror技术仅会将修改后的4 KB数据块传输到目标、从而显著降低网络带宽要求。SnapMirror可根据所配置的复制更新间隔提供异步卷级复制。
+下面是有关适用于SQL Server的SnapMirror的建议：
+
+* 如果使用CIFS、则目标SVM必须是源SVM所属的同一Active Directory域的成员、以便在灾难恢复期间不会破坏NAS文件中存储的访问控制列表(ACL)。
+* 使用与源卷名称相同的目标卷名称并不是必需的、但这样可以简化将目标卷挂载到目标的过程、使其易于管理。如果使用CIFS、则必须使目标NAS命名空间与源命名空间的路径和目录结构完全相同。
+* 为保持一致、请勿从控制器计划SnapMirror更新。但是、请从SnapCenter启用SnapMirror更新、以便在完成完整备份或日志备份后更新SnapMirror。
+* 将包含SQL Server数据的卷分布在集群中的不同节点上、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。
+
+
+有关SnapMirror的详细信息、请参见 link:https://www.netapp.com/us/media/tr-4015.pdf["TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》"^]。

@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-migration-fli-completion.html 
+keywords: migration, oracle, FLI 
+summary: 正在完成FLI转换- Oracle 
+---
+= FLI完成—Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+从主机角度来看、迁移已完成、但仍会从外部阵列提供I/O、直到删除导入关系为止。
+
+在删除关系之前、必须确认所有LUN的迁移过程均已完成。
+
+....
+Cluster01::*> lun import show -vserver vserver1 -fields foreign-disk,path,operational-state
+vserver   foreign-disk path              operational-state
+--------- ------------ ----------------- -----------------
+vserver1 800DT$HuVWB/ /vol/new_asm/LUN4 completed
+vserver1 800DT$HuVWBW /vol/new_asm/LUN0 completed
+vserver1 800DT$HuVWBX /vol/new_asm/LUN1 completed
+vserver1 800DT$HuVWBY /vol/new_asm/LUN2 completed
+vserver1 800DT$HuVWBZ /vol/new_asm/LUN3 completed
+vserver1 800DT$HuVWBa /vol/new_asm/LUN5 completed
+vserver1 800DT$HuVWBb /vol/new_asm/LUN6 completed
+vserver1 800DT$HuVWBc /vol/new_asm/LUN7 completed
+vserver1 800DT$HuVWBd /vol/new_asm/LUN8 completed
+vserver1 800DT$HuVWBe /vol/new_asm/LUN9 completed
+vserver1 800DT$HuVWBf /vol/new_lvm/LUN0 completed
+vserver1 800DT$HuVWBg /vol/new_lvm/LUN1 completed
+vserver1 800DT$HuVWBh /vol/new_lvm/LUN2 completed
+vserver1 800DT$HuVWBi /vol/new_lvm/LUN3 completed
+vserver1 800DT$HuVWBj /vol/new_lvm/LUN4 completed
+vserver1 800DT$HuVWBk /vol/new_lvm/LUN5 completed
+vserver1 800DT$HuVWBl /vol/new_lvm/LUN6 completed
+vserver1 800DT$HuVWBm /vol/new_lvm/LUN7 completed
+vserver1 800DT$HuVWBn /vol/new_lvm/LUN8 completed
+vserver1 800DT$HuVWBo /vol/new_lvm/LUN9 completed
+20 entries were displayed.
+....
+
+
+== 删除导入关系
+
+迁移过程完成后、删除此迁移关系。完成此操作后、I/O将专门从ONTAP上的驱动器提供。
+
+....
+Cluster01::*> lun import delete -vserver vserver1 -path /vol/new_asm/LUN0
+Cluster01::*> lun import delete -vserver vserver1 -path /vol/new_asm/LUN1
+...
+Cluster01::*> lun import delete -vserver vserver1 -path /vol/new_lvm/LUN8
+Cluster01::*> lun import delete -vserver vserver1 -path /vol/new_lvm/LUN9
+....
+
+
+== 取消注册外部LUN
+
+最后、修改磁盘以删除 `is-foreign` 名称。
+
+....
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBW} -is-foreign false
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBX} -is-foreign false
+...
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBn} -is-foreign false
+Cluster01::*> storage disk modify {-serial-number 800DT$HuVWBo} -is-foreign false
+Cluster01::*>
+....

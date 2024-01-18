@@ -1,0 +1,167 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-migration-fli-protocol-conversion.html 
+keywords: migration, oracle, FLI 
+summary: 在FLI迁移后更改SAN协议 
+---
+= FLI协议转换—Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+更改用于访问LUN的协议是一项常见要求。
+
+在某些情况下、将数据迁移到云是整体战略的一部分。TCP/IP是云协议、从FC更改为iSCSI可以更轻松地迁移到各种云环境。在其他情况下、iSCSI可能是利用IP SAN降低的成本的理想选择。有时、迁移可能会使用不同的协议作为临时措施。例如、如果外部阵列和基于ONTAP的LUN不能同时位于同一HBA上、则可以使用iSCSI LUN足够长的时间来从旧阵列复制数据。从系统中删除旧LUN后、您可以将其转换回FC。
+
+以下操作步骤演示了从FC到iSCSI的转换、但总体原则适用于从iSCSI到FC的反向转换。
+
+
+
+== 安装iSCSI启动程序
+
+默认情况下、大多数操作系统都包含软件iSCSI启动程序、但如果未包含、则可以轻松安装。
+
+....
+[root@host1 /]# yum install -y iscsi-initiator-utils
+Loaded plugins: langpacks, product-id, search-disabled-repos, subscription-
+              : manager
+Resolving Dependencies
+--> Running transaction check
+---> Package iscsi-initiator-utils.x86_64 0:6.2.0.873-32.el7 will be updated
+--> Processing Dependency: iscsi-initiator-utils = 6.2.0.873-32.el7 for package: iscsi-initiator-utils-iscsiuio-6.2.0.873-32.el7.x86_64
+---> Package iscsi-initiator-utils.x86_64 0:6.2.0.873-32.0.2.el7 will be an update
+--> Running transaction check
+---> Package iscsi-initiator-utils-iscsiuio.x86_64 0:6.2.0.873-32.el7 will be updated
+---> Package iscsi-initiator-utils-iscsiuio.x86_64 0:6.2.0.873-32.0.2.el7 will be an update
+--> Finished Dependency Resolution
+Dependencies Resolved
+=============================================================================
+ Package                        Arch   Version              Repository  Size
+=============================================================================
+Updating:
+ iscsi-initiator-utils          x86_64 6.2.0.873-32.0.2.el7 ol7_latest 416 k
+Updating for dependencies:
+ iscsi-initiator-utils-iscsiuio x86_64 6.2.0.873-32.0.2.el7 ol7_latest  84 k
+Transaction Summary
+=============================================================================
+Upgrade  1 Package (+1 Dependent package)
+Total download size: 501 k
+Downloading packages:
+No Presto metadata available for ol7_latest
+(1/2): iscsi-initiator-utils-6.2.0.873-32.0.2.el7.x86_6 | 416 kB   00:00
+(2/2): iscsi-initiator-utils-iscsiuio-6.2.0.873-32.0.2. |  84 kB   00:00
+-----------------------------------------------------------------------------
+Total                                           2.8 MB/s | 501 kB  00:00Cluster01
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Updating   : iscsi-initiator-utils-iscsiuio-6.2.0.873-32.0.2.el7.x86   1/4
+  Updating   : iscsi-initiator-utils-6.2.0.873-32.0.2.el7.x86_64         2/4
+  Cleanup    : iscsi-initiator-utils-iscsiuio-6.2.0.873-32.el7.x86_64    3/4
+  Cleanup    : iscsi-initiator-utils-6.2.0.873-32.el7.x86_64             4/4
+rhel-7-server-eus-rpms/7Server/x86_64/productid       | 1.7 kB     00:00
+rhel-7-server-rpms/7Server/x86_64/productid           | 1.7 kB     00:00
+  Verifying  : iscsi-initiator-utils-6.2.0.873-32.0.2.el7.x86_64         1/4
+  Verifying  : iscsi-initiator-utils-iscsiuio-6.2.0.873-32.0.2.el7.x86   2/4
+  Verifying  : iscsi-initiator-utils-iscsiuio-6.2.0.873-32.el7.x86_64    3/4
+  Verifying  : iscsi-initiator-utils-6.2.0.873-32.el7.x86_64             4/4
+Updated:
+  iscsi-initiator-utils.x86_64 0:6.2.0.873-32.0.2.el7
+Dependency Updated:
+  iscsi-initiator-utils-iscsiuio.x86_64 0:6.2.0.873-32.0.2.el7
+Complete!
+[root@host1 /]#
+....
+
+
+== 确定iSCSI启动程序名称
+
+在安装过程中会生成一个唯一的iSCSI启动程序名称。在Linux上、它位于中 `/etc/iscsi/initiatorname.iscsi` 文件此名称用于标识IP SAN上的主机。
+
+....
+[root@host1 /]# cat /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.1992-05.com.redhat:497bd66ca0
+....
+
+
+== 创建新启动程序组
+
+启动程序组(igroGroup)是ONTAP LUN屏蔽架构的一部分。除非先授予主机访问权限、否则无法访问新创建的LUN。完成此步骤的方法是创建一个igrop、其中列出了需要访问的FC WWN或iSCSI启动程序名称。
+
+在此示例中、创建了一个igrop、其中包含Linux主机的iSCSI启动程序。
+
+....
+Cluster01::*> igroup create -igroup linuxiscsi -protocol iscsi -ostype linux -initiator iqn.1994-05.com.redhat:497bd66ca0
+....
+
+
+== 关闭环境
+
+在更改LUN协议之前、必须将LUN完全置于静状态。要转换的LUN之一上的任何数据库都必须关闭、文件系统必须卸载、卷组必须停用。如果使用ASM、请确保已卸载ASM磁盘组并关闭所有网格服务。
+
+
+
+== 取消LUN与FC网络的映射
+
+在LUN完全静置后、从原始FC igrop中删除映射。
+
+....
+Cluster01::*> lun unmap -vserver vserver1 -path /vol/new_asm/LUN0 -igroup linuxhost
+Cluster01::*> lun unmap -vserver vserver1 -path /vol/new_asm/LUN1 -igroup linuxhost
+...
+Cluster01::*> lun unmap -vserver vserver1 -path /vol/new_lvm/LUN8 -igroup linuxhost
+Cluster01::*> lun unmap -vserver vserver1 -path /vol/new_lvm/LUN9 -igroup linuxhost
+....
+
+
+== 将LUN重新映射到IP网络
+
+将对每个LUN的访问权限授予新的基于iSCSI的启动程序组。
+
+....
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_asm/LUN0 -igroup linuxiscsi
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_asm/LUN1 -igroup linuxiscsi
+...
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_lvm/LUN8 -igroup linuxiscsi
+Cluster01::*> lun map -vserver vserver1 -path /vol/new_lvm/LUN9 -igroup linuxiscsi
+Cluster01::*>
+....
+
+
+== 发现iSCSI目标
+
+iSCSI发现分为两个阶段。第一种方法是发现目标、这与发现LUN不同。。 `iscsiadm` 下面显示的命令用于探测由指定的门户组 `-p argument` 和用于存储提供iSCSI服务的所有IP地址和端口的列表。在这种情况下、有四个IP地址在默认端口3260上提供iSCSI服务。
+
+
+NOTE: 如果无法访问任何目标IP地址、则此命令可能需要几分钟才能完成。
+
+....
+[root@host1 ~]# iscsiadm -m discovery -t st -p fas8060-iscsi-public1
+10.63.147.197:3260,1033 iqn.1992-08.com.netapp:sn.807615e9ef6111e5a5ae90e2ba5b9464:vs.3
+10.63.147.198:3260,1034 iqn.1992-08.com.netapp:sn.807615e9ef6111e5a5ae90e2ba5b9464:vs.3
+172.20.108.203:3260,1030 iqn.1992-08.com.netapp:sn.807615e9ef6111e5a5ae90e2ba5b9464:vs.3
+172.20.108.202:3260,1029 iqn.1992-08.com.netapp:sn.807615e9ef6111e5a5ae90e2ba5b9464:vs.3
+....
+
+
+== 发现iSCSI LUN
+
+发现iSCSI目标后、重新启动iSCSI服务以发现可用的iSCSI LUN并构建关联设备、例如多路径或ASMlib设备。
+
+....
+[root@host1 ~]# service iscsi restart
+Redirecting to /bin/systemctl restart  iscsi.service
+....
+
+
+== 重新启动环境
+
+通过重新激活卷组、重新挂载文件系统、重新启动RAC服务等方式重新启动环境。作为预防措施、NetApp建议您在转换过程完成后重新启动服务器、以确保所有配置文件均正确无误、并且所有陈旧设备均已删除。
+
+注意：重新启动主机之前、请确保中的所有条目都已启用 `/etc/fstab` 此参考迁移的SAN资源已被注释掉。如果未执行此步骤、并且LUN访问出现问题、则可能会导致操作系统无法启动。此问题描述不会损坏数据。但是、启动到救援模式或类似模式并进行更正可能非常不方便 `/etc/fstab` 以便可以启动操作系统、以便开始故障排除工作。

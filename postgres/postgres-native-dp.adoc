@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: postgres/postgres-native-dp.html 
+keywords: PostgreSQL,database,postgres 
+summary: 基于ONTAP的PostgreSQL数据库 
+---
+= 本机数据保护
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+存储设计的一个主要方面是为PostgreSQL卷启用保护。客户可以使用转储方法或文件系统备份来保护其PostgreSQL数据库。本节介绍备份单个数据库或整个集群的不同方法。
+
+备份PostgreSQL数据有三种方法：
+
+* SQL Server转储
+* 文件系统级备份
+* 持续归档
+
+
+SQL Server转储方法的理念是、使用SQL Server命令生成一个文件、当返回到服务器时、该文件可以像转储时那样重新创建数据库。PostgreSQL提供实用程序 `pg_dump` 和 `pg_dump_all` 用于创建单个和集群级别的备份。这些转储是逻辑转储、不包含可供WAL重放使用的足够信息。
+
+另一种备份策略是使用文件系统级备份、即管理员直接复制PostgreSQL用于将数据存储在数据库中的文件。此方法在脱机模式下完成：必须关闭数据库或集群。另一种替代方法是使用 `pg_basebackup` 对PostgreSQL数据库运行热流备份。

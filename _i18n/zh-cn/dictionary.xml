@@ -567,7 +567,6 @@
   <block id="55ca4b30c6f7c3ef975a6d1e1fb222a2" category="inline-link-macro">NetApp一致性组概述</block>
   <block id="69dd5879aee425e37fdd5796a8e06a56" category="paragraph">有关一致性组的详细信息、请参见 <block ref="112c5744a39904facdbc5fab385d9fe1" category="inline-link-macro-rx"></block>。</block>
   <block id="7e7397a7b79323762c61941fc0e6b5f9" category="doc">数据保护</block>
-  <block id="04e7487d479314b6bdfdca58a245d899" category="paragraph">索引保护</block>
   <block id="90b0d8da95f7f5935481bc7e648c111e" category="summary">PostgreSQL表段</block>
   <block id="16a49d0bc0249ef3dd42949589a0ed4e" category="doc">表空间</block>
   <block id="d6d544de56c329d9f68bb176c6245e7c" category="paragraph">初始化数据库集群时、系统会自动创建两个表空间。</block>
@@ -907,7 +906,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="b88caedbe9708683eed783eb534ae5f6" category="list-text">对LUN进行分区并验证它们是否已正确对齐。有关如何直接测试和确认对齐的说明，请参阅“附录B：WAFL对齐验证”。</block>
   <block id="a0c1c26e783204cf713b2e1f0823aab3" category="section-title">zpools</block>
   <block id="c81b8fe4a368c32102406e65fc41a227" category="inline-link-macro">LUN配置</block>
-  <block id="c49c7ca1707a6d27b04d804b2b5dfeb3" category="paragraph">只能在中的步骤之后创建zpool <block ref="255d6439b7182d422c7625a86084578a" category="inline-link-macro-rx"></block> 执行。如果操作步骤未正确执行、则可能会因I/O对齐而导致性能严重下降。要在ONTAP上获得最佳性能、需要将I/O与驱动器上的4K边界对齐。在zpool上创建的文件系统使用有效块大小、该大小通过名为的参数进行控制<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block>，可通过运行命令来查看<block ref="1615297782a0dff59b20451e2ca97ea7" prefix=" " category="inline-code"></block>。</block>
   <block id="869dc3a8daf591c7f33e5bb32a4a63c9" category="paragraph">的值<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 默认为9、表示2^9或512字节。为了获得最佳性能、<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 值必须为12 (2^12=4k)。此值在创建zpool时设置、并且无法更改、这意味着具有的zpool中的数据<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 应通过将数据复制到新创建的zpool来迁移12以外的文件。</block>
   <block id="6a00a2262e030c2656588743cb031710" category="paragraph">创建zpool后、请验证的值<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 然后继续。如果此值不是12、则表示未正确发现LUN。销毁zpool、确认相关Host Utilities文档中显示的所有步骤均已正确执行、然后重新创建zpool。</block>
   <block id="15ec722ce3f6694d12f89aeb5b621941" category="section-title">zpool和Solaris LDom</block>
@@ -1254,7 +1252,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="931c6f2c99380fbd899e3eaa31e97d98" category="section-title">数据大小</block>
   <block id="64e4d570abeebacf6bdcb19dfb73fcae" category="paragraph">要迁移的数据库的大小显然会影响迁移规划、但大小并不一定会影响转换时间。当需要迁移大量数据时、首要考虑因素是带宽。复制操作通常使用高效的顺序I/O来执行保守地估计、假设复制操作可用网络带宽的利用率为50%。例如、一个8 GB FC端口在理论上可以传输大约800 MBps。假设利用率为50%、则可以以大约400 Mbps的速率复制数据库。因此、以这种速率在大约7小时内即可复制一个10 TB的数据库。</block>
   <block id="84a80a048e7abc027dd6bdce55fda9d2" category="inline-link-macro">联机数据文件移动</block>
-  <block id="96220ddfb388df1ec5c630828316520f" category="paragraph">远距离迁移通常需要更具创意的方法、例如中所述的日志传送过程 <block ref="3a18b1903dadc58123e7db364a89a706" category="inline-link-macro-rx"></block>。远距离IP网络的带宽很少接近LAN或SAN速度。在一个案例中、NetApp以极高的归档日志生成速率协助远程迁移220 TB数据库。选择的数据传输方法是每天运送磁带、因为这种方法可提供最大可能的带宽。</block>
   <block id="1c169b76761527b28040655a783e50a2" category="section-title">数据库计数</block>
   <block id="da3770c5d6d1215e9f2524b9d7b7c3c5" category="paragraph">在许多情况下、移动大量数据的问题不在于数据大小、而在于支持数据库的配置的复杂性。仅仅知道必须迁移50 TB的数据库是不够的。它可以是一个50 TB的任务关键型数据库、4、000个原有数据库的集合、也可以是生产数据和非生产数据的混合。在某些情况下、大部分数据都由源数据库的克隆组成。这些克隆根本不需要迁移、因为它们可以轻松地重新创建、尤其是在新架构设计为利用NetApp FlexClone卷时。</block>
   <block id="a1739e745a7544d2432b2b990a715817" category="paragraph">对于迁移规划、您必须了解范围内有多少数据库以及必须如何确定这些数据库的优先级。随着数据库数量的增加、堆栈中的首选迁移选项往往会越来越少。例如、使用RMAN可以轻松复制单个数据库、但会短暂中断。这是主机级复制。</block>
@@ -1268,7 +1265,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="1311d3b592e4da5950e91965dac1d593" category="paragraph">QoS控制、数据重新定位、快照和克隆等技术几乎适用于任何配置。但是、通常需要考虑一些问题才能获得最大的益处。在某些情况下、数据库存储布局可能需要进行设计更改、才能最大程度地提高对新存储阵列的投资。此类设计更改可能会影响迁移策略、因为基于主机或基于存储的迁移会复制原始数据布局。要完成迁移并提供针对ONTAP优化的数据布局、可能还需要执行其他步骤。中所示的过程 <block ref="d4d5600aaaced44e203002ec1910822d" category="inline-link-macro-rx"></block> 之后、我们将演示一些方法、这些方法不仅可以迁移数据库、还可以轻松地将数据库迁移到最佳最终布局中。</block>
   <block id="1fd9b0a8321228b5b8ad4be85e71cf64" category="section-title">转换时间</block>
   <block id="95b9194d9f06f6f70febc87c071f3050" category="paragraph">应确定转换期间允许的最大服务中断时间。假设整个迁移过程会造成中断、这是一个常见错误。许多任务都可以在任何服务中断开始之前完成、而且许多选项都支持在不中断或中断的情况下完成迁移。即使不可避免地发生中断、您仍必须定义允许的最大服务中断、因为转换时间的持续时间因操作步骤而异操作步骤。</block>
-  <block id="2671d3330eac790e8b14ba2a9cecd70b" category="paragraph">例如、复制一个10 TB数据库通常需要大约7小时才能完成。如果业务需求允许中断七小时、则文件复制是一种简单安全的迁移选项。如果五个小时不可接受、则采用简单的日志传送流程(请参见 <block ref="d746c73310b8111ae91d5cedb4066344" category="inline-link-macro-rx"></block>)、只需极少的工作量即可完成设置、从而将转换时间缩短至大约15分钟。在此期间、数据库管理员可以完成此过程。如果15分钟不可接受、则可以通过脚本自动执行最终转换过程、将转换时间缩短为几分钟。您始终可以加快迁移速度、但这样做会耗费时间和精力。转换时间目标应基于业务部门可接受的内容。</block>
   <block id="9cfeaf56d2fc41c2695a69adf260c3f8" category="section-title">回退路径</block>
   <block id="f493e16f7e2caba820eba88a1c5f82d8" category="paragraph">任何迁移都不是完全无风险的。即使技术运行正常、也始终存在用户错误的可能性。必须考虑与所选迁移路径相关的风险以及迁移失败的后果。例如、Oracle ASM的透明联机存储迁移功能是其主要功能之一、而这种方法是已知最可靠的方法之一。但是、使用此方法可以不可逆地复制数据。如果ASM出现问题的可能性极小、则不存在轻松的回退路径。唯一的选择是还原原始环境或使用ASM将迁移反转回原始LUN。如果原始存储系统能够执行快照类型的备份、则可以通过在该系统上执行此类操作来最大程度地降低风险、但无法消除此类风险。</block>
   <block id="1886f1ab01daa4511ce537d1af675427" category="section-title">排练</block>
@@ -1566,7 +1562,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="8e3c921431d2b7f66fa0cc85f3ae5c9d" category="paragraph">建立所有导入关系后、可以将LUN重新置于联机状态。</block>
   <block id="ea382cbfdb353cee0cf25eaae9bba150" category="section-title">创建启动程序组</block>
   <block id="152c4728a5fb152525a639439b9d7cb9" category="inline-link-macro">协议转换</block>
-  <block id="2ba97db75ee4a901edea96edf3d2ddaa" category="paragraph">启动程序组(igroGroup)是ONTAP LUN屏蔽架构的一部分。除非先授予主机访问权限、否则无法访问新创建的LUN。为此、可创建一个igrop、其中列出应授予访问权限的FC WWN或iSCSI启动程序名称。编写此报告时、只有FC LUN支持FLI。但是、迁移后转换为iSCSI是一项简单的任务、如所示 <block ref="4f9fd7f3e31161eaca60ca6de385a92c" category="inline-link-macro-rx"></block>。</block>
   <block id="298a1c3c736859f2cfa3cb8eb1f3fdcc" category="paragraph">在此示例中、创建了一个igrop、其中包含两个WWN、分别对应于主机HBA上的两个可用端口。</block>
   <block id="4f6f03762bfcdc7174cdd30240ce45b3" category="section-title">将新LUN映射到主机</block>
   <block id="c22fee2d07a149be91ae1ae2ada1cb57" category="paragraph">创建igroup后、LUN将映射到定义的igroup。这些LUN仅可供此igrop中包含的WWN使用。在迁移过程的这一阶段、NetApp会假定主机尚未分区到ONTAP。这一点非常重要、因为如果将主机同时分区到外部阵列和新的ONTAP系统、则可能会在每个阵列上发现具有相同序列号的LUN。这种情况可能会导致多路径故障或数据损坏。</block>
@@ -1750,19 +1745,7 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="bdec122112fe3ad35d588380dc643e48" category="summary">MetroCluster逻辑架构—Oracle</block>
   <block id="141402e8d9fa946970f252a09a01a462" category="doc">MetroCluster逻辑架构—Oracle</block>
   <block id="37fa92fc2662529308c62c84eb1b38ea" category="paragraph">要了解Oracle数据库如何在MetroCluster环境alsop中运行、需要对MetroCluster系统的逻辑功能进行一些说明。</block>
-  <block id="8b2ad15147d13b66fb05bc4b7f95e653" category="summary">基于MetroCluster的Oracle—NVFAIL</block>
-  <block id="67be2475945283126e261087dcc833b7" category="doc">MetroCluster和NVFAIL</block>
   <block id="2623b589ddbc1cdb6184ba32aa06e83f" category="inline-link-macro">NVFAIL</block>
-  <block id="8b048af13e99be5215d8b6ba7542bd1d" category="paragraph">NVFAIL是ONTAP中的一项常规数据完整性功能、对于数据库工作负载尤为重要、有关详细信息、请参见 <block ref="b361c920d00a4a9bf82fc2698602aeab" category="inline-link-macro-rx"></block>。此外、对于NVFAIL、还需要考虑特定于MetroCluster的注意事项。</block>
-  <block id="a59556e5d6eba6a88829152216638f70" category="section-title">通过手动强制执行NVFAIL扩展RAC</block>
-  <block id="c8d0ea777fef88ebdbbedcb6a8534001" category="paragraph">要使用扩展RAC集群强制执行切换、最安全的方法是指定<block ref="71e644310ff0f1164d905d6e80174023" prefix=" " category="inline-code"></block> 在命令行中。此选项可作为紧急措施使用、以确保所有缓存数据均已转储。如果主机正在使用最初位于发生灾难的站点上的存储资源、则会收到I/O错误或陈旧的文件句柄 <block ref="a3c6541ac12f1f06a81cc9b03e6bd094" prefix="(" category="inline-code"></block>)错误。Oracle数据库崩溃、文件系统要么完全脱机、要么切换到只读模式。</block>
-  <block id="193392122201d82edb280636f4751f06" category="paragraph">切换完成后、<block ref="6b0a5ec5ecf08db5d4b32d860214d098" prefix=" " category="inline-code"></block> 标记、并且LUN需要置于联机状态。完成此活动后、可以重新启动数据库。这些任务可以自动执行、以减少RTO。</block>
-  <block id="2d77d18df7345b1b12c19fed37f30094" category="section-title">使用dr-force -nvfail.扩展RAC</block>
-  <block id="ce1c367fd3b2234c847cdcde6df93cf6" category="paragraph">最安全的配置是设置<block ref="a2626552f293b2377efe829e69d14daa" prefix=" " category="inline-code"></block> 标记。因此、卷在进入后将不可用<block ref="6b0a5ec5ecf08db5d4b32d860214d098" prefix=" " category="inline-code"></block> 切换期间。切换完成后、<block ref="6b0a5ec5ecf08db5d4b32d860214d098" prefix=" " category="inline-code"></block> 标记、并且LUN必须置于联机状态。完成这些活动后、可以重新启动数据库。这些任务可以自动执行、以减少RTO。</block>
-  <block id="7227c057accb7ced8902796f7b957b5a" category="paragraph">其结果与使用类似<block ref="71e644310ff0f1164d905d6e80174023" prefix=" " category="inline-code"></block> 标志。但是、受影响的卷数量可以仅限于那些必须防止应用程序或具有陈旧缓存的操作系统访问的卷。</block>
-  <block id="ae929f778e3706520521bed541a8b46e" category="section-title">扩展RAC、不使用dr-force -nvfail</block>
-  <block id="91b508022987523900b69bdaf7649555" category="paragraph">对于不使用的环境、有两个关键要求<block ref="a2626552f293b2377efe829e69d14daa" prefix=" " category="inline-code"></block> 在数据库卷上：</block>
-  <block id="e6b6543ad688c7163e581e8cc41e14bf" category="list-text">在执行维护任务期间、或者在SyncMirror plexes或NVRAM复制不同步的任何其他情况下、都不能发生切换。可使用Tiebre可能性 软件满足第一个要求、该软件配置为在站点发生故障后30秒内执行切换。此要求并不意味着必须在检测到站点故障后30秒内执行切换。这确实意味着、如果自某个站点确认正常运行后30秒内已过、则不再安全地强制执行切换。</block>
   <block id="6ddd3d6bc3ad92b983699970b1596e0f" category="summary">采用MetroCluster的Oracle</block>
   <block id="c1fac7a72cd91bcd345e567f6d6d93a3" category="doc">使用MetroCluster进行Oracle故障转移</block>
   <block id="7a60cb119af7ddcdfe38fc872d2027a1" category="paragraph">使用MetroCluster并不一定会增加或更改企业级应用程序和数据库的任何最佳操作实践。</block>
@@ -2092,15 +2075,12 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="a5c97d9c3645b9a26e3febeb4bc95e24" category="summary">带有ONTAP的ASM Recasation实用程序</block>
   <block id="861a5ecc95a8478c750be41bf2ddd6f5" category="doc">ASM Recandation Utility和零块检测</block>
   <block id="8eb703f2756cafd21dbac4f23c0d6416" category="paragraph">启用实时压缩后、ONTAP可以高效删除写入文件或LUN的置零块。Oracle ASM Recasation Utility (ARU)等实用程序的工作方式是向未使用的ASM块区写入零。</block>
-  <block id="1f65360ea8eb578d0ace3d58c460f3dc" category="paragraph">这样、数据库管理器便可在删除文件后回收存储阵列上的空间。ONTAP会截获零并取消分配LUN中的空间。回收过程速度极快、因为存储系统中不会写入任何数据。</block>
   <block id="9de53c14f2bae0c5d4b6e19be495ee94" category="paragraph">从数据库角度来看、ASM磁盘组包含零、读取这些LUN区域会产生零流、但ONTAP不会将零存储在驱动器上。而是进行简单的元数据更改、以便在内部将LUN的置零区域标记为任何数据为空。</block>
   <block id="06348c6e795160187e298a91b25a37a3" category="paragraph">出于类似的原因、涉及置零数据的性能测试无效、因为零块实际上不会在存储阵列中作为写入进行处理。</block>
   <block id="cee584f1e6223f6dbb73c0d64d599228" category="admonition">使用ARU时、请确保已安装Oracle建议的所有修补程序。</block>
   <block id="17ff263bc6eb701aecb8e79f9ef53efd" category="summary">使用Oracle数据库调整LUN和LVM大小</block>
   <block id="e0327f97ac271a738dd1ac6b182a4369" category="doc">调整LUN大小和基于LVM的大小</block>
   <block id="ff15e8b125dae74c1231f09380e48886" category="paragraph">当基于SAN的文件系统达到其容量限制时、可通过两种方法增加可用空间：</block>
-  <block id="827be6b2fb8e678a5bd56af225ba21d1" category="list-text">增加LUN的大小。</block>
-  <block id="1948e4ed4d6efa0efb6adb5ab56bfcb2" category="list-text">将LUN添加到现有卷组并增加所含逻辑卷的大小。</block>
   <block id="4182200437c090276a01ad8ca54076b0" category="summary">配置NVFAIL以保护Oracle数据库</block>
   <block id="60e002164f8988e984cf4a95b240f19d" category="doc">Oracle和NVFAIL</block>
   <block id="370bdf5dd39278264774ea595054e243" category="paragraph">NVFAIL是ONTAP中的一项功能、可确保在灾难性故障转移情形下的完整性。</block>
@@ -2168,8 +2148,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="335a5796fb106a877544d121062534be" category="paragraph">这样、目标服务器就可以识别LUN设备路径、卷组名称和其他设备路径。然后、可以关闭这些资源、然后还原镜像。这样、服务器就会处于可以快速使应用程序联机的状态。激活卷组、挂载文件系统或启动数据库和应用程序的步骤可以轻松实现自动化。</block>
   <block id="b1a175c5f42da29f6c27f4ea29684b63" category="paragraph">必须注意确保灾难恢复环境是最新的。例如、可能会向源服务器添加新的LUN、这意味着必须在目标上预先发现新的LUN、以确保灾难恢复计划按预期运行。</block>
   <block id="90426ba53f908049843b3ea392578d04" category="doc">Oracle灾难恢复</block>
-  <block id="ef09e87f183c8862564ee20992a229af" category="paragraph">NetApp MetroCluster为任务关键型Oracle工作负载提供高度可用的零数据丢失解决方案。</block>
-  <block id="d93c585474124fbc2aec0fe5ed4c204a" category="paragraph">此外、MetroCluster等集成解决方案还可以简化当今复杂的横向扩展Oracle数据库、应用程序和虚拟化基础架构。MetroCluster将多种外部数据保护产品和策略替换为一个简单的中央存储阵列。它可以在一个集群模式存储系统中提供集成的备份、恢复、灾难恢复和高可用性(HA)功能。</block>
   <block id="7fe779a487e8f113f1ffdff0fb80353f" category="summary">基于ONTAP的Oracle一致性组备份</block>
   <block id="773f9afa3df0cf82ed853c988183c73f" category="doc">Oracle一致性组备份</block>
   <block id="5afd3dc3f8d489d47587e10e6663c512" category="paragraph">要进行最简单的备份、只需将整个Oracle数据库放在一个卷中即可。</block>
@@ -2437,7 +2415,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="083e9332dc2b6bf064139ac2e670eee9" category="list-text">快照必须在快照点保持数据库崩溃状态一致。</block>
   <block id="9dae8634b638a6949dab0f7eaf7988bd" category="list-text">系统会为快照中的每个文件保留写入顺序。</block>
   <block id="7bc868657652757ca8505ddcd297456f" category="paragraph">ONTAP和NetApp Oracle管理产品符合这些要求。</block>
-  <block id="9ec85da221bc7f0822b82657e52f4955" category="summary">Oracle数据保护简介</block>
   <block id="9e19caeb431a5e29a1a63e3cee4b36c9" category="doc">借助ONTAP实现Oracle数据保护</block>
   <block id="6f1383567177df0041e76e845c3629f2" category="paragraph">最关键的任务数据位于数据库中。</block>
   <block id="848aab87f65bfade12f80d4e864ec046" category="paragraph">企业无法在不访问其数据的情况下运营、有时数据决定了业务。这些数据必须受到保护；但是、数据保护不仅仅是确保备份可用、它还需要快速可靠地执行备份、同时还要安全地存储这些备份。</block>
@@ -2511,7 +2488,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="5df81374c01d1b7c20fe8cb3883117eb" category="section-title">未对齐</block>
   <block id="5ff266dadf965b3c304513f516a13c12" category="paragraph">以下示例显示了未对齐的I/O：</block>
   <block id="25be03b87e6a5d8170ce85b16ea506ab" category="list-text">创建不与4 KB边界对齐的分区。这不是现代操作系统上的默认行为。</block>
-  <block id="9879c10d67b41984cae0992340d157f0" category="list-text">创建分区时使用的是33扇区偏移、而不是默认的32扇区偏移。重复中所述的操作步骤 <block ref="9eef0931337736367767200cf12a7482" category="inline-link-macro-rx"></block>。直方图显示如下：</block>
   <block id="4adda0e871000c2b13a4faef6ce4e21b" category="paragraph">未对齐情况很明显。I/O大部分落在*中 <block ref="66c8d76cad709856ccec680cab8ab35a" prefix="*" category="inline-code"></block> 存储分段、与预期偏移匹配。创建分区时、该分区会比优化默认值更远地移动到设备中512字节、这意味着直方图偏移512字节。</block>
   <block id="b53cb977228ac351c16dfacc3c427a99" category="paragraph">此外、还可以使用<block ref="20e637b3ddd562732de038fba736c7ee" prefix=" " category="inline-code"></block> 统计信息不为零、这意味着执行的I/O未填满整个4 KB块。</block>
   <block id="d3d92f87c5235ad11c8bc69e85fb2fd0" category="section-title">重做日志记录</block>
@@ -2892,9 +2868,7 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="049b6d7b78dd8ffebadb5a0be2261637" category="paragraph">*正在创建Svols存储库*
 创建必要的FlexVol 后、可以使用它们创建此数据存储库(也可以是此数据存储库的Snapshot卷)。右键单击要创建ONTAP 数据存储库的主机、集群或数据中心、然后选择_VMware tools_&gt;_ProVision DataData存储 库_。选择要由数据存储库支持的一个或多个FlexVol 、然后从现有FlexVol 卷中进行选择和/或为此数据存储库配置新的SCP卷。最后、为数据存储库指定默认SCP、此SCP将用于策略未指定SCP的虚拟机以及交换Vvol (这些虚拟机不需要高性能存储)。</block>
   <block id="a4332a81dbc3a9888be608dea640cd3d" category="section-title">正在创建VM存储策略</block>
-  <block id="80f789420db66cc767606f2432667d32" category="paragraph">在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用"NetApp.Clustered.Data.ONTAP .VP.VVol"存储类型和"proFileName"规则通过使用此策略将特定SCP应用于VM。有关使用ONTAP工具VASA Provider执行此操作的示例、请参见链接：ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。"NetApp.Clustered.Data.ONTAP .VP.VASA10"存储的规则适用于非基于VVO尔 的数据存储库。</block>
   <block id="b4f6f65777757af7630fae901718e51e" category="paragraph">早期版本与此类似、但如中所述 <block ref="68072d20e775e4558feadbec7ba8f768" category="inline-xref-macro-rx"></block>，您的选择将有所不同。</block>
-  <block id="136cc0f714cd085d732d263ed60f95b7" category="paragraph">创建存储策略后、即可在配置新VM时使用该策略、如中所示 <block ref="4ed4bde8f4b7355ad6a00fef761d7ba6" category="inline-link-macro-rx"></block>。有关在VASA Provider 7.2中使用性能管理功能的准则、请参见 <block ref="8fdd8868d80d04eecf1b4189862f536c" category="inline-xref-macro-rx"></block>。</block>
   <block id="52896487a6472798e1d6cbc9a95ec51e" category="section-title">使用ONTAP工具创建VM存储策略VASA Provider 9.10.</block>
   <block id="c0c5e719ad5439106e5a00588402f206" category="inline-image-macro">"使用ONTAP 工具VASA Provider 9.10"、300创建VM存储策略</block>
   <block id="378e30f2a60dc28c4afc9ae4f11a39e1" category="paragraph"><block ref="378e30f2a60dc28c4afc9ae4f11a39e1" category="inline-image-macro-rx" type="image"></block></block>
@@ -3383,7 +3357,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="bf5169ce5bb544313eaf17435f756da2" category="list-text">* 易于管理。 * 使用 SAN 协议时，如果需要更多空间，则需要执行几个步骤，包括增加 LUN ，重新扫描以发现新大小，然后增加文件系统大小。虽然可以增加 LUN 的大小，但不能减小 LUN 的大小，因此恢复未使用的空间可能需要额外的工作。NFS 可以轻松地进行大小调整，存储系统可以自动调整大小。SAN 可通过子操作系统剪切 /UNMAP 命令提供空间回收，从而允许将已删除文件中的空间返回到阵列。使用 NFS 数据存储库时，这种类型的空间回收会更加困难。</block>
   <block id="530c759326761c6ac026b313985b255f" category="list-text">* 存储空间透明度。 * 在 NFS 环境中，存储利用率通常更容易查看，因为精简配置可以立即实现节省。同样，重复数据删除和克隆节省的空间可立即用于同一数据存储库中的其他虚拟机或其他存储系统卷。NFS 数据存储库中的虚拟机密度通常也会更高，这样可以减少要管理的数据存储库数量，从而节省重复数据删除的空间，并降低管理成本。</block>
   <block id="16ee928b12bc598bf52b0f312879ec95" category="section-title">数据存储库布局</block>
-  <block id="b9890b64f7b9790ea1e078227efacfa2" category="paragraph">ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储库。尽管在使用 VSC 为 vSphere 配置数据存储库时会应用许多 ONTAP 最佳实践（在一节中列出） <block ref="ef37ab860d90e747aecd96bae9ce8d8d" category="inline-link-macro-rx"></block>），下面是需要考虑的其他一些准则：</block>
   <block id="b8c499c7b537f5bd4e51b0a6d6a1e9d0" category="list-text">使用 ONTAP NFS 数据存储库部署 vSphere 可实现高性能，易于管理的实施，从而提供基于块的存储协议无法实现的虚拟机与数据存储库比率。此架构可将数据存储库密度提高十倍，并相应地减少数据存储库数量。虽然较大的数据存储库可以提高存储效率并提供运营优势，但请考虑至少使用四个数据存储库（ FlexVol 卷）将虚拟机存储在一个 ONTAP 控制器上，以便从硬件资源中获得最大性能。通过这种方法，您还可以使用不同的恢复策略建立数据存储库。根据业务需求、某些备份或复制的频率比其他备份或复制的频率要高。FlexGroup 卷不需要多个数据存储库来提高性能、因为它们可以根据设计进行扩展。</block>
   <block id="e15ed0ec7af4278259b7618024b3e7ce" category="list-text">NetApp建议对大多数NFS数据存储库使用FlexVol卷。从ONTAP 9.8开始、也支持将FlexGroup卷用作数据存储库、并且通常建议在某些使用情形下使用。通常不建议使用其他ONTAP存储容器、例如qtrees、因为适用于VMware vSphere的ONTAP工具或适用于VMware vSphere的NetApp SnapCenter插件目前均不支持这些存储容器。尽管如此、在一个卷中将数据存储库部署为多个qtrees可能会对高度自动化的环境非常有用、这些环境可以从数据存储库级别的配额或VM文件克隆中受益。</block>
   <block id="dc4d78be836807b32c7ef7f42028b1ef" category="list-text">对于 FlexVol 卷数据存储库，大小合适的数据存储库大约为 4 TB 到 8 TB 。这种大小可以很好地平衡性能，易管理性和数据保护。从小规模入手（例如 4 TB ），然后根据需要扩展数据存储库（最大 100 TB ）。较小的数据存储库可以更快地从备份中或发生灾难后进行恢复，并可在集群中快速移动。请考虑使用 ONTAP 自动调整大小功能在已用空间发生变化时自动增长和缩减卷。默认情况下，适用于 VMware vSphere 数据存储库配置向导的 ONTAP 工具会对新数据存储库使用自动调整大小。可以使用 System Manager 或命令行对增长和缩减阈值以及大小上限和下限进行其他自定义。</block>
@@ -3392,7 +3365,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="8c761039ef4dd69451490b849ace1f82" category="list-text">避免在子操作系统中使用碎片整理实用程序、因为这不会带来任何性能优势、并会影响存储效率和快照空间使用量。此外，还应考虑在子操作系统中关闭虚拟桌面的搜索索引。</block>
   <block id="14abb814748566a24367c4459a54840b" category="list-text">ONTAP 凭借创新的存储效率功能引领行业发展，帮助您充分利用可用磁盘空间。AFF 系统通过默认实时重复数据删除和数据压缩进一步提高了这种效率。数据会在聚合中的所有卷之间进行重复数据删除，因此您无需再将相似的操作系统和类似应用程序分组到一个数据存储库中，即可最大程度地节省空间。</block>
   <block id="446548f2b1301893641e29657fc7fe53" category="inline-link-macro">基于 ONTAP 的 Oracle 数据库</block>
-  <block id="9016fa494b85853dca561abb922d08d1" category="list-text">在某些情况下，您甚至可能不需要数据存储库。为了获得最佳性能和易管理性，请避免对数据库和某些应用程序等高 I/O 应用程序使用数据存储库。而是考虑由子系统拥有的文件系统，例如由子系统管理或使用 RDM 管理的 NFS 或 iSCSI 文件系统。有关具体的应用指南，请参见适用于您的应用程序的 NetApp 技术报告。例如： <block ref="30827df672931d7ec1b01fc09c87df4e" category="inline-link-macro-rx"></block> 包含一个有关虚拟化的章节，其中包含有用的详细信息。</block>
   <block id="6cda576d2fd323c1a728b7ac67d6034f" category="list-text">一级磁盘（或经过改进的虚拟磁盘）支持独立于运行 vSphere 6.5 及更高版本的 VM 的 vCenter 管理磁盘。虽然它们主要由 API 管理，但对于 VVOL 很有用，尤其是在由 OpenStack 或 Kubernetes 工具管理时。ONTAP 以及适用于 VMware vSphere 的 ONTAP 工具均支持这些功能。</block>
   <block id="71318121439b39fdf872bb0bd57494f2" category="section-title">数据存储库和 VM 迁移</block>
   <block id="e8824ce2062c6d1fc536163f7b8940bd" category="paragraph">将 VM 从另一个存储系统上的现有数据存储库迁移到 ONTAP 时，请记住以下一些实践：</block>
@@ -4022,4 +3994,30 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="25cec91f17a8619119f76c8adbace583" category="paragraph">另请参见一节中有关数据压缩块对齐的讨论 <block ref="0faffd62be034c86d531acfee84d252e" category="inline-link-macro-rx"></block>。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。</block>
   <block id="38ac6f4e1538397bd4f659237ec03ebf" category="paragraph"><block ref="38ac6f4e1538397bd4f659237ec03ebf" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f01518e5f3b18a9ea241bc63a3475dbd" category="paragraph"><block ref="f01518e5f3b18a9ea241bc63a3475dbd" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="acce752526553bfa73c92799accd9cb8" category="summary">Oracle数据保护概述</block>
+  <block id="deb8cb7644231cae002f5f37c725b86f" category="paragraph">远距离迁移通常需要更具创意的方法、例如中所述的日志传送过程 <block ref="86efe12ea0d3a769a4b7cfc2b6362f49" category="inline-link-macro-rx"></block>。远距离IP网络的带宽很少接近LAN或SAN速度。在一个案例中、NetApp以极高的归档日志生成速率协助远程迁移220 TB数据库。选择的数据传输方法是每天运送磁带、因为这种方法可提供最大可能的带宽。</block>
+  <block id="055362c7082175c34483772a43b776cf" category="paragraph">例如、复制一个10 TB数据库通常需要大约7小时才能完成。如果业务需求允许中断七小时、则文件复制是一种简单安全的迁移选项。如果五个小时不可接受、则采用简单的日志传送流程(请参见 <block ref="eee8a7589b6555fc3411165c58a62ca5" category="inline-link-macro-rx"></block>)、只需极少的工作量即可完成设置、从而将转换时间缩短至大约15分钟。在此期间、数据库管理员可以完成此过程。如果15分钟不可接受、则可以通过脚本自动执行最终转换过程、将转换时间缩短为几分钟。您始终可以加快迁移速度、但这样做会耗费时间和精力。转换时间目标应基于业务部门可接受的内容。</block>
+  <block id="911e63244fc82405263306a64e535c69" category="paragraph">只能在中的步骤之后创建zpool <block ref="e8673fdb712a2edcdf56742c7eec0045" category="inline-link-macro-rx"></block> 执行。如果操作步骤未正确执行、则可能会因I/O对齐而导致性能严重下降。要在ONTAP上获得最佳性能、需要将I/O与驱动器上的4K边界对齐。在zpool上创建的文件系统使用有效块大小、该大小通过名为的参数进行控制<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block>，可通过运行命令来查看<block ref="1615297782a0dff59b20451e2ca97ea7" prefix=" " category="inline-code"></block>。</block>
+  <block id="b2ca9da17ac7a0807fb313343c1ba9cb" category="list-text">创建分区时使用的是33扇区偏移、而不是默认的32扇区偏移。重复中所述的操作步骤 <block ref="6ba0f94fdd8f9504e3fef5712023fb85" category="inline-link-macro-rx"></block>。直方图显示如下：</block>
+  <block id="eb7f9a88026c895932f70c650c364132" category="list-text">增加LUN的大小</block>
+  <block id="0f11c45e6e7377b9d10a93534d0fa2f3" category="list-text">将LUN添加到现有卷组并增加包含的逻辑卷</block>
+  <block id="e4da750cce448393b2597f8f66086894" category="paragraph">启动程序组(igroGroup)是ONTAP LUN屏蔽架构的一部分。除非先授予主机访问权限、否则无法访问新创建的LUN。为此、可创建一个igrop、其中列出应授予访问权限的FC WWN或iSCSI启动程序名称。编写此报告时、只有FC LUN支持FLI。但是、迁移后转换为iSCSI是一项简单的任务、如所示 <block ref="43085dc2a05784d4912331d1ed1db91d" category="inline-link-macro-rx"></block>。</block>
+  <block id="525e71fb331412cd820122c3d51d453c" category="paragraph">这样、数据库管理器便可在删除数据后回收存储阵列上的空间。ONTAP会截获零并取消分配LUN中的空间。回收过程速度极快、因为存储系统中不会写入任何数据。</block>
+  <block id="be17af715060572d2df93d7ffe4ce6dd" category="paragraph">ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储库。尽管在使用 VSC 为 vSphere 配置数据存储库时会应用许多 ONTAP 最佳实践（在一节中列出） <block ref="2e24324ebf41be836715e1e0dd648f4f" category="inline-link-macro-rx"></block>），下面是需要考虑的其他一些准则：</block>
+  <block id="141c3dc68be34b8f11c2a120b36a1eb8" category="list-text">在某些情况下，您甚至可能不需要数据存储库。为了获得最佳性能和易管理性，请避免对数据库和某些应用程序等高 I/O 应用程序使用数据存储库。而是考虑由子系统拥有的文件系统，例如由子系统管理或使用 RDM 管理的 NFS 或 iSCSI 文件系统。有关具体的应用指南，请参见适用于您的应用程序的 NetApp 技术报告。例如： <block ref="cfa0393f870bc70fd8973ae18376facc" category="inline-link-macro-rx"></block> 包含一个有关虚拟化的章节，其中包含有用的详细信息。</block>
+  <block id="3cd9527ff0ddb17e00c08bdb4cd1a776" category="paragraph">在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用"NetApp.Clustered.Data.ONTAP .VP.VVol"存储类型和"proFileName"规则通过使用此策略将特定SCP应用于VM。有关使用ONTAP工具VASA Provider的示例、请参见链接：vmware-vvols-ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。"NetApp.Clustered.Data.ONTAP .VP.VASA10"存储的规则适用于非基于VVO尔 的数据存储库。</block>
+  <block id="36ad91be49fdde7d3fadeba0fb782510" category="paragraph">创建存储策略后、即可在配置新VM时使用该策略、如中所示 <block ref="d202b3fe265f968d81802fcec9f3c381" category="inline-link-macro-rx"></block>。有关在VASA Provider 7.2中使用性能管理功能的准则、请参见 <block ref="8fdd8868d80d04eecf1b4189862f536c" category="inline-xref-macro-rx"></block>。</block>
+  <block id="14bdf3569ec0024259b2b02c5a668eae" category="paragraph">时间<block ref="7ccc31934ae8244d8263d3c09bcee186" prefix=" " category="inline-code"></block> 处于启用状态(默认值)时、InnoDB会将所有数据存储两次：首先存储到双写入缓冲区、然后存储到实际数据文件。</block>
+  <block id="394ad91b4701dbd32675896bed204755" category="sidebar">PostgreSQL的主机配置</block>
+  <block id="9852487272d9b2aa9026d0fddc0616fc" category="sidebar">PostgreSQL的存储配置</block>
+  <block id="bc237072428e0e4c415160b898946d4c" category="sidebar">PostgreSQL的数据保护</block>
+  <block id="3423582eed75b4bd6632c18238fd78e4" category="sidebar">Microsoft SQL Server的数据库配置</block>
+  <block id="6e97cf67ec5979ab5828852639efa208" category="sidebar">Microsoft SQL Server的存储配置</block>
+  <block id="5a4517368fb2ab5498fc2108c2ea64c5" category="sidebar">Oracle数据库的数据库配置</block>
+  <block id="e483c0ecf3a2b1a60f886d4a5ac553ff" category="sidebar">Oracle数据库的主机配置</block>
+  <block id="06b078afa802a679ad4694d13a8a2495" category="sidebar">Oracle数据库的网络配置</block>
+  <block id="f1991b28c5d48cb53798755acf9dfe62" category="sidebar">Oracle数据库的存储配置</block>
+  <block id="ea9cdfcbfcf1906c15b6779f0f327028" category="sidebar">MySQL的数据库配置</block>
+  <block id="308f8f580d0248ac023557cfd4b10d83" category="sidebar">MySQL的主机配置</block>
+  <block id="830f353b3e6055499fac447b16b0c935" category="sidebar">MySQL的存储配置</block>
 </blocks>

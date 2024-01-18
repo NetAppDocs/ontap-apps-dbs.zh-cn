@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dr-snapmirror-cg.html 
+keywords: oracle, data protection, DR, CG 
+summary: Oracle数据库的一致性组复制 
+---
+= 一致性组灾难恢复
+:allow-uri-read: 
+
+
+[role="lead"]
+一致性组复制可以像通过SnapMirror计划复制单个卷一样简单。这包括数据文件、控制文件、归档日志和重做日志。每次SnapMirror更新都会在目标站点生成一个新的数据库副本、该副本保持一致、并可通过中断镜像来激活。
+
+如果数据库必须跨越多个卷、则需要一致性组快照(CG快照)。
+
+在块级复制模式下与SnapMirror结合使用时、此策略的另一个优势是、可以完全复制源存储系统上的所有快照。除了灾难恢复副本之外、还会复制完整的备份副本。

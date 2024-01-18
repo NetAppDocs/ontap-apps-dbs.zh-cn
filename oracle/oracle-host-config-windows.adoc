@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-host-config-windows.html 
+keywords: oracle, database, ontap, windows 
+summary: 使用Microsoft Windows在ONTAP上运行Oracle 
+---
+= Microsoft Windows
+:allow-uri-read: 
+
+
+[role="lead"]
+特定于Microsoft Windows操作系统的配置主题。
+
+
+
+== NFS
+
+Oracle支持将Microsoft Windows与Direct NFS客户端结合使用。此功能提供了一条实现NFS管理优势的途径、其中包括跨环境查看文件、动态调整卷大小以及利用成本较低的IP协议。有关使用DNFS在Microsoft Windows上安装和配置数据库的信息、请参见Oracle官方文档。没有特别的最佳做法。
+
+
+
+== SAN
+
+为了获得最佳压缩效率、请确保NTFS文件系统使用8K或更大的分配单元。使用4K分配单元(通常为默认分配单元)会对压缩效率产生负面影响。

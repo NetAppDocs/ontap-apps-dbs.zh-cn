@@ -3,32 +3,32 @@ section: mssql
 title: Microsoft SQL Server
 entries:
 - title: 概述
-  url: "/mssql/overview.html"
+  url: "/mssql/mssql-overview.html"
 - title: 工作负载
-  url: "/mssql/workloads.html"
-- title: ONTAP 配置
-  url: "/postgres/ontap.html"
+  url: "/mssql/mssql-workloads.html"
 - title: 数据库配置
+  pdf-filename: Microsoft SQL Server的数据库配置
   entries:
   - title: 共享实例与专用实例
-    url: "/mssql/shared-vs-dedicated.html"
+    url: "/mssql/mssql-shared-vs-dedicated.html"
   - title: CPU配置
-    url: "/mssql/CPUConfiguration.html"
+    url: "/mssql/mssql-cpu-configuration.html"
   - title: 内存配置
-    url: "/mssql/Memoryconfiguration.html"
+    url: "/mssql/mssql-memory-configuration.html"
 - title: 存储配置
+  pdf-filename: Microsoft SQL Server的存储配置
   entries:
   - title: 数据库文件和文件组
-    url: "/mssql/files-and-filegroups.html"
+    url: "/mssql/mssql-files-and-filegroups.html"
   - title: tempdb文件
-    url: "/mssql/tempdb.html"
+    url: "/mssql/mssql-tempdb.html"
   - title: 存储注意事项
-    url: "/mssql/Storage-considerations.html"
+    url: "/mssql/mssql-storage-considerations.html"
   - title: 存储效率
-    url: "/mssql/storage-efficiency.html"
+    url: "/mssql/mssql-storage-efficiency.html"
 - title: 数据保护
-  url: "/mssql/sql-data-protection.html"
+  url: "/mssql/mssql-data-protection.html"
 - title: 灾难恢复
-  url: "/mssql/SQL-disaster-recovery.html"
+  url: "/mssql/mssql-disaster-recovery.html"
 - title: 数据安全性
-  url: "/mssql/data-security.html"
+  url: "/mssql/mssql-data-security.html"

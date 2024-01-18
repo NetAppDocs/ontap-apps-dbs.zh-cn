@@ -16,9 +16,6 @@ summary:
 [role="lead"]
 法律声明提供对版权声明、商标、专利等的访问。
 
-[role="lead"]
-法律声明提供对版权声明、商标、专利等的访问。
-
 
 
 == 版权
@@ -55,7 +52,7 @@ link:https://www.netapp.com/company/legal/privacy-policy/["https://www.netapp.co
 
 
 
-=== ONTAP
+== ONTAP
 
 link:https://library.netapp.com/ecm/ecm_download_file/ECMLP2885801["ONTAP 9.13.1的注意事项"^]
 link:https://library.netapp.com/ecm/ecm_download_file/ECMLP2884813["ONTAP 9.12.1的通知"^]
@@ -75,7 +72,7 @@ link:https://library.netapp.com/ecm/ecm_download_file/ECMLP2516795["ONTAP 9.1通
 
 
 
-=== MCC IP的ONTAP调解器
+== MCC IP的ONTAP调解器
 
 link:https://library.netapp.com/ecm/ecm_download_file/ECMLP2870521["9.9.1关于MCC IP的ONTAP调解器的通知"^]
 link:https://library.netapp.com/ecm/ecm_download_file/ECMLP2870521["9.8关于MCC IP的ONTAP调解器的通知"^]

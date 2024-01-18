@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: mysql/mysql-innodb_doublewrite.html 
+keywords: MySQL,MariaDB,innodb_doublewrite 
+summary: 基于ONTAP的MySQL 
+---
+= InnoDB_doublewite
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+时间 `innodb_doublewrite` 处于启用状态(默认值)时、InnoDB会将所有数据存储两次：首先存储到双写入缓冲区、然后存储到实际数据文件。
+
+您可以使用关闭此参数 `--skip-innodb_doublewrite` 适用于基准测试、或者您更关心最高性能而非数据完整性或可能出现的故障。InnoDB使用一种称为双写的文件转储技术。在将页面写入数据文件之前、InnoDB会将其写入一个称为双写入缓冲区的连续区域。在完成对双写缓冲区的写入和刷新后、InnoDB会将页面写入到其在数据文件中的正确位置。如果操作系统或myqld进程在页面写入期间崩溃、则InnoDB稍后可以在崩溃恢复期间从双写入缓冲区中找到一个良好的页面副本。
+
+
+TIP: * NetApp建议*禁用双写缓冲区。ONTAP NVRAM具有相同的功能。双重缓冲会不必要地损害性能。

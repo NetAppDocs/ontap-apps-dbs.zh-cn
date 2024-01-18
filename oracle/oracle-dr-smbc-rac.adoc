@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dr-smbc-rac.html 
+keywords: oracle, smbc, sm-bc, RAC 
+summary: 基于采用SM-BC的ONTAP的Oracle RAC 
+---
+= 采用SM-BC的Oracle RAC
+:allow-uri-read: 
+
+
+[role="lead"]
+SM-BC可精细控制数据集复制、以实现负载平衡或单个应用程序故障转移等目的。整体架构看起来像一个扩展的RAC集群、但某些数据库专用于特定站点、整体负载是分布式的。
+
+例如、您可以构建一个Oracle RAC集群来托管六个单独的数据库。其中三个数据库的存储主要托管在站点A上、其余三个数据库的存储将托管在站点B上此配置可最大限度地减少跨站点流量、从而确保性能最佳。此外、应用程序将配置为使用具有活动路径的存储系统本地数据库实例。这样可以最大程度地减少RAC互连流量。最后、这种整体设计可确保所有计算资源的使用均匀。随着工作负载的变化、数据库可以有选择地在各个站点之间来回故障转移、以确保负载均匀。
+
+除了粒度之外、使用SM-BC的Oracle RAC的基本原则和选项与相同 link:../metrocluster/mcc-rac.html["基于MetroCluster的Oracle RAC"]

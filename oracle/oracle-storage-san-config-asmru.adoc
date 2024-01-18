@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-storage-san-config-asmru.html 
+keywords: ontap, thin provisioning 
+summary: 带有ONTAP的ASM Recasation实用程序 
+---
+= ASM Recandation Utility和零块检测
+:allow-uri-read: 
+
+
+[role="lead"]
+启用实时压缩后、ONTAP可以高效删除写入文件或LUN的置零块。Oracle ASM Recasation Utility (ARU)等实用程序的工作方式是向未使用的ASM块区写入零。
+
+这样、数据库管理器便可在删除数据后回收存储阵列上的空间。ONTAP会截获零并取消分配LUN中的空间。回收过程速度极快、因为存储系统中不会写入任何数据。
+
+从数据库角度来看、ASM磁盘组包含零、读取这些LUN区域会产生零流、但ONTAP不会将零存储在驱动器上。而是进行简单的元数据更改、以便在内部将LUN的置零区域标记为任何数据为空。
+
+出于类似的原因、涉及置零数据的性能测试无效、因为零块实际上不会在存储阵列中作为写入进行处理。
+
+
+NOTE: 使用ARU时、请确保已安装Oracle建议的所有修补程序。

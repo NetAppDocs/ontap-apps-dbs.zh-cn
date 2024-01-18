@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: postgres/postgres-snapcenter-dp.html 
+keywords: PostgreSQL,database,postgres 
+summary: 基于ONTAP的PostgreSQL数据库 
+---
+= 数据保护软件
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+适用于PostgreSQL数据库的NetApp SnapCenter插件与Snapshot和NetApp FlexClone技术相结合、可为您提供以下优势：
+
+* 快速备份和恢复。
+* 节省空间的克隆。
+* 构建快速有效的灾难恢复系统的能力。
+
+
+[NOTE]
+====
+在以下情况下、您可能更愿意选择NetApp的高级备份合作伙伴、例如Veeam Software和Commvell：
+
+* 管理异构环境中的工作负载
+* 将备份存储到云或磁带以供长期保留
+* 支持多种操作系统版本和类型
+
+
+====
+适用于PostgreSQL的SnapCenter插件是社区支持的插件、安装和文档可从NetApp自动化商店获得。通过SnapCenter、用户可以远程备份数据库、克隆和还原数据。

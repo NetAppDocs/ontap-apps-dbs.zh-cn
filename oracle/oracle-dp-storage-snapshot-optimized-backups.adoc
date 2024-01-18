@@ -1,0 +1,156 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dp-storage-snapshot-optimized-backups.html 
+keywords: oracle, data protection, snapshot-optimized, crash-consistent 
+summary: 针对Snapshot优化的备份 
+---
+= Oracle Storage Snapshot优化的备份
+:allow-uri-read: 
+
+
+[role="lead"]
+使用Oracle 12c时、基于Snapshot的备份和恢复变得更加简单、因为无需将数据库置于热备份模式。因此、可以直接在存储系统上计划基于快照的备份、同时仍保留执行完整或时间点恢复的能力。
+
+尽管数据库管理器(操作步骤)对数据库管理器(数据库管理器)比较熟悉、但长期以来、可以使用数据库处于热备份模式时未创建的快照。在恢复期间、需要对Oracle 10g和11g执行额外的手动步骤、才能使数据库保持一致。采用Oracle 12c、 `sqlplus` 和 `rman` 包含额外的逻辑、用于重放未处于热备份模式的数据文件备份上的归档日志。
+
+如前文所述、恢复基于快照的热备份需要两组数据：
+
+* 在备份模式下创建的数据文件的快照
+* 数据文件处于热备份模式时生成的归档日志
+
+
+在恢复期间、数据库会从数据文件读取元数据、以选择恢复所需的归档日志。
+
+经过存储快照优化的恢复需要略有不同的数据集才能实现相同的结果：
+
+* 数据文件的快照、以及用于标识快照创建时间的方法
+* 从最近的数据文件检查点到快照的确切时间的归档日志
+
+
+在恢复期间、数据库会从数据文件中读取元数据、以确定所需的最早归档日志。可以执行完全恢复或时间点恢复。执行时间点恢复时、了解数据文件快照的时间至关重要。指定恢复点必须在快照创建时间之后。NetApp建议为快照时间至少添加几分钟、以考虑时钟变化。
+
+有关完整的详细信息、请参见Oracle 12c文档各个版本中有关"使用存储Snapshot优化进行恢复"主题的Oracle文档。另请参见Oracle文档ID 604683.1、了解有关Oracle第三方快照支持的信息。
+
+
+
+== 数据布局
+
+最简单的布局是将数据文件隔离到一个或多个专用卷中。它们必须未受任何其他文件类型的污染。这是为了确保数据文件卷可以通过SnapRestore操作快速还原、而不会销毁重要的重做日志、控制文件或归档日志。
+
+SAN对专用卷中的数据文件隔离具有类似要求。对于Microsoft Windows等操作系统、一个卷可能包含多个数据文件LUN、每个LUN都具有一个NTFS文件系统。对于其他操作系统、通常也会有一个逻辑卷管理器。例如、对于Oracle ASM、最简单的选择是将磁盘组限制为一个卷、该卷可以作为一个单元进行备份和还原。如果出于性能或容量管理原因需要更多卷、则在新卷上创建更多磁盘组可简化管理。
+
+如果遵循这些准则、则可以直接在ONTAP上计划快照、而无需执行一致性组快照。原因是针对快照优化的备份不需要同时备份数据文件。
+
+如果ASM磁盘组分布在多个卷中、则会出现复杂情况。在这些情况下、必须执行cG-Snapshot、以确保ASM元数据在所有成分卷之间保持一致。
+
+[注]验证ASM spfile和passwd文件是否不在托管数据文件的磁盘组中。这会影响有选择地还原数据文件和仅还原数据文件的能力。
+
+
+
+== 本地恢复过程—NFS
+
+此操作步骤可以手动驱动、也可以通过SnapCenter等应用程序驱动。基本操作步骤如下所示：
+
+. 关闭数据库。
+. 将数据文件卷恢复到所需还原点之前的快照。
+. 将归档日志重放至所需位置。
+
+
+此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须还原归档日志、或 `rman` 或 `sqlplus` 可以定向到中的数据 `.snapshot` 目录。
+
+此外、对于较小的数据库、最终用户可以直接从中恢复数据文件 `.snapshot` 目录、而无需借助自动化工具或存储管理员来执行SnapRestore命令。
+
+
+
+== 本地恢复过程—SAN
+
+此操作步骤可以手动驱动、也可以通过SnapCenter等应用程序驱动。基本操作步骤如下所示：
+
+. 关闭数据库。
+. 将托管数据文件的磁盘组静置。操作步骤因所选的逻辑卷管理器而异。使用ASM时、此过程需要卸载磁盘组。对于Linux、必须卸载文件系统、并停用逻辑卷和卷组。目标是停止要还原的目标卷组上的所有更新。
+. 将数据文件磁盘组还原到所需还原点之前的快照。
+. 重新激活新还原的磁盘组。
+. 将归档日志重放至所需位置。
+
+
+此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须通过使归档日志LUN脱机并执行还原来还原归档日志。这也是一个将归档日志划分为专用卷非常有用的示例。如果归档日志与重做日志共享一个卷组、则必须在还原整个LUN集之前将重做日志复制到其他位置、以避免丢失最终记录的事务。
+
+
+
+== 完全恢复示例
+
+假设数据文件已损坏或销毁、需要完全恢复。要执行此操作的操作步骤如下所示：
+
+....
+[oracle@host1 ~]$ sqlplus / as sysdba
+Connected to an idle instance.
+SQL> startup mount;
+ORACLE instance started.
+Total System Global Area 1610612736 bytes
+Fixed Size                  2924928 bytes
+Variable Size            1040191104 bytes
+Database Buffers          553648128 bytes
+Redo Buffers               13848576 bytes
+Database mounted.
+SQL> recover automatic;
+Media recovery complete.
+SQL> alter database open;
+Database altered.
+SQL>
+....
+
+
+== 时间点恢复示例
+
+整个恢复操作步骤只需一个命令： `recover automatic`。
+
+如果需要时间点恢复、则快照的时间戳必须已知、并且可按如下方式进行标识：
+
+....
+Cluster01::> snapshot show -vserver vserver1 -volume NTAP_oradata -fields create-time
+vserver   volume        snapshot   create-time
+--------  ------------  ---------  ------------------------
+vserver1  NTAP_oradata  my-backup  Thu Mar 09 10:10:06 2017
+....
+快照创建时间显示为3月9日和10：10：06。为了安全起见、快照时间增加了一分钟：
+
+....
+[oracle@host1 ~]$ sqlplus / as sysdba
+Connected to an idle instance.
+SQL> startup mount;
+ORACLE instance started.
+Total System Global Area 1610612736 bytes
+Fixed Size                  2924928 bytes
+Variable Size            1040191104 bytes
+Database Buffers          553648128 bytes
+Redo Buffers               13848576 bytes
+Database mounted.
+SQL> recover database until time '09-MAR-2017 10:44:15' snapshot time '09-MAR-2017 10:11:00';
+....
+此时将启动恢复。考虑到可能的时钟差异、它指定了10：11：00的快照时间(比记录的时间晚一分钟)和10：44的目标恢复时间。接下来、sqlplus请求所需的归档日志、以达到所需的恢复时间10：44。
+
+....
+ORA-00279: change 551760 generated at 03/09/2017 05:06:07 needed for thread 1
+ORA-00289: suggestion : /oralogs_nfs/arch/1_31_930813377.dbf
+ORA-00280: change 551760 for thread 1 is in sequence #31
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 552566 generated at 03/09/2017 05:08:09 needed for thread 1
+ORA-00289: suggestion : /oralogs_nfs/arch/1_32_930813377.dbf
+ORA-00280: change 552566 for thread 1 is in sequence #32
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 553045 generated at 03/09/2017 05:10:12 needed for thread 1
+ORA-00289: suggestion : /oralogs_nfs/arch/1_33_930813377.dbf
+ORA-00280: change 553045 for thread 1 is in sequence #33
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+ORA-00279: change 753229 generated at 03/09/2017 05:15:58 needed for thread 1
+ORA-00289: suggestion : /oralogs_nfs/arch/1_34_930813377.dbf
+ORA-00280: change 753229 for thread 1 is in sequence #34
+Specify log: {<RET>=suggested | filename | AUTO | CANCEL}
+Log applied.
+Media recovery complete.
+SQL> alter database open resetlogs;
+Database altered.
+SQL>
+....
+
+NOTE: 使用使用快照完成数据库恢复 `recover automatic` 命令不需要特定的许可、但需要使用进行时间点恢复 `snapshot time` 需要Oracle高级压缩许可证。

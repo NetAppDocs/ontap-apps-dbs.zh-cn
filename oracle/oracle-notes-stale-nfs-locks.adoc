@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-notes-stale-nfs-locks.html 
+keywords: oracle, database, ontap, stale, nfs, locks 
+summary: Oracle和过时的NFSv3锁定 
+---
+= 过时的NFSv3锁定和Oracle数据库
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+如果Oracle数据库服务器崩溃、则在重新启动时、陈旧的NFS锁定可能会出现问题。通过仔细注意服务器上的名称解析配置、可以避免此问题。
+
+出现此问题的原因是、创建锁定和清除锁定使用两种略有不同的名称解析方法。其中涉及两个进程、即网络锁定管理器(Network Lock Manager、NLM)和NFS客户端。NLM使用 `uname n` 要确定主机名、请使用 `rpc.statd` 流程使用 `gethostbyname()`。这些主机名必须匹配、操作系统才能正确清除陈旧锁定。例如、主机可能正在查找属于的锁定 `dbserver5`，但主机已将锁定注册为 `dbserver5.mydomain.org`。条件 `gethostbyname()` 返回的值与不相同 `uname –a`，则锁定释放过程未成功。
+
+以下示例脚本将验证名称解析是否完全一致：
+
+....
+#! /usr/bin/perl
+$uname=`uname -n`;
+chomp($uname);
+($name, $aliases, $addrtype, $length, @addrs) = gethostbyname $uname;
+print "uname -n yields: $uname\n";
+print "gethostbyname yields: $name\n";
+....
+条件 `gethostbyname` 不匹配 `uname`，可能是陈旧的锁定。例如、此结果揭示了一个潜在问题：
+
+....
+uname -n yields: dbserver5
+gethostbyname yields: dbserver5.mydomain.org
+....
+通常、可以通过更改主机在中的显示顺序来查找解决方案 `/etc/hosts`。例如、假设主机文件包含以下条目：
+
+....
+10.156.110.201  dbserver5.mydomain.org dbserver5 loghost
+....
+要解析此问题描述、请更改完全限定域名和短主机名的显示顺序：
+
+....
+10.156.110.201  dbserver5 dbserver5.mydomain.org loghost
+....
+`gethostbyname()` 现在返回短 `dbserver5` 主机名、与的输出匹配 `uname`。因此、锁定会在服务器崩溃后自动清除。

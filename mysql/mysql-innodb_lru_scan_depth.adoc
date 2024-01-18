@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: mysql/mysql-innodb_lru_scan_depth.html 
+keywords: MySQL,MariaDB,innodb_lru_scan_depth 
+summary: 基于ONTAP的MySQL 
+---
+= InnoDB_LRU_SCAN_深度
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+。 `innodb_lru_scan_depth` 参数会影响InnoDB缓冲池的刷新操作的算法和启发式。
+
+调整I/O密集型工作负载的性能专家主要关注此参数。对于每个缓冲池实例、此参数用于指定页面清理程序线程应继续扫描的最近最少使用(Least Recently Used、LRU)页面列表中的下限、以查找要刷新的脏页面。此后台操作每秒执行一次。
+
+您可以向上或向下调整该值、以最大程度地减少可用页数。不要将该值设置得比所需值高得多、因为扫描会产生显著的性能成本。此外、请考虑在更改缓冲池实例数时调整此参数、因为 `innodb_lru_scan_depth * innodb_buffer_pool_instances` 定义页面清理程序线程每秒执行的工作量。
+
+小于默认值的设置适用于大多数工作负载。只有在典型工作负载下具有备用I/O容量时、才应考虑增加此值。相反、如果写入密集型工作负载使I/O容量饱和、请减小该值、尤其是在缓冲池较大的情况下。

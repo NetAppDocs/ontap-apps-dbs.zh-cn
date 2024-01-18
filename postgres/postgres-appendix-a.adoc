@@ -1,0 +1,25 @@
+---
+sidebar: sidebar 
+permalink: postgres/postgres-appendix-a.html 
+keywords: PostgreSQL,database,postgres 
+summary: 基于ONTAP的PostgreSQL数据库 
+---
+= 附录A：主机配置
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+附录内容：
+
+* 验证ESX主机中的FC主机总线适配器(HBA)是否正在使用更新的驱动程序、固件和正确的BIOS版本运行。
+* 在主机上安装NetApp主机实用程序以查看给定LUN的直接和间接路径。该套件还提供了有关LUN SVM信息的扩展信息。
+* 请始终使用主机上的重新扫描SCSI总线脚本来执行以下操作：
+* 查找新LUN
+* 丢弃陈旧的LUN
+* 更新LUN的新路径
+* 要在路径出现故障时建立多个存储路由、请在主机操作系统上安装和配置多路径软件。
+* 如果不使用多路径软件、则应将每个LUN限制为一个路径。
+* Linux内核允许对块设备的I/O计划进行低级控制。Linux版本中的默认值可能差别很大。一般来说、使用NoOps计划程序对数据库执行NetApp客户和内部测试时、结果会更好。您应执行基准测试、以确定哪些I/O计划程序最适合您的使用情形。
+

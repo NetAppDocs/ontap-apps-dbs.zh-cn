@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-storage-san-config-lun-resizing.html 
+keywords: SAN, ASM, LVM 
+summary: 使用Oracle数据库调整LUN和LVM大小 
+---
+= 调整LUN大小和基于LVM的大小
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+当基于SAN的文件系统达到其容量限制时、可通过两种方法增加可用空间：
+
+* 增加LUN的大小
+* 将LUN添加到现有卷组并增加包含的逻辑卷
+
+
+虽然可以选择调整LUN大小来增加容量、但通常最好使用LVM、包括Oracle ASM。存在LVM的一个主要原因是避免调整LUN大小。通过LVM、多个LUN会绑定到一个虚拟存储池中。从该池中划分出来的逻辑卷由LVM管理、并且可以轻松调整大小。另一个优势是、通过在所有可用LUN之间分布给定逻辑卷、可以避免特定驱动器上出现热点。通常、可以通过使用卷管理器将逻辑卷的底层块区重新定位到新LUN来执行透明迁移。

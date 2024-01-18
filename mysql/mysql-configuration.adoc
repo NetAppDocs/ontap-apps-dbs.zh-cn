@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: mysql/mysql-configuration.html 
+keywords: MySQL,MariaDB 
+summary: MySQL配置 
+---
+= 配置概述
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp建议使用几个重要的MySQL配置参数(如表1所示)来获得最佳性能。
+
+[cols="1,1"]
+|===
+
+
+| Parameters | 值 
+
+
+| InnoDB_log_file_size | 256 M 
+
+
+| INNODB_FLOG_AT_TRx_Commit | 2. 
+
+
+| InnoDB_doublewite | 0 
+
+
+| INNODB_FLUG_METHOD | 同步 
+
+
+| InnoDB_buffer_pool_size | 11g 
+
+
+| InnoDB_IO_Capacity | 8192. 
+
+
+| InnoDB_buffer_pool_instances | 8. 
+
+
+| InnoDB_LRU_SCAN_深度 | 8192. 
+
+
+| open_file_Limit | 65535 
+|===
+要设置本节中所述的参数、必须在MySQL配置文件(my.cnf)中进行更改。NetApp最佳实践是内部测试的结果。

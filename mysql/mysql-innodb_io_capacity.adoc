@@ -1,0 +1,29 @@
+---
+sidebar: sidebar 
+permalink: mysql/mysql-innodb_io_capacity.html 
+keywords: MySQL,MariaDB,innodb_io_capacity 
+summary: 基于ONTAP的MySQL 
+---
+= InnoDB_IO_Capacity
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+在InnoDB插件中、从MySQL 5.7中添加了一个名为InnoDB_io_Capacity的新参数。
+
+它控制InnoDB执行的最大IOPS数(包括异常页面的转储速率以及插入缓冲区[ibuf]批大小)。InnoDB_IO_Capacity参数可通过InnoDB后台任务(例如从缓冲区池转储页面以及合并更改缓冲区中的数据)设置IOPS上限。
+
+将InnoDB_IO_Capacity参数设置为系统每秒可执行的大约I/O操作数。理想情况下、应尽可能降低设置值、但不要太低、以免后台活动减慢。如果设置值过高、则会从缓冲池中删除数据、并且插入缓冲区的速度过快、无法缓存、因此无法提供显著优势。
+
+
+TIP: * NetApp建议*如果通过NFS使用此设置、则分析IOPS (Sysbench/FIO)的测试结果并相应地设置参数。除非您在InnoDB缓冲池中看到的已修改或脏页面多于所需数量、否则请使用可能的最小值进行转储和清除以保持最新。
+
+
+CAUTION: 请勿使用极值(如20、000或更多)、除非您已证明较低的值不足以满足工作负载要求。
+
+InnoDB_IO_Capacity参数用于调节转储速率和相关I/O
+
+
+CAUTION: 如果将此参数或InnoDB_IO_capity_max参数设置得过高、并因过早转储而浪费I/O操作、可能会严重影响性能。
