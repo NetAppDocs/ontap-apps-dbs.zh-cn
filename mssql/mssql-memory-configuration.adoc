@@ -6,12 +6,11 @@ summary: 基于ONTAP的Microsoft SQL Server
 ---
 = Microsoft SQL Server内存配置
 :allow-uri-read: 
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
 :imagesdir: ../media/
 
+
+[role="lead"]
+以下各节将介绍一些关键内存配置设置。
 
 
 

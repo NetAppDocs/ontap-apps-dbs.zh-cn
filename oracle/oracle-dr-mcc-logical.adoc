@@ -153,10 +153,6 @@ ONTAP调解器可与MetroCluster IP和某些其他ONTAP解决方案结合使用�
 
 
 
-=== 调解器自动无干预切换(MAUSO)
-
-
-
 === 使用ClusterLion的虚拟第三站点
 
 ClusterLion是一种高级MetroCluster监控设备、可充当虚拟第三站点。通过这种方法、可以在双站点配置中安全地部署MetroCluster、并提供完全自动化的切换功能。此外、ClusterLion还可以执行额外的网络级监控并执行切换后操作。完整文档可从ProLion获得。

@@ -239,7 +239,6 @@
   <block id="8ada6a626a475d631df231bbb3a88ac9" category="paragraph">ONTAP调解器可与MetroCluster IP和某些其他ONTAP解决方案结合使用。它的功能与上述MetroCluster Tieb破碎 机软件非常相似、但也包括一项关键功能、即执行自动无人值守切换。</block>
   <block id="991d7d7d7388ccdd87c65ca09aa804f2" category="paragraph">光纤连接的MetroCluster可以直接访问相反站点上的存储设备。这样、一个MetroCluster控制器就可以通过从驱动器中读取检测信号数据来监控其他控制器的运行状况。这样、一个控制器就可以识别另一个控制器的故障并执行切换。</block>
   <block id="db2e932a11478bcf14c75d38e8b9a170" category="paragraph">相比之下、MetroCluster IP架构会通过控制器-控制器连接独占路由所有I/O；无法直接访问远程站点上的存储设备。这会限制控制器检测故障和执行切换的能力。因此、需要将ONTAP调解器作为Tieb破碎 机设备来检测站点丢失并自动执行切换。</block>
-  <block id="fed81cab21bffffef4cc425583569036" category="section-title">调解器自动无干预切换(MAUSO)</block>
   <block id="8004e6d63f487a456290225b74768a6c" category="section-title">使用ClusterLion的虚拟第三站点</block>
   <block id="f1d5a7305654a402a719675fbec810e7" category="paragraph">ClusterLion是一种高级MetroCluster监控设备、可充当虚拟第三站点。通过这种方法、可以在双站点配置中安全地部署MetroCluster、并提供完全自动化的切换功能。此外、ClusterLion还可以执行额外的网络级监控并执行切换后操作。完整文档可从ProLion获得。</block>
   <block id="a60b8f728a13371898fea9947ef1e0dc" category="paragraph"><block ref="a60b8f728a13371898fea9947ef1e0dc" category="inline-image-macro-rx" type="image"></block></block>
@@ -642,12 +641,6 @@
   <block id="0a01e6837f5c691536f0b6cbdd0232ec" category="inline-link-macro">TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》</block>
   <block id="1cca1a3fad8c6dd7e2dadbd2aa08bf07" category="paragraph">有关SnapMirror的详细信息、请参见 <block ref="64b916f792bad525a069a243c092b62e" category="inline-link-macro-rx"></block>。</block>
   <block id="3d4b417d78ff0ef4c84f0c043de24b10" category="doc">数据库安全性</block>
-  <block id="555119357ec4acedae2d155a0c65df5a" category="paragraph">数据库安全始终是重中之重、数据库管理员和组织会强制实施强化检查点、以便仅允许授权用户访问服务器和数据库。从定期修补服务器、配置防火墙、删除通用子系统或公共访问、以及向受限用户授予运行应用程序或运行临时报告查询的最低权限、所有这些都是确保业务生态系统安全的一部分。</block>
-  <block id="3f0ff45bcce968caef3a216a79681533" category="paragraph">随着勒索软件或内部威胁案例的增加、业务数据和备份需要得到保护、并且应该能够从恶意攻击中快速恢复、并且保持一致。攻击者可能仍会想方设法劫持数据。
-ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
-  <block id="8b64c006213e96766bdb598b57396083" category="paragraph">ONTAP FlexVol允许通过在作为源的卷和作为目标的SnapLock卷之间创建SnapMirror关系、将灵活卷备份到SnapLock企业版或SnapLock合规性卷。使用SnapLock技术、备份到二级存储的Snapshot副本在其保留日期之前不会被修改或删除 在与关系关联的SnapMirror策略上、在该关系中、为目标SnapLock卷上保留的特定SnapMirror标签定义了Snapshot副本数。要还原包含LUN数据的快照、可以通过SnapMirror还原操作在非SnapLock卷上完成。在ONTAP 9.131中、可以通过将SnapLock类型指定为非SnapLock来创建FlexClone副本。有关 SnapLock 的详细信息，请参见 <block ref="ef172f6fa5e7e0d1ce81bd97ee5f82e3" category="inline-link-macro-rx"></block>。</block>
-  <block id="0b6dbdd1b25ffa8aa9efcccb98bb3fbe" category="paragraph">防篡改Snapshot副本或Snapshot副本锁定：Snapshot副本是保护和还原数据库的快速方法。攻击者可能会删除Snapshot副本、而这可能是在数据损坏时还原数据库的最后一个选项。启用防篡改Snapshot副本会锁定主或二级ONTAP系统上的Snapshot副本、以防止路由管理员或不可信管理员在指定时间段内删除快照。ONTAP 9.12.1提供了防篡改Snapshot副本功能、该功能需要SnapLock许可证并初始化Compliance时钟。</block>
-  <block id="310ba850db6109a11c606bdc5224be97" category="paragraph">ONTAP具有多管理员验证(MAV)功能、这意味着任何一个管理员都不具有删除Snapshot副本或修改卷的完整权限。这可作为额外的安全性、以避免卷或Snapshot副本再次被不可信的管理员篡改。</block>
   <block id="77641f4a3e4406855e878235cbd89b87" category="doc">CPU配置</block>
   <block id="a51adad5719779145ac252822e328611" category="section-title">超线程</block>
   <block id="fe520b79816bad6a21fbebcb205c7ca9" category="paragraph">超线程是英特尔专有的同步多线程(SMT)实施、它可以改进在x86微处理器上执行的并行化(多任务处理)。</block>
@@ -684,7 +677,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="0424163d6b24f29436021dfd7072863b" category="paragraph">从SQL Server 2016开始、安装期间会自动检测操作系统可见的CPU核心数、SQL Server会根据该数量计算和配置获得最佳性能所需的tempdb文件数。</block>
   <block id="1c5b37437282a3648dde78afd914e452" category="doc">Microsoft SQL Server概述</block>
   <block id="9aa5016539f88d8f1972a16ce9babd34" category="paragraph">SQL Server是Microsoft数据平台的基础、可通过内存技术提供任务关键型性能、并加快对任何数据(无论是内部数据还是云数据)的洞察力。</block>
-  <block id="93561e0df88dabbfc4999f97e0030525" category="admonition">本文档将取代先前发布的技术报告_TR-4590：《采用ONTAP的Microsoft SQL Server最佳实践指南》</block>
   <block id="8133a02d7327679696821fb31b105177" category="paragraph">Microsoft SQL Server基于先前版本中提供的任务关键型功能构建、为任务关键型应用程序提供突破性的性能、可用性和易管理性。存储系统是影响SQL Server数据库整体性能的关键因素。NetApp提供了多种产品、使您的SQL Server数据库能够提供企业级性能、同时提供世界一流的工具来管理您的环境。</block>
   <block id="0bdfc026961d516d3d473152b4b6a87e" category="section-title">目的和范围</block>
   <block id="d0554e23b25bb82082a0cd9eaf810d0f" category="paragraph">本节介绍在运行NetApp ONTAP软件的NetApp存储系统上部署SQL Server的最佳实践、并深入介绍相关设计注意事项、目的是实现高效的存储部署以及端到端数据保护和保留规划。本指南的范围仅限于根据NetApp在部署SQL Server时为存储基础架构建议的设计原则和首选标准制定的技术设计准则。端到端实施不在本报告的讨论范围之内。</block>
@@ -2590,8 +2582,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="3123ece3c3b36f605758cb0c9a28f904" category="inline-link">监控 VVOL 数据存储库和虚拟机</block>
   <block id="75c07b623699e1947d011983a7823584" category="list-text"><block ref="75c07b623699e1947d011983a7823584" category="inline-link-rx"></block></block>
   <block id="73751ced5959ea3089346b01d42dde76" category="paragraph">除了产品文档之外、还有一些可能有用的支持知识库文章。</block>
-  <block id="23bd7442fd1cd75655289cc3a38dd825" category="inline-link">如何执行VASA Provider灾难恢复</block>
-  <block id="a2dd1381618efc2cd3834a883a0d779d" category="list-text"><block ref="a2dd1381618efc2cd3834a883a0d779d" category="inline-link-rx"></block></block>
   <block id="dd5138e8a4207a5b2fde43b411a4b5e1" category="section-title">VASA Provider信息板</block>
   <block id="6da01a643ea28efe37fa2d6fd06a634b" category="paragraph">VASA Provider包括一个信息板、其中包含各个VVO尔VM的性能和容量信息。此信息直接来自ONTAP 中有关VVOL文件 和LUN的信息、包括前5个虚拟机的延迟、IOPS、吞吐量和正常运行时间以及前5个数据存储库的延迟和IOPS。使用ONTAP 9.7或更高版本时、默认情况下会启用此功能。检索初始数据并将其显示在信息板中可能需要长达30分钟的时间。</block>
   <block id="9b78e1fecb2bcc40733f2180691c7507" category="section-title">ONTAP 工具的虚拟卷信息板</block>
@@ -3573,40 +3563,31 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="4d15db58f26b374b36c283df6b5a5fc1" category="paragraph">通过 SRA 使用基于阵列的复制时， SRM 支持在 ONTAP 9 中使用 iSCSI ，光纤通道和 NFS 版本 3 。对于使用传统或 VVol 数据存储库的 NFS 版本 4.1 ， SRM 不支持基于阵列的复制。</block>
   <block id="61f54ceeb0338787a2ee2d801cbc62cd" category="paragraph">要确认连接，请始终验证您是否可以从目标 ONTAP 集群在灾难恢复站点挂载和卸载新的测试数据存储库。测试要用于数据存储库连接的每个协议。最佳做法是使用 ONTAP 工具创建测试数据存储库，因为它正在按照 SRM 的指示执行所有数据存储库自动化。</block>
   <block id="0ac3e8abbf45a28af68d22b0f59a973e" category="paragraph">每个站点的 SAN 协议都应是同构的。您可以混合使用 NFS 和 SAN ，但不应在站点内混合使用 SAN 协议。例如，您可以在站点 A 中使用 FCP ，在站点 B 中使用 iSCSI站点 A 不应同时使用 FCP 和 iSCSI原因是 SRA 不会在恢复站点创建混合 igroup ，并且 SRM 不会筛选为 SRA 提供的启动程序列表。</block>
-  <block id="150f8d9d5018ff00285d9aa158451d7b" category="paragraph">先前的指南建议创建 LIF 以实现数据位置化。也就是说，始终使用物理拥有卷的节点上的 LIF 挂载数据存储库。在现代版本的 ONTAP 9 中，不再需要此功能。只要可能，如果给定的是集群范围的凭据， ONTAP 工具仍会选择在数据本地的 LIF 之间进行负载平衡，但对于高可用性或高性能而言，这并不是一项要求。</block>
   <block id="62a631034cae40cfcee909c69c12c5b3" category="paragraph">可以将NetApp ONTAP 9配置为在自动调整大小无法提供足够的紧急容量时自动删除快照、以便在空间不足的情况下保持正常运行时间。此功能的默认设置不会自动删除由SnapMirror创建的快照。如果删除了SnapMirror快照、则NetApp SRA将无法反转和重新同步受影响卷的复制。要防止ONTAP删除SnapMirror快照、请将Snapshot自动删除功能配置为尝试。</block>
   <block id="63b6c8d5e17ef7185a34c4ddd86f9d19" category="inline-link-macro">将卷配置为自动增长或缩减</block>
   <block id="a1874a28c8389c5c687d10167e80dc1f" category="paragraph">卷自动调整大小应设置为<block ref="4d200fce73a8e1cc965cfc2c43343824" prefix=" " category="inline-code"></block> 对于包含SAN数据存储库和的卷<block ref="d89f4f8b1d7c18847b88b46142f61535" prefix=" " category="inline-code"></block> 对于NFS数据存储库。了解更多信息 <block ref="ebd664f1c7cf128a3758282775d35e72" category="inline-link-macro-rx"></block>。</block>
   <block id="e401bd7c98141814eaf5528ddb318da6" category="section-title">基于存储策略的管理(Storage Policy Based Management、SPBM)和虚拟卷</block>
-  <block id="3077a08ffed60acebf18d37874130d44" category="paragraph">从 SRM 8.3 开始，支持使用 VVOL 数据存储库保护 VM 。在 ONTAP 工具设置菜单中启用 VVOL 复制后， VASA Provider 会将 SnapMirror 计划公开到 VM 存储策略中，如以下屏幕截图所示。</block>
-  <block id="399c1894baf71c0529aa0fba66ea18fb" category="paragraph">以下示例显示了 VVOL 复制的启用情况。</block>
   <block id="b180e7f35111dca8acd6c56cdbcabb3e" category="paragraph"><block ref="b180e7f35111dca8acd6c56cdbcabb3e" category="inline-image-macro-rx" type="image"></block></block>
   <block id="be41c3baf700984021c43e2e6b661b0a" category="paragraph">以下屏幕截图提供了创建 VM 存储策略向导中显示的 SnapMirror 计划示例。</block>
   <block id="43c130b36e9e2b3d61409aa974f89fc7" category="paragraph"><block ref="43c130b36e9e2b3d61409aa974f89fc7" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f6292d9eb6ea467a3c3560a65b7f63b5" category="paragraph">ONTAP VASA Provider 支持故障转移到不同的存储。例如，系统可以从边缘位置的 ONTAP Select 故障转移到核心数据中心的 AFF 系统。无论存储相似性如何，您都必须始终为启用了复制的 VM 存储策略配置存储策略映射和反向映射，以确保在恢复站点提供的服务满足预期和要求。以下屏幕截图突出显示了一个示例策略映射。</block>
   <block id="783a951245ce43eb84161804072a38c6" category="paragraph"><block ref="783a951245ce43eb84161804072a38c6" category="inline-image-macro-rx" type="image"></block></block>
   <block id="1eb90dc8f7adfd00c74af3b815e2ac15" category="section-title">为 VVOL 数据存储库创建复制的卷</block>
-  <block id="18231879821321e0aed7de84fe876766" category="paragraph">与以前的 VVOL 数据存储库不同，复制的 VVOL 数据存储库必须在启用复制的情况下从头开始创建，并且它们必须使用在具有 SnapMirror 关系的 ONTAP 系统上预创建的卷。这需要预先配置集群对等和 SVM 对等。这些活动应由 ONTAP 管理员执行，因为这样可以在跨多个站点管理 ONTAP 系统的人员与主要负责 vSphere 操作的人员之间严格划分职责。</block>
-  <block id="0a8c8293003bf411817ef3cedf18a2a9" category="paragraph">这代表 vSphere 管理员提出了一项新要求。由于卷是在 ONTAP 工具的范围之外创建的，因此在定期计划的重新发现期间之前，它不会意识到 ONTAP 管理员所做的更改。因此，最好在创建要用于 VVol 的卷或 SnapMirror 关系时始终运行重新发现。只需右键单击主机或集群，然后选择 NetApp ONTAP tools &gt; Update Host and Storage Data ，如以下屏幕截图所示。</block>
   <block id="dd5e006520a09e3975e52f6fb8991fd2" category="paragraph"><block ref="dd5e006520a09e3975e52f6fb8991fd2" category="inline-image-macro-rx" type="image"></block></block>
   <block id="550d51e15336d4a33bcbb0f26a6810f7" category="paragraph">对于 VVOL 和 SRM ，应注意一个事项。切勿在同一个 VVOL 数据存储库中混用受保护和未受保护的 VM 。原因是，在使用 SRM 故障转移到灾难恢复站点时，灾难恢复中只会使属于保护组的 VM 联机。因此，在重新保护（将 SnapMirror 从灾难恢复反转至生产环境）时，您可能会覆盖未进行故障转移且可能包含有价值数据的 VM 。</block>
   <block id="6d717f70d89096b731dfc63d7a1379e1" category="section-title">关于阵列对</block>
-  <block id="6dd3f3008fe81f402905b00c8dca007c" category="paragraph">系统会为每个阵列对创建一个阵列管理器。使用 SRM 和 ONTAP 工具，每个阵列配对都在 SVM 的范围内完成，即使您使用的是集群凭据也是如此。这样，您可以根据租户分配给他们管理的 SVM 在租户之间划分灾难恢复工作流。您可以为给定集群创建多个阵列管理器，这些阵列管理器本身可能不对称。您可以在不同的 ONTAP 9 集群之间扇出或扇入。例如，可以将集群 1 上的 SVMA 和 SVM-B 复制到集群 2 上的 SVM-C ，集群 3 上的 SVM-D ，反之亦然。</block>
   <block id="2219228418c053eb593ce0a1f318da47" category="paragraph">在 SRM 中配置阵列对时，应始终按照将其添加到 ONTAP 工具的方式在 SRM 中添加这些阵列对，也就是说，它们必须使用相同的用户名，密码和管理 LIF 。此要求可确保 SRA 与阵列正确通信。以下屏幕截图说明了集群在 ONTAP 工具中的显示方式以及如何将其添加到阵列管理器中。</block>
   <block id="7ec48584a43ed8a9b1dda55398d97cf4" category="paragraph"><block ref="7ec48584a43ed8a9b1dda55398d97cf4" category="inline-image-macro-rx" type="image"></block></block>
   <block id="3b34135c8c4d2b14ceb7ebf595f00193" category="section-title">关于复制组</block>
   <block id="6be59afd3c8bb91501f55a7e77ebe794" category="paragraph">复制组包含同时恢复的虚拟机的逻辑集合。ONTAP 工具 VASA Provider 会自动为您创建复制组。由于 ONTAP SnapMirror 复制是在卷级别进行的，因此卷中的所有 VM 都位于同一个复制组中。</block>
-  <block id="94a20f06626561800313d9472f9d9769" category="paragraph">对于复制组以及如何在 FlexVol 卷之间分布虚拟机，需要考虑几个因素。如果旧版 ONTAP 系统缺少聚合级重复数据删除功能，则在同一个卷中对类似 VM 进行分组可以提高存储效率，但分组会增加卷的大小并减少卷 I/O 并发性。在现代 ONTAP 系统中，可以通过在同一聚合中的 FlexVol 卷之间分布虚拟机来实现性能和存储效率的最佳平衡，从而利用聚合级重复数据删除并在多个卷之间实现更大的 I/O 并行化。您可以同时恢复卷中的 VM ，因为一个保护组（如下所述）可以包含多个复制组。此布局的缺点是、由于卷SnapMirror不考虑聚合重复数据删除、数据块可能会通过缆线传输多次。</block>
   <block id="c727c1020d3128dd7495a6e3e6f23736" category="paragraph">对于复制组，最后要考虑的一点是，每个复制组本身都是一个逻辑一致性组（不要与 SRM 一致性组相混淆）。这是因为卷中的所有 VM 都会使用同一个快照一起传输。因此，如果您的虚拟机必须彼此一致，请考虑将其存储在同一个 FlexVol 中。</block>
   <block id="9f8a350a2113ea4be6b4e5e5112514a3" category="section-title">关于保护组</block>
   <block id="df77671ab2743af7f1d1457c200eb12c" category="paragraph">保护组用于定义从受保护站点一起恢复的组中的 VM 和数据存储库。受保护站点是指在正常稳定状态操作期间，在保护组中配置的 VM 所在的站点。请务必注意，即使 SRM 可能会为一个保护组显示多个阵列管理器，一个保护组也不能跨越多个阵列管理器。因此，您不应将 VM 文件跨越不同 SVM 上的数据存储库。</block>
   <block id="b148467d645c3613c1c7a2607764c515" category="section-title">关于恢复计划</block>
   <block id="fd28cd9834ad3aa213c4fec2881064b5" category="paragraph">恢复计划定义了在同一过程中恢复的保护组。可以在同一恢复计划中配置多个保护组。此外，要为执行恢复计划提供更多选项，可以在多个恢复计划中包含一个保护组。</block>
   <block id="77aa84394124509e5e4006dcfd18789f" category="paragraph">通过恢复计划， SRM 管理员可以定义恢复工作流，方法是将 VM 分配给优先级组，优先级组从 1 （最高）到 5 （最低）不等，默认值为 3 （中等）。在优先级组中，可以为 VM 配置依赖关系。</block>
-  <block id="6d72567442b1f361e3c0e89cbc7dfd6a" category="paragraph">例如，您的公司可能有一个第 1 层业务关键型应用程序，该应用程序的数据库依赖于 Microsoft SQL 服务器。因此，您决定将 VM 置于优先级组 1 中。在优先级组 1 中，您开始规划订单以启动服务。您可能希望 Microsoft Windows 域控制器在 Microsoft SQL 服务器之前启动，而该服务器需要在应用程序服务器之前联机，依此类推。您应将所有这些 VM 添加到优先级组，然后设置依赖关系，因为依赖关系仅适用于给定优先级组。</block>
   <block id="030d749269f8866de516a551b0286001" category="paragraph">NetApp 强烈建议您与应用程序团队合作，了解故障转移场景中所需的操作顺序，并相应地构建恢复计划。</block>
   <block id="cebb1167d3e78885137c837f0abf8026" category="section-title">测试故障转移</block>
-  <block id="2772828493452c4a2ff21f8b2b66a1a7" category="paragraph">作为最佳实践，每当对受保护 VM 存储的配置进行更改时，始终执行测试故障转移。这样可以确保在发生灾难时，您可以相信 Site Recovery Manager 能够在预期 RTO 目标内还原服务。</block>
   <block id="6ae8acfc86f5df3426d525fb95767506" category="paragraph">NetApp 还建议偶尔确认子系统中的应用程序功能，尤其是在重新配置 VM 存储之后。</block>
   <block id="bd47371bcd8b3d08d6b4b15481b08d93" category="paragraph">执行测试恢复操作时，会在 ESXi 主机上为 VM 创建一个专用测试气泡网络。但是，此网络不会自动连接到任何物理网络适配器，因此不会在 ESXi 主机之间提供连接。为了允许在灾难恢复测试期间不同 ESXi 主机上运行的 VM 之间进行通信，在灾难恢复站点的 ESXi 主机之间创建了一个物理专用网络。要验证测试网络是否为专用网络，可以通过物理方式或使用 VLAN 或 VLAN 标记来隔离测试气泡网络。必须将此网络与生产网络隔离，因为在恢复 VM 后，不能将其放置在 IP 地址可能与实际生产系统冲突的生产网络上。在 SRM 中创建恢复计划时，可以选择创建的测试网络作为测试期间 VM 连接到的专用网络。</block>
   <block id="2be58fc410ddf2ba9c350135a617944a" category="paragraph">验证测试并使其不再需要后，请执行清理操作。运行清理会将受保护的 VM 恢复到其初始状态，并将恢复计划重置为就绪状态。</block>
@@ -3615,7 +3596,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="74abdd5cb502cd65bcf1d7ca484ab0c2" category="paragraph">您可能需要应对的一个问题描述是站点之间的网络差异。某些环境可能能够在主站点和灾难恢复站点使用相同的网络 IP 地址。此功能称为延伸型虚拟 LAN （ VLAN ）或延伸型网络设置。其他环境可能要求主站点使用与灾难恢复站点相对的不同网络 IP 地址（例如，在不同的 VLAN 中）。</block>
   <block id="9b8890fe5b1ab29543118b12a7bd0a07" category="inline-link-macro">SRM的NSX-T选项</block>
   <block id="25154023650451d6cc971fc54bff8898" category="paragraph">VMware 提供了多种方法来解决此问题。例如， VMware NSX-T Data Center 等网络虚拟化技术可从操作环境中将整个网络堆栈从第 2 层抽象为第 7 层，从而提供更便携的解决方案。了解更多信息 <block ref="3e6a2bd8e1acf69d423b7944c6543271" category="inline-link-macro-rx"></block>。</block>
-  <block id="2ef005587879f8a16a4d999c1dd71630" category="paragraph">通过 SRM ，您还可以在虚拟机恢复后更改其网络配置。此重新配置包括 IP 地址，网关地址和 DNS 服务器设置等设置。恢复计划中VM的属性设置中可以指定不同的网络设置、这些设置会在恢复后应用于各个VM。</block>
   <block id="b56336aa967325217297d8725b64eb0b" category="inline-link-macro">VMware文档</block>
   <block id="d32598436410006707b2ad1d79395f02" category="paragraph">要将 SRM 配置为对多个 VM 应用不同的网络设置，而无需编辑恢复计划中每个 VM 的属性， VMware 提供了一个名为 dr-ip-customizer 的工具。要了解如何使用此实用程序、请参见 <block ref="837c7339284b78d4fd5550c5d0fb1a68" category="inline-link-macro-rx"></block>。</block>
   <block id="3c8c527afa8ce5009c8f707f7fd4fabf" category="section-title">重新保护</block>
@@ -3623,7 +3603,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="2bf236f8aceaaff2b305848df524c42e" category="paragraph">从根本上说，故障恢复操作是指方向与以前不同的故障转移。作为最佳实践，在尝试故障恢复或换句话说，故障转移到原始站点之前，您应验证原始站点是否已恢复到可接受的功能级别。如果原始站点仍然受到影响，您应延迟故障恢复，直到故障得到充分修复为止。</block>
   <block id="cb03753531bad31391d7156433b98ae6" category="paragraph">另一个故障恢复最佳实践是，始终在完成重新保护之后以及执行最终故障恢复之前执行测试故障转移。此操作将验证原始站点上的系统是否可以完成此操作。</block>
   <block id="900a3b65ea54b6dcff72ed0d6ac66fdf" category="section-title">重新保护原始站点</block>
-  <block id="2a0c13d7b927063987bf931a141f2662" category="paragraph">故障恢复后，您应先向所有利益相关方确认其服务已恢复正常，然后再重新运行重新保护。</block>
   <block id="12d059a2c7519f2e3497b30a71121503" category="paragraph">在故障恢复后运行重新保护实际上会使环境恢复到最初的状态，同时重新运行从生产站点到恢复站点的 SnapMirror 复制。</block>
   <block id="7ab9df3e4e38ca227c1b48b0f6740675" category="section-title">确保开发活动的安全</block>
   <block id="1a79eb278bc02ebdbd2ab32925e316f6" category="paragraph">使用适用于 VMware vSphere 的 NetApp ONTAP 工具进行软件工程时，需要执行以下安全开发活动：</block>
@@ -3974,7 +3953,6 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="dee28dd6d1a9ef7bf399f642fd9d588f" category="section-title">NFS传输大小</block>
   <block id="d8299d00f914e35b80644e5781e47a77" category="paragraph"><block ref="d8299d00f914e35b80644e5781e47a77" category="inline-image-macro-rx" type="image"></block></block>
   <block id="14ce62ac76fa34a51093e6bcf11a2fd1" category="paragraph">数据库备份的主要注意事项是利用NetApp Snapshot技术。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。</block>
-  <block id="08ec4f226440b636860c1faf0bd1b98c" category="paragraph"><block ref="08ec4f226440b636860c1faf0bd1b98c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="2c024bdc7d0e87e8ba0f473024d45a4e" category="paragraph">修改服务器和数据库设置有助于实现更好、更高效的数据库性能。</block>
   <block id="861f074a1ecd9d1cc088d2fe81903565" category="paragraph"><block ref="861f074a1ecd9d1cc088d2fe81903565" category="inline-image-macro-rx" type="image"></block></block>
   <block id="710e9cd79e3865d47122a799f425b31f" category="paragraph"><block ref="710e9cd79e3865d47122a799f425b31f" category="inline-image-macro-rx" type="image"></block></block>
@@ -4027,8 +4005,55 @@ ONTAP提供了各种功能来保护NAS和SAN上的数据安全。</block>
   <block id="9674525687765646f35916d0e569eda9" category="paragraph">否则、数据库功能(包括性能)应接近相同。唯一的要求是使用<block ref="d64a84456adc959f56de6af685d0dadd" prefix=" " category="inline-code"></block> 挂载选项。要确保软超时不会产生不可恢复的IO错误、必须执行此操作。</block>
   <block id="0c6430fad6c643c444b5d6d52b18edb4" category="paragraph">如果选择NFSv4作为协议、NetApp建议使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高NFSv4.0的故障恢复能力。</block>
   <block id="248212b04c23627e2719e106224d2eb3" category="paragraph">对常规数据库工作负载使用以下挂载选项：</block>
-  <block id="6daf9da65c1180ae710d4f437b5e4edc" category="paragraph">如果预期顺序IO负载繁重、则可以增加NFS传输大小。</block>
   <block id="9efbdff43e91279291e95690414bec95" category="paragraph">在ONTAP级别增加传输大小后、将使用以下挂载选项：</block>
   <block id="395201f6a339cc4cf6b345e0c259f383" category="section-title">NFSv3 TCP插槽表</block>
   <block id="1f8260aa2c5a5b35bf771c26828d2096" category="paragraph">如果在Linux中使用NFSv3、则正确设置TCP插槽表至关重要。</block>
+  <block id="92d0a1aef2134a70d5c0f0279dc22ec6" category="doc">Snapshot 副本</block>
+  <block id="0c47b4eb567b018e3d2e5882b88eaca9" category="paragraph">存储快照是目标数据的时间点副本。ONTAP的实施支持设置各种策略、并为每个卷存储多达1024个快照。ONTAP中的快照可节省空间。只有在原始数据集发生更改时、才会占用空间。它们也是只读的。快照可以删除、但不能更改。</block>
+  <block id="7986a4827296ca9cd0b991ded9f8a10d" category="paragraph">在某些情况下、可以直接在ONTAP上计划快照。在其他情况下、可能需要SnapCenter等软件来编排应用程序或操作系统操作、然后再创建快照。无论哪种方法最适合您的工作负载、主动快照策略都可以通过频繁、轻松访问从启动LUN到任务关键型数据库的所有备份来确保数据安全。</block>
+  <block id="210c45246ad11e0b53bdb20b64266780" category="paragraph">*注意*：ONTAP灵活卷或更简单地说、卷不是LUN的同义词。卷是文件或LUN等数据的管理容器。例如、数据库可能位于一个8 LUN条带集上、所有LUN都包含在一个卷中。</block>
+  <block id="ad590deba1cd4423ee565e822c3a91d1" category="paragraph">有关快照的详细信息、请单击 <block ref="211d7effcac0cb0488144c6fc8b3cb7c" category="inline-link-macro-rx"></block></block>
+  <block id="c4bf0f56feeec9a45e973768fbc4f47e" category="section-title">防篡改快照</block>
+  <block id="d2e783db61d20da61c761d4d473bed14" category="paragraph">从ONTAP 9.12.1开始、快照不仅是只读的、还可以防止意外或故意删除。此功能称为防篡改快照。可以通过Snapshot策略设置和实施保留期限。生成的快照在达到到期日期之前无法删除。不会覆盖管理或支持中心。</block>
+  <block id="38fef959179f8d3eb79a68a5ce747bdc" category="paragraph">这样可以确保即使侵入者、恶意内部人员甚至勒索软件攻击导致访问ONTAP系统本身、也不会影响备份。如果与频繁的快照计划结合使用、则可以提供极其强大的数据保护、并且RPO非常低。</block>
+  <block id="c64db0c79e66c1c0e5b932c5d2dedfea" category="paragraph">有关防篡改快照的详细信息、请单击 <block ref="134603be635c039f9224bff191c6103c" category="inline-link-macro-rx"></block></block>
+  <block id="a1f41e52e9ddbd9f87ecd032c237b1c0" category="section-title">SnapMirror 复制</block>
+  <block id="1bb837ddfb635c39a6c6e23d847823f9" category="paragraph">也可以将快照复制到远程系统。这包括防篡改快照、其中会在远程系统上应用和实施保留期限。结果是、数据保护优势与本地快照相同、但数据位于另一个存储阵列上。这样可以确保销毁原始阵列不会影响备份。</block>
+  <block id="18d315ae923785b3f9c5234724b0ab42" category="paragraph">第二个系统还为管理安全性打开了新的选项。例如、某些NetApp客户会隔离主存储系统和二级存储系统的身份验证凭据。没有一个管理用户可以同时访问这两个系统、这意味着恶意管理员无法删除所有数据副本。</block>
+  <block id="e805272dcce51c35975e830e5ee9ecaf" category="paragraph">有关SnapMirror的详细信息、请单击 <block ref="9abdfd5d94773cf0a996248d1d722cac" category="inline-link-macro-rx"></block></block>
+  <block id="500569e3cc0764260a592cb176921ca3" category="section-title">Storage Virtual Machine</block>
+  <block id="d5174dd4c760ef1a826b3e5bc22215e5" category="paragraph">新配置的ONTAP存储系统与新配置的VMware ESX服务器类似、因为在创建虚拟机之前、这两个系统都不能支持任何用户。通过ONTAP、您可以创建一个Storage Virtual Machine (SVM)、此SVM将成为存储管理的最基本单元。每个SVM都有自己的存储资源、协议配置、IP地址和FCP WWN。  这是ONTAP多租户的基础。</block>
+  <block id="597cb258dd509add7cd999794c60d430" category="paragraph">例如、您可以为关键生产工作负载配置一个SVM、为开发活动配置另一个SVM。然后、您可以限制某些管理员对生产SVM的访问、同时授予开发人员对开发SVM中存储资源的更广泛的控制权限。您可能还需要为财务和人力资源团队提供第三个SVM、以存储非常关键的只读数据。</block>
+  <block id="18519d16720b1e13890c2639657b5bf8" category="paragraph">有关SVM的详细信息、请单击 <block ref="a06a0fd566387240178b1c926e07cb7b" category="inline-link-macro-rx"></block></block>
+  <block id="7d0fc71fe28e011ca49b06214469d484" category="section-title">管理RBAC</block>
+  <block id="4f0dae2ba2fd11c533349d6ade4f81de" category="paragraph">ONTAP为管理登录提供了功能强大的基于角色的访问控制(Role-Based Access Control、RBAC)。某些管理员可能需要完全集群访问权限、而其他管理员则可能只需要访问某些SVM。高级帮助台人员可能需要增加卷大小的能力。这样、您就可以为管理用户授予执行其工作职责所需的访问权限、而无需执行任何其他操作。此外、您还可以使用不同供应商提供的PKI来保护这些登录、限制对ssh密钥的访问、并强制执行失败登录尝试锁定。</block>
+  <block id="6ae13b0198daa7d13d79a8631297e64d" category="paragraph">有关管理访问控制的详细信息、请单击 <block ref="db5be08b697b5ef26e0e94da1d5f4970" category="inline-link-macro-rx"></block></block>
+  <block id="671a94a08dff3cf44fad087e2346c8b0" category="section-title">多因素身份验证</block>
+  <block id="c6595c32ea3c4aa315aa5c66b88b0a54" category="paragraph">ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身份验证。其结果是、用户名/密码被泄露本身并不是没有第二个因素(例如FOB或智能手机应用程序)的数据的安全线程。</block>
+  <block id="945c88a63c229c39ee73ab5592b3ef63" category="paragraph">有关详细信息，请单击 <block ref="03628d0cd13b6640ef56c399aa1c2070" category="inline-link-macro-rx"></block></block>
+  <block id="852741d2a7fb0a8a1a5dd748dbbd6734" category="section-title">API RBAC</block>
+  <block id="bbbea5fec67f15424fa77aa563754c49" category="paragraph">自动化需要API调用、但并非所有工具都需要完全管理访问权限。为了帮助保护自动化系统的安全、还在API级别提供了RBAC。您可以将自动化用户帐户限制为所需的API调用。例如、监控软件不需要更改访问权限、只需要读取访问权限即可。配置存储的工作流不需要删除存储。</block>
+  <block id="97ad75902b447ba6b23cabdb10252ce8" category="paragraph">要了解更多信息、请开始 <block ref="d3dd665f13f927a9546f36768f8407dd" category="inline-link-macro-rx"></block></block>
+  <block id="cb93ad4589e6e6834d2627d2ef8c8456" category="section-title">多管理员验证</block>
+  <block id="7604bad489eaec7e27d112c63d3e2936" category="paragraph">通过要求两个不同的管理员(每个管理员都有自己的凭据)批准某些活动、可以进一步实现多"因素"身份验证。其中包括更改登录权限、运行诊断命令和删除数据。</block>
+  <block id="e890d04cd745ac382688bbb307655e81" category="paragraph">有关多管理员验证(MAV)的详细信息、请单击 <block ref="88f84d4fec0424d978600980bf11baf0" category="inline-link-macro-rx"></block></block>
+  <block id="b39c0496b44447232912303246b46aaa" category="paragraph">如果预期顺序IO较多、则可以按下一节所述增加NFS传输大小。</block>
+  <block id="f8fd5d7386ed935c8520d4e04b029e93" category="paragraph">以下各节将介绍一些关键内存配置设置。</block>
+  <block id="959e8f746f4ff03f6225b95cf646e65f" category="admonition">本文档将取代先前发布的技术报告_TR-4590：《采用ONTAP的Microsoft SQL Server最佳实践指南》</block>
+  <block id="1f6b7ed754cfe3488cf91c21c13ec49a" category="paragraph">保护数据库环境是一项多方面的工作、不仅限于管理数据库本身。NetApp提供了多种独特的功能、旨在保护数据库基础架构的存储方面。</block>
+  <block id="15d2f797f7375b32cb5e92538291f2af" category="list-text"><block ref="15d2f797f7375b32cb5e92538291f2af" category="inline-link-rx"></block></block>
+  <block id="36d72286c0ef70108b2f7791b73fdc6d" category="list-text">之前的指南建议创建LIF以定位数据。也就是说，始终使用物理拥有卷的节点上的 LIF 挂载数据存储库。在现代版本的 ONTAP 9 中，不再需要此功能。如果给定了集群范围的凭据、则ONTAP工具仍会尽可能选择在数据本地的各个LUN之间进行负载平衡、但这并不是高可用性或高性能的要求。</block>
+  <block id="aa131b86ebd9f719bab1aba612ae3c3f" category="list-text">如果恢复计划中的数据存储库数量和保护组数量达到最低、则SRM的性能最佳。因此、您应考虑在受SRM保护的环境中优化虚拟机密度、在这种环境中、应使用最重要的是RTO。</block>
+  <block id="afab42482b97a8b43c62320c373ded74" category="list-text">使用Distributed Resource Scheduler (DRS)帮助平衡受保护和恢复ESXi集群上的负载。请记住、如果您计划故障恢复、则在运行重新保护时、先前受保护的集群将成为新的恢复集群。DRS将有助于平衡两个方向的放置。</block>
+  <block id="8ed6c5d9143eeb92cf75bb8a08bb7819" category="list-text">如有可能、请避免对SRM使用IP自定义、因为这会增加您的RTO。</block>
+  <block id="8baa3b91d59f004ee489f4f3fd3dd4e4" category="paragraph">从SRM 8.3开始、支持使用Vvol数据存储库保护VM。在 ONTAP 工具设置菜单中启用 VVOL 复制后， VASA Provider 会将 SnapMirror 计划公开到 VM 存储策略中，如以下屏幕截图所示。</block>
+  <block id="3c1a2fd7a7a41ca20efeae84dc73ba0a" category="paragraph">以下示例显示了已启用的卷复制。</block>
+  <block id="fc7cd76ae57374916b5edd5a2dd19fee" category="paragraph">与以前的 VVOL 数据存储库不同，复制的 VVOL 数据存储库必须在启用复制的情况下从头开始创建，并且它们必须使用在具有 SnapMirror 关系的 ONTAP 系统上预创建的卷。这需要预先配置集群对等和 SVM 对等。这些活动应由ONTAP管理员执行、因为这样可以在管理多个站点的ONTAP系统的人员与主要负责vSphere操作的人员之间实现严格的职责分离。</block>
+  <block id="e4ad04c89e34f6ca94c87cd68315b108" category="paragraph">这代表 vSphere 管理员提出了一项新要求。由于卷是在 ONTAP 工具的范围之外创建的，因此在定期计划的重新发现期间之前，它不会意识到 ONTAP 管理员所做的更改。因此，最好在创建要用于 VVol 的卷或 SnapMirror 关系时始终运行重新发现。只需右键单击主机或集群、然后选择NetApp ONTAP工具&gt;更新主机和存储数据、如以下屏幕截图所示。</block>
+  <block id="e2e7245b1b3cf4a13a6b703ead49ebee" category="paragraph">系统会为每个阵列对创建一个阵列管理器。使用 SRM 和 ONTAP 工具，每个阵列配对都在 SVM 的范围内完成，即使您使用的是集群凭据也是如此。这样，您可以根据租户分配给他们管理的 SVM 在租户之间划分灾难恢复工作流。您可以为一个给定集群创建多个阵列管理器、这些阵列管理器可以是非对称的。您可以在不同的 ONTAP 9 集群之间扇出或扇入。例如，可以将集群 1 上的 SVMA 和 SVM-B 复制到集群 2 上的 SVM-C ，集群 3 上的 SVM-D ，反之亦然。</block>
+  <block id="3233e61306af256f9de7fd3086bc08bf" category="paragraph">对于复制组以及如何在 FlexVol 卷之间分布虚拟机，需要考虑几个因素。对于缺少聚合级重复数据删除的旧版ONTAP系统、将相似的VM分组在同一个卷中可以提高存储效率、但分组会增加卷的大小并减少卷I/O并发性。在现代ONTAP系统中、可以通过在同一聚合中的FlexVol卷之间分布虚拟机、从而利用聚合级重复数据删除并在多个卷之间实现更大的I/O并行处理能力、从而在性能和存储效率之间实现最佳平衡。您可以同时恢复卷中的 VM ，因为一个保护组（如下所述）可以包含多个复制组。此布局的缺点是、由于卷SnapMirror不考虑聚合重复数据删除、数据块可能会通过缆线传输多次。</block>
+  <block id="670ea4d89ef5c48c4f2d840baf48688c" category="paragraph">例如、您的公司可能拥有一个第1层业务关键型应用程序、该应用程序的数据库依赖于Microsoft SQL Server。因此，您决定将 VM 置于优先级组 1 中。在优先级组 1 中，您开始规划订单以启动服务。您可能希望 Microsoft Windows 域控制器在 Microsoft SQL 服务器之前启动，而该服务器需要在应用程序服务器之前联机，依此类推。您可以将所有这些VM添加到优先级组、然后设置依赖关系、因为依赖关系仅适用于给定优先级组。</block>
+  <block id="512ee19e5020f3ee80a9e25f3f5a6468" category="paragraph">作为最佳实践，每当对受保护 VM 存储的配置进行更改时，始终执行测试故障转移。这样可以确保在发生灾难时、您可以相信Site Recovery Manager可以在预期的Recovery目标范围内还原服务。</block>
+  <block id="4da3f855cd505741909cfd49d743e68e" category="paragraph">通过 SRM ，您还可以在虚拟机恢复后更改其网络配置。此重新配置包括IP地址、网关地址和DNS服务器设置等设置。恢复计划中VM的属性设置中可以指定不同的网络设置、这些设置会在恢复后应用于各个VM。</block>
+  <block id="e409450ce49f3558b068c69a77a9623a" category="paragraph">在故障恢复之后、您应与所有利益相关方确认其服务已恢复正常、然后再再次运行重新保护。</block>
 </blocks>

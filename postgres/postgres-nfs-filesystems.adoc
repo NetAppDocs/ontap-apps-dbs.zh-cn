@@ -25,9 +25,9 @@ PostgreSQL数据库可以托管在NFSv3或NFSv4文件系统上。最佳选择取
 对常规数据库工作负载使用以下挂载选项：
 
 ....
-rw, hard,nointr,bg,vers=[3|4],proto=tcp,rsize=65536,wsize=65536
+rw,hard,nointr,bg,vers=[3|4],proto=tcp,rsize=65536,wsize=65536
 ....
-如果预期顺序IO负载繁重、则可以增加NFS传输大小。
+如果预期顺序IO较多、则可以按下一节所述增加NFS传输大小。
 
 
 
@@ -57,7 +57,7 @@ Cluster01::*>
 在ONTAP级别增加传输大小后、将使用以下挂载选项：
 
 ....
-rw, hard,nointr,bg,vers=[3|4],proto=tcp,rsize=262144,wsize=262144
+rw,hard,nointr,bg,vers=[3|4],proto=tcp,rsize=262144,wsize=262144
 ....
 
 
