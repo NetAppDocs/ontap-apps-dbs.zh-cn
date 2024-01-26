@@ -66,7 +66,7 @@ entries:
       url: "/oracle/oracle-storage-san-config-lun-sizing.html"
     - title: LUN大小调整
       url: "/oracle/oracle-storage-san-config-lun-resizing.html"
-    - title: LVM拼花
+    - title: LVM条带化
       url: "/oracle/oracle-storage-san-config-lvm-striping.html"
   - title: NFS
     entries:
@@ -114,7 +114,7 @@ entries:
   entries:
   - title: 概述
     url: "/oracle/oracle-dp-overview.html"
-  - title: RPO、TRO和SLA
+  - title: RPO、RTO和SLA
     url: "/oracle/oracle-dp-slas.html"
   - title: 数据可用性
     url: "/oracle/oracle-dp-data-availability.html"

@@ -2523,15 +2523,6 @@
   <block id="ff1d278a485c443dc5d8fc9f10f1a702" category="doc">适用于采用VMware Horizon 7的虚拟桌面基础架构的NetApp HCI —为高级用户提供3D图形功能</block>
   <block id="e3162938e0d7b1bbc74111cc5b5871c5" category="paragraph">TR-4792提供了在由NVIDIA图形处理单元(GPU)和虚拟化软件提供支持的VMware Horizon环境中使用NetApp H615C计算节点处理3D图形工作负载的指导。此外、还提供了对H615C的SPECviewperf 13进行的初步测试的结果。</block>
   <block id="1de37c09602b46db5de57a946efe2768" category="paragraph"><block ref="1de37c09602b46db5de57a946efe2768" category="inline-link-macro-rx"></block></block>
-  <block id="5ed492cbbbf7e6d167035a7c10478daa" category="summary">采用NetApp HCI 的VMware最终用户计算是一种经过预先验证的最佳实践数据中心架构、可用于在企业级部署虚拟桌面工作负载。</block>
-  <block id="36f00397200c227ebfe56599e7bafcd5" category="doc">NVA-1129-design：采用NetApp HCI 和NVIDIA GPU的VMware最终用户计算</block>
-  <block id="52940073ac3f539b3c6d9ac1e41d5f06" category="paragraph">采用NetApp HCI 的VMware最终用户计算是一种经过预先验证的最佳实践数据中心架构、可用于在企业级部署虚拟桌面工作负载。本文档介绍了可靠且无风险地在生产环境中部署解决方案 的架构设计和最佳实践。</block>
-  <block id="8a36e2f35bf4a10959caf61f15d8df63" category="paragraph"><block ref="8a36e2f35bf4a10959caf61f15d8df63" category="inline-link-macro-rx"></block></block>
-  <block id="b4a3c2c985fcfc0d0e59c8d9c3259eb0" category="doc">NVA-1129-Deploy：采用NetApp HCI 和NVIDIA GPU的VMware最终用户计算</block>
-  <block id="8b3f1e47da9509d2edf2f21012c6ec7e" category="paragraph">采用NetApp HCI 的VMware最终用户计算是一种经过预先验证的最佳实践数据中心架构、用于在企业级部署虚拟桌面工作负载。本文档介绍如何以可靠且无风险的方式在生产环境中部署解决方案</block>
-  <block id="ba999af3664a8f6c5b43a92bc11de64a" category="paragraph"><block ref="ba999af3664a8f6c5b43a92bc11de64a" category="inline-link-macro-rx"></block></block>
-  <block id="85864e2699dfaceb7f8d1f85448939fe" category="doc">NVA-1132设计：采用NetApp HCI 的VMware最终用户计算</block>
-  <block id="8c40c45c2332a47a83ae257f42af2331" category="paragraph"><block ref="8c40c45c2332a47a83ae257f42af2331" category="inline-link-macro-rx"></block></block>
   <block id="93b94e62ad8cb02a1d1a7b0944a5445d" category="summary">本文档讨论适用于 VMware vSphere 的 ONTAP 工具的产品安全性。</block>
   <block id="57a033c33a8be6110be46b2914cc4989" category="doc">将ONTAP 与虚拟卷结合使用</block>
   <block id="69556d50c944e0a07ade0bea62f078a3" category="paragraph">要将VVOLS与ONTAP 结合使用、关键在于适用于VMware vSphere虚拟设备的ONTAP 工具附带的VASA Provider软件。</block>
@@ -3869,7 +3860,6 @@
   <block id="35084d885dea7b061e6894c1cf3036d9" category="sidebar">工作负载</block>
   <block id="7d219314ccabde6609510141bb175a6c" category="sidebar">共享实例与专用实例</block>
   <block id="d5363ae19ecaede49e2ced297df7737a" category="sidebar">内存配置</block>
-  <block id="459f656cac9c4d74b9f3f16ebb2a76c8" category="sidebar">数据库文件和文件组</block>
   <block id="500c09aa1bb9af431f2c18348e69bfd0" category="sidebar">tempdb文件</block>
   <block id="6fb6843bd9a214011969c02729c7d671" category="sidebar">存储注意事项</block>
   <block id="4c5d94eb4dc4bff93f6a96a08ab7b244" category="sidebar">数据安全性</block>
@@ -3885,9 +3875,6 @@
   <block id="619615da0f93507e22a6054ef2aea4f1" category="sidebar">逻辑接口</block>
   <block id="aca8e861c6f30fe2d42d0310a387312b" category="sidebar">以太网配置</block>
   <block id="63a5b8bd41978e8124f9ccdfa9063e9e" category="sidebar">FC SAN配置</block>
-  <block id="d63f66214ae30c5b9b10653f1e503492" category="sidebar">LUN对齐</block>
-  <block id="f6556bc360e8c25d9e29515d2d52cd66" category="sidebar">LUN计数和LUN大小</block>
-  <block id="d552d63771786b001d365cf747f74f6a" category="sidebar">LUN大小调整</block>
   <block id="c3f378ef942f6bf228a43aaacc628fea" category="sidebar">LVM拼花</block>
   <block id="254f642527b45bc260048e30704edb39" category="sidebar">Configuration</block>
   <block id="f3a78e25ce9f95fc3c61ccc39f32fb4d" category="sidebar">Oracle Direct NFS （ DNFS ）</block>
@@ -3901,10 +3888,8 @@
   <block id="7fbd108e1fc6910c941094e95a677878" category="sidebar">整个文件</block>
   <block id="eb43c2427eb06b9f561363863b4a4f0b" category="sidebar">部分文件</block>
   <block id="1afe200fa26ba361f59b603b22ad6392" category="sidebar">选择文件</block>
-  <block id="46880cc1d7a1624f1d6fa77e7ee02fb7" category="sidebar">RPO、TRO和SLA</block>
   <block id="448d15345bb99c834095da225c529b8a" category="sidebar">数据可用性</block>
   <block id="5869e10a9dea6d88d61bb10040557f35" category="sidebar">数据完整性</block>
-  <block id="e2ac7be9b8940191426986b2ca575aa2" category="sidebar">备份和恢复基础知识</block>
   <block id="7b68149402c05a52968bda6af0435c8a" category="sidebar">基于Snapshot的联机备份</block>
   <block id="49ba0ee205d016d8236db9c1e8c130e5" category="sidebar">Storage Snapshot优化的备份</block>
   <block id="2c6d98297c340e390e0783220b038545" category="sidebar">物理架构</block>
@@ -4056,4 +4041,11 @@
   <block id="512ee19e5020f3ee80a9e25f3f5a6468" category="paragraph">作为最佳实践，每当对受保护 VM 存储的配置进行更改时，始终执行测试故障转移。这样可以确保在发生灾难时、您可以相信Site Recovery Manager可以在预期的Recovery目标范围内还原服务。</block>
   <block id="4da3f855cd505741909cfd49d743e68e" category="paragraph">通过 SRM ，您还可以在虚拟机恢复后更改其网络配置。此重新配置包括IP地址、网关地址和DNS服务器设置等设置。恢复计划中VM的属性设置中可以指定不同的网络设置、这些设置会在恢复后应用于各个VM。</block>
   <block id="e409450ce49f3558b068c69a77a9623a" category="paragraph">在故障恢复之后、您应与所有利益相关方确认其服务已恢复正常、然后再再次运行重新保护。</block>
+  <block id="a42cf9beb4788dddb7d317e05cc08e23" category="sidebar">数据库文件和文件组</block>
+  <block id="8858bb6564a2efc189c9183c495ce545" category="sidebar">LUN对齐</block>
+  <block id="02bc4ad8a694d41c8b598dfbcb12f069" category="sidebar">LUN计数和LUN大小</block>
+  <block id="066f208a93617bd82090d42624ce63cc" category="sidebar">LUN大小调整</block>
+  <block id="9eeba6fd02cf3b6d8aee35e0ce9bf8fe" category="sidebar">LVM条带化</block>
+  <block id="183bdb28f19bee640319f68825827aea" category="sidebar">RPO、RTO和SLA</block>
+  <block id="2172b5d51273924b537842b0db78bfd4" category="sidebar">备份和恢复基础知识</block>
 </blocks>
