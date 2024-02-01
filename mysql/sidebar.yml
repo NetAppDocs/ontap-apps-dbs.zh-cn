@@ -45,5 +45,3 @@ entries:
     url: "/mysql/mysql-mysql-over-nfs.html"
   - title: 基于SAN的MySQL
     url: "/mysql/mysql-mysql-over-san.html"
-  - title: 使用FabricPool进行MySQL层
-    url: "/mysql/mysql-tiering.html"

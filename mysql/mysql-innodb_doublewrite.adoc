@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: mysql/mysql-innodb_doublewrite.html 
 keywords: MySQL,MariaDB,innodb_doublewrite 
-summary: 基于ONTAP的MySQL 
+summary: MySQL和InnoDB_doblewite 
 ---
 = InnoDB_doublewite
 :allow-uri-read: 

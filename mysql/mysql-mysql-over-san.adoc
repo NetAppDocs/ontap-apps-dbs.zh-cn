@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: mysql/mysql-mysql-over-san.html 
 keywords: MySQL,MariaDB,SAN 
-summary: 基于ONTAP的MySQL 
+summary: 采用SAN的MySQL 
 ---
-= 基于SAN的MySQL
+= 采用SAN的MySQL
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

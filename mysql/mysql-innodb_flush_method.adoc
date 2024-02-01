@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: mysql/mysql-innodb_flush_method.html 
 keywords: MySQL,MariaDB,innodb_flush_method 
-summary: 基于ONTAP的MySQL 
+summary: MySQL和InnoDB_F冲 方法 
 ---
 = INNODB_FLUG_METHOD
 :allow-uri-read: 

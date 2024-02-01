@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: mysql/mysql-mysql-over-nfs.html 
 keywords: MySQL,MariaDB,NFS 
-summary: 基于ONTAP的MySQL 
+summary: 使用NFS的MySQL 
 ---
-= 基于NFS的MySQL
+= 使用NFS的MySQL
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

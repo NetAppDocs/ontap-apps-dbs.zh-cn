@@ -1,17 +1,17 @@
 ---
 sidebar: sidebar 
 permalink: mysql/mysql-file-descriptors.html 
-keywords: MySQL,MariaDB,TR-4722 
-summary: 基于ONTAP的MySQL 
+keywords: MySQL,MariaDB,file descriptors 
+summary: MySQL文件说明 
 ---
-= 文件描述符
+= MySQL文件描述符
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-要运行、MySQL服务器需要文件描述符。
+要运行、MySQL服务器需要文件描述符、而默认值是不够的。
 
 它使用这些表来打开新连接、将表存储在缓存中、创建临时表以解决复杂的查询、以及访问永久性查询。如果myqld无法在需要时打开新文件、则它可能会停止正常运行。此问题描述的一个常见现象是错误24："打开的文件太多"。 可以同时打开的文件描述符myqld的数量由定义 `open_files_limit` 在配置文件中设置的选项 (`/etc/my.cnf`）。但是 `open_files_limit` 也取决于操作系统的限制。这种依赖关系使变量的设置变得更加复杂。
 

@@ -2,16 +2,16 @@
 sidebar: sidebar 
 permalink: mysql/mysql-configuration.html 
 keywords: MySQL,MariaDB 
-summary: MySQL配置 
+summary: MySQL配置参数 
 ---
-= 配置概述
+= MySQL配置参数
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-NetApp建议使用几个重要的MySQL配置参数(如表1所示)来获得最佳性能。
+NetApp建议使用一些重要的MySQL配置参数来获得最佳性能。
 
 [cols="1,1"]
 |===

@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: postgres/postgres-architecture.html 
 keywords: PostgreSQL,database,postgres 
-summary: 基于ONTAP的PostgreSQL数据库 
+summary: PostgreSQL架构 
 ---
 = PostgreSQL架构
 :hardbreaks:

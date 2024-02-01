@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: mysql/mysql-open_file_limits.html 
 keywords: MySQL,MariaDB,open_file_limits 
-summary: 基于ONTAP的MySQL 
+summary: MySQL和open_file_极限 
 ---
 = open_file_极限 值
 :allow-uri-read: 
