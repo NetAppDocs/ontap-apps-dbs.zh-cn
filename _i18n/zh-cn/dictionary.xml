@@ -3034,7 +3034,6 @@
   <block id="2d506b6088a383ccf08479b0f80c0ff4" category="paragraph">在某些情况下，可以使用其他许可功能来增强克隆功能，例如用于备份的 SnapRestore 或 FlexClone 。这些许可证通常包含在许可证包中，无需额外付费。要执行vVol克隆操作以及支持vVol的受管快照(从虚拟机管理程序卸载到ONTAP)、需要FlexClone许可证。在数据存储库 / 卷中使用 FlexClone 许可证还可以改进某些基于 VAAI 的克隆（创建节省空间的即时副本，而不是块副本）。  此外， SRA 还会使用它来测试灾难恢复副本的恢复，并使用 SnapCenter 来执行克隆操作，以及浏览备份副本以还原单个文件。</block>
   <block id="5dd57c2a315d3af44c2eb40eefc47111" category="doc">网络配置：</block>
   <block id="66507f357c74ee12194270cfe053b98d" category="paragraph">需要考虑以下几点：</block>
-  <block id="b3752ab8dec37db2e30f4bf37fbdc112" category="list-text">将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。</block>
   <block id="7c4904daaa282388097ad83bf382e1a5" category="list-text">如果您的网络需要并支持巨型帧，则可以使用巨型帧，尤其是在使用 iSCSI 时。如果使用这些协议，请确保在存储和 ESXi 主机之间的路径中的所有网络设备， VLAN 等上对其进行相同的配置。否则，您可能会看到性能或连接问题。此外，还必须在 ESXi 虚拟交换机， VMkernel 端口以及每个 ONTAP 节点的物理端口或接口组上以相同的方式设置 MTU 。</block>
   <block id="8b6e7f43d1d697e8f99164f0aa2ab1b6" category="inline-link">TR-4182</block>
   <block id="3745abd352adaa2cdec42c798060eef6" category="list-text">NetApp 仅建议在 ONTAP 集群中的集群网络端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用。请参见<block ref="bdfb81665a0ef86d871a52c0e6ebc591" category="inline-link-rx"></block> 了解有关流量控制的更多背景信息。</block>
@@ -4063,4 +4062,6 @@
   <block id="d078ae9a339971900f939db9e82f253d" category="paragraph">存储管理员有时倾向于通过从配置中删除网络交换机来简化其基础架构。在某些情况下、可以支持此功能。</block>
   <block id="14a07a9c146c886f1cf8b6ebd4b2b418" category="summary">通过ONTAP直接建立网络连接</block>
   <block id="a4e0be5abb980518338c55619fbfa4df" category="doc">与TCP/IP和FC网络直接连接</block>
+  <block id="abf5ca60591addc6b98fa0f5479fdd67" category="list-text">将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。请参见 <block ref="afd3cc0da7d20400afc9250e88156a0f" category="inline-link-macro-rx"></block> 适用于追加信息 。</block>
+  <block id="e817ecc2f82a2b78d828ec8704031da3" category="section-title">直连网络</block>
 </blocks>
