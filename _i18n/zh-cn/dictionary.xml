@@ -1212,7 +1212,6 @@
   <block id="5d49a93437a42d2926c8be7eb3c7a56f" category="list-text">日志归档后加上检查点可用于删除日志文件。</block>
   <block id="e3898c187d7edf64fc8e4d4e409fd244" category="list-text">然后从文件系统中删除日志。执行此过程时应格外小心。</block>
   <block id="eb290dfcb2d35cffcb49a22fd05168b5" category="summary">Oracle迁移规划</block>
-  <block id="4e0761b3f22b38640f0d2291420d26f6" category="doc">奇迹迁移规划</block>
   <block id="dacc2a633e9981c9f91e43ac6b59e889" category="paragraph">Oracle数据迁移可在以下三个级别之一进行：数据库、主机或存储阵列。</block>
   <block id="5153193d50d4c628312db2d5bc0132ed" category="paragraph">不同之处在于、整个解决方案的哪个组件负责移动数据：数据库、主机操作系统或存储系统。</block>
   <block id="cc3e73ae592a355b9beb405232d08fe2" category="paragraph">下图显示了一个迁移级别和数据流示例。在数据库级别迁移的情况下、数据会从原始存储系统通过主机层和数据库层移动到新环境中。主机级迁移类似、但数据不会通过应用层、而是使用主机进程写入新位置。最后、对于存储级别迁移、NetApp FAS系统等阵列负责数据移动。</block>
@@ -4052,4 +4051,16 @@
   <block id="62414a5a9c0e2fc12a8d028ad29164b8" category="summary">MySQL和InnoDB_IO_Capacity</block>
   <block id="6219c45bc8c26437c0b7e1a69d4cbe58" category="summary">MySQL和InnoDB_F冲 方法</block>
   <block id="35d1a5d7b12999ec27f5233dccba043f" category="summary">MySQL和open_file_极限</block>
+  <block id="c031febc35017c70bf3b526723756b2a" category="doc">iSCSI和NVMe/TCP</block>
+  <block id="4da35d461815e71b97bda03476e89b7b" category="paragraph">使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会产生两条独立的数据流路径。丢失路径、端口或控制器不会阻止使用另一个路径。</block>
+  <block id="40715d81cea527f13cdf470773fc3a65" category="paragraph">可以使用直连NFS存储、但有一个重大限制—如果没有大量的脚本编写工作、故障转移将无法正常工作、这是客户的责任。</block>
+  <block id="d0b13bfd23c05f64222869de30f81000" category="paragraph">直连NFS存储的无中断故障转移之所以复杂、是因为本地操作系统上会发生路由。例如、假设主机的IP地址为192.168.1.1/24、并且直接连接到IP地址为192.168.1.50/24的ONTAP控制器。在故障转移期间、该192.168.1.50地址可以故障转移到另一个控制器、并且该地址可供主机使用、但主机如何检测到它的存在？原来的192.168.1.1地址仍然位于不再连接到操作系统的主机NIC上。发往192.168.1.50的流量将继续发送到无法运行的网络端口。</block>
+  <block id="288a0a5ebbc70fb3b968ec58d36d71ab" category="paragraph">第二个操作系统NIC可配置为19 2.168.1.2、并且能够与故障转移的192.168.1.50地址通信、但本地路由表默认使用一个*且仅一个*地址与192.168.1.0/24子网通信。sysadmin可以创建一个脚本框架、用于检测失败的网络连接并更改本地路由表或启动和关闭接口。确切的操作步骤取决于所使用的操作系统。</block>
+  <block id="d6ce8522932df7ae76aa0b963ad9ef7d" category="paragraph">在实践中、NetApp客户确实使用直连NFS、但通常仅适用于故障转移期间IO暂停的工作负载。使用硬挂载时、暂停期间不应出现任何IO错误。在服务还原之前、IO应挂起、可以通过故障恢复或手动干预在主机上的NIC之间移动IP地址。</block>
+  <block id="3436a7073ac9f4071820b6720a7789fc" category="section-title">FC直连</block>
+  <block id="b7981516813a09695906aa429b07f48f" category="paragraph">不能使用FC协议将主机直接连接到ONTAP存储系统。原因是使用了NPIV。用于向FC网络标识ONTAP FC端口的WWN使用一种称为NPIV的虚拟化类型。连接到ONTAP系统的任何设备都必须能够识别NPIV WWN。目前没有HBA供应商提供可安装在能够支持NPIV目标的主机中的HBA。</block>
+  <block id="97db606ac6781989ea3b189d7be28bf2" category="section-title">直连网络</block>
+  <block id="d078ae9a339971900f939db9e82f253d" category="paragraph">存储管理员有时倾向于通过从配置中删除网络交换机来简化其基础架构。在某些情况下、可以支持此功能。</block>
+  <block id="14a07a9c146c886f1cf8b6ebd4b2b418" category="summary">通过ONTAP直接建立网络连接</block>
+  <block id="a4e0be5abb980518338c55619fbfa4df" category="doc">与TCP/IP和FC网络直接连接</block>
 </blocks>

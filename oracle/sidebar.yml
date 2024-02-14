@@ -55,6 +55,8 @@ entries:
     url: "/oracle/oracle-network-config-ethernet.html"
   - title: FC SAN配置
     url: "/oracle/oracle-network-config-fc.html"
+  - title: 直连网络
+    url: "/oracle/oracle-network-config-direct-connect.html"
 - title: 存储配置
   pdf-filename: Oracle数据库的存储配置
   entries:
