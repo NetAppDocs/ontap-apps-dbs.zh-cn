@@ -11,13 +11,10 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 :icons: font
 :linkattrs: 
 :imagesdir: ../media/
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
-:revnumber: 
-:revdate: and so on.
 
+
+[role="lead"]
+通过克隆存储对象，您可以快速创建副本以供将来使用，例如配置其他 VM ，备份 / 恢复操作等。
 
 在 vSphere 中，您可以克隆虚拟机，虚拟磁盘， VVol 或数据存储库。克隆后，通常可以通过自动化过程进一步自定义对象。vSphere 既支持完整副本克隆，也支持链接克隆，在这些克隆中，它可以独立于原始对象跟踪更改。
 

@@ -10,11 +10,10 @@ summary:
 :icons: font
 :linkattrs: 
 :imagesdir: ../media/
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
 
+
+[role="lead"]
+以下各节概述了将VMware vvol与ONTAP存储结合使用的过程和最佳实践。
 
 
 

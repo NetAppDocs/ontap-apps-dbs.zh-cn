@@ -13,6 +13,9 @@ summary: 借助 ONTAP ， Storage Virtual Machine （ SVM ）的概念可在安�
 :imagesdir: ../media/
 
 
+[role="lead"]
+以下各节将介绍VMware和ONTAP SRM的部署最佳实践。
+
 
 
 == SMT 的 SVM 布局和分段

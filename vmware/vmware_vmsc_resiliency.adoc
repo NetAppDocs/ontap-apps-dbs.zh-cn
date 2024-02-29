@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware_vmsc_resiliency.html 
+keywords: VMware, Data protection, MetroCluster, SMBC, SnapMirror active sync, vMSC 
+summary: 了解采用NetApp ONTAP的vSphere Metro Storage Cluster 
+---
+= 计划内和计划外事件的故障恢复能力
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp MetroCluster和SnapMirror主动同步是功能强大的工具，可提高NetApp硬件和ONTAP®软件的高可用性和无中断运行。
+
+这些工具可为整个存储环境提供站点范围的保护、确保数据始终可用。无论您使用的是独立服务器、高可用性服务器集群、Docker容器还是虚拟化服务器、NetApp技术都可以在因断电、散热或网络连接中断、存储阵列关闭或操作错误而导致全面中断时无缝保持存储可用性。
+
+MetroCluster和SnapMirror主动同步提供了三种在发生计划内或计划外事件时保持数据连续性的基本方法：
+
+* 冗余组件、用于防止出现单组件故障
+* 影响单个控制器的事件的本地HA接管
+* 全面的站点保护—通过将存储和客户端访问从源集群移动到目标集群、快速恢复服务
+
+
+这意味着在单个组件发生故障时可以无缝地继续运行、并在更换故障组件后自动恢复为冗余操作。
+
+除单节点集群(通常为软件定义的版本、例如ONTAP Select)之外、所有ONTAP集群都具有称为接管和交还的内置HA功能。集群中的每个控制器都会与另一个控制器配对、形成一个HA对。这些对可确保每个节点在本地连接到存储。
+
+接管是一个自动化过程、其中一个节点接管另一个节点的存储以维护数据服务。相反、恢复过程会恢复正常操作。接管可以是计划内的(例如在执行硬件维护或ONTAP升级时)、也可以是计划外的(因节点崩溃或硬件故障而导致)。
+
+在接管期间、MetroCluster配置中的网络连接存储逻辑接口(NAS LUN)会自动进行故障转移。但是、存储区域网络Lifs (SAN Lifs)不会进行故障转移；它们将继续使用逻辑单元号(Logical Unit Number、LUN)的直接路径。
+
+有关HA接管和交还的详细信息、请参见 https://docs.netapp.com/us-en/ontap/high-availability/index.html["HA对管理概述"]。值得注意的是、此功能并不特定于MetroCluster或SnapMirror活动同步。
+
+如果一个站点脱机或作为计划内活动进行站点范围维护、则会使用MetroCluster进行站点切换。另一个站点接管脱机集群的存储资源(磁盘和聚合)的所有权、故障站点上的SVM将联机并在灾难站点上重新启动、从而保留其完整身份、以供客户端和主机访问。
+
+使用SnapMirror主动同步时、由于两个副本会同时使用、因此现有主机将继续运行。要确保正确进行站点故障转移、需要使用NetApp调解器。

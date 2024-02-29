@@ -4,20 +4,15 @@ permalink: vmware/vmware-vsphere-datastores.html
 keywords: vSphere, datastore, VMFS, FC, FCoE, NVMe/FC, iSCSI, NFS, vVols 
 summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解决方案的最佳实践。 
 ---
-= 数据存储库和协议
-:hardbreaks:
+= vSphere 数据存储库和协议功能
 :allow-uri-read: 
-:nofooter: 
-:icons: font
-:linkattrs: 
-:imagesdir: ../media/
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
-:revdate: == vSphere datastore and protocol features
 
 
+
+
+== vSphere 数据存储库和协议功能
+
+[role="lead"]
 在运行ONTAP 软件的系统上、可以使用七种协议将VMware vSphere连接到数据存储库：
 
 * FCP
@@ -86,7 +81,7 @@ FCP、FCoE、NVMe/FC、NVMe/TCP和iSCSI是块协议、它们使用vSphere虚拟�
 如果不使用VAAI、则此设置是NFS上所有VM的默认设置。 
 
 
-| VMware 原生多路径 | 是的。 | 是的。 | 是、使用新的高性能插件(HPP) | 不适用 
+| VMware 原生多路径 | 是的。 | 是的。 | 是、使用新的高性能插件(HPP) | NFS v4.1会话中继需要ONTAP 9.14.1及更高版本 
 |===
 下表列出了支持的 ONTAP 存储管理功能。
 
@@ -189,7 +184,7 @@ ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储�
 
 此插件还可帮助您在 vSphere 环境中使用其他 ONTAP 工具。您可以通过此插件安装适用于VMware VAAI的NFS插件、以便将副本卸载到ONTAP以执行VM克隆操作、为厚虚拟磁盘文件预留空间以及卸载ONTAP快照。
 
-此插件也是适用于ONTAP的VASA Provider的许多功能的管理界面、支持通过VVO尔 进行基于存储策略的管理。注册适用于 VMware vSphere 的 ONTAP 工具后，可使用它创建存储功能配置文件，将其映射到存储，并确保数据存储库随时间的推移符合这些配置文件。VASA Provider 还提供了一个用于创建和管理 VVol 数据存储库的界面。
+该插件也是适用于 ONTAP 的 VASA Provider 的许多功能的管理界面，支持使用 VVOL 进行基于存储策略的管理。注册适用于 VMware vSphere 的 ONTAP 工具后，可使用它创建存储功能配置文件，将其映射到存储，并确保数据存储库随时间的推移符合这些配置文件。VASA Provider 还提供了一个用于创建和管理 VVol 数据存储库的界面。
 
 一般来说， NetApp 建议在 vCenter 中使用适用于 VMware vSphere 的 ONTAP 工具来配置传统数据存储库和 VVOL 数据存储库，以确保遵循最佳实践。
 
@@ -199,7 +194,7 @@ ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储�
 
 在将 vSphere 与运行 ONTAP 软件的系统结合使用时，配置网络设置非常简单，与其他网络配置类似。需要考虑以下几点：
 
-* 将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。请参见 link:vmware-vsphere-network.html#direct-connect-networking["直连网络"] 适用于追加信息 。
+* 将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。请参见 link:vmware-vsphere-network.html["直连网络"] 适用于追加信息 。
 * 如果您的网络需要并支持巨型帧，则可以使用巨型帧，尤其是在使用 iSCSI 时。如果使用这些协议，请确保在存储和 ESXi 主机之间的路径中的所有网络设备， VLAN 等上对其进行相同的配置。否则，您可能会看到性能或连接问题。此外，还必须在 ESXi 虚拟交换机， VMkernel 端口以及每个 ONTAP 节点的物理端口或接口组上以相同的方式设置 MTU 。
 * NetApp 仅建议在 ONTAP 集群中的集群网络端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用。请参见 http://www.netapp.com/us/media/tr-4182.pdf["TR-4182"^] 了解有关流量控制的更多背景信息。
 * 当 ESXi 和 ONTAP 存储阵列连接到以太网存储网络时， NetApp 建议将这些系统连接到的以太网端口配置为快速生成树协议（ RSTP ）边缘端口或使用 Cisco PortFast 功能。NetApp 建议在使用 Cisco PortFast 功能且为 ESXi 服务器或 ONTAP 存储阵列启用了 802.1Q VLAN 中继的环境中启用生成树 PortFast 中继功能。
@@ -371,7 +366,7 @@ image:vsphere_ontap_image3.png["错误：缺少图形映像"]
 | Kerberos 身份验证 | 否 | 是（在 vSphere 6.5 及更高版本中进行了增强，可支持 AES ， krb5i ） 
 
 
-| 多路径支持 | 否 | 否 
+| 多路径支持 | 否 | 是的。 
 |===
 
 
@@ -402,7 +397,7 @@ ONTAP 9.8还为FlexGroup卷文件添加了新的基于文件的性能指标(IOPS
 * 使用FlexGroup卷配置默认值。虽然建议使用适用于 VMware vSphere 的 ONTAP 工具，因为它可以在 vSphere 中创建和挂载 FlexGroup ，但也可以使用 ONTAP System Manager 或命令行来满足特殊需求。即使如此、也应使用默认值、例如每个节点的成分卷成员数、因为这是在vSphere中经过最全面测试的内容。尽管如此、仍然完全支持非默认设置、例如更改成分卷的数量或放置。
 * 在估算基于FlexGroup的数据存储库的规模时、请记住、FlexGroup由多个较小的FlexVol卷组成、这些卷会创建一个较大的命名空间。因此、如果使用包含八个成分卷的FlexGroup、请确保数据存储库大小至少是最大虚拟机大小的八倍。例如，如果您的环境中有一个 6 TB 的 VM ，请将 FlexGroup 数据存储库的大小调整为不小于 48 TB 。
 * 允许 FlexGroup 管理数据存储库空间。已使用 vSphere 数据存储库测试自动调整大小和弹性调整。如果数据存储库容量接近全满，请使用适用于 VMware vSphere 的 ONTAP 工具或其他工具调整 FlexGroup 卷的大小。FlexGroup 可在成分卷之间保持容量和索引节点的平衡，并在容量允许的情况下优先将文件夹（ VM ）中的文件分配给同一成分卷。
-* VMware 和 NetApp 目前不支持通用的多路径网络连接方法。对于 NFSv4.1 ， NetApp 支持 pNFS ，而 VMware 支持会话中继。NFSv3 不支持通过多个物理路径访问一个卷。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。
+* 从ONTAP 9.14.1开始、VMware和NetApp当前支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。
 * 在 9.8 版中，最多已对 1500 个 VM 的 FlexGroup vSphere 数据存储库支持进行了测试。
 * 使用适用于 VMware VAAI 的 NFS 插件执行副本卸载。请注意、如前文所述、虽然FlexGroup数据存储库中的克隆功能得到了增强、但在FlexVol和/或FlexGroup卷之间复制VM时、ONTAP与ESXi主机副本相比、不会提供显著的性能优势。因此、在决定使用VAai或FlexGroup时、请考虑克隆工作负载。修改成分卷的数量是针对基于FlexGroup的克隆进行优化的一种方法。调整缓存超时。
 * 使用适用于 VMware vSphere 9.8 的 ONTAP 工具使用 ONTAP 指标（信息板和 VM 报告）监控 FlexGroup VM 的性能，并管理各个 VM 上的 QoS 。目前无法通过 ONTAP 命令或 API 获得这些指标。

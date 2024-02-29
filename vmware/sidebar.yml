@@ -52,6 +52,18 @@ entries:
     url: "/vmware/vmware-srm-replication_topologies.html"
   - title: 对使用 VVol 复制的 SRM 进行故障排除
     url: "/vmware/vmware-srm-vvol-troubleshooting.html"
+- title: 采用ONTAP的vSphere Metro存储集群
+  entries:
+  - title: VMSC概述
+    url: "/vmware/vmware_vmsc_overview.html"
+  - title: vSphere HA解决方案
+    url: "/vmware/vmware_vmsc_solution.html"
+  - title: VMSC设计
+    url: "/vmware/vmware_vmsc_design.html"
+  - title: VMSC故障恢复能力
+    url: "/vmware/vmware_vmsc_resiliency.html"
+  - title: 使用MCC的VMSC场景
+    url: "/vmware/vmware_vmsc_scen_mcc.html"
 - title: 产品安全性
   entries:
   - title: 适用于 VMware vSphere 的 ONTAP 工具

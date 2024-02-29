@@ -11,13 +11,10 @@ summary: 近 20 年来， NetApp ONTAP 软件一直是 VMware vSphere 环境中�
 :icons: font
 :linkattrs: 
 :imagesdir: ../media/
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
-:revnumber: 
-:revdate: and simplify management.
 
+
+[role="lead"]
+近 20 年来， NetApp ONTAP 软件一直是 VMware vSphere 环境中的领先存储解决方案，并不断增加创新功能来简化管理，同时降低成本。本文档介绍了适用于 vSphere 的 ONTAP 解决方案，其中包括用于简化部署，降低风险和简化管理的最新产品信息和最佳实践。
 
 
 NOTE: 本文档可替代先前发布的技术报告_TR-4597：《适用于ONTAP的VMware vSphere》_

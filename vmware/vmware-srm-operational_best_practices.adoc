@@ -11,12 +11,14 @@ summary: 如果可能，请始终使用 ONTAP 工具配置数据存储库和卷�
 :icons: font
 :linkattrs: 
 :imagesdir: ../media/
-:firstname: [.lead]
-:author: [.lead]
-:authorinitials: [
-:authors: [.lead]
-:revdate: == Datastores and protocols
 
+
+[role="lead"]
+以下各节概述了VMware SRM和ONTAP存储的最佳操作实践。
+
+
+
+== 数据存储库和协议
 
 * 如果可能，请始终使用 ONTAP 工具配置数据存储库和卷。这样可以确保卷，接合路径， LUN ， igroup ，导出策略， 以及其他设置均以兼容的方式进行配置。
 * 通过 SRA 使用基于阵列的复制时， SRM 支持在 ONTAP 9 中使用 iSCSI ，光纤通道和 NFS 版本 3 。对于使用传统或 VVol 数据存储库的 NFS 版本 4.1 ， SRM 不支持基于阵列的复制。
