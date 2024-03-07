@@ -2472,32 +2472,13 @@
   <block id="e357ccd0745db58f22ea5c0947b613ee" category="paragraph"><block ref="330c4316ae6124616389eb1ca9912f7a" prefix="" category="inline-code"></block> 现在返回短<block ref="c7169a6dd344d0f0a38071a1262e4973" prefix=" " category="inline-code"></block> 主机名、与的输出匹配<block ref="4040592cec1880aa70936989f05e7c31" prefix=" " category="inline-code"></block>。因此、锁定会在服务器崩溃后自动清除。</block>
   <block id="547b870352d8464aadbe7bee63d6f3d1" category="summary">数据库虚拟化简介</block>
   <block id="ea4c55be196897a16d86999f5c16d582" category="doc">虚拟化</block>
-  <block id="4a478889a2e46bee771126a78eda2911" category="paragraph">使用VMware ESX、Oracle OVM或KVM对数据库进行虚拟化是NetApp客户越来越普遍的选择、他们选择对其任务关键型数据库进行虚拟化。</block>
-  <block id="0f976e587b1e7af0949904e76d91384b" category="paragraph">在虚拟化支持策略(尤其是VMware产品)方面存在许多误解。事实上、听说Oracle不支持任何虚拟化、这种情况并不少见。这一概念是不正确的、会导致错失虚拟化机会。Oracle文档ID 249212.1讨论了Oracle环境中的已知问题、并指定了对RAC的支持。</block>
-  <block id="02ea3d7754e6bc1c99ff77393e49e373" category="paragraph">如果客户遇到Oracle未知的问题、可能会被要求在物理硬件上重现该问题。运行尖端产品版本的Oracle客户可能不想使用虚拟化、因为可能会发现新的错误。但是、对于使用公开发布的产品版本的虚拟化客户来说、这种情况实际上并不是问题。</block>
   <block id="9e28dbd7a4f5940eeaf6d3893c5c4b1f" category="section-title">存储表示</block>
-  <block id="8fdbc6d55014a06c15b9f130e5bedd12" category="paragraph">考虑将数据库虚拟化的客户应根据业务需求制定存储决策。虽然这对于所有IT决策来说都是一个正确的表述、但对于虚拟化来说尤其重要、因为项目的规模和范围差别很大。</block>
-  <block id="6cf53ad2948792abdf4a8668365b8396" category="paragraph">存储表示有四个基本选项：</block>
   <block id="151ae53a4100e0a6e83bde4d78083f81" category="list-text">由虚拟机上的iSCSI启动程序(而不是虚拟机管理程序)管理的iSCSI LUN</block>
-  <block id="73014dc1e7381cfd107ba79742a873e3" category="list-text">VM挂载的NFS文件系统、而不是虚拟机磁盘(VMDK)</block>
-  <block id="810f0004f0e8e215c676ac0621d5836b" category="list-text">虚拟机管理程序数据存储库</block>
-  <block id="8e2a0eba3eaebd64066d020ab225dd78" category="paragraph">一般情况下、请避免对Oracle文件使用数据存储库。此建议的原因有很多：</block>
-  <block id="98b171e836c6656f9cf88835666c6345" category="list-text">*Transparency。*当VM拥有其文件系统时，数据库管理员或系统管理员可以更轻松地确定其数据的文件系统源。</block>
-  <block id="ec6a3b593d5584a2e15651852e384082" category="list-text">*性能。*测试表明、通过虚拟机管理程序数据存储库输送所有I/O会对性能产生影响。</block>
-  <block id="47464ddf615c138c6c06d3bfea555b2d" category="list-text">*易管理性。*如果虚拟机拥有其文件系统、则使用或不使用虚拟机管理程序层会影响易管理性。配置、监控、数据保护等过程同样适用于整个资产、包括虚拟化和非虚拟化环境。</block>
-  <block id="3d04d7019fbc0d27880dcc5c0881f87b" category="list-text">*稳定性和故障排除。*当虚拟机拥有其文件系统时、由于虚拟机上存在整个存储堆栈、因此提供良好、稳定的性能和故障排除会更加简单。虚拟机管理程序的唯一角色是传输FC或IP帧。如果配置中包含数据存储库、则会引入另一组超时、参数、日志文件和潜在错误、从而使配置复杂。</block>
   <block id="36f9cea3dc0f65698a9fbe15460591c1" category="list-text">*可移动性。*当VM拥有其文件系统时、移动Oracle环境的过程将变得更加简单。文件系统可以轻松地在虚拟化和非虚拟化子系统之间移动。</block>
-  <block id="cb90f9e52412940f028394174f31ec2f" category="list-text">*受制于供应商。*将数据放入数据存储库后、使用不同的虚拟机管理程序或将数据完全从虚拟化环境中取出将变得非常困难。</block>
-  <block id="4308dde96d1bdae6ac436a611c834331" category="list-text">*启用Snapshot。*在某些情况下、由于带宽相对有限、虚拟化环境中的备份可能会成为一个问题。例如、四端口10GbE中继可能足以满足许多虚拟化数据库的日常性能需求。但是、此类中继不足以使用RMAN或其他需要流式传输完整大小数据副本的备份产品执行备份。</block>
-  <block id="872c95c8713fd14a0bef21fe92a55ab7" category="paragraph">使用虚拟机拥有的文件系统可以更轻松地利用基于Snapshot的备份和恢复。虚拟机拥有的文件系统会将执行备份的工作卸载到存储系统上。无需纯粹为了满足备份窗口中的带宽和CPU要求而过度构建虚拟机管理程序配置。</block>
-  <block id="3522f960cdbaf08c375bd70214f8db2f" category="admonition">*Oracle建议*避免将NetApp数据放置在数据存储库上以实现最佳性能和易管理性。使用子系统拥有的文件系统、例如由子系统管理的NFS或iSCSI文件系统、或者将其与RDM结合使用。</block>
   <block id="f114856edc6cd8d6a9add5ec3f67656f" category="section-title">部分驱动程序</block>
   <block id="beeb10ceee6c9aabe178fb51edea7d22" category="paragraph">为了获得最佳性能、使用完全虚拟化的网络驱动程序至关重要。使用数据存储库时、需要使用一个虚拟化的SCSI驱动程序。与虚拟化驱动程序相比、超虚拟化设备驱动程序可以使子系统更深入地集成到虚拟机管理程序中、而在模拟驱动程序中、虚拟机管理程序会花费更多的CPU时间来模拟物理硬件的行为。</block>
-  <block id="59b3d62404749c3e899b7e4c9ee10146" category="paragraph">大多数数据库的性能都受存储限制。因此、网络或SCSI驱动程序带来的额外延迟尤为明显。NetApp客户支持遇到了许多性能问题、这些问题通过安装虚拟化驱动程序得到了解决。在一次客户概念验证中、数据库在ESX环境下的性能优于与裸机运行相同硬件的性能。这些测试需要大量I/O、性能差异是由于使用了ESX超虚拟化网络驱动程序所致。</block>
-  <block id="4e27b04a271416c5701a99234f8a23e6" category="admonition">*SCSI建议*始终使用虚拟化网络驱动程序和NetApp驱动程序。</block>
   <block id="7c5996fc15a24ce96b30160b60ac2b96" category="section-title">过量使用RAM</block>
   <block id="5bccdd812c4af1cb5b9e36ddce656b60" category="paragraph">过量使用RAM意味着在不同主机上配置的虚拟化RAM要多于物理硬件上的虚拟化RAM。否则可能会出现发生原因意外的性能问题。对数据库进行虚拟化时、虚拟机管理程序不得将Oracle SGA的底层块交换到存储中。这样做会导致性能结果高度不稳定。</block>
-  <block id="31db92967e891f0a122e0329d819842e" category="admonition">* NetApp建议*不要以允许交换Oracle SGA块的方式配置虚拟机管理程序。</block>
   <block id="be493f1fc0b02ae45602c7c13f7b5dc7" category="summary">TR-4792为在由NVIDIA图形处理单元(GPU)和虚拟化软件提供支持的VMware Horizon环境中使用NetApp HCI 615C处理3D图形工作负载提供了指导。</block>
   <block id="ff1d278a485c443dc5d8fc9f10f1a702" category="doc">适用于采用VMware Horizon 7的虚拟桌面基础架构的NetApp HCI —为高级用户提供3D图形功能</block>
   <block id="e3162938e0d7b1bbc74111cc5b5871c5" category="paragraph">TR-4792提供了在由NVIDIA图形处理单元(GPU)和虚拟化软件提供支持的VMware Horizon环境中使用NetApp H615C计算节点处理3D图形工作负载的指导。此外、还提供了对H615C的SPECviewperf 13进行的初步测试的结果。</block>
@@ -3101,13 +3082,11 @@
   <block id="8065bff4940ae8d7161f926b0df47ac4" category="inline-link">NetApp 互操作性表工具</block>
   <block id="1479ddf58c038ab7d220ff734c74deaf" category="list-text">请参见中的 NFS v4.1 互操作性表注释<block ref="8813559f5b95abb5411182be29200aff" category="inline-link-rx"></block> 支持所需的特定 ESXi 修补程序级别。</block>
   <block id="24aaa4a688e881fa13d31656a85d40a9" category="list-text">NFS 导出策略用于控制 vSphere 主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值<block ref="ea72d12ecaa06afdb0c8a3b15e485e95" prefix=" " category="inline-code"></block> 和<block ref="df809a941c1287d18c08bb5927b639dc" prefix=" " category="inline-code"></block> ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：</block>
-  <block id="822366735aef72f1a9429ac86dda7338" category="list-text">访问协议： nfs3.</block>
   <block id="69abbd5c7cd9c1b3828b9aa5a894ff47" category="list-text">客户端匹配规范： 192.168.42.21</block>
   <block id="bd6cc42f9cd65cca72cbd56d2f4bf43d" category="list-text">RO 访问规则： sys</block>
   <block id="581c470a5099548fc9865a4bab8761f8" category="list-text">RW访问规则：sys</block>
   <block id="0bbc71e6a4ea49af70dd616d3807e524" category="list-text">匿名UID</block>
   <block id="59d5d8c898df18115bd4ced36c6bc0de" category="list-text">超级用户： sys</block>
-  <block id="c184ce6b86d2e6fbf8681d61637c101b" category="list-text">如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 创建或修改导出策略规则时。要使VAAI副本卸载正常工作、需要使用NFSv4协议、并将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 自动包括NFSv3和NFSv4版本。</block>
   <block id="6670a317619282ec228a9ef492af0a76" category="list-text">NFS 数据存储库卷是从 SVM 的根卷接合的；因此， ESXi 也必须有权访问根卷，才能导航和挂载数据存储库卷。根卷以及嵌套了数据存储库卷接合的任何其他卷的导出策略必须包含一条或多条适用于ESXi服务器的规则、以便为其授予只读访问权限。下面是根卷的示例策略、该策略也使用VAAI插件：</block>
   <block id="8c93fb3ff528165613797962f5a0ed9c" category="list-text">访问协议：NFS (包括nfs3和nfs4)</block>
   <block id="80e6a4f964e826c69c1c62bd5ea67590" category="list-text">RW访问规则：从不(根卷的最佳安全性)</block>
@@ -4281,7 +4260,6 @@
   <block id="da76be2bc20d4e043d9a2019b817214f" category="inline-link">如何在vSphere Client中创建和配置集群</block>
   <block id="e02f3e9258a23204655bd512ec53911d" category="paragraph">请参见<block ref="c06ae090600e7aa086edfa28514435e7" category="inline-link-rx"></block> 配置vCenter HA。</block>
   <block id="bdd88c75f085534f6e2cdc7726cf1dd6" category="paragraph">您还应参考<block ref="3a8301f60ad04eb873ae8dea15ee0495" category="inline-link-rx"></block>。</block>
-  <block id="7ed2d453d67762a9f20ad13c2f472fcb" category="section-title">什么是vSphere Metro Storage Cluster？</block>
   <block id="38910d3dab2318849fd5f1a1dfbe0152" category="inline-link">《VMware存储兼容性指南》</block>
   <block id="eab65c9bc6c74eff9aee0d7f0c44276d" category="paragraph">vSphere Metro Storage Cluster (VMSC)是一种经过认证的配置、可保护虚拟机(VM)和容器免受故障的影响。这可以通过使用延伸型存储概念以及分布在不同故障域(例如机架、建筑物、园区甚至城市)中的ESXi主机集群来实现。NetApp MetroCluster和SnapMirror主动同步存储技术用于分别为主机集群提供RPO = 0或接近RPO = 0的保护。VMSC配置旨在确保数据始终可用、即使完整的物理或逻辑"站点"发生故障也是如此。在成功完成VMSC认证过程后、属于VMSC配置的存储设备必须经过认证。可在中找到所有受支持的存储设备<block ref="293ceee3268d7991d7fe245e02c1c5c9" category="inline-link-rx"></block>。</block>
   <block id="838b66b875df1b432ac420a98cba3db6" category="paragraph">如果您需要有关vSphere Metro Storage Cluster设计准则的详细信息、请参阅以下文档：</block>
@@ -4304,10 +4282,8 @@
   <block id="bca8b52c503406abc3e9e50c5352d0a2" category="paragraph">本文档介绍了VMware行业领先的灾难恢复(Disaster Recovery、DR)软件ONTAP 解决方案for VMware Site Recovery Manager (SRM)、其中包括可简化部署、降低风险和简化日常管理的最新产品信息和最佳实践。</block>
   <block id="4f46fffb0ac7017fd2b42c10d6aa03fc" category="paragraph">备份虚拟机并快速恢复虚拟机是 ONTAP for vSphere 的一项强大优势，使用适用于 VMware vSphere 的 SnapCenter 插件在 vCenter 中轻松管理此功能。</block>
   <block id="3a021eaaeb6692340890af4de2f7514a" category="paragraph">以下各节将介绍VMware和ONTAP SRM的部署最佳实践。</block>
-  <block id="ff53ee8001042abcefe5c912d0b5012f" category="doc">vSphere 数据存储库和协议功能</block>
   <block id="b69cd5a82aaf0c524a71d46ec6fdd29c" category="cell">NFS v4.1会话中继需要ONTAP 9.14.1及更高版本</block>
   <block id="80303385ad0f7147caa1af6d2162852b" category="paragraph">该插件也是适用于 ONTAP 的 VASA Provider 的许多功能的管理界面，支持使用 VVOL 进行基于存储策略的管理。注册适用于 VMware vSphere 的 ONTAP 工具后，可使用它创建存储功能配置文件，将其映射到存储，并确保数据存储库随时间的推移符合这些配置文件。VASA Provider 还提供了一个用于创建和管理 VVol 数据存储库的界面。</block>
-  <block id="83fe2b10c55a47a84465ff5a93a3feda" category="list-text">从ONTAP 9.14.1开始、VMware和NetApp当前支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。</block>
   <block id="d9c9eb44a58ee1ce90daa68527aa8930" category="summary">使用MCC的VMSC的故障情形</block>
   <block id="e7c7574b0826c9074f480de76c889ba8" category="paragraph">以下各节概述了VMSC和NetApp MetroCluster系统的各种故障情形的预期结果。</block>
   <block id="c8a2eebb480fef69e6ed917ea7f7a9d3" category="section-title">单个存储路径故障</block>
@@ -4367,9 +4343,42 @@
   <block id="e6364c2f5314a32cd95be04b4c2112e6" category="paragraph">以下各节概述了将VMware vvol与ONTAP存储结合使用的过程和最佳实践。</block>
   <block id="a9da618400fb93b20c20f5343efaefa7" category="sidebar">采用ONTAP的VMware vSphere Metro Storage Cluster</block>
   <block id="2f58fa882a22b5af5f0741f03abaf611" category="sidebar">采用ONTAP的vSphere Metro存储集群</block>
-  <block id="4ed162a87c3bbcd728e66cd9365c7660" category="sidebar">VMSC概述</block>
-  <block id="111464465e5bb57958d189842ad5e093" category="sidebar">vSphere HA解决方案</block>
-  <block id="422fa84cbd2dc1a741d30fa40ad8284d" category="sidebar">VMSC设计</block>
-  <block id="f6aef7af169e3878f32a39224e7a6cb8" category="sidebar">VMSC故障恢复能力</block>
-  <block id="dfcccfecca566c55bd84119f294cde76" category="sidebar">使用MCC的VMSC场景</block>
+  <block id="4a884da785a62e8b1758932191ff42de" category="paragraph">对于选择使用虚拟化来管理任务关键型数据库的NetApp客户来说、使用VMware、Oracle OLVM或KVM实现数据库虚拟化的做法越来越普遍。</block>
+  <block id="3a8ba1ff8824968961222d6b447b4973" category="section-title">可支持性</block>
+  <block id="3231d83af741101eb02b16e5d7a6dffc" category="paragraph">对于Oracle虚拟化支持策略、尤其是VMware产品支持策略、存在许多误解。听说Oracle完全不支持虚拟化、这种情况并不少见。这一概念是不正确的、会导致错失从虚拟化中获益的机会。Oracle文档ID 249212.1讨论了实际要求、客户很少考虑这些要求。</block>
+  <block id="722bd611ee4f38780607b400c8a604c0" category="paragraph">如果虚拟化服务器上出现问题、而Oracle支持先前并不知道该问题、则可能会要求客户在物理硬件上重现该问题。运行尖端产品版本的Oracle客户可能不想使用虚拟化、因为可能会出现可支持性问题、但对于使用通用Oracle产品版本的虚拟化客户来说、这种情况并不是现实情况。</block>
+  <block id="c8a4476ecddeda66dbd2c354c8fb2c6b" category="paragraph">考虑将数据库虚拟化的客户应根据业务需求制定存储决策。虽然这对于所有IT决策来说都是一个普遍正确的说法、但对于数据库项目来说尤其重要、因为要求的大小和范围差别很大。</block>
+  <block id="835ce293f862d9fb74e50f4cf928c56d" category="paragraph">存储表示有三个基本选项：</block>
+  <block id="327813abbc0ae1e9d3abe282303bf00c" category="list-text">虚拟机管理程序数据存储库上的虚拟化LUN</block>
+  <block id="1a1af5efffda8c766ead9f73fc782e0e" category="list-text">虚拟机挂载的NFS文件系统(而不是基于NFS的数据存储库)</block>
+  <block id="f9bf9489147891f7ee7ba15126a27fda" category="list-text">直接设备映射。客户不喜欢VMware VMM、但物理设备通常仍与KVM和OLVM虚拟化直接映射。</block>
+  <block id="69b0ac6bf6ea8e1ab4e4fc896294da01" category="paragraph">向虚拟化子系统提供存储的方法通常不会影响性能。主机操作系统、虚拟化网络驱动程序和虚拟机管理程序数据存储库实施均经过高度优化、只要遵循基本最佳实践、通常可以占用虚拟机管理程序与存储系统之间的所有可用FC或IP网络带宽。在某些情况下、使用一种存储表示方法可能比使用另一种存储表示方法更容易获得最佳性能、但最终结果应该是可比的。</block>
+  <block id="a2e8fb5328f6558e3a119d8c224a1897" category="paragraph">决定如何向虚拟化子系统提供存储的关键因素是可管理性。方法没有对错之处。最佳方法取决于IT运营需求、技能和偏好。</block>
+  <block id="e4919ac0a074fa1bba5303f596a5f591" category="paragraph">需要考虑的因素包括：</block>
+  <block id="c422e10bbf04c180f4c47f81ed9a1f7a" category="list-text">*Transparency。*当VM管理其文件系统时，数据库管理员或系统管理员可以更轻松地确定其数据的文件系统源。访问文件系统和LUN的方式与使用物理服务器相同。</block>
+  <block id="42de52ad09be3101fc535dea2aedce1d" category="list-text">*一致性。*如果虚拟机拥有其文件系统、则使用或不使用虚拟机管理程序层会影响易管理性。配置、监控、数据保护等过程同样适用于整个资产、包括虚拟化和非虚拟化环境。</block>
+  <block id="0562446bc5eefe9a584e23ffb3061cbf" category="paragraph">另一方面、在完全虚拟化的数据中心中、根据上述相同的原理(一致性、使用相同的配置、保护、监控和数据保护过程的能力)、在整个占用空间中使用基于数据存储库的存储可能更好。</block>
+  <block id="7269a37b557c66664c0377693f62ec8a" category="list-text">*稳定性和故障排除。*当虚拟机拥有其文件系统时、由于虚拟机上存在整个存储堆栈、因此提供良好、稳定的性能和解决问题会更加简单。虚拟机管理程序的唯一角色是传输FC或IP帧。如果配置中包含数据存储库、则会引入另一组超时、参数、日志文件和潜在错误、从而使配置复杂。</block>
+  <block id="c160b6d86853c20a432e2407b82866e6" category="list-text">*受制于供应商。*将数据放入数据存储库后、使用不同的虚拟机管理程序或将数据完全从虚拟化环境中取出将变得非常困难。</block>
+  <block id="a42abd01a1e0c89cfa2112dc09378967" category="list-text">*启用Snapshot。*由于带宽相对有限、虚拟化环境中的传统备份过程可能会成为一个问题。例如、四端口10GbE中继可能足以满足许多虚拟化数据库的日常性能需求、但此类中继不足以使用RMAN或其他需要流式传输完整大小数据副本的备份产品执行备份。因此、日益整合的虚拟化环境需要通过存储快照执行备份。这样、无需纯粹为了满足备份窗口中的带宽和CPU要求而过度构建虚拟机管理程序配置。</block>
+  <block id="86c36175331b4a95c083fabdcca8b8a0" category="paragraph">使用子系统拥有的文件系统有时可以更轻松地利用基于快照的备份和还原、因为需要保护的存储对象可以更轻松地确定目标。但是、越来越多的虚拟化数据保护产品能够与数据存储库和快照完美集成。在决定如何将存储提供给虚拟化主机之前、应充分考虑备份策略。</block>
+  <block id="8c19dda4c4cab5e52edf9463f196b97d" category="section-title">数据存储库条带化</block>
+  <block id="8fa77493c52e71f201ccdb67db26446d" category="paragraph">将数据库与数据存储库结合使用时、需要考虑一个与性能相关的关键因素—条带化。</block>
+  <block id="53ab623a905e6ec84d908f0b99a8d1c8" category="paragraph">VMFS等数据存储库技术可以跨越多个LUN、但它们不是条带化设备。这些LUN会串联在一起。最终结果可能是LUN热点。例如、典型的Oracle数据库可能具有一个8-LUN ASM磁盘组。所有8个虚拟化LUN均可配置在一个8 LUN VMFS数据存储库上、但无法保证数据将驻留在哪些LUN上。得到的配置可能是所有8个虚拟化LUN都占用VMFS数据存储库中的一个LUN。这将成为性能瓶颈。</block>
+  <block id="e6bb99e411f5495b03c1e0a4e75a1434" category="paragraph">通常需要条带化。对于某些虚拟机管理程序(包括KVM)、可以按所述使用LVM条带化来构建数据存储库 <block ref="dd0ff2598ebb26feb9ff73a59186b79f" category="inline-link-macro-rx"></block>。使用VMware时、架构看起来略有不同。每个虚拟化LUN都需要放置在不同的VMFS数据存储库上。</block>
+  <block id="506c2c0c7f5b70af3df68c45c46f45a7" category="paragraph">例如：</block>
+  <block id="6ec151851a31c86edd358bc49f80908c" category="paragraph"><block ref="6ec151851a31c86edd358bc49f80908c" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="70ff2667d6b190dea65bae42217aa310" category="paragraph">这种方法的主要驱动因素不是ONTAP、这是因为一个虚拟机或虚拟机管理程序LUN可并行处理的操作数存在固有限制。一个ONTAP LUN支持的IOPS通常远远超过主机可以请求的IOPS。单个LUN性能限制几乎是主机操作系统的结果。因此、大多数数据库需要4到8个LUN才能满足其性能需求。</block>
+  <block id="59f9d8d1b212a8ff6bd3476975e17620" category="paragraph">VMware架构需要仔细规划其架构、以确保此方法不会遇到数据存储库和/或LUN路径最大值。此外、对于每个数据库、不需要一组唯一的VMFS数据存储库。主要需求是确保每个主机都有一组从虚拟化LUN到存储系统本身上后端LUN的干净的4到8 IO路径。在极少数情况下、即使数据存储库数量更多、也可能有利于满足真正的极致性能需求、但所有数据库中通常有95%的数据库需要使用4到8个LUN。在典型的OS/ONTAP /网络配置下、包含8个LUN的单个ONTAP卷最多可支持250、000次随机Oracle块IOPS。</block>
+  <block id="622b235a9123d972c612737c81eb55a1" category="inline-link">NetApp和VMware的NFSv3 nConnect功能</block>
+  <block id="ee7dab8e6be0e4b3085e8fb1df295146" category="list-text">从ONTAP 9.14.1开始、VMware和NetApp当前支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。有关nconnect的详细信息、请参见<block ref="2668e8271f58131cbbe97dab01f83475" category="inline-link-rx"></block>。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。</block>
+  <block id="7564f732469e12963d8b416572cf4efb" category="section-title">什么是vSphere Metro Storage Cluster？</block>
+  <block id="830d984ea50f71fa76636d0524167a3a" category="doc">vSphere数据存储库和协议功能概述</block>
+  <block id="7bbcbf5b4bf3f23dc1b710dfd65de967" category="list-text">从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见<block ref="2668e8271f58131cbbe97dab01f83475" category="inline-link-rx"></block></block>
+  <block id="1d1d9d816e63b6c7d3057732579e8889" category="list-text">如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 而不是<block ref="61a52f7a75745796f63ec9e3ea2547b4" prefix=" " category="inline-code"></block> 创建或修改导出策略规则时。VAAI副本卸载功能要求使用NFSv4协议才能运行、即使数据协议为NFS3也是如此。将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 包括NFS3和NFSv4版本。</block>
+  <block id="cc0f7f705e4495c607aea288505e31bf" category="sidebar">VMSC概述</block>
+  <block id="de9a829f775bc333b77fdacbc333f7a1" category="sidebar">vSphere HA解决方案</block>
+  <block id="70b29c8dabeb7a16884003c35e163f96" category="sidebar">VMSC设计</block>
+  <block id="6c4755219197ce467bf892a552c8663a" category="sidebar">VMSC故障恢复能力</block>
+  <block id="13376e3e9b02a56731aa64aeb10947b2" category="sidebar">使用MCC的VMSC场景</block>
 </blocks>

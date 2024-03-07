@@ -1,0 +1,104 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-vsphere-datastores-nfs.html 
+keywords: vSphere, datastore, VMFS, FC, FCoE, NVMe/FC, iSCSI, NFS, vVols 
+summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解决方案的最佳实践。 
+---
+= NFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+通过 vSphere ，客户可以使用企业级 NFS 阵列为 ESXi 集群中的所有节点提供对数据存储库的并发访问。如数据存储库一节所述，在将 NFS 与 vSphere 结合使用时，可以获得一些易用性和存储效率可见性优势。
+
+将 ONTAP NFS 与 vSphere 结合使用时，建议采用以下最佳实践：
+
+* 为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。
+* 自 VMware Infrastructure 3 以来， VMware 一直支持 NFSv3 。vSphere 6.0 增加了对 NFSv4.1 的支持，该支持可实现 Kerberos 安全性等一些高级功能。如果 NFSv3 使用客户端锁定，则 NFSv4.1 使用服务器端锁定。虽然 ONTAP 卷可以通过这两种协议导出，但 ESXi 只能通过一种协议挂载。此单协议挂载并不会阻止其他 ESXi 主机通过不同版本挂载同一数据存储库。请务必指定挂载时要使用的协议版本，以便所有主机都使用相同的版本，从而使用相同的锁定模式。请勿在主机之间混用 NFS 版本。如果可能，请使用主机配置文件检查合规性。
++
+** 由于 NFSv3 和 NFSv4.1 之间不会自动转换数据存储库，因此请创建一个新的 NFSv4.1 数据存储库，并使用 Storage vMotion 将 VM 迁移到新数据存储库。
+** 请参见中的 NFS v4.1 互操作性表注释 https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^] 支持所需的特定 ESXi 修补程序级别。
+** 从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见 https://docs.netapp.com/us-en/netapp-solutions_nconnect/virtualization/vmware-vsphere8-nfsv3-nconnect.html["NetApp和VMware的NFSv3 nConnect功能"]
+
+
+* NFS 导出策略用于控制 vSphere 主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值 `-anon` 和 `-allow-suid` ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：
++
+** 访问协议：NFS (包括nfs3和nfs4)
+** 客户端匹配规范： 192.168.42.21
+** RO 访问规则： sys
+** RW访问规则：sys
+** 匿名UID
+** 超级用户： sys
+
+
+* 如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为 `nfs` 而不是 `nfs3` 创建或修改导出策略规则时。VAAI副本卸载功能要求使用NFSv4协议才能运行、即使数据协议为NFS3也是如此。将协议指定为 `nfs` 包括NFS3和NFSv4版本。
+* NFS 数据存储库卷是从 SVM 的根卷接合的；因此， ESXi 也必须有权访问根卷，才能导航和挂载数据存储库卷。根卷以及嵌套了数据存储库卷接合的任何其他卷的导出策略必须包含一条或多条适用于ESXi服务器的规则、以便为其授予只读访问权限。下面是根卷的示例策略、该策略也使用VAAI插件：
++
+** 访问协议：NFS (包括nfs3和nfs4)
+** 客户端匹配规范： 192.168.42.21
+** RO 访问规则： sys
+** RW访问规则：从不(根卷的最佳安全性)
+** 匿名UID
+** 超级用户：sys (使用VAAI的根卷也需要此功能)
+
+
+* 使用适用于 VMware vSphere 的 ONTAP 工具（最重要的最佳实践）：
++
+** 使用适用于 VMware vSphere 的 ONTAP 工具配置数据存储库，因为它可以自动简化导出策略的管理。
+** 使用此插件为VMware集群创建数据存储库时、请选择集群、而不是单个ESX服务器。选择此选项会将数据存储库自动挂载到集群中的所有主机。
+** 使用插件挂载功能将现有数据存储库应用于新服务器。
+** 如果不对 VMware vSphere 使用 ONTAP 工具，请对所有服务器或需要额外访问控制的每个服务器集群使用一个导出策略。
+
+
+* 虽然 ONTAP 提供了一个灵活的卷命名空间结构，可以使用接合在树中排列卷，但这种方法对于 vSphere 来说毫无价值。无论存储的命名空间层次结构如何，它都会在数据存储库的根目录下为每个 VM 创建一个目录。因此，最佳实践是，只需将 vSphere 卷的接合路径挂载到 SVM 的根卷，即适用于 VMware vSphere 的 ONTAP 工具如何配置数据存储库。如果没有嵌套的接合路径，也意味着任何卷都不依赖于根卷以外的任何卷，即使有意使某个卷脱机或销毁该卷，也不会影响指向其他卷的路径。
+* 对于 NFS 数据存储库上的 NTFS 分区，块大小为 4k 是可以的。下图显示了从 vSphere 主机到 ONTAP NFS 数据存储库的连接。
+
+
+image:vsphere_ontap_image3.png["错误：缺少图形映像"]
+
+下表列出了 NFS 版本和支持的功能。
+
+|===
+| vSphere 功能 | NFSv3 | NFSv4.1 
+
+
+| VMotion 和 Storage vMotion | 是的。 | 是的。 
+
+
+| 高可用性 | 是的。 | 是的。 
+
+
+| 容错 | 是的。 | 是的。 
+
+
+| DRS | 是的。 | 是的。 
+
+
+| 主机配置文件 | 是的。 | 是的。 
+
+
+| 存储 DRS | 是的。 | 否 
+
+
+| 存储 I/O 控制 | 是的。 | 否 
+
+
+| SRM | 是的。 | 否 
+
+
+| 虚拟卷 | 是的。 | 否 
+
+
+| 硬件加速（ VAAI ） | 是的。 | 是的。 
+
+
+| Kerberos 身份验证 | 否 | 是（在 vSphere 6.5 及更高版本中进行了增强，可支持 AES ， krb5i ） 
+
+
+| 多路径支持 | 否 | 是的。 
+|===

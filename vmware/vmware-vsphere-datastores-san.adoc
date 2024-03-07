@@ -1,0 +1,50 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-vsphere-datastores-san.html 
+keywords: vSphere, datastore, VMFS, FC, FCoE, NVMe/FC, iSCSI, NFS, vVols 
+summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解决方案的最佳实践。 
+---
+= SAN （ FC ， FCoE ， NVMe/FC ， iSCSI ）， RDM
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+在 vSphere 中，可以通过三种方式使用块存储 LUN ：
+
+* 使用 VMFS 数据存储库
+* 使用原始设备映射（ RDM ）
+* 作为 LUN ，由软件启动程序从 VM 子操作系统访问和控制
+
+
+VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据存储库。可以为 VMFS 数据存储库配置 LUN ，这些 LUN 可通过 NVMe/FC 协议访问的 FC ， iSCSI ， FCoE 或 NVMe 命名空间进行访问。VMFS 允许集群中的每个 ESX 服务器同时访问传统 LUN 。ONTAP 最大 LUN 大小通常为 16 TB ；因此，使用四个 16 TB LUN （所有 SAN 阵列系统均支持最大 VMFS LUN 大小为 64 TB ）来创建最大 64 TB 的 VMFS 5 数据存储库（请参见本节中的第一个表）。由于 ONTAP LUN 架构不具有较小的单个队列深度，因此 ONTAP 中的 VMFS 数据存储库可以以相对简单的方式扩展到比传统阵列架构更大的程度。
+
+vSphere 内置了对存储设备的多条路径的支持，称为原生多路径（ NMP ）。NMP 可以检测受支持存储系统的存储类型，并自动配置 NMP 堆栈以支持正在使用的存储系统的功能。
+
+NMP 和 NetApp ONTAP 均支持非对称逻辑单元访问（ Asymmetric Logical Unit Access ， ALUA ）来协商优化和非优化路径。在 ONTAP 中，经过 ALUA 优化的路径遵循直接数据路径，并使用托管所访问 LUN 的节点上的目标端口。默认情况下，在 vSphere 和 ONTAP 中均已启用 ALUA 。NMP会将ONTAP集群识别为ALOA、并使用ALOA存储阵列类型插件 (`VMW_SATP_ALUA`)、然后选择轮循环路径选择插件 (`VMW_PSP_RR`）。
+
+ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi 无法识别超出这些限制的任何 LUN 或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。
+
+SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关 SLM 的详细信息，请查看的第 5.9 节 http://www.netapp.com/us/media/tr-4080.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
+
+* 默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。
+* 对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM `lun mapping remove-reporting-nodes` 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。
+
+
+块协议（ iSCSI ， FC 和 FCoE ）使用 LUN ID 和序列号以及唯一名称来访问 LUN 。FC 和 FCoE 使用全球通用名称（ WWPN 和 WWPN ）， iSCSI 使用 iSCSI 限定名称（ IQN ）。存储中 LUN 的路径对于块协议没有意义，并且不会显示在协议的任何位置。因此，只包含 LUN 的卷根本无需在内部挂载，而包含数据存储库中使用的 LUN 的卷则不需要接合路径。ONTAP 中的 NVMe 子系统的工作原理类似。
+
+要考虑的其他最佳实践：
+
+* 确保为 ONTAP 集群中每个节点上的每个 SVM 创建一个逻辑接口（ LIF ），以最大程度地提高可用性和移动性。ONTAP SAN 最佳实践是，每个节点使用两个物理端口和 LIF ，每个网络结构使用一个。ALUA 用于解析路径并识别活动优化（直接）路径与活动非优化路径。ALUA 用于 FC ， FCoE 和 iSCSI 。
+* 对于 iSCSI 网络，如果存在多个虚拟交换机，请在采用 NIC 绑定的不同网络子网上使用多个 VMkernel 网络接口。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 并提高吞吐量。下图提供了多路径连接的示例。在 ONTAP 中，使用连接到两个或更多交换机的两个或更多链路配置一个单模式接口组以进行故障转移，或者使用 LACP 或其他具有多模式接口组的链路聚合技术来提供 HA 和链路聚合的优势。
+* 如果在ESXi中使用质询握手身份验证协议(Challenge-Handshake Authentication Protocol、CHAP)进行目标身份验证、则还必须在ONTAP中使用命令行界面配置此协议 (`vserver iscsi security create`)或使用System Manager (在"Storage">"SVM">"SVM Settings"(SVM设置)>"Protocols"(协议)>"iSCSI"下编辑"Initiator Security"(启动程序安全性)。
+* 使用适用于 VMware vSphere 的 ONTAP 工具创建和管理 LUN 和 igroup 。此插件会自动确定服务器的 WWPN 并创建适当的 igroup 。它还会根据最佳实践配置 LUN 并将其映射到正确的 igroup 。
+* 请谨慎使用VMM、因为它们更难管理、而且它们还会使用路径、如前文所述、这些路径会受到限制。ONTAP LUN 支持这两者 https://kb.vmware.com/s/article/2009226["物理和虚拟兼容模式"^] RDM 。
+* 有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分 https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html["《 ONTAP NVMe/FC 主机配置指南》"^] 和 http://www.netapp.com/us/media/tr-4684.pdf["TR-4684."^]下图显示了从 vSphere 主机到 ONTAP LUN 的多路径连接。
+
+
+image:vsphere_ontap_image2.png["错误：缺少图形映像"]

@@ -13,7 +13,15 @@ entries:
   - title: 基于虚拟卷和存储策略的管理
     url: "/vmware/vmware-vsphere-vvols_and_spbm.html"
   - title: 数据存储库和协议
-    url: "/vmware/vmware-vsphere-datastores.html"
+    entries:
+    - title: 概述
+      url: "/vmware/vmware-vsphere-datastores-top.html"
+    - title: SAN
+      url: "/vmware/vmware-vsphere-datastores-san.html"
+    - title: NFS
+      url: "/vmware/vmware-vsphere-datastores-nfs.html"
+    - title: FlexGroup 卷
+      url: "/vmware/vmware-vsphere-datastores-fg.html"
   - title: 网络配置：
     url: "/vmware/vmware-vsphere-network.html"
   - title: 克隆
