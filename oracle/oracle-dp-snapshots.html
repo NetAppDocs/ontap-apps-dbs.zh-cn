@@ -1,0 +1,4242 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head class="at-element-marker">
+  <title>Oracle数据库和基于快照的备份</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Oracle数据库和基于快照的备份" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+	<meta property="og:description" content="基于ONTAP的Oracle数据库和快照的角色" />
+  <meta property="og:image" content="https://docs.netapp.com/zh-cn/ontap-apps-dbs/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="基于ONTAP的Oracle数据库和快照的角色">
+  <meta name="keywords" content=" oracle, database, ontap, snapshots"><!-- Icons -->
+  <link rel="icon" href="/zh-cn/ontap-apps-dbs/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/zh-cn/ontap-apps-dbs/css/ie-netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/zh-cn/ontap-apps-dbs/css/ie-landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/zh-cn/ontap-apps-dbs/css/ie-tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel="canonical" href="https://docs.netapp.com/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://docs.netapp.com/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="en" href="https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="ja" href="https://docs.netapp.com/ja-jp/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="ko" href="https://docs.netapp.com/ko-kr/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://docs.netapp.com/zh-tw/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="de" href="https://docs.netapp.com/de-de/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="es" href="https://docs.netapp.com/es-es/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="fr" href="https://docs.netapp.com/fr-fr/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <link rel="alternate" hreflang="it" href="https://docs.netapp.com/it-it/ontap-apps-dbs/oracle/oracle-dp-snapshots.html" />
+  <!-- Top level site integrations -->
+<script type="text/javascript" src="https://cdn.cookielaw.org/consent/72570c5c-fe30-465f-b0e0-b77f7fb4ae34/OtAutoBlock.js"></script>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-document-language="true" data-domain-script="72570c5c-fe30-465f-b0e0-b77f7fb4ae34"></script>
+    <script type="text/javascript">function OptanonWrapper() { }</script>
+    <script type="text/plain" class="optanon-category-C0002" src="https://assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js"></script>
+    <script class="optanon-category-C0001">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.setAttributeNode(d.createAttribute('data-ot-ignore'));j.setAttribute('class','optanon-category-C0001');j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MD73T9M');</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      const MASTHEAD_OFFSET = 65;
+      const SECTIONS = $("main h2, main h3");
+      // PAGE NAV - Init
+      if (SECTIONS.length == 0) {
+        // remove if there is no elements
+        /*
+        $("#ie-right-navbar").remove();
+        $("#ie-right-navbar-collapse").remove();
+        */
+      } else {
+        $(".page-nav-title").css('display', 'block');
+        for (var i = 0; i < SECTIONS.length; i++) {
+          var sectionId = $(SECTIONS[i]).attr('id');
+          var sectionName = $(SECTIONS[i]).text();
+          var subClass = $(SECTIONS[i]).is("h3") ? ' page-nav__sublink' : '';
+          $("#page-menu").append('<li class="page-nav-item"><a href="#' + sectionId + '" class="page-nav__link' + subClass + '">' + sectionName + '</a></li>');
+        }
+      }
+    });
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/zh-cn/ontap-apps-dbs/js/na-search.js'></script><script src='/zh-cn/ontap-apps-dbs/js/ie-clouddocs.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+    /*
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+      */
+  </script>
+  <script src='/zh-cn/ontap-apps-dbs/js/custom-dropdown.js'></script>
+  <script src='/zh-cn/ontap-apps-dbs/js/FileSaver.min.js'></script>
+  <script src='/zh-cn/ontap-apps-dbs/js/jszip-utils.min.js'></script>
+  <script src='/zh-cn/ontap-apps-dbs/js/jszip.min.js'></script><script src='/zh-cn/ontap-apps-dbs/js/ie-pdf-ux.js'></script></head>
+
+
+  <body class role="document" data-flavor="">
+    <div class="skip-to-main">
+      <a href="#main" >Skip to main content</a>
+    </div><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MD73T9M"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="page" class="">
+      <div id="ie-phone-menu" class=""></div>
+      <div id="ie-content-wrap" class="">
+        <nav id="ie-new-header">
+    <ul>
+        <li id="ie-phone-menu-button">
+            <a href="#">
+                <image id="" src="/zh-cn/ontap-apps-dbs/images/hamburger.svg" alt="menu" />
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.netapp.com/cn">
+                <image id="ie-header-logo" src="/zh-cn/ontap-apps-dbs/images/netapp_logo.svg" alt="netapp" />
+            </a>
+        </li>
+        <li id="ie-header-docs">
+            <a href="https://www.netapp.com/support-and-training/documentation/">文档</a>
+        </li>
+
+        <!-- Empty container to push header left with or without lang selector -->
+        <li id="empty-container" style="margin-left: auto">
+        </li>
+        <!-- Start Language Selector --><li id="ie-language-dropdown">
+            <div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+                <div class="custom-dropdown-select custom-dropdown-select-lang">
+                    <img src="/zh-cn/ontap-apps-dbs/images/language_white_24dp.svg" class="n-globe__icon" />
+                    <span class="lang-name">简体中文</span>
+                    <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu"><li>
+                        <a href="https://docs.netapp.com/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">English</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ja-jp/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">日本語</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ko-kr/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">한국어</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-tw/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/de-de/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/es-es/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">Español</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/fr-fr/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">Français</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/it-it/ontap-apps-dbs/oracle/oracle-dp-snapshots.html"
+                            target="_self"><span translate="no" class="notranslate">Italiano</span></a>
+                    </li></ul>
+            </div>
+            </li>
+        <!-- End Language Selector -->
+
+
+        <li id="ie-allnetapp">
+            <div id="allnetapp-dropdown" class="custom-dropdown custom-dropdown-allnetapp">
+                <div class="custom-dropdown-select custom-dropdown-select-allnetapp">
+                    <img src="/zh-cn/ontap-apps-dbs/images/apps_white_24dp.svg" alt="" class="allnetapp-icon" />
+                    <span class="allnetapp-name">全部来自 NetApp</span>
+                    <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu allnetapp-dropdown">
+                    <li>
+                        <a href="https://bluexp.netapp.com/"
+                            target="_self"><span translate="no" class="notranslate">BlueXP</span></a>
+                    </li>
+                    <li>
+                        <a href="https://mysupport.netapp.com/site/"
+                            target="_self"><span translate="no" class="notranslate">支持</span></a>
+                    </li>
+                    <li>
+                        <a href="https://kb.netapp.com/"
+                            target="_self"><span translate="no" class="notranslate">知识库</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.netapp.com/zh-hans/support-and-training/netapp-learning-services/"
+                            target="_self"><span translate="no" class="notranslate">训练</span></a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+    </ul>
+</nav>
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+
+<div id="ie-new-sidebar-collapse" style="display: none">
+    <img id="sidebar-expand" class="ie-searchbox-icon" src="/zh-cn/ontap-apps-dbs/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-new-sidebar">
+    <div id="ie-product-identity-lockup">
+        <div id="sidebar-collapse" class="">
+            <img src="/zh-cn/ontap-apps-dbs/images/double_arrow.svg" alt="" />
+        </div>
+        <div id="ie-breadcrumb" class="">
+  <ul class="ie-breadcrumb">
+    <li class="">
+      <a href="https://docs.netapp.com">所有文档</a>
+    </li>
+    
+    
+
+    
+  </ul>
+  
+  <div class="ie-product-name" >
+    <!--<a href="/zh-cn/ontap-apps-dbs/">-->
+      Enterprise applications
+    <!--</a>-->
+  </div>
+</div>
+
+            
+
+        
+        
+
+<div id="ie-searchbox" class="ie-searchbox-sidebar ">
+    <img class="ie-searchbox-icon" src="/zh-cn/ontap-apps-dbs/images/loupe.svg" alt=""/>
+    <div id="react-search" 
+        data-search-html="/zh-cn/ontap-apps-dbs/search.html" 
+        data-type="widget"
+        data-placeholder="搜索文档"
+        data-no-results-found="未找到 {query} 的相关结果"
+        data-did-you-mean="搜索 {suggestion}。"
+        data-no-results-found-did-you-mean="未找到 {query} 的相关结果。您是指 {suggestion}？"
+        data-results-found="找到 {hitCount} 个结果"
+        data-error-message="发生错误。请重试。"
+        data-error-reset="重置搜索"
+        data-sk-es-pf-indexes="" 
+        data-flavor="">
+    </div>
+</div>
+        
+    </div>
+    <div id="ie-new-toc"><script>
+  let sidebarAccordion = true;
+
+  /* specific css rules for Mac */
+  if(navigator.platform.match('Mac') !== null) {
+    document.body.setAttribute('class', 'OSX');
+  }
+
+</script>
+
+<div id="ie-sidebar-container">
+  <ul id="ie-sidebar-list" ><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="企业级应用程序"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/index.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/zh-cn/ontap-apps-dbs/index.html">
+        企业级应用程序
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Microsoft SQL Server"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Microsoft SQL Server</div>-->
+         Microsoft SQL Server
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="工作负载"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-workloads.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-workloads.html">
+        工作负载
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Microsoft SQL Server的数据库配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据库配置</div>-->
+         数据库配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="共享实例与专用实例"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-shared-vs-dedicated.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-shared-vs-dedicated.html">
+        共享实例与专用实例
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="CPU配置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-cpu-configuration.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-cpu-configuration.html">
+        CPU配置
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="内存配置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-memory-configuration.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-memory-configuration.html">
+        内存配置
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Microsoft SQL Server的存储配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 存储配置</div>-->
+         存储配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据库文件和文件组"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-files-and-filegroups.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-files-and-filegroups.html">
+        数据库文件和文件组
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="tempdb文件"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-tempdb.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-tempdb.html">
+        tempdb文件
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="存储注意事项"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-storage-considerations.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-storage-considerations.html">
+        存储注意事项
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="存储效率"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-storage-efficiency.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-storage-efficiency.html">
+        存储效率
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据保护"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-data-protection.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-data-protection.html">
+        数据保护
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="灾难恢复"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-disaster-recovery.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-disaster-recovery.html">
+        灾难恢复
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据安全性"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mssql/mssql-data-security.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mssql/mssql-data-security.html">
+        数据安全性
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="MySQL"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> MySQL</div>-->
+         MySQL
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="MySQL的数据库配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据库配置</div>-->
+         数据库配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="文件结构"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-file-structure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-file-structure.html">
+        文件结构
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="配置概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-configuration.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-configuration.html">
+        配置概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="InnoDB_log_file_size"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_log_file_size.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_log_file_size.html">
+        InnoDB_log_file_size
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="INNODB_FLOG_AT_TRx_Commit"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_flush_log_at_trx_commit.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_flush_log_at_trx_commit.html">
+        INNODB_FLOG_AT_TRx_Commit
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="InnoDB_doublewite"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_doublewrite.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_doublewrite.html">
+        InnoDB_doublewite
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="InnoDB_buffer_pool_size"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_buffer_pool_size.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_buffer_pool_size.html">
+        InnoDB_buffer_pool_size
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="INNODB_FLUG_METHOD"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_flush_method.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_flush_method.html">
+        INNODB_FLUG_METHOD
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="InnoDB_IO_Capacity"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_io_capacity.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_io_capacity.html">
+        InnoDB_IO_Capacity
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="InnoDB_LRU_SCAN_深度"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-innodb_lru_scan_depth.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-innodb_lru_scan_depth.html">
+        InnoDB_LRU_SCAN_深度
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="open_file_极限 值"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-open_file_limits.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-open_file_limits.html">
+        open_file_极限 值
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="MySQL的主机配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 主机配置</div>-->
+         主机配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="容器化"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-containers.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-containers.html">
+        容器化
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="插槽表"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-slot-tables.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-slot-tables.html">
+        插槽表
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="I/O计划程序"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-schedulers.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-schedulers.html">
+        I/O计划程序
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="文件描述符"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-file-descriptors.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-file-descriptors.html">
+        文件描述符
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="MySQL的存储配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 存储配置</div>-->
+         存储配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于NFS的MySQL"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-mysql-over-nfs.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-mysql-over-nfs.html">
+        基于NFS的MySQL
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于SAN的MySQL"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/mysql/mysql-mysql-over-san.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/mysql/mysql-mysql-over-san.html">
+        基于SAN的MySQL
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle 数据库"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Oracle 数据库</div>-->
+         Oracle 数据库
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="ONTAP 配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> ONTAP 配置</div>-->
+         ONTAP 配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="RAID"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-raid.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-raid.html">
+        RAID
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="容量限制"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-capacity-limits.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-capacity-limits.html">
+        容量限制
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage Virtual Machine"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-svm.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-svm.html">
+        Storage Virtual Machine
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="服务质量（ QoS ）"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-qos.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-qos.html">
+        服务质量（ QoS ）
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="效率"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-efficiency.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-efficiency.html">
+        效率
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="精简配置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-thin-provisioning.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-thin-provisioning.html">
+        精简配置
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="故障转移和切换"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-ontap-config-failover.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-ontap-config-failover.html">
+        故障转移和切换
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据库的数据库配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据库配置</div>-->
+         数据库配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据文件和重做块大小"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-app-config-block-sizes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-app-config-block-sizes.html">
+        数据文件和重做块大小
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="db_file_multiblock_read_count"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-app-config-mbr.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-app-config-mbr.html">
+        db_file_multiblock_read_count
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="filesystemio_options"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-app-config-filesystemio_options.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-app-config-filesystemio_options.html">
+        filesystemio_options
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle RAC"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-app-config-rac.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-app-config-rac.html">
+        Oracle RAC
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据库的主机配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 主机配置</div>-->
+         主机配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AIX"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-aix.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-aix.html">
+        AIX
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="HP-UX"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-hp-ux.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-hp-ux.html">
+        HP-UX
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Linux"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-linux.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-linux.html">
+        Linux
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="带有ASMlib和AFC的Linux"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-asmlib-afd.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-asmlib-afd.html">
+        带有ASMlib和AFC的Linux
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Microsoft Windows"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-windows.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-windows.html">
+        Microsoft Windows
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Solaris"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-host-config-solaris.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-host-config-solaris.html">
+        Solaris
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据库的网络配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 网络配置：</div>-->
+         网络配置：
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="逻辑接口"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-network-config-lifs.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-network-config-lifs.html">
+        逻辑接口
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="以太网配置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-network-config-ethernet.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-network-config-ethernet.html">
+        以太网配置
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="FC SAN配置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-network-config-fc.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-network-config-fc.html">
+        FC SAN配置
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="直连网络"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-network-config-direct-connect.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-network-config-direct-connect.html">
+        直连网络
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据库的存储配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 存储配置</div>-->
+         存储配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="FC SAN"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> FC SAN</div>-->
+         FC SAN
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="LUN对齐"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-san-config-lun-alignment.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-san-config-lun-alignment.html">
+        LUN对齐
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="LUN计数和LUN大小"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-san-config-lun-sizing.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-san-config-lun-sizing.html">
+        LUN计数和LUN大小
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="LUN大小调整"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-san-config-lun-resizing.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-san-config-lun-resizing.html">
+        LUN大小调整
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="LVM条带化"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-san-config-lvm-striping.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-san-config-lvm-striping.html">
+        LVM条带化
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> NFS</div>-->
+         NFS
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-nfs-config-overview.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-nfs-config-overview.html">
+        Configuration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle Direct NFS （ DNFS ）"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-nfs-config-dnfs.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-nfs-config-dnfs.html">
+        Oracle Direct NFS （ DNFS ）
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS租约和锁定"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-nfs-config-leases-and-locks.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-nfs-config-leases-and-locks.html">
+        NFS租约和锁定
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS缓存"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-nfs-config-caching.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-nfs-config-caching.html">
+        NFS缓存
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS传输大小"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-nfs-config-transfer-sizes.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-nfs-config-transfer-sizes.html">
+        NFS传输大小
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle和NVFAIL"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-nvfail.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-nvfail.html">
+        Oracle和NVFAIL
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="ASM Recasation Utility"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-storage-san-config-asmru.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-storage-san-config-asmru.html">
+        ASM Recasation Utility
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="虚拟化"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-virtualization-introduction.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-virtualization-introduction.html">
+        虚拟化
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="分层"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 分层</div>-->
+         分层
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="分层策略"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 分层策略</div>-->
+         分层策略
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="将数据发送到对象存储"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-policies.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-policies.html">
+        将数据发送到对象存储
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="正在从对象存储检索数据"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-retrieval-policies.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-retrieval-policies.html">
+        正在从对象存储检索数据
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="层策略"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 层策略</div>-->
+         层策略
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="整个文件"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-whole-file.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-whole-file.html">
+        整个文件
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="部分文件"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-partial-file.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-partial-file.html">
+        部分文件
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="选择文件"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-logs.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-logs.html">
+        选择文件
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="快照"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-snapshots.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-snapshots.html">
+        快照
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="备份"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-backups.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-backups.html">
+        备份
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="对象存储访问中断"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-tiering-object-store-access-interruptions.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-tiering-object-store-access-interruptions.html">
+        对象存储访问中断
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据保护"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Oracle数据保护</div>-->
+         Oracle数据保护
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="RPO、RTO和SLA"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-slas.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-slas.html">
+        RPO、RTO和SLA
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据可用性"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-data-availability.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-data-availability.html">
+        数据可用性
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据完整性"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-data-integrity.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-data-integrity.html">
+        数据完整性
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="备份和恢复基础知识"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 备份和恢复基础知识</div>-->
+         备份和恢复基础知识
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="快照"
+      data-li-level="4#" 
+      class="  ie-sidebar-selected    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-snapshots.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html">
+        快照
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SnapRestore"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-snaprestore.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snaprestore.html">
+        SnapRestore
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于Snapshot的联机备份"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-online-backup.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-online-backup.html">
+        基于Snapshot的联机备份
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage Snapshot优化的备份"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-storage-snapshot-optimized-backups.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-storage-snapshot-optimized-backups.html">
+        Storage Snapshot优化的备份
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SnapCenter和其他工具"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dp-backup-tools.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dp-backup-tools.html">
+        SnapCenter和其他工具
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle灾难恢复"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Oracle灾难恢复</div>-->
+         Oracle灾难恢复
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="MetroCluster"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> MetroCluster</div>-->
+         MetroCluster
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="物理架构"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-physical.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-physical.html">
+        物理架构
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="逻辑架构"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-logical.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-logical.html">
+        逻辑架构
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SyncMirror"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-syncmirror.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-syncmirror.html">
+        SyncMirror
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle故障转移"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-failover.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-failover.html">
+        Oracle故障转移
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NVFAIL"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-nvfail.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-nvfail.html">
+        NVFAIL
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于MetroCluster的Oracle SI"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-si.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-si.html">
+        基于MetroCluster的Oracle SI
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于MetroCluster的Oracle RAC"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-mcc-rac.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-mcc-rac.html">
+        基于MetroCluster的Oracle RAC
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SnapMirror活动同步"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> SnapMirror活动同步</div>-->
+         SnapMirror活动同步
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="架构"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-smbc-architecture.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-smbc-architecture.html">
+        架构
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="故障转移"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-smbc-failover.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-smbc-failover.html">
+        故障转移
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="采用SnapMirror活动同步的Oracle SI"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-smbc-si.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-smbc-si.html">
+        采用SnapMirror活动同步的Oracle SI
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="具有SnapMirror活动同步的Oracle RAC"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-smbc-rac.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-smbc-rac.html">
+        具有SnapMirror活动同步的Oracle RAC
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="故障情形"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-dr-smbc-failure-scenarios.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-dr-smbc-failure-scenarios.html">
+        故障情形
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Oracle数据库迁移"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Oracle数据库迁移</div>-->
+         Oracle数据库迁移
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="规划"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-planning.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-planning.html">
+        规划
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="过程"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 过程</div>-->
+         过程
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-procedures-overview.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-procedures-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据文件移动"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-datafile-move.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-datafile-move.html">
+        数据文件移动
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="日志传送"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-log-shipping.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-log-shipping.html">
+        日志传送
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="主机数据复制"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-host-data-copy.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-host-data-copy.html">
+        主机数据复制
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="外部LUN导入"
+      data-li-level="4" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-4  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 外部LUN导入</div>-->
+         外部LUN导入
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="规划"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-fli-planning.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-fli-planning.html">
+        规划
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="转换"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-fli-cutover.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-fli-cutover.html">
+        转换
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="完成"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-fli-completion.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-fli-completion.html">
+        完成
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="协议转换"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-fli-protocol-conversion.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-fli-protocol-conversion.html">
+        协议转换
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="示例脚本"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-migration-sample-scripts.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-migration-sample-scripts.html">
+        示例脚本
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="附加说明"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 附加说明</div>-->
+         附加说明
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="性能优化和基准测试"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-notes-optimization-and-benchmarking.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-notes-optimization-and-benchmarking.html">
+        性能优化和基准测试
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="过时的NFS锁定"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-notes-stale-nfs-locks.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-notes-stale-nfs-locks.html">
+        过时的NFS锁定
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="WAFL对齐验证"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/oracle/oracle-notes-wafl-alignment-verification.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/oracle/oracle-notes-wafl-alignment-verification.html">
+        WAFL对齐验证
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="PostgreSQL"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> PostgreSQL</div>-->
+         PostgreSQL
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="PostgreSQL的主机配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据库配置</div>-->
+         数据库配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="架构"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-architecture.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-architecture.html">
+        架构
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="初始化"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-initialization.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-initialization.html">
+        初始化
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="设置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-db-config.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-db-config.html">
+        设置
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="表空间"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-tablespaces.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-tablespaces.html">
+        表空间
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="PostgreSQL的存储配置"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 存储配置</div>-->
+         存储配置
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-nfs-filesystems.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-nfs-filesystems.html">
+        NFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SAN"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-san-filesystems.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-san-filesystems.html">
+        SAN
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="PostgreSQL的数据保护"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据保护</div>-->
+         数据保护
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="本机数据保护"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-native-dp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-native-dp.html">
+        本机数据保护
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Snapshot技术"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-snapshot-dp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-snapshot-dp.html">
+        Snapshot技术
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据保护软件"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/postgres/postgres-snapcenter-dp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/postgres/postgres-snapcenter-dp.html">
+        数据保护软件
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SAP"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> SAP</div>-->
+         SAP
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SAP HANA和AnyDB"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="sap-solutions.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/zh-cn/ontap-apps-dbs/sap-solutions.html">
+        SAP HANA和AnyDB
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="VMware"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> VMware</div>-->
+         VMware
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="采用ONTAP的VMware vSphere"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 采用ONTAP的VMware vSphere</div>-->
+         采用ONTAP的VMware vSphere
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="统一存储"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-unified.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-unified.html">
+        统一存储
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="虚拟化工具"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-vtools.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-vtools.html">
+        虚拟化工具
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于虚拟卷和存储策略的管理"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-vvols_and_spbm.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-vvols_and_spbm.html">
+        基于虚拟卷和存储策略的管理
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据存储库和协议"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 数据存储库和协议</div>-->
+         数据存储库和协议
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-datastores-top.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-datastores-top.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="SAN"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-datastores-san.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-datastores-san.html">
+        SAN
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-datastores-nfs.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-datastores-nfs.html">
+        NFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="FlexGroup 卷"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-datastores-fg.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-datastores-fg.html">
+        FlexGroup 卷
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="网络配置："
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-network.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-network.html">
+        网络配置：
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="克隆"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-cloning.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-cloning.html">
+        克隆
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="数据保护"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-dp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-dp.html">
+        数据保护
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="QoS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-qos.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-qos.html">
+        QoS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="基于存储策略的管理"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-policy-and-vvols.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-policy-and-vvols.html">
+        基于存储策略的管理
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="VMware Storage Distributed Resource Scheduler"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-sdrs.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-sdrs.html">
+        VMware Storage Distributed Resource Scheduler
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="建议设置"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vsphere-settings.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vsphere-settings.html">
+        建议设置
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)</div>-->
+         使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vvols-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vvols-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="将ONTAP 与虚拟卷结合使用"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vvols-ontap.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vvols-ontap.html">
+        将ONTAP 与虚拟卷结合使用
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="部署虚拟卷存储"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vvols-deploy.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vvols-deploy.html">
+        部署虚拟卷存储
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="保护卷"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vvols-protect.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vvols-protect.html">
+        保护卷
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="故障排除"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-vvols-resources.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-vvols-resources.html">
+        故障排除
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="采用ONTAP的VMware Site Recovery Manager"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 采用ONTAP的VMware Site Recovery Manager</div>-->
+         采用ONTAP的VMware Site Recovery Manager
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-srm-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-srm-overview.html">
+        概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="部署最佳实践"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-srm-deployment_best_practices.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-srm-deployment_best_practices.html">
+        部署最佳实践
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="操作最佳实践"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-srm-operational_best_practices.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-srm-operational_best_practices.html">
+        操作最佳实践
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="复制拓扑"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-srm-replication_topologies.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-srm-replication_topologies.html">
+        复制拓扑
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="对使用 VVol 复制的 SRM 进行故障排除"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-srm-vvol-troubleshooting.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-srm-vvol-troubleshooting.html">
+        对使用 VVol 复制的 SRM 进行故障排除
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="采用ONTAP的vSphere Metro存储集群"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 采用ONTAP的vSphere Metro存储集群</div>-->
+         采用ONTAP的vSphere Metro存储集群
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="VMSC概述"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware_vmsc_overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware_vmsc_overview.html">
+        VMSC概述
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="vSphere HA解决方案"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware_vmsc_solution.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware_vmsc_solution.html">
+        vSphere HA解决方案
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="VMSC设计"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware_vmsc_design.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware_vmsc_design.html">
+        VMSC设计
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="VMSC故障恢复能力"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware_vmsc_resiliency.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware_vmsc_resiliency.html">
+        VMSC故障恢复能力
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="使用MCC的VMSC场景"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware_vmsc_scen_mcc.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware_vmsc_scen_mcc.html">
+        使用MCC的VMSC场景
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="产品安全性"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/zh-cn/ontap-apps-dbs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/zh-cn/ontap-apps-dbs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> 产品安全性</div>-->
+         产品安全性
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="适用于 VMware vSphere 的 ONTAP 工具"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-security-tools.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-security-tools.html">
+        适用于 VMware vSphere 的 ONTAP 工具
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="适用于 VMware vSphere 的 SnapCenter 插件"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/vmware/vmware-security-snapcenter.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/zh-cn/ontap-apps-dbs/vmware/vmware-security-snapcenter.html">
+        适用于 VMware vSphere 的 SnapCenter 插件
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="法律声明"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/oracle/oracle-dp-snapshots.html" 
+      dale-entry-url="/legal-notices.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/zh-cn/ontap-apps-dbs/legal-notices.html">
+        法律声明
+      </a></li></ul>
+</div>
+<script>
+
+  $(".ie-sidebar-button").click(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    expandedLI = $('li.ie-sidebar-expand')
+
+    const li = $(this).closest("li");
+
+    const parentsLI = $(li).parents('li');
+
+    expandedLI.map(element => {
+      if (sidebarAccordion && !li.hasClass('ie-sidebar-expand') && jQuery.inArray(expandedLI[element], parentsLI) == -1) {
+        $(expandedLI[element]).toggleClass('ie-sidebar-expand');
+        $(expandedLI[element]).children("ul").animate({ height: 'toggle' }, 400, function () {
+          $(li).children("ul").toggleClass('ie-sidebar-open');
+
+        })
+      }
+
+    })
+
+    $(li).toggleClass('ie-sidebar-expand');
+    $(li).children("ul").animate({ height: 'toggle' }, 400, function () {
+      $(li).children("ul").toggleClass('ie-sidebar-open');
+    })
+  });
+
+
+  
+    $("li.ie-sidebar-selected").parents('ul').toggleClass("ie-sidebar-open");
+    $("li.ie-sidebar-selected").toggleClass("ie-sidebar-expand")
+    $("ul.ie-sidebar-open").parent().toggleClass("ie-sidebar-expand");
+    $("li.ie-sidebar-selected").children('ul').toggleClass("ie-sidebar-open")
+  
+  
+</script>
+    </div>
+</div>
+<script>
+
+    
+    let sidebarScrollTopPosition = 0;
+    $("#ie-new-toc").on("scroll", function () {
+        if (sidebarScrollTopPosition == 0) {
+            $.cookie("sidebarScroll", $("#ie-new-toc").scrollTop(), {
+                path: "/zh-cn/ontap-apps-dbs"
+            });
+        }
+
+        if ($("#ie-new-toc").scrollTop() > 0) {
+            $('#ie-product-identity-lockup').addClass('ie-addShadow');
+        } else {
+            $('#ie-product-identity-lockup').removeClass('ie-addShadow');
+        }
+    });
+
+    $(function () {
+        if ($.cookie("sidebarScroll")) {
+            $("#ie-new-toc").scrollTop($.cookie("sidebarScroll"));
+        }
+    });
+
+    function setSidebarBottom() {
+        const footerGap = PXinViewport($(".n-footer"));
+        document.getElementById("ie-new-sidebar").style.bottom = Math.max(0, footerGap) + "px";
+    }
+
+    window.onscroll = () => {
+        setSidebarBottom();
+    };
+
+    $("#sidebar-collapse").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        if ($.cookie("sidebarScroll")) {
+            sidebarScrollTopPosition = $.cookie("sidebarScroll");
+        }
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 350, function () {
+            $("#ie-new-sidebar-collapse").show();
+            $("#ie-new-sidebar").removeClass("open")
+            $("#ie-new-sidebar").addClass("close")
+            $("#ie-new-sidebar").removeAttr("style")
+        });
+        $(".ie-content-pane").animate({ width: (width + sidebarWidth), marginLeft: (marginLeft - sidebarWidth) }, 350, function () {
+            resizeContent()
+        })
+
+    });
+    $("#sidebar-expand").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 250, function () {
+            $('#ie-new-sidebar').css('display', 'flex');
+            $("#ie-new-sidebar-collapse").hide();
+            $("#ie-new-sidebar").removeClass("close")
+            $("#ie-new-sidebar").addClass("open")
+            setSidebarBottom();
+
+            if (sidebarScrollTopPosition != 0) {
+                $.cookie("sidebarScroll", sidebarScrollTopPosition, {
+                    path: "/zh-cn/ontap-apps-dbs"
+                })
+                $("#ie-new-toc").scrollTop(sidebarScrollTopPosition);
+                sidebarScrollTopPosition = 0;
+            }
+        });
+        $(".ie-content-pane").animate({ width: (width - sidebarWidth), 'marginLeft': (marginLeft + sidebarWidth) }, 250, function () {
+            resizeContent()
+        })
+    });
+    function resizeContent() {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        const rightNavbarVisible =  $("#ie-right-navbar").css('display') && $("#ie-right-navbar").css('display') != 'none';
+        const sidebarVisible = $("#ie-new-sidebar").css('display') != 'none';
+        const rightNavbarWidth = $("#ie-right-navbar").width();
+        const rightNavbarCollapseWidth = $("#ie-right-navbar-collapse").width();
+        const rightNavbarCollapseVisible = $("#ie-right-navbar-collapse").css('display') && $("#ie-right-navbar-collapse").css('display') != 'none';
+        
+        if (rightNavbarVisible && sidebarVisible) {
+            $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarWidth}px)`)
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+        } else if (sidebarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarCollapseWidth}px)`)
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar").width()}px)`)
+            }
+
+        } else if (rightNavbarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            $(".ie-content-pane").width(`calc(100% - ${rightNavbarWidth}px)`)
+        } else {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${rightNavbarCollapseWidth}px)`);
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar-collapse").width()}px) `);
+            }
+            
+        }
+    }
+    $(window).on("resize load", function () {
+        setSidebarBottom();
+        resizeContent()
+    });
+
+
+</script>
+
+<div class="ie-content-pane ie-component-detail-content ie-component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <!-- include utility.html -->
+      <div class="ie-info-disclaimer">
+    <span>
+      <div class="ie-info-disclaimer-container">
+        <div class="ie-info-disclaimer-icon">
+          <img src="/zh-cn/ontap-apps-dbs/images/notification-icons.svg" class="luci-icon" alt="" />
+        </div>
+        <div class="ie-info-disclaimer-content">
+          <span> 简体中文版经机器翻译而成，仅供参考。如与英语版出现任何冲突，应以英语版为准。 </span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </span>
+  </div><div class="ie-component-detail-heading-wrap">
+  <h1 class="ie-component-detail-heading">Oracle数据库和基于快照的备份</h1>
+</div>
+
+<div id="ie-byline">
+  
+<div class="page-details">
+    
+        
+            <time datetime="2024-03-13 14:07:56 +0000">03/13/2024</time>
+        
+    
+    
+        <span>贡献者
+        </span>
+    
+    
+</div>
+<div class="page-controls">
+    <div id="contribute-dropdown" class="custom-dropdown custom-dropdown-contrib" >
+        <div class="custom-dropdown-select custom-dropdown-select-contrib">
+        <span class="contrib-name"><img src="/zh-cn/ontap-apps-dbs/images/discuss-sm.svg" alt="" class="github-icon" />建议更改</span>
+        <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown invisible" />
+        <img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup" />
+        </div>
+        <ul class="custom-dropdown-menu suggested-changes-dropdown"><li>
+                <a target="_blank" href="https://github.com/NetAppDocs/ontap-apps-dbs.zh-cn/issues/new?template=new-from-page.yml&page-url=https://docs.netapp.com/zh-cn/ontap-apps-dbs/oracle/oracle-dp-snapshots.html&page-title=Oracle数据库和基于快照的备份" class="page-nav-contribute-link" role="button">请求文档更改</a>
+            </li><li> 
+                <a target="_blank" href="https://github.com/NetAppDocs/ontap-apps-dbs/blob/main/oracle/oracle-dp-snapshots.adoc" class="page-nav-contribute-link" role="button">编辑此页面</a>
+            </li><li><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  >了解如何贡献</a></li>
+        </ul>
+    </div>
+    <div id="pdf-control-container">
+        <div class="n-pdf-header">
+            <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+                <img class="adobe-icon" src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>PDF<img src="/zh-cn/ontap-apps-dbs/images/dropdown-arrow.svg" class="custom-icon" alt="" />
+            </a>
+        </div>
+        <div class="n-pdf-body-container">
+            <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+                    
+                    
+                    
+                    <a target="_blank" class="pdf-download-link" href="/zh-cn/ontap-apps-dbs/pdfs/fullsite-sidebar/ONTAP和企业级应用程序.pdf" >
+                    <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>本文档站点的 PDF</a>
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Microsoft_SQL_Server.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Microsoft SQL Server
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Microsoft_SQL_Server的数据库配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据库配置
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Microsoft_SQL_Server的存储配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            存储配置
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/MySQL.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            MySQL
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/MySQL的数据库配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据库配置
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/MySQL的主机配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            主机配置
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/MySQL的存储配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            存储配置
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle_数据库.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Oracle 数据库
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/ONTAP_配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            ONTAP 配置
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据库的数据库配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据库配置
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据库的主机配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            主机配置
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据库的网络配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            网络配置：
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据库的存储配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            存储配置
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/FC_SAN.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            FC SAN
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/NFS.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            NFS
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/分层.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            分层
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/分层策略.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            分层策略
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/层策略.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            层策略
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据保护.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Oracle数据保护
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/备份和恢复基础知识.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            备份和恢复基础知识
+          </a>
+          
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle灾难恢复.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Oracle灾难恢复
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/MetroCluster.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            MetroCluster
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/SnapMirror活动同步.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            SnapMirror活动同步
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/Oracle数据库迁移.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Oracle数据库迁移
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/过程.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            过程
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/外部LUN导入.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            外部LUN导入
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/附加说明.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            附加说明
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/PostgreSQL.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            PostgreSQL
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/PostgreSQL的主机配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据库配置
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/PostgreSQL的存储配置.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            存储配置
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/PostgreSQL的数据保护.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据保护
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/SAP.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            SAP
+          </a>
+          
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/VMware.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            VMware
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/采用ONTAP的VMware_vSphere.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            采用ONTAP的VMware vSphere
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/数据存储库和协议.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            数据存储库和协议
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/使用ONTAP的虚拟卷_Virtual_Volume_Virtual_Volume_Virtual_Volume_Virtual_Volume_.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/采用ONTAP的VMware_Site_Recovery_Manager.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            采用ONTAP的VMware Site Recovery Manager
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/采用ONTAP的vSphere_Metro存储集群.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            采用ONTAP的vSphere Metro存储集群
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/zh-cn/ontap-apps-dbs/pdfs/sidebar/产品安全性.pdf" 
+            
+          >
+            <img src="/zh-cn/ontap-apps-dbs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            产品安全性
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+</li></ul>
+            <div class="zip-pdf-link-container" style="display: none;">   
+                <a href="#" id="zipPdf">
+                <img src="/zh-cn/ontap-apps-dbs/images/pdf-zip.png" alt="" width="16" height="16"/>
+                <pre>单独 PDF 文档的收集<span class="zip-size"></span></pre>
+                </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+        </div>
+    </div>        
+<script>
+$("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+$("#toggleButtonPdf").on('click', function(e){ 
+    e.stopPropagation();
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+});
+
+//hide is by clicking outside pdfcontainer
+$(document).on('click', function (e) {
+    if ($('#toggleContainerPdf').is(':visible') && !$('.n-pdf-body-container').is(e.target) && !$('.n-pdf-body-container').has(e.target).length)  {
+        
+        $("#toggleContainerPdf").toggle('display');
+        $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+        $("#toggleButtonPdf").removeClass("active");
+    }
+});
+</script>
+<script>
+    function getPdfLocation() {
+        const pdfLocation = window.scrollX + document.querySelector('#pdf-control-container').getBoundingClientRect().left
+        if (pdfLocation < 450) {
+            $(".n-pdf-body-container").addClass("block")
+        } else {
+            $(".n-pdf-body-container").removeClass("block")
+        }
+    
+    }
+    $( window ).on( "resize", function() {
+        getPdfLocation()
+} );
+</script>
+<script>
+    const pdfButtonWidth =  $(".n-pdf-header").width();
+    const pdfMenuWidth = $(".n-pdf-body-container").width();
+    $(".n-pdf-body-container").css('margin-left', `calc(${pdfButtonWidth - pdfMenuWidth}px)`);
+</script>
+</div>
+
+    
+
+</div>
+
+
+
+
+<div class="content-to-index">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>基于ONTAP的Oracle数据库数据保护的基础是NetApp Snapshot技术。</p>
+</div>
+<div class="paragraph">
+<p>关键值如下：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>*精简性。*快照是指特定时间点数据容器内容的只读副本。</p>
+</li>
+<li>
+<p>*效率。*创建快照时不需要任何空间。只有在数据发生更改时才会占用空间。</p>
+</li>
+<li>
+<p>*易管理性。*基于快照的备份策略易于配置和管理、因为快照是存储操作系统的本机部分。如果存储系统已启动、则它可以随时创建备份。</p>
+</li>
+<li>
+<p>*可扩展性。*一个文件和LUN容器最多可保留1024个备份。对于复杂的数据集、可以通过一组一致的快照来保护多个数据容器。</p>
+</li>
+<li>
+<p>无论卷包含1024个快照还是无快照、性能都不受影响。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>虽然许多存储供应商都提供快照技术、但ONTAP中的快照技术是独一无二的、可为企业级应用程序和数据库环境带来显著优势：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Snapshot副本是底层任意位置写入文件布局(Write-Anywhere File Layout、WAFL)的一部分。它们不是附加技术或外部技术。由于存储系统是备份系统、因此可简化管理。</p>
+</li>
+<li>
+<p>Snapshot副本不会影响性能、但某些边缘情形除外、例如、快照中存储的数据量如此之多、以致于底层存储系统会填满。</p>
+</li>
+<li>
+<p>术语"一致性组"通常用于指作为一致的数据集合进行管理的一组存储对象。特定ONTAP卷的快照构成一致性组备份。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ONTAP快照的扩展能力也优于竞争技术。客户可以存储5个、50个或500个快照、而不会影响性能。卷中当前允许的最大快照数为1024。如果需要额外保留快照、可以选择将快照级联到其他卷。</p>
+</div>
+<div class="paragraph">
+<p>因此、保护ONTAP上托管的数据集非常简单、并且具有高度可扩展性。备份不需要移动数据、因此可以根据业务需求定制备份策略、而不是网络传输速率、大量磁带驱动器或磁盘暂存区的限制。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="快照是否为备份">快照是否为备份？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>有关将快照用作数据保护策略的一个常见问题是、"实际"数据和快照数据位于同一个驱动器上。丢失这些驱动器将导致主数据和备份均丢失。</p>
+</div>
+<div class="paragraph">
+<p>这是一个合理的问题。本地快照用于满足日常备份和恢复需求、在这方面、快照是备份。在NetApp环境中、几乎99%的恢复方案都依靠快照来满足最苛刻的恢复时间要求。</p>
+</div>
+<div class="paragraph">
+<p>但是、本地快照绝不是唯一的备份策略、这就是NetApp提供SnapMirror和SnapVault复制等技术来快速高效地将快照复制到一组独立驱动器的原因。在采用快照和快照复制功能且架构合理的解决方案中、磁带的使用量可以降至最低、甚至可以每季度归档一次、也可以完全避免。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="基于snapshot的备份">基于Snapshot的备份</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>使用ONTAP Snapshot副本保护数据有多种选择、快照是复制、灾难恢复和克隆等许多其他ONTAP功能的基础。本文档不会介绍有关Snapshot技术的完整问题描述、但以下各节将提供一般概述。</p>
+</div>
+<div class="paragraph">
+<p>创建数据集快照的主要方法有两种：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>崩溃状态一致的备份</p>
+</li>
+<li>
+<p>应用程序一致的备份</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>崩溃状态一致的数据集备份是指在一个时间点捕获整个数据集结构。如果数据集存储在单个NetApp FlexVol卷中、则此过程非常简单；可以随时创建Snapshot。如果数据集跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</p>
+</div>
+<div class="paragraph">
+<p>当备份点恢复足以满足要求时、主要使用崩溃状态一致的备份。当需要更精细的恢复时、通常需要应用程序一致的备份。</p>
+</div>
+<div class="paragraph">
+<p>"应用程序一致"中的"一致"一词通常用词不当。例如、将Oracle数据库置于备份模式称为应用程序一致的备份、但数据不会以任何方式保持一致或处于静态。数据在整个备份过程中持续更改。相比之下、大多数MySQL和Microsoft SQL Server备份确实会在执行备份之前将数据置于静噪状态。VMware可能会使某些文件保持一致、也可能不会使其保持一致。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="一致性组">一致性组</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>术语"一致性组"是指存储阵列能够将多个存储资源作为一个映像进行管理。例如、一个数据库可能包含10个LUN。阵列必须能够以一致的方式备份、还原和复制这10个LUN。如果LUN的映像在备份时不一致、则无法还原。复制这10个LUN要求所有副本之间完全同步。</p>
+</div>
+<div class="paragraph">
+<p>在讨论ONTAP时、不经常使用术语"一致性组"、因为一致性一直是ONTAP中卷和聚合架构的基本功能。许多其他存储阵列将LUN或文件系统作为单独的单元进行管理。然后、可以选择将其配置为"一致性组"以实现数据保护、但这是配置中的一个额外步骤。</p>
+</div>
+<div class="paragraph">
+<p>ONTAP始终能够捕获一致的本地和复制数据映像。虽然ONTAP系统上的各种卷通常不会正式描述为一致性组、但它们就是一致性组。该卷的快照是一致性组映像、该快照的还原是一致性组还原、SnapMirror和SnapVault均提供一致性组复制。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="一致性组快照">一致性组快照</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一致性组快照(CG快照)是基本ONTAP快照技术的扩展。标准快照操作会为单个卷中的所有数据创建一致的映像、但有时需要在多个卷甚至多个存储系统之间创建一组一致的快照。这样就会生成一组快照、这些快照的使用方式与仅包含一个卷的快照相同。它们可用于本地数据恢复、为灾难恢复目的进行复制或作为一个一致的单元进行克隆。</p>
+</div>
+<div class="paragraph">
+<p>已知的最大CG-Snapsh图 用途是用于大小约为1 PB且跨越12个控制器的数据库环境。在此系统上创建的CG快照已用于备份、恢复和克隆。</p>
+</div>
+<div class="paragraph">
+<p>大多数情况下、如果数据集跨越多个卷且必须保留写入顺序、则选定管理软件会自动使用CG快照。在这种情况下、无需了解CG快照的技术详细信息。但是、在某些情况下、复杂的数据保护要求需要对数据保护和复制过程进行详细控制。可以选择自动化工作流或使用自定义脚本来调用CG-Snapshot API。要了解cG-Snapshot的最佳选项和角色、需要对该技术进行更详细的说明。</p>
+</div>
+<div class="paragraph">
+<p>创建一组CG快照的过程分为两步：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>在所有目标卷上建立写入隔离。</p>
+</li>
+<li>
+<p>在隔离状态下创建这些卷的快照。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>写入隔离是按序列建立的。这意味着、在多个卷之间设置隔离过程时、写入I/O会冻结在序列中的第一个卷上、因为它会继续提交到稍后显示的卷。最初、这可能看起来违反了保留写入顺序的要求、但只有在主机上异步发出的适用场景I/O、而不依赖于任何其他写入。</p>
+</div>
+<div class="paragraph">
+<p>例如、数据库可能会对大量异步数据文件更新进行问题描述、并允许操作系统重新排列I/O、然后根据自己的计划程序配置完成这些更新。无法保证此类I/O的顺序、因为应用程序和操作系统已释放保留写入顺序的要求。</p>
+</div>
+<div class="paragraph">
+<p>作为一个计数器示例、大多数数据库日志记录活动都是同步的。在确认I/O并保留这些写入顺序之前、数据库不会继续进行日志写入。如果日志I/O到达隔离的卷、则不会进行确认、应用程序会阻止进一步写入。同样、文件系统元数据I/O通常是同步的。例如、文件删除操作不能丢失。如果带有xfs文件系统的操作系统删除了某个文件、而更新了xfs文件系统元数据以删除对该文件的引用的I/O则会登录到隔离的卷上、则文件系统活动将暂停。这样可以保证CG快照操作期间文件系统的完整性。</p>
+</div>
+<div class="paragraph">
+<p>在目标卷之间设置写入隔离后、这些卷便可创建快照了。无需同时创建快照、因为从依赖写入的角度来看、卷的状态是冻结的。为了防止创建CG快照的应用程序出现缺陷、初始写入隔离包括一个可配置的超时时间、在此超时时间内、ONTAP会自动释放隔离并在定义的秒数后恢复写入处理。如果所有快照都是在超时期限到期之前创建的、则生成的一组快照是有效的一致性组。</p>
+</div>
+<div class="sect2">
+<h3 id="从属写入顺序">从属写入顺序</h3>
+<div class="paragraph">
+<p>从技术角度来看、一致性组的关键在于保留写入顺序、尤其是依赖写入顺序。例如、向10个LUN写入数据的数据库会同时向所有LUN写入数据。许多写入操作是异步发出的、这意味着它们的完成顺序并不重要、实际完成顺序会因操作系统和网络行为而异。</p>
+</div>
+<div class="paragraph">
+<p>在数据库继续执行其他写入操作之前、磁盘上必须存在某些写入操作。这些关键写入操作称为依赖写入。后续写入I/O取决于磁盘上是否存在这些写入。对这10个LUN执行任何快照、恢复或复制操作都必须确保依赖写入顺序得到保证。文件系统更新是依赖写入顺序写入的另一个示例。必须保留文件系统更改的顺序、否则整个文件系统可能会损坏。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="战略">战略</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>基于快照的备份有两种主要方法：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>崩溃状态一致的备份</p>
+</li>
+<li>
+<p>受Snapshot保护的热备份</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>崩溃状态一致的数据库备份是指在一个时间点捕获整个数据库结构、包括数据文件、重做日志和控制文件。如果数据库存储在单个NetApp FlexVol卷中、则此过程非常简单；可以随时创建Snapshot。如果数据库跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</p>
+</div>
+<div class="paragraph">
+<p>崩溃状态一致的Snapshot备份主要在备份点恢复已足够时使用。在某些情况下、可以应用归档日志、但在需要更精细的时间点恢复时、最好使用联机备份。</p>
+</div>
+<div class="paragraph">
+<p>基于快照的联机备份的基本操作步骤如下所示：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>将数据库放置在中 <code>backup</code> 模式。</p>
+</li>
+<li>
+<p>为托管数据文件的所有卷创建快照。</p>
+</li>
+<li>
+<p>退出 <code>backup</code> 模式。</p>
+</li>
+<li>
+<p>运行命令 <code>alter system archive log current</code> 强制日志归档。</p>
+</li>
+<li>
+<p>为托管归档日志的所有卷创建快照。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>此操作步骤将生成一组快照、其中包含处于备份模式的数据文件以及处于备份模式时生成的关键归档日志。这是恢复数据库的两项要求。为方便起见、还应保护控制文件等文件、但唯一的绝对要求是保护数据文件和归档日志。</p>
+</div>
+<div class="paragraph">
+<p>虽然不同的客户可能有非常不同的策略、但几乎所有这些策略最终都基于下面所述的相同原则。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="基于snapshot的恢复">基于Snapshot的恢复</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在为Oracle数据库设计卷布局时、首先要决定是否使用基于卷的NetApp SnapRestore (VBSR)技术。</p>
+</div>
+<div class="paragraph">
+<p>基于卷的SnapRestore可以将卷几乎即时还原到较早的时间点。由于卷上的所有数据均已还原、因此VBSR可能并不适用于所有使用情形。例如、如果整个数据库(包括数据文件、重做日志和归档日志)存储在单个卷上、而此卷通过VBSR还原、则数据会丢失、因为较新的归档日志和重做数据会被丢弃。</p>
+</div>
+<div class="paragraph">
+<p>还原不需要VBSR。许多数据库都可以通过使用基于文件的单文件文件系统(Single File SnapRestore、SFSR)进行还原、或者只需将文件从快照复制回活动文件系统即可。</p>
+</div>
+<div class="paragraph">
+<p>当数据库非常大或必须尽快恢复时、最好使用VBSR、而使用VBSR需要隔离数据文件。在NFS环境中、给定数据库的数据文件必须存储在未受任何其他类型文件污染的专用卷中。在SAN环境中、数据文件必须存储在专用FlexVol卷上的专用LUN中。如果使用卷管理器(包括Oracle自动存储管理[ASM])、则磁盘组还必须专用于数据文件。</p>
+</div>
+<div class="paragraph">
+<p>通过以这种方式隔离数据文件、可以将其还原到早期状态、而不会损坏其他文件系统。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="snapshot-预留">Snapshot 预留</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>对于SAN环境中包含Oracle数据的每个卷、 <code>percent-snapshot-space</code> 应设置为零、因为在LUN环境中为快照预留空间没有用处。如果预留百分比设置为100、则包含LUN的卷的快照需要该卷中具有足够的可用空间(不包括快照预留)来吸收所有数据的100%周转率。如果预留百分比设置为较低的值、则所需的可用空间量相应较少、但始终不包括Snapshot预留。这意味着会浪费LUN环境中的快照预留空间。</p>
+</div>
+<div class="paragraph">
+<p>在NFS环境中、有两种选择：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>设置 <code>percent-snapshot-space</code> 基于预期的Snapshot空间消耗。</p>
+</li>
+<li>
+<p>设置 <code>percent-snapshot-space</code> 将活动空间和快照空间占用情况统一置零并进行管理。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>使用第一个选项时、 <code>percent-snapshot-space</code> 设置为非零值、通常约为20%。然后、此空间将对用户隐藏。但是、此值不会对利用率造成限制。如果预留百分比为20%的数据库的周转率为30%、则快照空间可能会超出预留百分比的界限并占用未预留空间。</p>
+</div>
+<div class="paragraph">
+<p>将预留设置为20%这样的值的主要优势是、验证某些空间始终可用于快照。例如、预留为20%的1 TB卷仅允许数据库管理员(Database Administrator、DBA)存储800 GB数据。此配置可确保至少为快照占用200 GB的空间。</p>
+</div>
+<div class="paragraph">
+<p>时间 <code>percent-snapshot-space</code> 设置为零时、卷中的所有空间均可供最终用户使用、从而提高可见性。数据库管理员必须了解、如果发现1 TB卷利用快照、则这1 TB空间将在活动数据和Snapshot周转率之间共享。</p>
+</div>
+<div class="paragraph">
+<p>最终用户之间没有明确的首选方案一和备选方案二。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ontap和第三方快照">ONTAP和第三方快照</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Oracle文档ID 604683.1介绍了第三方快照支持的要求以及可用于备份和还原操作的多个选项。</p>
+</div>
+<div class="paragraph">
+<p>第三方供应商必须保证公司的快照符合以下要求：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>快照必须与Oracle建议的还原和恢复操作集成。</p>
+</li>
+<li>
+<p>快照必须在快照点保持数据库崩溃状态一致。</p>
+</li>
+<li>
+<p>系统会为快照中的每个文件保留写入顺序。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ONTAP和NetApp Oracle管理产品符合这些要求。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  
+  <!-- Start Page Toolbar -->
+<div id="ie-right-navbar-collapse" class="close">
+  <img id="navbar-expand" class="ie-searchbox-icon" src="/zh-cn/ontap-apps-dbs/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-right-navbar" class="open">
+  <div id="right-navbar-collapse">
+    <img src="/zh-cn/ontap-apps-dbs/images/double_arrow.svg" alt="" />
+  </div>
+  <div class="page-nav-container">
+    <nav class="page-nav-fixed">
+      <div class="page-nav-title">在本页面中</div>
+      <div class="page-nav-links">
+        <ul class="page-nav-inner" id="page-menu"></ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<script>
+  resizeContent();
+  function setRightBarHeight() {
+    var h = 0;
+
+    // header 1
+    h += PXinViewport($('.n-footer'));
+    h += PXinViewport($('#ie-new-header'));
+
+    if ($('#ie-right-navbar').length) {
+      $('#ie-right-navbar').css({ height: `calc(100vh - ${h}px)` });
+    }
+    if ($('.page-nav-links').length) {
+      h += 98;
+      $('.page-nav-links').css({ height: `calc(100vh - ${h}px)` });
+    }
+  }
+
+  $(document).ready(function () {
+    // PAGE NAV - Click
+    const MASTHEAD_OFFSET = 65;
+    const SECTIONS = $("main h2, main h3");
+    let calculateActiveSection = false;
+    setTimeout(() => {
+      calculateActiveSection = true;
+    }, 100)
+
+    $(".page-nav__link").click(function (event) {
+      calculateActiveSection = false;
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      var target = $(event.target);
+      target.addClass('page-nav__link--active');
+      location.hash = event.target.hash;
+      setTimeout(() => {
+        calculateActiveSection = true;
+      }, 100)
+
+    });
+
+    // PAGE NAV - Scroll
+    $(window).on('resize scroll', function () {
+      if (calculateActiveSection) {
+        var activeSection = getActiveSection(SECTIONS, MASTHEAD_OFFSET);
+        if (activeSection) {
+          var activeHref = $(activeSection).attr('id');
+          $(".page-nav__link").removeClass('page-nav__link--active');
+          $("#page-menu a[href=#" + activeHref + "]").addClass('page-nav__link--active');
+          if (location.hash != "#" + activeHref) {
+            if (history.replaceState) {
+              history.replaceState(null, null, "#" + activeHref);
+            }
+          }
+        }
+      }
+    });
+
+    $(".n-pdf-button").click(function () {
+      $(this).toggleClass("active");
+    });
+
+    $.fn.isVisibleAndInViewport = function () {
+      var elementTop = $(this).offset().top;
+      var elementBottom = elementTop + $(this).outerHeight();
+
+      var viewportTop = $(window).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+
+      return elementBottom > viewportTop && elementTop < viewportBottom && $(this).is(":visible");
+    };
+
+
+    $(window).on('resize scroll', function () {
+      setRightBarHeight();
+    });
+
+    $(window).trigger('resize');
+
+
+  });
+
+  $("#right-navbar-collapse").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 350, function () {
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+    });
+    $(".ie-content-pane").animate({ width: (width + rightNavbarWidth) }, 350, function () {
+      resizeContent()
+      setSidebarBottom();
+    })
+
+  });
+  $("#navbar-expand").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 250, function () {
+      $("#ie-right-navbar-collapse").removeClass("open")
+      $("#ie-right-navbar-collapse").addClass("close")
+      $("#ie-right-navbar").removeClass("close")
+      $("#ie-right-navbar").addClass("open")
+      setRightBarHeight();
+      setSidebarBottom();
+    });
+    $(".ie-content-pane").animate({ width: (width - rightNavbarWidth) }, 250, function () {
+      resizeContent()
+    })
+  });
+
+  function navbarResize() {
+    const rightNavbarResized = $("#ie-right-navbar-collapse").hasClass('resized');
+    if (window.innerWidth < 1024) {
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+      $("#ie-right-navbar").removeAttr("style")
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar-collapse").addClass("resized")
+    } else {
+      if (rightNavbarResized) {
+        $('#ie-right-navbar').removeClass('close');
+        $('#ie-right-navbar').addClass('open');
+        $("#ie-right-navbar-collapse").removeClass("resized")
+        $("#ie-right-navbar-collapse").removeClass("open")
+        $("#ie-right-navbar-collapse").addClass("close")
+      }
+    }
+    resizeContent()
+  }
+  navbarResize();
+  $(window).on('resize load', function () {
+    navbarResize()
+  });
+
+  function getActiveSection(sections, offset) {
+    var scrollPosition = $(window).scrollTop() + offset + 5;
+    var activeSection;
+    for (var i = 0; i < sections.length; i++) {
+      var el = $(sections[i]);
+      var activePosition = el.offset().top;
+      if (activePosition > scrollPosition) {
+        break;
+      }
+
+      activeSection = sections[i];
+    }
+
+    return activeSection;
+  }
+
+  $("a[href*=#]:not([href=#])").click(function () {
+    setTimeout(() => {
+      $(window).trigger('scroll');
+    }, 105)
+  })
+
+  const hashOnLoad = location.href.split("#")[1];
+  setTimeout(function () {
+    if (hashOnLoad) {
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      $("#page-menu a[href=#" + hashOnLoad + "]").addClass('page-nav__link--active');
+    }
+  }, 100)
+
+</script>
+
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+        <div class="n-footer__left">
+          <li class="n-footer__copyright-link">
+                    <a href="https://www.netapp.com/company/legal/copyright/">© 2024 NetApp, Inc.</a>
+          </li>
+        </div>
+        <div class="n-footer__center">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">使用条款</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">隐私策略</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Cookie 政策</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Cookie 设置</a>
+            </li>
+          </ul>
+       </div>
+        <div class="n-footer__right">
+              <li class="n-footer__copyright-link">
+                <a target="_self" href="javascript:netapp_mailto()">请发送有关此页面的反馈</a>
+              </li>
+        </div>
+     </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/zh-cn/ontap-apps-dbs/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/zh-cn/ontap-apps-dbs/js/prism.js'></script>
+      <script type="text/javascript" src='/zh-cn/ontap-apps-dbs/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/zh-cn/ontap-apps-dbs/js/ie-tabbed-blocks.js'></script>
+    <script src='/zh-cn/ontap-apps-dbs/js/ie-sidebar.js'></script>
+  </body>
+
+</html>
