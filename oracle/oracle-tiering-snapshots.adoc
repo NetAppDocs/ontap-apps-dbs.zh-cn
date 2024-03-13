@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-tiering-snapshots.html 
 keywords: tiering, fabricpool 
-summary: Oracle快照层 
+summary: Oracle和FabricPool快照层 
 ---
-= Oracle快照层
+= 采用FabricPool快照层的Oracle
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

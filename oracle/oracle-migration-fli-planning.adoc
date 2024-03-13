@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-migration-fli-planning.html 
 keywords: migration, oracle, fli 
-summary: 准备ONTAP以进行FLI迁移 
+summary: 使用FLI迁移Oracle—规划 
 ---
-= FLI规划—Oracle
+= 使用FLI迁移Oracle—规划
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

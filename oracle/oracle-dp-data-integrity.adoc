@@ -2,14 +2,14 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dp-data-integrity.html 
 keywords: checksums, data integrity 
-summary: 校验和和和和Oracle数据保护 
+summary: 校验和和和和Oracle数据库完整性 
 ---
-= 校验和和和和Oracle数据完整性
+= 校验和和和和Oracle数据库完整性
 :allow-uri-read: 
 
 
 [role="lead"]
-NetApp经常遇到的一个问题是如何确保Oracle数据库的数据完整性。
+ONTAP及其支持的协议包括多项功能、可保护Oracle数据库完整性、包括空闲数据和通过网络传输的数据。
 
 ONTAP中的逻辑数据保护包括三个关键要求：
 

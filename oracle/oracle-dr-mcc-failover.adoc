@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-failover.html 
 keywords: Metrocluster, mcc, MCC-IP 
-summary: 采用MetroCluster的Oracle 
+summary: 使用MetroCluster进行Oracle数据库故障转移 
 ---
-= 使用MetroCluster进行Oracle故障转移
+= 使用MetroCluster进行Oracle数据库故障转移
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -13,9 +13,7 @@ summary: 采用MetroCluster的Oracle
 :imagesdir: ../media/
 
 
-[role="lead"]
-使用MetroCluster并不一定会增加或更改企业级应用程序和数据库的任何最佳操作实践。
-
+ Metrocluster is an ONTAP feature that can protect your Oracle databases with RPO=0 synchronous mirroring across sites, and it scales up to support hundreds of databases on a single MetroCluster system. It's also simple to use. The use of MetroCluster does not necessarily add to or change any best practices for operating a enterprise applications and databases.
 通常的最佳实践仍然适用、如果您的需求仅需要RPO = 0数据保护、则MetroCluster可以满足该需求。但是、大多数客户使用MetroCluster不仅可以实现RROT=0的数据保护、还可以在灾难情形下提高RTO、并在站点维护活动中提供透明的故障转移。
 
 

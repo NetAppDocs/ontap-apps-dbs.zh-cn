@@ -117,20 +117,12 @@
   <block id="6a594ec6f0bb742c1d2b0f631cf65ba1" category="paragraph">但是、在现代操作系统中、禁用任何这些TCP功能通常不会带来明显的优势、同时还可能会损害性能。在虚拟化网络环境中、性能可能会受到损害、因为要高效处理数据包丢失和网络质量变化、需要使用这些功能。</block>
   <block id="cdc44d05b1633e8a8c7835010c423dd6" category="admonition">*TCP NetApp建议*在主机上启用TCP时间戳、SACK和TCP窗口缩放，在任何当前操作系统中，所有这三个参数都应默认为打开。</block>
   <block id="72a921ac9177188a9be32ec711fc15d8" category="doc">路径访问</block>
-  <block id="544c599da087dba677a820c3df344503" category="paragraph">SnapMirror业务连续性(SM-BC)本质上是SAN的一项增强型SnapMirror功能、允许主机从托管LUN的系统以及托管其副本的系统访问LUN。</block>
-  <block id="6139cdabb39d5ceac18a60642497c6a7" category="paragraph">SM-BC和SnapMirror Sync (SM-S)共享一个复制引擎、但是SM-BC还包括一些附加功能、例如、企业级应用程序的透明应用程序故障转移和故障恢复。</block>
   <block id="a73743f15de974052b0640c60f489d90" category="paragraph">在实践中、它的工作原理与粒度版本的MetroCluster类似、它可以为各个工作负载启用选择性粒度RPO = 0同步复制。低级别的路径行为与MetroCluster截然不同、但从主机角度来看、最终结果是类似的。</block>
-  <block id="b3bf85c7b0a17286752c110f404a7035" category="paragraph">SM-BC使主存储阵列和远程存储阵列中的存储设备对主机操作系统可见。路径可通过非对称逻辑单元访问(AANAA)进行管理、ANAA是一种行业标准协议、用于确定存储系统与主机之间的优化路径。</block>
   <block id="cbf0bd4f4096570f567049c984f8c9d3" category="paragraph">访问I/O的最短设备路径被视为主动/优化路径、其余路径被视为主动/非优化路径。</block>
-  <block id="350b9208772a185e0d0943b105765d89" category="paragraph">SM-BC关系位于不同集群上的一对SVM之间。这两个SVM都能够提供数据、但ALUA会优先使用当前拥有LUN所在驱动器所有权的SVM。远程SVM的IO将通过SM-BC互连代理。</block>
   <block id="341d84aa26cb4521474864e04ea2a63b" category="inline-image-macro">错误：缺少图形映像</block>
-  <block id="532db5273379dd6149d97b7ab6e420b6" category="paragraph"><block ref="532db5273379dd6149d97b7ab6e420b6" category="inline-image-macro-rx" type="image"></block></block>
   <block id="b56265ceb6311e42003e668438136a59" category="section-title">同步复制</block>
-  <block id="8159c40a86db91b72e00c2eb5cf751fe" category="paragraph">在正常操作下、远程副本始终是RPO = 0的同步副本、但有一个例外。如果无法复制数据、SM-BC将释放复制数据的要求并恢复提供IO。如果客户认为复制链路丢失是近乎灾难的情况、或者不希望在无法复制数据时业务运营暂停、则首选此选项。</block>
   <block id="0cf4a786acebd750bbfdfc4416c89406" category="section-title">存储硬件</block>
-  <block id="f0fd4c8ee2422af8e335cc85c485ccbf" category="paragraph">与其他存储灾难恢复解决方案不同、SM-BC提供了非对称平台灵活性。每个站点的硬件不必相同。通过此功能、您可以调整用于支持SM-BC的硬件的大小。如果需要支持完整的生产工作负载、远程存储系统可以与主站点完全相同；但是、如果灾难导致I/O减少、则与远程站点上较小的系统相比、可能会更经济高效。</block>
   <block id="ea9f3de5dd21190fbc6bca180b2040f1" category="section-title">ONTAP调解器</block>
-  <block id="b378eb5f2b386494f24a3f09afd8ae1f" category="paragraph">ONTAP调解器是从NetApp支持下载的软件应用程序。调解器可自动执行主站点和远程站点存储集群的故障转移操作。它可以部署在内部或云端托管的小型虚拟机(VM)上。配置后、它将作为第三个站点来监控这两个站点的故障转移场景。</block>
   <block id="0f54fb931dbdeea735f18a8e73f9eab5" category="doc">利用SyncMirror实现数据保护</block>
   <block id="d7023f86951b6c3c009891a468c3effd" category="paragraph">最简单的一个层面是、同步复制意味着、在确认镜像存储之前、必须对镜像存储的两端进行任何更改。例如、如果数据库正在写入日志、或者VMware子系统正在修补、则写入操作绝不能丢失。作为协议级别、在将写入提交到两个站点上的非易失性介质之前、存储系统不得确认写入。只有这样、才能安全地继续操作、而不会丢失数据。</block>
   <block id="eee4f7a4e0ed3a8646a97bcf3e118fb9" category="paragraph">使用同步复制技术是设计和管理同步复制解决方案的第一步。最重要的注意事项是了解在各种计划内和计划外故障情形下可能发生的情况。并非所有同步复制解决方案都能提供相同的功能。如果您需要的解决方案能够实现零恢复点目标(RPO)、即零数据丢失、则必须考虑所有故障情形。特别是、如果由于站点间连接断开而无法进行复制、则会产生什么预期结果？</block>
@@ -250,20 +242,12 @@
   <block id="f322f850d55e87946f9660e4ccb1bbb6" category="list-text">由于ClusterLion仅在MetroCluster完全同步时执行切换、因此不需要NVFAIL。此配置允许站点范围的环境(例如扩展Oracle RAC)保持联机、即使在计划外切换期间也是如此。</block>
   <block id="5c132e05fb0e306f56955603619de359" category="list-text">支持包括光纤连接MetroCluster和MetroCluster IP</block>
   <block id="86bcf99dbc3944da56f06b48074d09f6" category="doc">正常运行</block>
-  <block id="16dd4928055f2caf6f6fb8119ef69bcc" category="paragraph">SM-BC支持两种类型的存储故障转移操作：计划内和计划外、其工作方式略有不同。管理员手动启动计划内故障转移、以便快速切换到远程站点、而计划外故障转移则由第三个站点上的调解器自动启动。计划内故障转移的主要目的是执行增量修补和升级、执行灾难恢复测试或采用一种正式的策略、全年在站点之间切换操作、以证明完全的业务连续性功能。</block>
-  <block id="63d4f976530f4faffa1ecd40fe8843f4" category="paragraph">这些图显示了在正常操作、故障转移和故障恢复操作期间发生的情况。为便于说明、它们显示了一个复制的LUN。在实际的SM-BC配置中、复制基于卷、其中每个卷包含一个或多个LUN、但为了简化操作、卷层已被删除。</block>
   <block id="e48472f7daf781b63506f9e296443027" category="paragraph">在正常操作下、可以从本地副本或远程副本访问LUN。红线表示ALOA公布的优化路径、结果应该是会优先沿着此路径发送IO。</block>
-  <block id="ef1d805ecb3b65664c42a1d32d8120d5" category="paragraph">绿线是一个活动路径、但它会产生较长的延迟、因为该路径上的IO需要通过SM-BC路径传递。额外的延迟取决于用于SM-BC的站点之间的互连速度。</block>
   <block id="e139a585510a502bbf1841cf589f5086" category="section-title">失败</block>
   <block id="7ed516552b652790c92df0bf237264b2" category="paragraph">如果活动镜像副本因计划内或计划外故障转移而变得不可用、则很明显、它将不再可用。但是、远程系统具有同步副本、并且指向远程站点的SAN路径已存在。远程系统能够为该LUN提供IO服务。</block>
-  <block id="89a4933a199f7b0e286c8bcb1606905a" category="paragraph">是否立即使用远程副本取决于SM-BC是在Sync模式还是StrictSync模式下运行。</block>
-  <block id="af43c542f512c4f7dc1b137d5de49d40" category="paragraph"><block ref="af43c542f512c4f7dc1b137d5de49d40" category="inline-image-macro-rx" type="image"></block></block>
   <block id="7388404ef116c3ff812bfd290b094d9e" category="section-title">故障转移</block>
   <block id="997dfe060d2107e84407cfb41e692c54" category="paragraph">故障转移会导致远程副本成为活动副本。这些路径将从"Active/Optimized"(活动/优化)更改为"Active/Optimized"(活动/优化)、并且IO将继续提供服务、而不会丢失数据</block>
-  <block id="52da4ea35ba60090f331eefab5d6c612" category="paragraph"><block ref="52da4ea35ba60090f331eefab5d6c612" category="inline-image-macro-rx" type="image"></block></block>
   <block id="0493d27e20d11e356e53e0a730b0ad08" category="section-title">修复</block>
-  <block id="4f125c91283d9dc1751ad99a7a171420" category="paragraph">源系统恢复使用后、SM-BC可以重新同步复制、但运行另一个方向。现在、配置与起始点基本相同、只是已翻转主动镜像站点。</block>
-  <block id="5c647f57a104a05d7d8b55d089efefbe" category="paragraph"><block ref="5c647f57a104a05d7d8b55d089efefbe" category="inline-image-macro-rx" type="image"></block></block>
   <block id="6d80a3efb80520f47b63dc279e1bea3d" category="section-title">故障恢复</block>
   <block id="d47f47372b9b94d274cceb3638b28845" category="paragraph">如果需要、管理员可以执行故障恢复、并将LUN的活动副本移回原始控制器。</block>
   <block id="0c99cedb6f39d8ac16d5b4c01c162c23" category="paragraph">数据库重做/事务日志记录通常会生成未对齐的I/O、此I/O可能会导致发生原因发出有关ONTAP上LUN错位的警告、从而使人产生误解。</block>
@@ -307,46 +291,31 @@
   <block id="13b992c3d358d786db03341886472c4f" category="paragraph">从较高层面来看、数据压缩是一个数学过程、通过该过程、可以检测数据模式并对其进行编码、从而减少空间需求。相反、重复数据删除会检测实际重复的数据块并删除无关的副本。数据缩减允许多个逻辑数据块共享介质上的同一物理块。</block>
   <block id="786d7cc1b18aa3d9c3e8d3e30865240e" category="paragraph">在全闪存存储系统推出之前、基于阵列的数据压缩的价值有限、因为大多数I/O密集型工作负载都需要大量磁盘轴才能提供可接受的性能。由于驱动器数量众多、存储系统所含容量总是远远超出所需容量。随着固态存储的兴起、这种情况发生了变化。不再需要纯粹为了获得良好的性能而大量过度配置驱动器。存储系统中的驱动器空间可以与实际容量需求相匹配。</block>
   <block id="b207c460d31fea9e1cfab71057e8152c" category="paragraph">与旋转驱动器相比、固态驱动器(SSD)的IOPS功能提高几乎始终可以节省成本、但数据压缩可以通过增加固态介质的有效容量来进一步节省成本。</block>
-  <block id="bd6c983943da8bf0ead08c643f0e75f3" category="paragraph">数据压缩方法有多种。许多数据库都具有自己的数据压缩功能、但在客户环境中很少出现这种情况。原因通常是对压缩数据进行*更改*会对性能造成影响、而且许可成本往往很高。最后、还会对数据库操作产生整体性能影响。为执行数据压缩和解压缩的CPU支付较高的每CPU许可证成本毫无意义、而不是实际的数据库工作。更好的选择是将压缩工作负载分流到存储系统。</block>
   <block id="6296c8b7406b90d37edf269f1ea6f6ee" category="section-title">自适应数据压缩</block>
   <block id="1245fef302b5da2c27766d9a98ad358c" category="paragraph">自适应数据压缩已针对企业级工作负载进行了全面测试、未观察到对性能的影响、即使在延迟以微秒为单位的全闪存环境中也是如此。一些客户甚至报告说、使用数据压缩后性能会提高、因为数据会在缓存中保持压缩状态、从而有效地增加了控制器中的可用缓存量。</block>
   <block id="93e0a644c8f1b7f7f378bc071d15d1e9" category="paragraph">ONTAP以4 KB为单位管理物理块。自适应数据压缩使用默认的压缩块大小8 KB、这意味着数据以8 KB单位进行压缩。这与关系数据库最常使用的8 KB块大小匹配。随着将更多数据作为一个单元进行压缩、数据压缩算法的效率也会提高。32 KB压缩块大小比8 KB压缩块单元更节省空间。这确实意味着、使用默认8 KB块大小的自适应数据压缩确实会使效率率略低、但使用更小的数据压缩块大小也会有显著优势。数据库工作负载包含大量覆盖活动。要覆盖经过压缩的32 KB数据块中的8 KB、需要回读整个32 KB逻辑数据、对其进行解压缩、更新所需的8 KB区域、重新压缩、然后将整个32 KB写入驱动器。这对存储系统来说是一项非常昂贵的操作、因此、某些基于较大压缩块大小的竞争存储阵列也会对数据库工作负载的性能造成严重影响。</block>
-  <block id="096cc7f8e7e1861c3ee0269a90fc27e3" category="admonition">自适应数据压缩使用的块大小最多可以增加到32 KB。这可能会提高存储效率、如果阵列上存储了大量的此类数据、则对于归档日志和备份文件等不会影响存储效率的文件、应考虑使用此方法。在某些情况下、使用16 KB或32 KB块大小的活动数据库也可以通过增加要匹配的自适应数据压缩的块大小来受益。请咨询NetApp或合作伙伴代表、了解这是否适合您的工作负载。</block>
-  <block id="f291779c724993ded5e79421d88f3e55" category="admonition">在流式备份目标上、不应同时使用大于8 KB的数据压缩块大小和重复数据删除。原因是、对备份的数据所做的微小更改会影响32 KB数据压缩窗口。如果窗口发生变化、则生成的压缩数据会在整个文件中有所不同。重复数据删除在数据压缩后进行、这意味着重复数据删除引擎对每个压缩备份的看法不同。如果需要对流式备份(例如Oracle RMAN)进行重复数据删除、则只应使用8 KB块自适应数据压缩。最好使用自适应数据压缩、因为它的块大小较小、不会影响重复数据删除的效率。出于类似的原因、主机端压缩也会影响重复数据删除效率。</block>
   <block id="1f9367b7afff301ee24188d35050ae0a" category="section-title">对温度敏感的存储效率</block>
   <block id="78aa8c12abb3bf9f61a08df0f9b403de" category="paragraph">温度敏感型存储效率(TSSE)在ONTAP 9.8及更高版本中提供、它依靠块访问热图来识别不常访问的块并以更高的效率对其进行压缩。</block>
   <block id="02e44d620def629a6c145ccd0d9a0fd3" category="section-title">数据压缩对齐</block>
   <block id="3b6e6c232a02ab9c64199eb9efae012c" category="paragraph">数据库环境中的自适应数据压缩需要在一定程度上考虑数据压缩块对齐问题。对于随机覆盖非常特定的块的数据来说、这样做只是一个问题。这种方法在概念上类似于整体文件系统对齐、即文件系统的起点必须与4 k设备边界对齐、文件系统的块大小必须是4 k的倍数。</block>
-  <block id="327a36f7ca539411197c2f867b501719" category="paragraph">例如、只有当8 KB写入文件与文件系统本身内的8 KB边界对齐时、才会对其进行压缩。这一点意味着它必须位于文件的前8 KB、文件的后8 KB、依此类推。RMAN备份或归档日志等数据是跨多个块按顺序写入的操作、所有这些块都会进行压缩。因此、无需考虑对齐。唯一关注的I/O模式是随机覆盖文件。</block>
   <block id="1d1a594959ec615f56516f5d0f5e8ddb" category="section-title">NFS</block>
-  <block id="8dae8f7054353dae17cd9da8deb0e091" category="paragraph">使用NFS时、文件I/O会对齐。文件的每个块都会相对于文件开头对齐。</block>
   <block id="62a0282d39568be094470486eaf70c4f" category="section-title">SAN</block>
-  <block id="b0762e9957c8485f911e57bfd027eddb" category="paragraph">SAN环境要求数据与8 KB边界对齐、以实现最佳数据压缩。SAN对齐有两个方面：LUN和文件系统。LUN必须配置为整个驱动器设备(无分区)或与8 KB边界对齐的分区。</block>
-  <block id="ad16b6d5634739ef4ceb795c5beea659" category="admonition">有关数据压缩与预留百分比之间交互的说明、请参见有关精简配置的章节。</block>
   <block id="14c3c56ff2a98d1a9c47b63a917f67a3" category="section-title">数据缩减</block>
-  <block id="546168bb7b68da66be7b6c0e60a23460" category="paragraph">数据缩减是ONTAP中推出的一项技术、可提高数据压缩效率。如前文所述、自适应数据压缩本身最多可节省2：1的空间、因为它仅限于在4 KB WAFL块中存储8 KB I/O。块大小越大、压缩方法的效率越高。但是、它们不适用于受到小块覆盖的数据。解压缩32 KB数据单元、更新8 KB部分、重新压缩以及回写驱动器会产生开销。</block>
   <block id="0b01f66d49b9df153ee76048de44f6eb" category="paragraph">数据缩减的工作原理是、允许将多个逻辑块存储在物理块中。例如、具有高度可压缩数据(例如文本或部分全满块)的数据库可以从8 KB压缩到1 KB。如果不进行数据缩减、这1 KB的数据仍会占用整个4 KB块。实时数据缩减允许将1 KB的压缩数据与其他压缩数据一起存储在仅1 KB的物理空间中。它不是一种压缩技术；它只是一种在驱动器上分配空间的更高效的方式、因此不会产生任何可检测的性能影响。</block>
-  <block id="07b153ed9b6a6f9f334f2ad1fe94651e" category="paragraph">节省的资金数额各不相同。已压缩或加密的数据通常无法进一步压缩、因此、数据集无法从数据缩减中受益。新初始化的Oracle数据文件包含的块元数据和零数略多于块元数据和零、数据压缩率高达80：1。这创造了极其广泛的可能性。</block>
   <block id="83f45cad5e6f535ff10e564a526baad0" category="section-title">重复数据删除</block>
   <block id="f591ef30da06841378ee7f595e63a93c" category="paragraph">重复数据删除是指从数据集中删除重复的块大小。例如、如果10个不同文件中存在相同的4 KB块、则重复数据删除会将所有10个文件中的4 KB块重定向到相同的4 KB物理块。结果是、这些数据的效率将提高10：1。</block>
   <block id="699c85c5df1985b2af588f9e6c1ad353" category="paragraph">VMware子系统启动LUN等数据的重复数据删除效果通常非常好、因为它们包含同一操作系统文件的多个副本。我们观察到的效率为100：1甚至更高。</block>
-  <block id="c3ed34b88ac0b8efff210a99f19a4b9b" category="paragraph">某些数据不包含重复数据。例如、Oracle块包含数据库全局唯一的标头和几乎唯一的尾部。因此、对Oracle数据库进行重复数据删除很少能节省超过1%的空间。</block>
   <block id="9653a3d4907877aae00bb7d39eeec66d" category="paragraph">在少数情况下、使用16 KB和大型块的数据库可节省多达15%的空间。每个块的初始4 KB包含全局唯一标头、而最后4 KB块包含接近唯一的尾部。内部块是重复数据删除的候选数据、但实际上、这几乎完全是由于对置零数据进行重复数据删除。</block>
-  <block id="89d6ec0df0a54d3cdcc8f0573a6b37c5" category="paragraph">许多争用资源的阵列都声称、基于数据库被复制多次的假设、可以对Oracle数据库进行重复数据删除。在这方面、也可以使用NetApp重复数据删除、但ONTAP提供了一个更好的选择：NetApp FlexClone技术。最终结果是相同的；会为一个Oracle数据库创建多个副本、这些副本共享大多数底层物理块。与花时间复制数据文件并对其进行重复数据删除相比、使用FlexClone的效率要高得多。实际上、它是无重复数据删除、而不是重复数据删除、因为从一开始就不会创建重复数据。</block>
   <block id="32aeb47267cb2045610b468115f3ae0e" category="section-title">效率和精简配置</block>
   <block id="3381946611f34fb44ad8a38a0c44e0a8" category="paragraph">效率功能是精简配置的一种形式。例如、占用100 GB卷的100 GB LUN可能会压缩到50 GB。由于卷仍为100 GB、因此尚未实现实际节省。必须先减小卷大小、以便节省的空间可用于系统上的其他位置。如果稍后更改100 GB LUN会导致数据的可压缩性降低、则LUN大小会增大、卷可能会填满。</block>
-  <block id="20132d08f816a6401f40a29feb68df8d" category="paragraph">强烈建议使用精简配置、因为它可以简化管理、同时显著提高可用容量并节省相关成本。原因很简单—Oracle环境通常包含大量空空间、大量卷和LUN以及可压缩数据。厚配置会为卷和LUN预留存储空间、以防它们最终达到100%全满并包含100%不可压缩数据。这种情况不大可能发生。通过精简配置、可以回收这些空间并将其用于其他位置、并可以基于存储系统本身进行容量管理、而不是基于许多较小的卷和LUN。</block>
   <block id="38ef8b6f2fc332958c293d93c61d7756" category="paragraph">有些客户更喜欢对特定工作负载使用厚配置、或者通常根据既定的运营和采购实践使用厚配置。</block>
   <block id="f8ea8eaa5ca0e58c6a43ec0117b7bd8d" category="paragraph">*注意：*如果卷配置厚配置、则必须小心操作、以便完全禁用该卷的所有效率功能、包括使用解压缩和删除重复数据删除<block ref="3cfeff511a11b8c5f54ce9749a719a58" prefix=" " category="inline-code"></block> 命令：此卷不应显示在中<block ref="df899f2d908ec33afe1d01ee26b3dd47" prefix=" " category="inline-code"></block> 输出。如果配置了效率功能、则仍会为卷部分配置效率功能。因此、覆盖保证的工作方式有所不同、这会增加配置忽略发生原因卷以意外用尽空间的可能性、从而导致数据库I/O错误。</block>
   <block id="0e7c78164adb6d4650ea685a79d8e99e" category="section-title">效率最佳实践</block>
-  <block id="d67dd6ae62908b7781805cf297fa8d87" category="paragraph">NetApp针对ONTAP 9及更高版本提供了以下建议。对于ONTAP 9之前的ONTAP版本、请联系您的NetApp代表。</block>
   <block id="ec499ad25fa5a765ba43ec2c87819623" category="section-title">AFF默认值</block>
-  <block id="38b7d52fb2d518d07c1c857b20ebbbd2" category="paragraph">在纯闪存AFF系统上运行的ONTAP上创建的卷经过精简配置、并启用了所有实时效率功能。尽管Oracle数据库通常不会从重复数据删除中受益、并且可能包含不可压缩的数据、但默认设置适用于几乎所有工作负载。ONTAP旨在高效处理所有类型的数据和I/O模式、无论它们是否可节省空间。只有在完全了解原因且有优势的情况下、才应更改默认值。</block>
   <block id="9f7127e69d50bf7b844ff3723b86fbd1" category="section-title">一般建议</block>
   <block id="2c24e4751310e03f119a4df187a3bc08" category="list-text">如果卷和(或) LUN未进行精简配置、则必须禁用所有效率设置、因为使用这些功能不会节省空间、而将厚配置与已启用空间效率相结合会发生原因发生意外行为、包括空间不足错误。</block>
   <block id="4922fe547c351d6a121465da036d478e" category="list-text">如果数据不会被覆盖(例如使用备份或数据库事务日志)、则可以通过在较低的冷却期启用TSSE来提高效率。</block>
   <block id="e75fd383e4106eb78482b18896975daf" category="list-text">某些文件可能包含大量不可压缩数据、例如、在应用程序级别已启用数据压缩时、文件已加密。如果出现上述任一情况、请考虑禁用数据压缩、以便在包含可压缩数据的其他卷上执行更高效的操作。</block>
-  <block id="11845fef1d21077d7b23ce880868b556" category="list-text">不要在数据库备份中同时使用32 KB数据压缩和重复数据删除。请参阅""部分<block ref="57ee2712afc5e59236f86db0537b05dc" category="inline-xref-macro-rx"></block>""以了解详细信息。</block>
   <block id="64d5def835c194cac8afe4fafded756e" category="doc">Policies—本地快照</block>
   <block id="baa596d0db91317fa83739a95649752e" category="paragraph">FabricPool的初始版本针对备份用例。唯一可以分层的块类型是不再与活动文件系统中的数据关联的块。因此、只能将快照数据块移至容量层。当您需要确保性能不会受到影响时、这仍然是最安全的一种层选项。</block>
   <block id="b21eb7f0b67c3e27e915183638bf92cf" category="paragraph">可通过两种方法将非活动快照块分层到容量层。首先是<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block> 策略仅针对快照块。虽然<block ref="9df22f196a33acd0b372fe502de51211" prefix=" " category="inline-code"></block> 策略包括<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block> 块、它还会对活动文件系统中的块进行分层。这可能并不可取。</block>
@@ -826,7 +795,6 @@
   <block id="c840abede1d1bcf78e7b3e30048c08b1" category="paragraph">Microsoft在服务器级别为每个核心(而不是每个实例)授予SQL Server许可证。因此、为了节省许可成本、数据库管理员尝试尽可能多地安装服务器可以处理的SQL Server实例、这可能会导致以后出现重大性能问题。</block>
   <block id="8a77155b45f0f2313c8ebf3d755463e5" category="admonition">*SQL NetApp建议*尽可能选择专用的SQL Server实例，以获得最佳性能。</block>
   <block id="df7423789cebcf51de121abdae4181c3" category="summary">ONTAP和企业级应用程序</block>
-  <block id="6e1c62c6c9ec560b6b6cf47a8a8c83f8" category="summary">使用Solaris在ONTAP上运行Oracle</block>
   <block id="eaf36c98b91893b7f79bd5184a23d377" category="doc">Solaris</block>
   <block id="fb04d97697a77a89d0c3f5c09cd9ba47" category="paragraph">特定于Solaris OS的配置主题。</block>
   <block id="eefc332f1bd0a0aa81d0ce222989294f" category="section-title">Solaris NFS挂载选项</block>
@@ -903,9 +871,7 @@
   <block id="f5aa5b31f0536ddcdb748ae360d91358" category="paragraph">必须在zpool级别对基于ZFS的数据执行基于Snapshot的备份、还原、克隆和归档、并且通常需要多个zpool。zpool类似于LVM磁盘组、应使用相同的规则进行配置。例如、数据库的布局可能最好是将数据文件驻留在上<block ref="f1fb162e58045170396a0ac29d648fa5" prefix=" " category="inline-code"></block> 以及上的归档日志、控制文件和重做日志<block ref="92073f03d18c8eaec3eb5e0908210e1a" prefix=" " category="inline-code"></block>。此方法允许使用标准热备份、其中数据库将置于热备份模式、然后是的快照<block ref="f1fb162e58045170396a0ac29d648fa5" prefix=" " category="inline-code"></block>。然后、数据库将从热备份模式中删除、并强制执行日志归档和的快照<block ref="92073f03d18c8eaec3eb5e0908210e1a" prefix=" " category="inline-code"></block> 已创建。还原操作需要卸载zfs文件系统并使zpool完全脱机、然后执行SnapRestore还原操作。然后、可以将zpool重新联机并恢复数据库。</block>
   <block id="f1110589be196c2310808482067fce1b" category="section-title">filesystemio_options</block>
   <block id="c271ff9f255f2d215054d508448781a3" category="paragraph">Oracle参数<block ref="f1110589be196c2310808482067fce1b" prefix=" " category="inline-code"></block> 与ZFS的工作方式不同。条件<block ref="aef8f91b1e026cc1bb55e8b08c491d35" prefix=" " category="inline-code"></block> 或<block ref="6887bae4cda2d09a283a165c5be3f2b8" prefix=" " category="inline-code"></block> 使用时、写入操作是同步的、并会绕过操作系统缓冲区缓存、但读取操作会由ZFS进行缓冲。此操作会导致性能分析出现困难、因为I/O有时会被ZFS缓存截获并提供服务、从而使存储延迟和总I/O比看起来要小。</block>
-  <block id="22a7d37643562540ddbda52f511fb1fe" category="summary">使用HP-UX在ONTAP上运行Oracle</block>
   <block id="b1fd823d262032e04291313f72be9452" category="doc">HP-UX</block>
-  <block id="5be7e182308e16aee80978c6a5ebe02b" category="paragraph">特定于HP-UX操作系统的配置主题。</block>
   <block id="8ec258cd0b6ab050fc478a415a20f2e9" category="section-title">HP-UX NFS挂载选项</block>
   <block id="7c5876d5737071c64af78562fe375386" category="paragraph">下表列出了单个实例的HP-UX NFS挂载选项。</block>
   <block id="9c9fb3cc18a83e4e46165b5c3d4ce8ef" category="cell">控制文件
@@ -923,8 +889,6 @@
   <block id="6630bbc9a901be0d038b2c39e2faf65d" category="paragraph">对于包含数据文件、重做日志、归档日志和控制文件的文件系统、如果HP-UX版本不支持并发I/O、请使用以下挂载选项：</block>
   <block id="ed37730e0f28a631768a396e7898e197" category="paragraph">如果支持并发I/O (VxFS 5.0.1及更高版本或ServiceGuard Storage Management Suite)、请对包含数据文件、重做日志、归档日志和控制文件的文件系统使用以下挂载选项：</block>
   <block id="f51ddb98d92e83609db075add5fba4d8" category="admonition">参数<block ref="d3cc759510a3aba837fc8efeb2e24b91" prefix=" " category="inline-code"></block> 在VxFS环境中尤其重要。Oracle建议在Oracle 10g R1及更高版本中保持此参数未设置、除非另有明确指示。Oracle 8 KB块大小的默认值为128。如果此参数的值强制设置为16或更低、请删除<block ref="a6b02283cba560dcfdea44af66ec792c" prefix=" " category="inline-code"></block> 挂载选项、因为它可能会损坏顺序I/O性能。此步骤会损害性能的其他方面、仅当的值为时才应执行此步骤<block ref="d3cc759510a3aba837fc8efeb2e24b91" prefix=" " category="inline-code"></block> 必须更改默认值。</block>
-  <block id="ca3fa25943498edb0ee62d0ea286bb7a" category="summary">在ONTAP上使用Linux和ASMlib/ASM筛选器驱动程序的Oracle</block>
-  <block id="d7e9c72be485a5a848f1f7cd15a9a5ba" category="doc">ASMlib和ASM筛选器驱动程序</block>
   <block id="5802d9527a43305e9e1c903bc6b5a721" category="paragraph">特定于使用AFC和ASMlib的Linux操作系统的配置主题</block>
   <block id="2681013be5b0a9063a7ef0a8fe4d31da" category="section-title">ASMlib块大小</block>
   <block id="1943673cc25055e93f0129f2baa8f499" category="paragraph">ASMlib是一个可选的ASM管理库和关联实用程序。其主要价值是能够使用可读标签将LUN或基于NFS的文件标记为ASM资源。</block>
@@ -944,9 +908,6 @@
   <block id="7c329811bcc7bb2f50005da5a3aff250" category="paragraph">最近的Linux内核更改会强制实施发送到多路径设备的I/O大小限制、而AFD不会遵守这些限制。然后、I/O将被拒绝、从而导致LUN路径脱机。因此、无法安装Oracle Grid、配置ASM或创建数据库。</block>
   <block id="926e4b7a2822a39a07f61474b92e9d8c" category="paragraph">解决方案将在多路径.conf文件中为ONTAP LUN手动指定最大传输长度：</block>
   <block id="3d0c741146f1e8e31bc7d07128ca6e0a" category="admonition">即使当前不存在任何问题、如果使用AWAD来确保未来的Linux升级不会出现意外的发生原因问题、则应设置此参数。</block>
-  <block id="72247c591c444399f3d42dffa31b644e" category="summary">使用AIX在ONTAP上运行Oracle</block>
-  <block id="23802d94b756cf69028557bea156ab1a" category="doc">IBM AIX</block>
-  <block id="5b8d4d99cdcb494ca636eb065004b165" category="paragraph">特定于IBM AIX操作系统的配置主题。</block>
   <block id="d99ae60d37a12f766bc2a1f1c228fb4f" category="section-title">并发I/O</block>
   <block id="0f3eb508f611e203aeffa91d5753648a" category="paragraph">要在IBM AIX上实现最佳性能、需要使用并发I/O如果不使用并发I/O、则性能可能会受到限制、因为AIX会执行序列化的原子I/O、从而产生大量开销。</block>
   <block id="ecdc41fc6a2adf7e41e7277e12eeb805" category="paragraph">最初、NetApp建议使用<block ref="4482571a249db31b3abed938e4567a15" prefix=" " category="inline-code"></block> 挂载选项、用于强制在文件系统上使用并发I/O、但此过程存在缺点、不再需要。自AIX 5.2和Oracle 10gR1推出以来、AIX上的Oracle可以打开单个文件以实现并发IO、而不是强制在整个文件系统上执行并发I/O。</block>
@@ -969,12 +930,9 @@
   <block id="0aabf727ab0a83c5f5d078e8b18445e0" category="cell">默认值</block>
   <block id="e1f651debac4f720c13ae930ff3ca14a" category="cell">ORACLE_HOME</block>
   <block id="27a7ffa293f5a4d2a5bb54354486dece" category="paragraph">使用AIX之前<block ref="b7cc91287fc99a8937a55e79376c6f54" prefix=" " category="inline-code"></block> 在任何环境(包括数据库)中、设备都应检查参数<block ref="9d51746070ef554ad4e93a16de4aed0f" prefix=" " category="inline-code"></block>。此参数不是HBA队列深度、而是与各个的SCSI队列深度相关<block ref="66ad66c6ace8456eae4ca6807552e54b" prefix=" " category="inline-code"></block> 可能太低、无法获得良好性能。测试表明、最佳值为64。</block>
-  <block id="6e1dee25b21d0005970053df9e9384ba" category="summary">使用Microsoft Windows在ONTAP上运行Oracle</block>
   <block id="bb79f96acbff544ded541446c9c7c894" category="doc">Microsoft Windows</block>
-  <block id="44959b8c12de9e1107621ee8c0337463" category="paragraph">特定于Microsoft Windows操作系统的配置主题。</block>
   <block id="14ce2582c2080a7f08fe9249f6565f40" category="paragraph">Oracle支持将Microsoft Windows与Direct NFS客户端结合使用。此功能提供了一条实现NFS管理优势的途径、其中包括跨环境查看文件、动态调整卷大小以及利用成本较低的IP协议。有关使用DNFS在Microsoft Windows上安装和配置数据库的信息、请参见Oracle官方文档。没有特别的最佳做法。</block>
   <block id="f854b764258138b512f30be71e1c7908" category="paragraph">为了获得最佳压缩效率、请确保NTFS文件系统使用8K或更大的分配单元。使用4K分配单元(通常为默认分配单元)会对压缩效率产生负面影响。</block>
-  <block id="140def8362bd2cf6a999328e25572cfd" category="summary">使用Linux在ONTAP上运行Oracle</block>
   <block id="edc9f0a5a5d57797bf68e37364743831" category="doc">Linux</block>
   <block id="dfc95ed5e895617bbd0d4b1a8bfba8ca" category="paragraph">特定于Linux操作系统的配置主题。</block>
   <block id="5ecd4a6f4aedfdd45cce80a18b1a7942" category="section-title">插槽表</block>
@@ -1015,28 +973,21 @@
   <block id="dbff1dc161f3f1d61258259b3a0b549c" category="paragraph">a较低<block ref="9434de34302b4f40887a7277cf35a8fc" prefix=" " category="inline-code"></block> 值可以缩短ASM切换到备用故障组所需的时间、但这也会增加在控制器接管等维护活动期间发生不必要故障转移的风险。可以通过仔细监控ASM镜像状态来缓解此风险。如果发生不必要的故障转移、并且重新同步执行速度相对较快、则可以快速重新同步镜像。对于追加信息、请参见有关使用的Oracle软件版本的ASM快速镜像重新同步的Oracle文档。</block>
   <block id="ec0b68df6b5a0fdd6d73ac710b9684da" category="section-title">Linux xfs、ext3和ext4挂载选项</block>
   <block id="278230e4238d02fcb49850454e7d79e0" category="admonition">* NetApp建议*使用默认挂载选项。</block>
-  <block id="17361a1d111a3ff3a45b20c3a1efa11b" category="summary">Oracle和TCP/IP以及以太网配置。</block>
-  <block id="fe586387f0871fa578f77ac2e26e624a" category="doc">Oracle数据库的TCP/IP和以太网配置</block>
   <block id="02a5a4d50c5112bb31ff9c94f5b47ce9" category="paragraph">许多基于ONTAP的Oracle客户使用以太网、即NFS、iSCSI、NVMe/TCP的网络协议、尤其是云。</block>
   <block id="8a1870adbe8a237106c32d72660a9c42" category="summary">Oracle数据库的逻辑接口设计</block>
   <block id="f46a94d438563c03413adfec27c6bfda" category="paragraph">Oracle数据库需要访问存储。逻辑接口(Logical Interface、Logical Interface、Logical Interface)是将Storage Virtual Machine (SVM)连接到网络并进而连接到数据库的网络管道。要确保每个数据库工作负载都有足够的带宽、并且故障转移不会导致存储服务丢失、需要正确的LIF设计。</block>
   <block id="f445528d334d486a14570735705e2223" category="summary">适用于Oracle数据库的FC网络配置</block>
-  <block id="ee955933387c00b282dcfda69005517f" category="doc">适用于Oracle的FC配置</block>
   <block id="92cdde4ecc529b9f9379ed2bdb6aae34" category="paragraph">为Oracle数据库配置FC SAN主要是遵循日常SAN最佳实践。</block>
-  <block id="953369199e3a71ad1ad58bc7d5ad2d9f" category="summary">NetApp ONTAP是一款功能强大的数据管理平台、具有本机功能、包括即时备份、还原和克隆功能、实时数据压缩等效率功能、无中断硬件升级以及从外部存储阵列导入LUN的功能。</block>
   <block id="9eaca569c6f5ca3388f5613da3aa008c" category="doc">基于ONTAP的Oracle数据库</block>
   <block id="528b35962f1679204260ddef6800eece" category="paragraph">ONTAP专为Oracle数据库而设计。几十年来、ONTAP针对关系数据库I/O的独特需求进行了优化、并专门为满足Oracle数据库的需求而创建了多种ONTAP功能、甚至是应Oracle Inc.本身的要求也是如此。</block>
   <block id="c9f8ef2db64ce19b15d2cc98fbd3d24c" category="admonition">本文档将取代以前发布的技术报告_TR-3633：《基于ONTAP的Oracle数据库》；TR-4591：《Oracle数据保护：备份、恢复、复制》；TR-4592：《基于MetroCluster的Oracle》；以及TR-4534：《将Oracle数据库迁移到NetApp存储系统》_</block>
   <block id="b42ad0517ef7394f97178fb9e1de8d78" category="paragraph">除了ONTAP为数据库环境带来价值的多种可能方式之外、还有各种各样的用户要求、包括数据库大小、性能要求和数据保护需求。NetApp存储的已知部署包括从在VMware ESX下运行的大约6、000个数据库的虚拟化环境到当前大小为996 TB且在不断增长的单实例数据仓库等所有内容。因此、在NetApp存储上配置Oracle数据库的明确最佳实践很少。</block>
   <block id="7bf0493f27e81fe4c3740e773e137a48" category="paragraph">在NetApp存储上运行Oracle数据库的要求可通过两种方式来满足。首先、当存在明确的最佳实践时、我们将专门予以说明。概括地说、我们将根据Oracle存储解决方案架构师的特定业务需求来说明他们必须考虑的许多设计注意事项。</block>
   <block id="633d94718c25247da5772ed6f2b244c9" category="summary">Oracle存储迁移简介</block>
-  <block id="6ca08c212e9ec987ce485fd9c7705eff" category="doc">将Oracle数据库迁移到NetApp存储系统</block>
-  <block id="9e099143017b5d9ff9c117de4ac659d7" category="paragraph">利用新存储平台的功能有一个不可避免的要求：必须将数据放置在新存储系统上。</block>
   <block id="08beeb11d62fd51ef2742eae3ee3719f" category="admonition">本文档将取代先前发布的技术报告_TR-4534：《将Oracle数据库迁移到NetApp存储系统》_</block>
   <block id="5f2a4190824fd64be3c8cabeb7dc62ff" category="paragraph">对于新的数据库项目、这不是问题、因为数据库和应用程序环境已构建到位。但是、迁移在业务中断、完成迁移所需的时间、所需的技能组合以及风险最小化方面带来了特殊挑战。</block>
   <block id="a83f1ca5ad00b39773d9e6a26b0e70b2" category="section-title">脚本</block>
   <block id="08293bec81c296b61f4a751175d9caa7" category="paragraph">本文档提供了示例脚本。这些脚本提供了一些示例方法、用于自动执行各个方面的迁移、以降低出现用户错误的几率。这些脚本可以降低对负责迁移的IT人员的总体需求、并加快整个过程。这些脚本全部取自NetApp专业服务和NetApp合作伙伴执行的实际迁移项目。本文档通篇展示了这些参数的用法示例。</block>
-  <block id="b3978e376e381abd116a2ae7938d8a9c" category="summary">FLI Cutover—Oracle</block>
   <block id="c28b52826242c7cdffe5f3ae1e917f61" category="paragraph">由于需要更改FC网络配置、外部LUN导入期间不可避免地会发生某些中断。但是、中断的持续时间不必比重新启动数据库环境并更新FC分区以将主机FC连接从外部LUN切换到ONTAP所需的时间长。</block>
   <block id="a2248459756ffc1877beb9b39c77668b" category="paragraph">此过程可概括如下：</block>
   <block id="c9f77905e39abbada6c73a7a3d5f51f8" category="list-text">将外部LUN上的所有LUN活动置于静噪状态。</block>
@@ -1083,8 +1034,6 @@
   <block id="e8c3dc00e15826e3b77a2d41d7fde92a" category="paragraph">现在LVM和ASM设备已联机且可用、可以重新启动网格服务。</block>
   <block id="934317e45581988a01f54761705ca58a" category="section-title">重新启动数据库</block>
   <block id="41475a737e947d73c674b90e78e246a0" category="paragraph">重新启动网格服务后、可以启动数据库。在尝试启动数据库之前、可能需要等待几分钟、以便ASM服务完全可用。</block>
-  <block id="0b986cf2a434b03b097578ad444e72f0" category="summary">正在完成FLI转换- Oracle</block>
-  <block id="24bd7d2a01571aa270c81d8d9f8370e9" category="doc">FLI完成—Oracle</block>
   <block id="b171714b39ad4102aced4daceef8c678" category="paragraph">从主机角度来看、迁移已完成、但仍会从外部阵列提供I/O、直到删除导入关系为止。</block>
   <block id="f708d001227724fa0a8a3d57aacedb1a" category="paragraph">在删除关系之前、必须确认所有LUN的迁移过程均已完成。</block>
   <block id="85cf20229bc9008553794abdaed507f5" category="section-title">删除导入关系</block>
@@ -1211,7 +1160,6 @@
   <block id="f00c8361a8acc818247282bb6420a8c1" category="list-text">如果遇到错误、导致您无法删除活动日志、请强制切换到下一个日志以释放锁定并强制执行全局检查点。请参见以下此过程的示例。删除位于旧位置的日志文件组2的尝试被拒绝、因为此日志文件中仍有活动数据。</block>
   <block id="5d49a93437a42d2926c8be7eb3c7a56f" category="list-text">日志归档后加上检查点可用于删除日志文件。</block>
   <block id="e3898c187d7edf64fc8e4d4e409fd244" category="list-text">然后从文件系统中删除日志。执行此过程时应格外小心。</block>
-  <block id="eb290dfcb2d35cffcb49a22fd05168b5" category="summary">Oracle迁移规划</block>
   <block id="dacc2a633e9981c9f91e43ac6b59e889" category="paragraph">Oracle数据迁移可在以下三个级别之一进行：数据库、主机或存储阵列。</block>
   <block id="5153193d50d4c628312db2d5bc0132ed" category="paragraph">不同之处在于、整个解决方案的哪个组件负责移动数据：数据库、主机操作系统或存储系统。</block>
   <block id="cc3e73ae592a355b9beb405232d08fe2" category="paragraph">下图显示了一个迁移级别和数据流示例。在数据库级别迁移的情况下、数据会从原始存储系统通过主机层和数据库层移动到新环境中。主机级迁移类似、但数据不会通过应用层、而是使用主机进程写入新位置。最后、对于存储级别迁移、NetApp FAS系统等阵列负责数据移动。</block>
@@ -1249,7 +1197,6 @@
   <block id="f92065612dfd409585ca08d95cc7a4dc" category="paragraph">可以通过创建测试数据文件并将其移动来轻松衡量移动数据文件所需的时间。操作所用时间记录在v$session数据中：</block>
   <block id="78fb69ccdf01155db62828d0bc182b84" category="paragraph">在此示例中、移动的文件为数据文件8、该文件大小为21 GB、需要大约6分钟才能完成迁移。所需时间显然取决于存储系统的功能、存储网络以及迁移时发生的整体数据库活动。</block>
   <block id="593b763e01de37a327966ee1abb3f8a2" category="summary">使用主机端存储堆栈迁移Oracle</block>
-  <block id="174f3246d5f9cdf330404cb6158e67e2" category="doc">Oracle主机数据复制</block>
   <block id="3dc2d5f8d7209bb75e8d67aed68bc5ed" category="paragraph">与数据库级迁移一样、在主机层进行迁移也是一种独立于存储供应商的方法。</block>
   <block id="1686ceaaa0d8fb4f9a8adb5e717b029c" category="paragraph">换言之、有时"只复制文件"是最佳选择。</block>
   <block id="d5732a4ab4c633ceb871cebdbf9ae34f" category="paragraph">虽然这种低技术方法可能看起来过于简单、但它确实具有显著优势、因为无需使用特殊软件、而且在该过程中、原始数据始终保持安全不变。主要限制是、文件复制数据迁移过程会造成系统中断、因为在复制操作开始之前、必须关闭数据库。没有好的方法可以同步文件中的更改、因此、在开始复制之前、必须完全将文件置于静状态。</block>
@@ -1500,8 +1447,6 @@
   <block id="dc818e71a5519d1b99c7e996cf21fd74" category="list-text">*基于副本的过渡(CBT)。*采用CBT的7MTT可在新环境中从现有7-模式系统设置SnapMirror卷。数据同步后、7MTT会编排转换过程。</block>
   <block id="453bbc96e365e25cc2d091dced3565a6" category="list-text">*无副本过渡(CFT)。*采用CFT的7MTT基于现有7-模式磁盘架的原位转换。不会复制任何数据、现有磁盘架可以重复使用。保留现有数据保护和存储效率配置。</block>
   <block id="16262236c3981cb3310b9320b5a67fd0" category="paragraph">这两种方案之间的主要区别在于、无副本过渡是一种大爆炸方法、在这种方法中、连接到原始7-模式HA对的所有磁盘架都必须重新定位到新环境。无法移动部分磁盘架。基于副本的方法允许移动选定卷。此外、无副本过渡的转换窗口可能会更长、因为重新对磁盘架进行转换和转换元数据需要关联。根据现场经验、NetApp建议留出1小时的时间来重新定位磁盘架并重新为其接通网络、而留出15分钟到2小时的时间来进行元数据转换。</block>
-  <block id="c8365c28332d425fd91f2de2e2c22dfb" category="summary">准备ONTAP以进行FLI迁移</block>
-  <block id="25c18537e56595b3e7f3ce78905917ba" category="doc">FLI规划—Oracle</block>
   <block id="f1033948d9d2d14612d27f1808720f12" category="inline-link">TR-4380：《使用外部LUN导入进行SAN迁移》</block>
   <block id="58fc59a248fefa86003ac1867e5bd279" category="paragraph">NetApp中介绍了使用FLI迁移SAN资源的过程<block ref="5abd855dd5d8332b78fa966ac34c0f22" category="inline-link-rx"></block>。</block>
   <block id="795bbfbd054829fad905065087ba2d5a" category="paragraph">从数据库和主机的角度来看、不需要执行任何特殊步骤。更新FC分区并使LUN在ONTAP上可用后、LVM应能够从LUN中读取LVM元数据。此外、卷组已准备就绪、无需执行其他配置步骤。在极少数情况下、环境可能会包含使用先前存储阵列的引用进行硬编码的配置文件。例如、包含的Linux系统<block ref="dd5ff67ba72768d33f75e645aa2b8e56" prefix=" " category="inline-code"></block> 必须更新引用给定设备的WWN的规则、以反映FLI所做的更改。</block>
@@ -1561,8 +1506,6 @@
   <block id="cc7b9a518bb2532f61662a9893248133" category="paragraph">此脚本接受处于挂载模式的数据库的Oracle SID的一个参数、并尝试重放所有当前可用的归档日志。</block>
   <block id="2a5bd3a209a1ed33b81c5306780227ce" category="section-title">重放备用数据库上的日志</block>
   <block id="ea7bebed0b4151a9b28acbde55fc0eb3" category="paragraph">此脚本与前面的脚本相同、只是它是为备用数据库设计的。</block>
-  <block id="109be8945d38cda6c034a22373bdbd3b" category="summary">在FLI迁移后更改SAN协议</block>
-  <block id="b5e65fbdff41aa940dad918d9f7c0b9e" category="doc">FLI协议转换—Oracle</block>
   <block id="2adcfd589637337984e39e94dd14ae33" category="paragraph">更改用于访问LUN的协议是一项常见要求。</block>
   <block id="38fe6838f11a6023172d11d806adbfcf" category="paragraph">在某些情况下、将数据迁移到云是整体战略的一部分。TCP/IP是云协议、从FC更改为iSCSI可以更轻松地迁移到各种云环境。在其他情况下、iSCSI可能是利用IP SAN降低的成本的理想选择。有时、迁移可能会使用不同的协议作为临时措施。例如、如果外部阵列和基于ONTAP的LUN不能同时位于同一HBA上、则可以使用iSCSI LUN足够长的时间来从旧阵列复制数据。从系统中删除旧LUN后、您可以将其转换回FC。</block>
   <block id="832c81bd0db3ad98a3804ff5ce996a58" category="paragraph">以下操作步骤演示了从FC到iSCSI的转换、但总体原则适用于从iSCSI到FC的反向转换。</block>
@@ -1587,36 +1530,27 @@
   <block id="25d811252f87ae85dda97f2ab9dd1f3a" category="section-title">重新启动环境</block>
   <block id="8a9aae851d31dae8baf96171f114955e" category="paragraph">通过重新激活卷组、重新挂载文件系统、重新启动RAC服务等方式重新启动环境。作为预防措施、NetApp建议您在转换过程完成后重新启动服务器、以确保所有配置文件均正确无误、并且所有陈旧设备均已删除。</block>
   <block id="00f4c8378b0bf837cee4b0aed8886f31" category="paragraph">注意：重新启动主机之前、请确保中的所有条目都已启用<block ref="816a3ef77b62ade41c3f936c958aa555" prefix=" " category="inline-code"></block> 此参考迁移的SAN资源已被注释掉。如果未执行此步骤、并且LUN访问出现问题、则可能会导致操作系统无法启动。此问题描述不会损坏数据。但是、启动到救援模式或类似模式并进行更正可能非常不方便<block ref="816a3ef77b62ade41c3f936c958aa555" prefix=" " category="inline-code"></block> 以便可以启动操作系统、以便开始故障排除工作。</block>
-  <block id="7e712b6bec5dd0821f1822121da9f0c6" category="summary">采用QoS的Oracle性能管理</block>
-  <block id="ff8b87ff7571fb54e71c9589f1b886a3" category="doc">Oracle数据库的服务质量</block>
   <block id="08e3cfb3c3dfa08d34bcbbfe07fe5f28" category="paragraph">安全高效地管理多个Oracle数据库需要有效的QoS策略。原因在于现代存储系统的性能不断提高。</block>
   <block id="3408fe4b6e4b2ed9366356f08e3b9ab0" category="summary">Oracle数据库和存储效率</block>
   <block id="151654fbc652cca26707bd7a060073d3" category="doc">Oracle数据库和ONTAP效率功能</block>
   <block id="4564218d346b0ef8263512ebe659337d" category="paragraph">ONTAP空间效率功能针对Oracle数据库进行了优化。在几乎所有情况下、最佳方法都是保留默认值并启用所有效率功能。</block>
   <block id="794c6d3bb54da92d9a4a4022bc5c4e94" category="summary">RAID和Oracle数据库</block>
-  <block id="ead1ce56c368cc12c4f8932e01c92f65" category="doc">Oracle RAID要求</block>
   <block id="e959fe6bb794f67f31a0d4e6bc5d5bf4" category="paragraph">RAID是指使用冗余来保护数据不受驱动器丢失的影响。</block>
   <block id="b60b0e7c75501fe2f322675f2e6da6d7" category="paragraph">在配置用于Oracle数据库和其他企业应用程序的NetApp存储时、有时会出现有关RAID级别的问题。有关存储阵列配置的许多传统Oracle最佳实践都包含有关使用RAID镜像和(或)避免使用某些类型的RAID的警告。尽管这些来源可以提供有效的支持、但它们并不适用于RAID 4以及ONTAP中使用的NetApp RAID DP和RAID-TEC技术。</block>
   <block id="6de6bcceac7c1a53ecb774d42b8d5c9a" category="summary">Oracle和ONTAP精简配置</block>
-  <block id="e04c5c8668870edf8392b07169f96644" category="doc">使用Oracle进行精简配置</block>
   <block id="26c71bfc140fc9f2d56f83f7aedffd53" category="paragraph">对Oracle数据库进行精简配置需要仔细规划、因为这样会导致在存储系统上配置的空间超过实际可用的空间。这是非常值得的努力、因为如果操作正确、可以显著节省成本并提高易管理性。</block>
   <block id="c9a6446e7a1a2aa2d3d06c76b3dd02ae" category="summary">为Oracle数据库配置SVM</block>
   <block id="eaa6380760494a867d1be23523aaba3e" category="doc">Oracle数据库和Storage Virtual Machine</block>
   <block id="ffa2dec61afa63c15c9906328e62e2e8" category="paragraph">Oracle数据库存储管理集中在Storage Virtual Machine (SVM)上</block>
   <block id="ba0fd7b6bfa61ad7f7ad5326a0934d01" category="summary">要确保Oracle数据库操作不会被这些操作中断、需要了解存储接管和切换功能。此外、如果使用不当、接管和切换操作使用的参数可能会影响数据完整性。</block>
-  <block id="75f921b4326183319e82bc907e80cc42" category="doc">Oracle和ONTAP控制器故障转移/切换</block>
   <block id="999548558d2844d78a3b5f9186c231a4" category="summary">数据库和ONTAP存储容量和可用空间</block>
-  <block id="3736e7d9912dca1541f3d86788010d1d" category="doc">Oracle和存储容量管理</block>
   <block id="360612d74cdd78953036946ec943f795" category="paragraph">要使用可预测、可管理的高性能企业存储管理数据库或其他企业应用程序、需要在驱动器上留出一些可用空间来管理数据和元数据。所需的可用空间量取决于使用的驱动器类型和业务流程。</block>
-  <block id="655dc175973dc3d055e6e798ce1399a6" category="summary">Oracle多块读取参数</block>
   <block id="d3cc759510a3aba837fc8efeb2e24b91" category="doc">db_file_multiblock_read_count</block>
   <block id="32faf0a922da10425f2be9f86a5f5e18" category="paragraph">。<block ref="d3cc759510a3aba837fc8efeb2e24b91" prefix=" " category="inline-code"></block> 参数用于控制Oracle在顺序I/O期间单次操作读取的Oracle数据库块的最大数量</block>
   <block id="36cb03af3dc688208e0e94fda31ca7a4" category="paragraph">但是、此参数不会影响Oracle在任何和所有读取操作期间读取的块数、也不会影响随机I/O只有顺序I/O的块大小会受到影响。</block>
   <block id="2565c992b3732464484104f4c846d9b4" category="paragraph">Oracle建议用户不要设置此参数。这样可以使数据库软件自动设置最佳值。这通常意味着、将此参数设置为一个可产生1 MB I/O大小的值。例如、读取1 MB的8 KB块需要读取128个块、因此、此参数的默认值为128。</block>
   <block id="0fd26e725a6c1a81508e013094776e2c" category="paragraph">NetApp在客户站点发现的大多数数据库性能问题都与此参数的设置不正确有关。在Oracle版本8和9中更改此值有充分的理由。因此、参数可能会在不为人所用的情况下出现在中<block ref="b6bd7c570605affc5b50bbd3e436f0c0" prefix=" " category="inline-code"></block> 文件、因为数据库已原位升级到Oracle 10及更高版本。与默认值128相比、原有设置8或16会严重损害顺序I/O性能。</block>
   <block id="3f594bb922365c7a9f095f44822fa22e" category="admonition">* NetApp建议*设置<block ref="d3cc759510a3aba837fc8efeb2e24b91" prefix=" " category="inline-code"></block> 参数不应出现在中<block ref="b6bd7c570605affc5b50bbd3e436f0c0" prefix=" " category="inline-code"></block> 文件NetApp从未遇到过更改此参数可提高性能的情况、但在许多情况下、它会明显损坏顺序I/O吞吐量。</block>
-  <block id="669ebbf33c0b19005e2ccaf02ba69e5f" category="summary">使用网络存储的Oracle RAC设置</block>
-  <block id="5c87e825763ec1e41a459f6baa4b2a44" category="doc">Oracle Real Application Clusters （ RAC ）</block>
   <block id="0eec903bb9d87349e379892ca99ef9ec" category="paragraph">Oracle RAC是一款集群软件产品、它具有多种类型的内部检测信号进程、用于监控集群的运行状况。</block>
   <block id="7c13d022c9fda6e792c4349a043a6c74" category="inline-link-macro">MissCount</block>
   <block id="bab4ae46619fcbbb84e3375ef205e61c" category="admonition">中的信息 <block ref="9cd17d807316d35ef47b12cbecab4ec8" category="inline-link-macro-rx"></block> 第节介绍了有关使用网络存储的Oracle RAC环境的重要信息、在许多情况下、需要更改默认Oracle RAC设置、以确保RAC集群在网络路径更改和存储故障转移/切换操作后不会受到影响。</block>
@@ -1633,7 +1567,6 @@
   <block id="5b46e861366ffd98cd94c26abf2bf550" category="list-text"><block ref="ff4a008470319a22d9cf3d14af485977" prefix="" category="inline-code"></block> 二进制文件位于网络连接驱动器上、包括NFS、iSCSI、FC和基于数据存储库的驱动器。</block>
   <block id="7ace6d79e63cb29c86093526fbddf845" category="list-text">操作系统通过SAN启动。</block>
   <block id="985511d6258bbf659d35bd76e0b0cea1" category="list-text">在这种情况下、请评估影响操作系统或访问的网络中断的影响<block ref="9599929f8663b5e2093f7bc5cb20b0c2" prefix=" " category="inline-code"></block> 文件系统。在某些情况下、此类中断发生原因会使Oracle RAC守护进程发生拖延、从而可能导致出现<block ref="7c13d022c9fda6e792c4349a043a6c74" prefix=" " category="inline-code"></block>基于的超时和逐出。超时默认为27秒、即的值<block ref="7c13d022c9fda6e792c4349a043a6c74" prefix=" " category="inline-code"></block> 减号<block ref="c9333b0a26b9f9e9fd808e6238d613b0" prefix=" " category="inline-code"></block>。在这种情况下，增加<block ref="7c13d022c9fda6e792c4349a043a6c74" prefix=" " category="inline-code"></block> 至200以匹配<block ref="0494651671c3dc7f1ccdf99a4368a2cf" prefix=" " category="inline-code"></block>。</block>
-  <block id="6cde0106c3eb71034259ac34de5e6a2c" category="summary">Oracle文件系统io_options</block>
   <block id="a3f7c31b8d967e0ac9f9dd30fc81c061" category="paragraph">Oracle初始化参数<block ref="f1110589be196c2310808482067fce1b" prefix=" " category="inline-code"></block> 控制异步和直接I/O的使用</block>
   <block id="d1fa3441fd96418a75a509ac2907d644" category="paragraph">与通常的看法相反、异步I/O和直接I/O并不互相排斥。NetApp发现、在客户环境中、此参数经常配置不当、这种配置不当直接导致许多性能问题。</block>
   <block id="0775b72ddf51e2a16e466ee2df8f75ab" category="paragraph">异步I/O意味着可以并行处理Oracle I/O操作。在各种操作系统上提供异步I/O之前、用户配置了大量dbwriter进程并更改了服务器进程配置。使用异步I/O时、操作系统本身会代表数据库软件以高度高效的并行方式执行I/O。此过程不会使数据面临风险、Oracle重做日志记录等关键操作仍会同步执行。</block>
@@ -1648,8 +1581,6 @@
   <block id="1ea377466376b194b2d1bfc3ab2fa4c4" category="paragraph">如果数据库一直在使用缓冲I/O、则切换到直接I/O可能还需要更改SGA大小。禁用缓冲的I/O可消除主机操作系统缓存为数据库提供的性能优势。将RAM重新添加到SGA可修复此问题。最终结果应该是I/O性能有所提高。</block>
   <block id="787b3d8b62af05ac3efd1c9ca7a8fc7e" category="paragraph">尽管Oracle SGA使用RAM几乎总是优于操作系统缓冲区缓存、但可能无法确定最佳值。例如、在具有许多间歇性活动Oracle实例的数据库服务器上、最好使用SGA大小非常小的缓冲I/O。这种安排允许所有正在运行的数据库实例灵活地使用操作系统上剩余的可用RAM。这是一种非常少见的情况、但在某些客户站点上也发现过。</block>
   <block id="d4157ab77eb31459bd406aa0f873e20c" category="admonition">* NetApp建议*设置<block ref="f1110589be196c2310808482067fce1b" prefix=" " category="inline-code"></block> to<block ref="aef8f91b1e026cc1bb55e8b08c491d35" prefix=" " category="inline-code"></block>但请注意，在某些情况下，丢失主机缓冲区缓存可能需要增加Oracle SGA。</block>
-  <block id="caa6d47f2f011d5d1b5fb830e85a37f0" category="summary">Oracle块大小</block>
-  <block id="6db776dab2989df63d245511a4dccf08" category="doc">Oracle块大小</block>
   <block id="f8b42f9efd1a05ede10b0e0c11dfa8b0" category="paragraph">ONTAP在内部使用可变块大小、这意味着可以为Oracle数据库配置所需的任何块大小。但是、文件系统块大小可能会影响性能、在某些情况下、较大的重做块大小可以提高性能。</block>
   <block id="0944aedb4703c4a5e94fb90de9d7a22f" category="section-title">数据文件块大小</block>
   <block id="cc4662c047050e0082701ce6f052dcb7" category="paragraph">某些操作系统可选择文件系统块大小。对于支持Oracle数据文件的文件系统、使用数据压缩时、块大小应为8 KB。如果不需要数据压缩、则可以使用8 KB或4 KB的块大小。</block>
@@ -1659,35 +1590,15 @@
   <block id="fa06b9584ea36af182742c07894220f0" category="paragraph">在重做率非常高的情况下、4 KB块大小的性能可能会更好、因为重做率较高、可以在更少、更高效的操作中执行I/O。如果重做速率大于50 Mbps、请考虑测试4 KB的块大小。</block>
   <block id="781000593b4913b5625dd5ed9eebe87e" category="paragraph">在块大小为4 KB的文件系统上使用块大小为512字节的重做日志和许多非常小的事务时、客户发现了一些数据库问题。对一个4 KB文件系统块应用多个512字节更改所涉及的开销导致了性能问题、这些问题通过将文件系统更改为使用512字节的块大小得以解决。</block>
   <block id="a02416fde36b174cf1196213fcf1bef6" category="admonition">* NetApp建议*不要更改重做块大小、除非相关客户支持或专业服务组织建议您更改块大小、或者更改基于官方产品文档。</block>
-  <block id="00783c075f877e6e69c64079296967ed" category="summary">借助ONTAP实现Oracle灾难恢复</block>
-  <block id="6a87f84ba62b57e5643d5bfa5967c7a8" category="doc">使用ONTAP进行灾难恢复</block>
   <block id="65a6ece62f52a5e2ff74baaae821ae86" category="paragraph">灾难恢复是指在发生灾难性事件(例如火灾、导致存储系统甚至整个站点遭到破坏)后恢复数据服务。</block>
   <block id="e168b3b0b2f075f39012df52c5ea3c0a" category="admonition">本文档可替代先前发布的技术报告_TR-4591：《Oracle数据保护》_和_TR-4592：《基于MetroCluster的Oracle》</block>
   <block id="a91982f09e6a0341a90dae002865ea11" category="paragraph">灾难恢复可以通过使用SnapMirror轻松复制数据来实现、当然、许多客户每小时更新一次镜像副本。</block>
-  <block id="0f1b72a875a2bcb3d0e844ca2dcee233" category="paragraph">对于大多数客户而言、灾难恢复不仅需要拥有远程数据副本、还需要能够快速利用这些数据。NetApp提供了两种技术来满足这一需求—MetroCluster和SnapMirror业务连续性(SM-BC)</block>
   <block id="ad2c5e9521f13e89cd84fdd65ec96c7d" category="paragraph">MetroCluster是指硬件配置中的ONTAP、其中包括低级同步镜像存储和许多附加功能。MetroCluster等集成解决方案简化了当今复杂的横向扩展数据库、应用程序和虚拟化基础架构。它将多个外部数据保护产品和策略替换为一个简单的中央存储阵列。此外、它还可以在一个集群模式存储系统中提供集成的备份、恢复、灾难恢复和高可用性(HA)功能。</block>
-  <block id="05be1e741eba1ac3f0b7c924f261403b" category="paragraph">SnapMirror业务连续性(SM-BC)基于SnapMirror同步。通过MetroCluster、每个ONTAP控制器都负责将其驱动器数据复制到远程位置。使用SM-BC、您实际上拥有两个不同的ONTAP系统、这些系统维护LUN数据的独立副本、但会合作提供该LUN的一个实例。从主机角度来看、它是一个LUN实体。</block>
-  <block id="70f47db03a0843fec433c8cc41a54635" category="paragraph">尽管SM-BC和MetroCluster在内部的工作方式截然不同、但对于主机来说、结果却非常相似。主要区别在于粒度。如果您只需要选择要同步复制的工作负载、则SM-BC是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SM-BC目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。</block>
-  <block id="7389dc8e47495ffdde7fd2e0fc19df20" category="summary">使用SM-BC进行Oracle故障转移</block>
-  <block id="0a54809bbd5dc721967217b79aa04429" category="paragraph">在SM-BC上托管Oracle数据库的主要原因是、在计划内和计划外存储事件期间提供透明的故障转移。</block>
-  <block id="cfb8f86af03363ef2c73933e34108390" category="summary">ONTAP上的Oracle单个实例、使用SM-BC</block>
-  <block id="f25228759326d365adf4dca6b7b2cb8b" category="doc">采用SM-BC的单实例Oracle</block>
   <block id="a38cb04f35bd24313f90398cdc07e149" category="paragraph">下图显示了一种简单的部署模式、其中、存储设备会从Oracle数据库的主存储集群和远程存储集群进行分区或连接。</block>
   <block id="ac38db4f14e512b48d088eedb84cd611" category="paragraph">Oracle仅在主系统上配置。此模式可在发生存储端灾难时实现无缝存储故障转移、不会丢失任何数据、也不会造成任何应用程序停机。但是、在站点发生故障期间、此模型不会提供数据库环境的高可用性。这种类型的架构对于希望获得零数据丢失解决方案且存储服务具有高可用性的客户非常有用、但客户也认为数据库集群完全丢失需要手动操作。</block>
-  <block id="ccc53ca027c7d8fb1e0d647249fd67cd" category="paragraph"><block ref="ccc53ca027c7d8fb1e0d647249fd67cd" category="inline-image-macro-rx" type="image"></block></block>
   <block id="4e072ef2eba1c46e59475046cd4fb880" category="paragraph">这种方法还可以节省Oracle许可成本。在远程站点上预配置Oracle数据库节点需要根据大多数Oracle许可协议为所有核心授予许可。如果可以接受因安装Oracle数据库服务器和挂载无故障数据副本所需时间而导致的延迟、则此设计可能非常经济高效。</block>
-  <block id="5e2dd7c2fa063e6d7af964efc0e488a0" category="summary">基于采用SM-BC的ONTAP的Oracle RAC</block>
-  <block id="f7d366254f13816be07d3c8dff4ef00c" category="doc">采用SM-BC的Oracle RAC</block>
-  <block id="67bbc9e19672ee6c9c548cae8a472396" category="paragraph">SM-BC可精细控制数据集复制、以实现负载平衡或单个应用程序故障转移等目的。整体架构看起来像一个扩展的RAC集群、但某些数据库专用于特定站点、整体负载是分布式的。</block>
   <block id="9331b3ad2bcf259818157930e1c82ad3" category="paragraph">例如、您可以构建一个Oracle RAC集群来托管六个单独的数据库。其中三个数据库的存储主要托管在站点A上、其余三个数据库的存储将托管在站点B上此配置可最大限度地减少跨站点流量、从而确保性能最佳。此外、应用程序将配置为使用具有活动路径的存储系统本地数据库实例。这样可以最大程度地减少RAC互连流量。最后、这种整体设计可确保所有计算资源的使用均匀。随着工作负载的变化、数据库可以有选择地在各个站点之间来回故障转移、以确保负载均匀。</block>
   <block id="4278792a47efb1e599476fe07109dca4" category="inline-link-macro">基于MetroCluster的Oracle RAC</block>
-  <block id="1c6753ccdcc6629af3e1febabbf271b5" category="paragraph">除了粒度之外、使用SM-BC的Oracle RAC的基本原则和选项与相同 <block ref="f7453402f1e4779ea0ec67d873358932" category="inline-link-macro-rx"></block></block>
-  <block id="7e544b57620f5cdeb71865606eab0549" category="summary">采用SnapMirror业务连续性(SM-BC)的Oracle</block>
-  <block id="33aa8b7a84723347d228956fab2a4de8" category="doc">Oracle和SnapMirror业务连续性</block>
-  <block id="41eec95e0dbb542c5cd25248ec5759d5" category="paragraph">SM-BC为各个Oracle数据库和应用程序环境提供了选择性的RPO = 0同步镜像。</block>
-  <block id="563d0bf19fd5d623a031d90c30128dc1" category="summary">Oracle SM-BC故障场景</block>
-  <block id="3c1ea312a3c6648fc3f94a1ccd12bebc" category="doc">Oracle SM-BC故障场景</block>
-  <block id="87777c84375810d8b6fd65f604dd2561" category="paragraph">存在多种SnapMirror业务连续性(SM-BC)故障情形、每种情形的结果各不相同。</block>
   <block id="8eea62084ca7e541d918e823422bd82e" category="cell">结果</block>
   <block id="ee70ac41df7240931fee4110b599c39f" category="cell">复制链路故障</block>
   <block id="e79e76eca171f3e596eb56ba4bb24743" category="cell">调解器可识别这种脑裂情形、并恢复持有主副本的节点上的I/O。当站点之间的连接恢复联机后、备用站点将执行自动重新同步。</block>
@@ -1706,20 +1617,10 @@
   <block id="0e578c93ab393c3d449d484e9fa4b84e" category="cell">磁盘丢失</block>
   <block id="3d5fea5d89ec844fc92c08a585050e4e" category="cell">IO最多会连续发生三次磁盘故障。这是RAID-TEC的一部分。</block>
   <block id="bd300f92769c0ee071832cadaff91f04" category="cell">在典型部署中丢失整个站点</block>
-  <block id="9cfa40a514d333ea10de6fc8a75ac663" category="cell">故障站点上的服务器显然将不再可用。支持集群的应用程序可以配置为在两个站点上运行、并在备用站点上继续运行、但大多数此类应用程序都需要第三个站点的Tieb破碎 机、就像SM-BC需要调解器一样。
-
-如果没有应用程序级集群、则需要在运行正常的站点上启动应用程序。这会影响可用性、但会保留RPO = 0。不会丢失任何数据。</block>
-  <block id="f2762385d394491398659925e75d5d01" category="summary">MetroCluster物理架构—Oracle</block>
-  <block id="5be41b602a41d06df45e8986ec09a8dc" category="doc">MetroCluster物理架构—Oracle</block>
   <block id="d12be40db836559c628e8024f5d6ff56" category="paragraph">要了解Oracle数据库在MetroCluster环境中的运行方式、需要对MetroCluster系统的物理设计进行一些说明。</block>
   <block id="5e33c0d8a2417ce5fb6e7a211ad063bb" category="admonition">本文档可替代先前发布的技术报告_TR-4592：《基于MetroCluster的Oracle》</block>
-  <block id="bdec122112fe3ad35d588380dc643e48" category="summary">MetroCluster逻辑架构—Oracle</block>
-  <block id="141402e8d9fa946970f252a09a01a462" category="doc">MetroCluster逻辑架构—Oracle</block>
   <block id="37fa92fc2662529308c62c84eb1b38ea" category="paragraph">要了解Oracle数据库如何在MetroCluster环境alsop中运行、需要对MetroCluster系统的逻辑功能进行一些说明。</block>
   <block id="2623b589ddbc1cdb6184ba32aa06e83f" category="inline-link-macro">NVFAIL</block>
-  <block id="6ddd3d6bc3ad92b983699970b1596e0f" category="summary">采用MetroCluster的Oracle</block>
-  <block id="c1fac7a72cd91bcd345e567f6d6d93a3" category="doc">使用MetroCluster进行Oracle故障转移</block>
-  <block id="7a60cb119af7ddcdfe38fc872d2027a1" category="paragraph">使用MetroCluster并不一定会增加或更改企业级应用程序和数据库的任何最佳操作实践。</block>
   <block id="a4feacea8b05d0f24e5a4612a164a055" category="paragraph">通常的最佳实践仍然适用、如果您的需求仅需要RPO = 0数据保护、则MetroCluster可以满足该需求。但是、大多数客户使用MetroCluster不仅可以实现RROT=0的数据保护、还可以在灾难情形下提高RTO、并在站点维护活动中提供透明的故障转移。</block>
   <block id="3ff8bcf18c694581aa25b0a347508e0f" category="section-title">使用预配置的操作系统进行故障转移</block>
   <block id="9bd9ad7f296a0e8ac3df804b3c6a392f" category="paragraph">SyncMirror在灾难恢复站点提供数据的同步副本、但要使数据可用、需要使用操作系统和相关应用程序。基本自动化可以显著缩短整个环境的故障转移时间。Oracle RAC、Veritas Cluster Server (VCS)或VMware HA等集群软件产品通常用于在站点间创建集群、在许多情况下、可以使用简单的脚本来驱动故障转移过程。</block>
@@ -1736,8 +1637,6 @@
   <block id="3d4d04d6cdab90b7ca0deb0344f04eec" category="list-text">启动虚拟机</block>
   <block id="ba2f22f63087151f0a0694be5f35fcf2" category="list-text">手动启动数据库或将虚拟机配置为自动启动数据库</block>
   <block id="810078f3b19b93e24de8638d68f727b5" category="paragraph">例如、ESX集群可以跨越多个站点。发生灾难时、可以在切换后将灾难恢复站点上的虚拟机置于联机状态。只要在发生灾难时托管虚拟化数据库服务器的数据存储库未在使用中、就不需要进行设置<block ref="3b93661df04b698b1340ff2da3238d16" prefix=" " category="inline-code"></block> 在关联卷上。</block>
-  <block id="681afe3bdc351138642f233429d64762" category="summary">Oracle和SyncMirror</block>
-  <block id="bc8a6c6eac662831d2ddce97adbd4324" category="doc">SyncMirror—Oracle</block>
   <block id="c702c387f07bcb4f18482e68d69a155a" category="paragraph">使用MetroCluster系统进行Oracle数据保护的基础是SyncMirror、这是一种性能最高的横向扩展同步镜像技术。</block>
   <block id="9028b52caaa7bdbfb9be779eeb1fe00e" category="summary">采用MetroCluster的Oracle扩展RAC</block>
   <block id="dbcedb2fd86e6012347a3c9ad111f3a8" category="doc">基于MetroCluster的扩展Oracle RAC</block>
@@ -1778,7 +1677,6 @@
   <block id="2c7696fb04f52eb5687d059415066fa7" category="paragraph">使用三个站点构建扩展RAC集群更容易。托管MetroCluster系统一半的两个站点也支持数据库工作负载、而第三个站点则充当数据库和MetroCluster系统的断路器。Oracle TiebREAKER配置可能非常简单、只需将ASM磁盘组的一个成员放置在第三个站点上即可进行表决、也可能包括在第三个站点上运行的实例、以确保RAC集群中的节点数为奇数。</block>
   <block id="6265611ca77e9ad52249c5fdd4780da9" category="admonition">有关在扩展RAC配置中使用NFS的重要信息、请参阅Oracle文档中的"Quorum Failure group"(仲裁故障组)。总之、可能需要修改NFS挂载选项以包括软选项、以确保与托管仲裁资源的第三站点断开连接不会挂起主Oracle服务器或Oracle RAC进程。</block>
   <block id="d84d0eea463e72a6e15018c70a45af46" category="doc">Oracle、MetroCluster和NVFAIL</block>
-  <block id="ee6c613c07239c0923d940dfd448493f" category="paragraph">NVFAIL是ONTAP中的一项常规数据完整性功能、对于数据库工作负载尤为重要。</block>
   <block id="9dc6a9986107298da2a22e7c5a3efb00" category="summary">基于MetroCluster的Oracle单个实例</block>
   <block id="f8b28e31633ae72c2971ee8b815ed4af" category="paragraph">如前所述、MetroCluster系统的存在并不一定会增加或更改数据库的任何最佳操作实践。客户MetroCluster系统上当前运行的大多数数据库都是单个实例、并遵循Oracle on ONTAP文档中的建议。</block>
   <block id="f4872c843923dd8d8731ef66462b5a99" category="paragraph">SyncMirror在灾难恢复站点提供数据的同步副本、但要使数据可用、需要使用操作系统和相关应用程序。基本自动化可以显著缩短整个环境的故障转移时间。通常会使用Veritas Cluster Server (VCS)等集群软件产品在各个站点之间创建集群、在许多情况下、可以使用简单的脚本来驱动故障转移过程。</block>
@@ -1787,7 +1685,6 @@
   <block id="3dee93bd9bc9b8b50dcdd2066a86009f" category="list-text">正在启动数据库</block>
   <block id="620515885465a26daea6cc6441403e34" category="paragraph">此方法的主要要求是在远程站点上运行操作系统。它必须预配置Oracle二进制文件、这也意味着必须在主站点和备用站点上执行Oracle修补等任务。或者、也可以将Oracle二进制文件镜像到远程站点、并在声明发生灾难时进行挂载。</block>
   <block id="edb5332feef69c0aa60ea10ed5d31a9f" category="list-text">手动启动数据库或将虚拟机配置为自动启动数据库、例如、ESX集群可以跨越多个站点。发生灾难时、可以在切换后将灾难恢复站点上的虚拟机置于联机状态。只要在发生灾难时托管虚拟化数据库服务器的数据存储库未在使用中、就不需要进行设置<block ref="3b93661df04b698b1340ff2da3238d16" prefix=" " category="inline-code"></block> 在关联卷上。</block>
-  <block id="6c2e01aca4f10a83d34e3f3046435e82" category="summary">SnapMirror和SyncMirror</block>
   <block id="64bba30b717cb45555458da4fed880a1" category="paragraph">几乎每个应用程序都需要数据复制。</block>
   <block id="25fb1fa02f326334533a22c105ad3e69" category="paragraph">在最基本的层面上、复制可以是在异地存储的磁带上进行复制、也可以是应用程序级复制到备用位置。灾难恢复是指在服务发生灾难性丢失时使用这些副本使服务联机。</block>
   <block id="eab6cb3a1168ef2311865e6155b8272c" category="paragraph">ONTAP提供了多种复制选项、可在存储阵列中本机满足各种要求、从而满足各种需求。这些选项可以包括将备份简单地复制到远程站点、甚至可以复制到一个完全自动化的同步解决方案、从而在同一平台上提供灾难恢复和高可用性。</block>
@@ -1818,7 +1715,6 @@
   <block id="9ccd61d6efc86cc37743fdff385832e8" category="paragraph">有关SM-S的完整说明、请参见<block ref="4459b84726c651a8047a6486e87e48fb" category="inline-link-rx"></block> 以及ONTAP官方文档。新版本的ONTAP会不断增加功能。</block>
   <block id="6165c4352e1504dbaeef34d0cc50c187" category="section-title">一致性组</block>
   <block id="0651e813e385dbd62a9bca9baee23c6c" category="paragraph">ONTAP允许创建一致性组快照、从9.13.1开始、ONTAP可以将卷组(请记住、ONTAP术语中的卷不是LUN、而是由一个或多个文件或LUN组成的管理容器)复制为一致的组。</block>
-  <block id="80c6d3e933105ad9a2c104ec78444b8c" category="paragraph">SnapMirror复制和中断CG SnapMirror关系可保持卷之间的一致性、而SnapMirror同步和SnapMirror业务连续性都可保持成分卷之间的一致性。</block>
   <block id="455c7758003d6ebd974e8858f5ef1d7d" category="paragraph">这样、您就可以复制多卷数据集、并确保所有卷都是交叉一致的。此外、这还允许"中断镜像并开始"灾难恢复操作、而无需执行其他应用程序或数据库恢复步骤。</block>
   <block id="c44a2da164b7b770fce6338a987670ee" category="section-title">MetroCluster和SyncMirror</block>
   <block id="b1a1cfbf3988d8abdfdedaabc1742ae9" category="paragraph">MetroCluster也是一种同步复制解决方案、适用于大规模任务关键型工作负载。复制基于SyncMirror。最简单的一层是、SyncMirror会在两个不同的位置创建两组受RAID保护的完整数据。它们可以位于数据中心内的相邻房间内、也可以相距数公里。</block>
@@ -1828,8 +1724,6 @@
   <block id="9ab80c5e33e343c3415c21be433c4447" category="list-text">在正常操作中、SyncMirror可在不同位置之间提供有保障的同步镜像。写入操作只有在两个站点的非易失性介质上存在后才会得到确认。</block>
   <block id="680ccf94624c9f922ed236c8cc0c1af2" category="list-text">如果站点之间的连接发生故障、SyncMirror会自动切换到异步模式、以使主站点始终提供数据、直到连接恢复为止。还原后、它可以高效更新主站点上累积的更改、从而实现快速重新同步。不需要完全重新初始化。</block>
   <block id="c18ec55908c635b68abe8c6edbf6476e" category="paragraph">SnapMirror还与基于SyncMirror的系统完全兼容。例如、主数据库可能运行在分布在两个地理站点的MetroCluster集群上。此数据库还可以将备份作为长期归档复制到第三个站点、或者用于在DevOps环境中创建克隆。</block>
-  <block id="0660b44d1a6d7e0d905c3fe28eef63ab" category="summary">基于ONTAP DR操作步骤的Oracle、具有日志传送功能</block>
-  <block id="54bae719e8fa53582d5b2781b4952c6b" category="doc">通过日志重放实现灾难恢复</block>
   <block id="3a8111f0b903472ec78531619bf984f6" category="paragraph">Oracle数据库的复制过程与备份过程基本相同。主要要求是、必须将构成可恢复备份的快照复制到远程存储系统。</block>
   <block id="c62b3abab4fdbaf8f0a84e8c3559b5fd" category="paragraph">如前面有关本地数据保护的文档所述、可以使用热备份过程或利用针对快照优化的备份来创建可恢复的备份。</block>
   <block id="3d8f8c6a5c90bcd85a22fbd17390a864" category="inline-link-macro">数据布局</block>
@@ -1890,39 +1784,22 @@
   <block id="810e47566b9cd5aa3b28e6514ec95735" category="paragraph">最近创建的快照为<block ref="c001e27abf0e66d13790bb8a7e00da54" prefix=" " category="inline-code"></block>。还原此快照。</block>
   <block id="87d83a0406ac6622efcdf91c42784ecd" category="paragraph">数据库现在可以恢复了。如果是SAN环境、则可以激活卷组并挂载文件系统、这是一个轻松自动化的过程。但是、此示例使用的是NFS、因此文件系统已挂载并变为读写状态、不再需要在镜像中断后挂载或激活。</block>
   <block id="7a2e97f17454be76b7e522ce612ff961" category="paragraph">现在、可以将数据库恢复到所需的时间点、也可以根据所复制的重做日志副本将其完全恢复。此示例说明了归档日志、控制文件和重做日志卷的组合值。恢复过程显著简化、因为不需要依赖备份控制文件或重置日志文件。</block>
-  <block id="d6597945276340ba33115e737eb4b489" category="summary">Oracle数据库的一致性组复制</block>
-  <block id="fc506ae4ea109f50758acc176bcb5341" category="doc">一致性组灾难恢复</block>
   <block id="5eda890cc07e4b7cd409730d8af8ddc3" category="paragraph">一致性组复制可以像通过SnapMirror计划复制单个卷一样简单。这包括数据文件、控制文件、归档日志和重做日志。每次SnapMirror更新都会在目标站点生成一个新的数据库副本、该副本保持一致、并可通过中断镜像来激活。</block>
   <block id="89cb1432594ce7c25dadf229401874e7" category="paragraph">如果数据库必须跨越多个卷、则需要一致性组快照(CG快照)。</block>
   <block id="f96b125d1bacc785389957041be148e9" category="paragraph">在块级复制模式下与SnapMirror结合使用时、此策略的另一个优势是、可以完全复制源存储系统上的所有快照。除了灾难恢复副本之外、还会复制完整的备份副本。</block>
   <block id="77fda44088666155052f9d4224878cbc" category="summary">Oracle归档日志层</block>
-  <block id="113d9dffdeb8fa14877fc8cf8ca7c9d5" category="doc">Oracle日志层</block>
   <block id="8625af69ad0b5f76799d87df777e3c86" category="paragraph">FabricPool最重要的用途或许是提高已知冷数据(如数据库事务日志)的效率。</block>
   <block id="a98d546484d238b37b7e2584ae8d399d" category="summary">Oracle备份层</block>
   <block id="9f409a250e4be99904c9e90259cb747d" category="paragraph">传统应用程序备份包括Oracle Recovery Manager等产品、这些产品可在原始数据库位置之外创建基于文件的备份。</block>
-  <block id="6cddb309df5eb8791dc990f72ef2deb2" category="summary">Oracle分层策略</block>
-  <block id="7ba3322dbc0b3c33a66f1963e80b7a2a" category="doc">Oracle数据库分层策略</block>
   <block id="4627801bdbb24a1991e64f30a2d80cb1" category="paragraph">ONTAP提供了四个策略、用于控制性能层上的Oracle数据如何成为重新定位到容量层的候选对象。</block>
-  <block id="47f6817eca23122cc683f7c2759e6ecb" category="summary">Oracle完整图块层</block>
-  <block id="1def0ac22a738b54cce584e969065918" category="doc">Oracle完整文件层</block>
   <block id="2eea2725f31529888b5e57b36492819f" category="paragraph">虽然FabricPool分层在块级运行、但在某些情况下、可用于提供文件级分层。</block>
-  <block id="468853d9ed2134af17ede5fd165a8dff" category="summary">使用FabricPool进行部分文件分层</block>
-  <block id="5638b2f30ee966b3ff84bac350092971" category="doc">Oracle部分文件分层</block>
   <block id="f935a501eae76f9c13d430bc3879cd0d" category="paragraph">由于FabricPool在块级别工作、因此可能会更改的文件可以部分分层到对象存储、同时也可以部分保留在性能层上。</block>
-  <block id="dd22ff2cf158f98efbd92f4522b3064b" category="summary">对象存储访问中断期间的数据库访问</block>
   <block id="cc4e17c26faf6b70b383529b6215ba0f" category="doc">对象存储访问中断</block>
-  <block id="bbb21240a2cc48eb7a229ec824e70cdf" category="summary">《采用FabricPool的Oracle的层管理概述》</block>
-  <block id="ec2ffb259f21d115e5481eb0f215aa0d" category="doc">Oracle层概述</block>
   <block id="ec35a176f3e7c086273baee0c7f374d5" category="paragraph">要了解FabricPool层如何影响Oracle和其他数据库、需要了解低级别FabricPool架构。</block>
-  <block id="cd6b77e4d343896571bc445479f24588" category="summary">Pr神奇 分层检索策略</block>
-  <block id="3bf6f5a455b1889775d79713ad4e19ed" category="doc">检索策略</block>
   <block id="6edf1821ddc55278229c2156f42905f0" category="paragraph">分层策略用于控制将哪些Oracle数据库块从性能层分层到容量层。检索策略控制读取已分层的块时发生的情况。</block>
-  <block id="95ab96ac5aaeae15f7b499d0fa0313cf" category="summary">Oracle快照层</block>
   <block id="d01cbb2be77343ccdb1d3372c4b9891e" category="summary">Oracle数据库LUN大小调整和LUN计数准则</block>
-  <block id="b9e88e2eb3d5eef807fc42db706d866a" category="doc">Oracle LUN规模估算和LUN计数</block>
   <block id="51f96d1f8b50084e3a2ddc21ceef8b2f" category="paragraph">要获得Oracle数据库的最佳性能和易管理性、选择最佳LUN大小和要使用的LUN数量至关重要。</block>
   <block id="3d1bd23e74923cdc48fe992d0687809f" category="summary">Oracle数据库和NFS租用和锁定</block>
-  <block id="472f36eb81330c2c27f02245ce8a911e" category="doc">NFS租用和锁定—Oracle</block>
   <block id="cec6f8a988408ba212798e1cc32658c7" category="paragraph">NFSv3处于无状态。这实际上意味着、NFS服务器(ONTAP)不会跟踪挂载了哪些文件系统、由谁挂载或哪些锁定真正到位。</block>
   <block id="7c96331bd03e63c4eb3505c526b42244" category="paragraph">ONTAP确实具有一些记录挂载尝试的功能、因此您可以了解哪些客户端可能正在访问数据、并且可能存在建议锁定、但该信息并不能保证100%完整。此操作无法完成、因为跟踪NFS客户端状态不是NFSv3标准的一部分。</block>
   <block id="20733ad7135aa0ede95fd8637fe05cf6" category="section-title">NFSv4状态</block>
@@ -2020,16 +1897,12 @@
   <block id="c0eb73bb35a4c58d87b330cd00f1986a" category="paragraph">应用程序二进制文件(如Oracle数据库二进制文件)包括root用户拥有的具有set_id位的文件、这意味着NFSv4域名不匹配会导致Oracle启动失败、并显示有关名为的文件的所有权或权限的警告<block ref="dd440398b298ff16eb1188ba8afca6df" prefix=" " category="inline-code"></block>，位于中<block ref="002f94d606ac06f290f33a5fcc67b264" prefix=" " category="inline-code"></block> 目录。它应如下所示：</block>
   <block id="21cc6f8790de2a7022b344914915604e" category="paragraph">如果此文件的所有权为mody、则可能存在NFSv4域映射问题。</block>
   <block id="203f1cdb2421d34e9eb7391e03ffcaf6" category="paragraph">要修复此问题、请选中<block ref="60969252b5b8391a3378335ae420d2e8" prefix=" " category="inline-code"></block> 根据ONTAP上的v4-id-domain设置创建文件、并确保它们一致。如果不是、请进行所需的更改、然后运行<block ref="1c7ebfbcaa2681599e41320ed491ca91" prefix=" " category="inline-code"></block>，然后等待片刻，让更改传播。然后、文件所有权应正确识别为root。如果用户尝试运行<block ref="05f0da969f2e0e6ecf3ab445e1e665ad" prefix=" " category="inline-code"></block> 更正NFS域配置之前、可能需要在此文件上运行<block ref="05f0da969f2e0e6ecf3ab445e1e665ad" prefix=" " category="inline-code"></block> 再次重申。</block>
-  <block id="51fb8677d45bb006235a9f8cbe477f6f" category="summary">NFS属性缓存数据库</block>
-  <block id="4da0a3b9c2e8fc0df8844a41ac133401" category="doc">数据库的NFS缓存</block>
   <block id="748f6387bf49161b9a69b7bfd691dcd2" category="paragraph">如果存在以下任一挂载选项、则会禁用主机缓存：</block>
   <block id="9f75df502ef11eaef4292c94110cb673" category="paragraph">这些设置可能会对软件安装、修补和备份/还原操作的速度产生严重的负面影响。在某些情况下、尤其是对于集群应用程序、由于需要在集群中的所有节点之间实现缓存一致性、因此必然需要使用这些选项。在其他情况下、客户会错误地使用这些参数、从而导致不必要的性能损害。</block>
   <block id="8d23519d53d6611bc42fef8dc4a432df" category="paragraph">许多客户会在安装或修补应用程序二进制文件期间临时删除这些挂载选项。如果用户验证在安装或修补过程中没有其他进程正在使用目标目录、则可以安全地执行此删除。</block>
   <block id="f73bede4039d47664f70de3c2d1f2b46" category="summary">Oracle数据库的LVM条带配置</block>
-  <block id="7844f2cc495a938f3039da5801958506" category="doc">使用Oracle数据库执行LVM带</block>
   <block id="1b5681ffc153e25d2a48ae3f3f01b9f5" category="paragraph">LVM条带化是指在多个LUN之间分布数据。结果是、许多数据库的性能显著提高。</block>
   <block id="358b9a846de3e04b423c68bac9bc6d53" category="summary">LUN与Oracle数据库对齐</block>
-  <block id="c4cb2c6af5d7b6c38cd7e588d846e8b4" category="doc">Oracle I/O的LUN对齐</block>
   <block id="3e00e4d28b17eedd6f6c2c38233e06a8" category="paragraph">LUN对齐是指针对底层文件系统布局优化I/O。</block>
   <block id="a6c7e85d51ae3b98197ceb3eafa3686a" category="inline-link-macro">效率</block>
   <block id="6e2524d5663b2bdc0c7985fa3e57cc55" category="section-title">未对齐警告</block>
@@ -2043,14 +1916,11 @@
   <block id="ebf61afddb34d070825eb696bea48813" category="paragraph">在某些工作负载中、最大64K会产生限制。特别是、如果数据库执行的I/O数量较少但规模较大、则单线程操作(例如备份或恢复操作或数据库完整表扫描)运行速度会更快、效率也会更高。ONTAP的最佳I/O处理大小为256K。</block>
   <block id="b0a5b394f3a29e64573049cda19fbacc" category="paragraph">给定ONTAP SVM的最大传输大小可按如下方式进行更改：</block>
   <block id="b070b82d66be7116d5fd6dfd8172351b" category="cell">请勿将ONTAP上允许的最大传输大小减小到低于当前挂载的NFS文件系统的rsize/wsize值。在某些操作系统中、这可能会导致挂起甚至数据损坏。例如、如果NFS客户端当前设置为rsize/wsize 65536,则ONTAP最大传输大小可以在65536- 1048576之间进行调整,但不会产生任何影响,因为客户端本身是有限的。将最大传输大小减小至65536,可能会损坏可用性或数据。</block>
-  <block id="a5c97d9c3645b9a26e3febeb4bc95e24" category="summary">带有ONTAP的ASM Recasation实用程序</block>
-  <block id="861a5ecc95a8478c750be41bf2ddd6f5" category="doc">ASM Recandation Utility和零块检测</block>
   <block id="8eb703f2756cafd21dbac4f23c0d6416" category="paragraph">启用实时压缩后、ONTAP可以高效删除写入文件或LUN的置零块。Oracle ASM Recasation Utility (ARU)等实用程序的工作方式是向未使用的ASM块区写入零。</block>
   <block id="9de53c14f2bae0c5d4b6e19be495ee94" category="paragraph">从数据库角度来看、ASM磁盘组包含零、读取这些LUN区域会产生零流、但ONTAP不会将零存储在驱动器上。而是进行简单的元数据更改、以便在内部将LUN的置零区域标记为任何数据为空。</block>
   <block id="06348c6e795160187e298a91b25a37a3" category="paragraph">出于类似的原因、涉及置零数据的性能测试无效、因为零块实际上不会在存储阵列中作为写入进行处理。</block>
   <block id="cee584f1e6223f6dbb73c0d64d599228" category="admonition">使用ARU时、请确保已安装Oracle建议的所有修补程序。</block>
   <block id="17ff263bc6eb701aecb8e79f9ef53efd" category="summary">使用Oracle数据库调整LUN和LVM大小</block>
-  <block id="e0327f97ac271a738dd1ac6b182a4369" category="doc">调整LUN大小和基于LVM的大小</block>
   <block id="ff15e8b125dae74c1231f09380e48886" category="paragraph">当基于SAN的文件系统达到其容量限制时、可通过两种方法增加可用空间：</block>
   <block id="4182200437c090276a01ad8ca54076b0" category="summary">配置NVFAIL以保护Oracle数据库</block>
   <block id="60e002164f8988e984cf4a95b240f19d" category="doc">Oracle和NVFAIL</block>
@@ -2059,7 +1929,6 @@
   <block id="68114defc717054e7e3b02df438cdbe1" category="paragraph">缓存可以在应用程序层或服务器层进行。例如、如果Oracle Real Application Cluster (RAC)配置中的服务器在主站点和远程站点上都处于活动状态、则该配置会在Oracle SGA中缓存数据。如果强制切换操作导致数据丢失、则会使数据库面临损坏的风险、因为存储在SGA中的块可能与磁盘上的块不匹配。</block>
   <block id="162de6d405c04ce8f152f1d246ed9187" category="paragraph">在操作系统文件系统层使用缓存不太明显。装载的NFS文件系统中的块可能会缓存在操作系统中。或者、可以将基于主站点上LUN的集群文件系统挂载到远程站点的服务器上、然后再次缓存数据。在这些情况下、NVRAM故障、强制接管或强制切换可能会导致文件系统损坏。</block>
   <block id="04ca8d9ad570a3bdf1d76e23bc108ae5" category="paragraph">ONTAP通过NVFAIL及其关联设置、保护数据库和操作系统免受这种情况的影响。</block>
-  <block id="45293b650c7dacd88d269bebf219b8ef" category="summary">NetApp SnapRestore技术可在ONTAP中从Snapshot副本快速恢复Oracle数据库。</block>
   <block id="82ef718f4ebe0c276814ee3d51e33361" category="doc">SnapRestore</block>
   <block id="863696626734d6591db8be57b41c7eec" category="paragraph">NetApp SnapRestore技术可在ONTAP中从快照快速恢复数据。</block>
   <block id="9099b669f87419bc03914f11f5779c60" category="paragraph">当关键数据集不可用时、关键业务运营将中断。磁带可能会中断、甚至从基于磁盘的备份中恢复的速度也可能很慢、无法通过网络传输。SnapRestore通过近乎即时地还原数据集来避免这些问题。即使是PB级数据库、也只需几分钟的时间即可完全还原。</block>
@@ -2080,8 +1949,6 @@
   <block id="7f7599a8b92846b691484dc91e090164" category="section-title">File SnapRestore</block>
   <block id="f03eebe4f07d362dbfe4c1d4e76c724d" category="paragraph">基于文件的SnapRestore是一种基于快照的更精细还原过程。系统会还原单个文件或LUN的状态、而不是还原整个卷的状态。无需删除任何快照、此操作也不会对先前的快照创建任何依赖关系。文件或LUN将立即在活动卷中可用。</block>
   <block id="e432fdcc277fc74a1b2b94cfeec8a7d2" category="paragraph">在对文件或LUN执行SnapRestore还原期间、不需要移动数据。但是、需要进行一些内部元数据更新、以反映文件或LUN中的底层块现在同时位于快照和活动卷中这一事实。此过程不会对性能产生任何影响、但会阻止创建快照、直到创建完成为止。根据所还原文件的总大小、处理速率约为5 Gbps (18 TB/小时)。</block>
-  <block id="a68b31b502bf7555cda2514354e553c2" category="summary">ONTAP数据保护策略</block>
-  <block id="6bb9a5aec98309d1414b32f7e0751415" category="doc">数据保护规划</block>
   <block id="45c46768a1cb073f0d13245a0dc816f2" category="paragraph">正确的企业级数据保护架构取决于数据保留、可恢复性以及在各种事件期间对中断的承受能力方面的业务要求。</block>
   <block id="46e1b2893bdb002c0ede448cbfe1cb14" category="paragraph">例如、考虑范围内的应用程序、数据库和重要数据集的数量。为单个数据集构建备份策略以确保符合典型SLA要求相当简单、因为无需管理太多对象。随着数据集数量的增加、监控变得更加复杂、管理员可能不得不花费越来越多的时间来解决备份故障。随着环境达到云和服务提供商规模、需要采用完全不同的方法。</block>
   <block id="b70d233428e03d072b1134a97d853ab2" category="paragraph">数据集大小也会影响策略。例如、由于数据集非常小、因此对于使用100 GB数据库进行备份和恢复、有许多选项可供选择。只需使用传统工具从备份介质中复制数据、通常就能提供足够的恢复回路(Recovery)。100 TB数据库通常需要完全不同的策略、除非RTO允许发生多天中断、在这种情况下、可以使用基于副本的传统备份和恢复操作步骤。</block>
@@ -2099,8 +1966,6 @@
   <block id="444cd304758b7607c8f7a3f627a5bc1f" category="paragraph">最简单的方法是将所有文件或LUN放在一个卷一致性组中、这样便可直接在ONTAP中计划快照创建。如果数据集必须跨越多个卷、则需要一致性组快照(CG快照)。这可以使用System Manager或还原API调用进行配置、此外、SnapCenter还能够在定义的卷列表上创建简单的一致性组快照。</block>
   <block id="689b0155b42a554594a44cddc736eb67" category="section-title">复制和灾难恢复架构</block>
   <block id="1749d12df3df2319d3eee218a277ff83" category="inline-link-macro">MetroCluster</block>
-  <block id="7b8111b0a2fc76252bbacbbc9de542a4" category="inline-link-macro">SnapMirror 业务连续性</block>
-  <block id="96a7c86d5bc52a478876c48dc6dcc9f0" category="paragraph">本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括 <block ref="5c964f26ec7fbbad5ac67aaa5dcf9269" category="inline-link-macro-rx"></block> 和 <block ref="30831ec866621e18e7521d6c2750acaa" category="inline-link-macro-rx"></block></block>
   <block id="f443592081a2b3ddc55b94abe49ba128" category="paragraph">灾难恢复RPO受可用网络带宽和所保护数据的总大小限制。创建初始基线传输后、更新仅基于更改后的数据、尽管存在例外情况、但更改后的数据在总数据占用空间中所占的百分比通常很低。</block>
   <block id="89e87a831dae60244ba34496d70fd45d" category="paragraph">例如、一个每周变更率为10%的10 TB数据库平均每小时总变更大约为6 GB。如果使用10 Gb连接、则此数据库需要大约6分钟的传输时间。更改率随数据库更改率的波动而变化、但整体更新间隔为15分钟、因此应可实现15分钟RPO。如果有100个此类数据库、则需要600分钟来传输数据。因此、无法实现1小时的RPO。同样、一个大小为100 TB且每周变更率为10%的数据库的副本无法在一小时内可靠地更新。</block>
   <block id="3c886a803aef21f5ac9f7bcea7408cbb" category="paragraph">其他因素可能会影响复制、例如复制开销和并发复制操作数限制。但是、单卷复制策略的整体规划可以基于可用带宽、通常可以实现一小时的复制RPO。低于一小时的RPO将更难实现、只能在咨询NetApp专业服务后执行。在某些情况下、如果站点间网络连接良好、则15分钟是可行的。但是、总体而言、如果需要的RPO低于一小时、则多卷日志重放架构可以获得更好的结果。</block>
@@ -2119,17 +1984,12 @@
   <block id="335a5796fb106a877544d121062534be" category="paragraph">这样、目标服务器就可以识别LUN设备路径、卷组名称和其他设备路径。然后、可以关闭这些资源、然后还原镜像。这样、服务器就会处于可以快速使应用程序联机的状态。激活卷组、挂载文件系统或启动数据库和应用程序的步骤可以轻松实现自动化。</block>
   <block id="b1a175c5f42da29f6c27f4ea29684b63" category="paragraph">必须注意确保灾难恢复环境是最新的。例如、可能会向源服务器添加新的LUN、这意味着必须在目标上预先发现新的LUN、以确保灾难恢复计划按预期运行。</block>
   <block id="90426ba53f908049843b3ea392578d04" category="doc">Oracle灾难恢复</block>
-  <block id="7fe779a487e8f113f1ffdff0fb80353f" category="summary">基于ONTAP的Oracle一致性组备份</block>
-  <block id="773f9afa3df0cf82ed853c988183c73f" category="doc">Oracle一致性组备份</block>
-  <block id="5afd3dc3f8d489d47587e10e6663c512" category="paragraph">要进行最简单的备份、只需将整个Oracle数据库放在一个卷中即可。</block>
   <block id="2a4fa9d9434561574119e3086112023f" category="paragraph">使用单个快照保护数据文件、归档日志、重做日志和控制文件是一种有效的备份、还原和复制方法。  但是、RPO仅限于备份本身的时间点。它适用于一小时或更长时间的RPO。如果数据库跨越多个卷、则需要使用前面讨论的工具之一创建CG快照。</block>
   <block id="93310f4cebc752304c164f00d67e0bca" category="paragraph">例如、整个数据库可以位于具有以下快照计划的单个卷中：</block>
   <block id="a33821be4b3522d65daed1ec317299f6" category="list-text">72个每小时快照</block>
   <block id="0eea0679ac7bf43c19d603cd78e81de9" category="list-text">30个夜间快照</block>
   <block id="c4546c401776d279c5577011584577fa" category="list-text">12个月快照</block>
   <block id="b63db1b650d128c342617b377baf928a" category="paragraph">这样、在前72小时的滚动期间便可实现1小时的RPO、并可提供额外的每晚和每月备份。还可以在单个卷或一组CG快照中包含多个数据库或应用程序文件、以便在更大的环境中提供一致的备份。</block>
-  <block id="5eb532bcede5a8d57b8fb4429d5cc7ec" category="summary">借助基于ONTAP的Oracle最大限度地提高可用性</block>
-  <block id="b4343a8438e1b9cc9e9486f85831f2a1" category="doc">借助ONTAP实现Oracle数据可用性</block>
   <block id="686540783626106489734a1990d4930d" category="paragraph">ONTAP旨在最大程度地提高Oracle数据库的可用性。本文档不会介绍完整的ONTAP高可用性功能问题描述。但是、与数据保护一样、在设计数据库基础架构时、基本了解此功能非常重要。</block>
   <block id="b049fcbe8198301adc6bf87634a02845" category="section-title">HA 对</block>
   <block id="1a7c11d1e2d03d3d1b57cff284ebd761" category="paragraph">高可用性的基本单位是HA对。每个对都包含冗余链路、以支持将数据复制到NVRAM。NVRAM不是写入缓存。控制器中的RAM用作写入缓存。NVRAM的用途是临时记录数据、以防止发生意外系统故障。在这方面、它类似于数据库重做日志。</block>
@@ -2157,9 +2017,6 @@
   <block id="cbfdbb11fd5eab0d9fdd078ae66a1c69" category="cell">2-3秒</block>
   <block id="1a066f0304c1d3a279466c70359c5103" category="cell">计划外接管</block>
   <block id="0f4a6e109a34d3483995e427b6581130" category="cell">30秒</block>
-  <block id="a4985782267828ce03a3d13f37392de1" category="summary">校验和和和和Oracle数据保护</block>
-  <block id="407941abab873f61b271b481e105eb33" category="doc">校验和和和和Oracle数据完整性</block>
-  <block id="b93232347a11497969d0ea20d34cd16e" category="paragraph">NetApp经常遇到的一个问题是如何确保Oracle数据库的数据完整性。</block>
   <block id="dbfb054670bc82c6e08a7e101c0f0ef4" category="paragraph">ONTAP中的逻辑数据保护包括三个关键要求：</block>
   <block id="b6cc6762545d78ab663e39c37d172bd2" category="list-text">必须防止数据损坏。</block>
   <block id="e7c7e14f4b6ca1b3ae32b2279243dba6" category="list-text">必须保护数据免受驱动器故障的影响。</block>
@@ -2210,9 +2067,7 @@
   <block id="8b7b33533c2b36c157a0a482bdd52a8e" category="paragraph">Oracle数据文件和重做日志架构还旨在提供尽可能高级别的数据完整性、即使在极端情况下也是如此。在最基本的层面上、Oracle块包括对几乎每个I/O进行校验和和和基本逻辑检查如果Oracle未崩溃或使表空间脱机、则数据完好无损。数据完整性检查的程度可以调整、Oracle也可以配置为确认写入。因此、几乎所有崩溃和故障情形都可以恢复、在极少数情况下发生不可恢复的情况时、系统会立即检测到损坏。</block>
   <block id="4066c36b811913c85aa86346e30cee4d" category="paragraph">大多数使用Oracle数据库的NetApp客户在迁移到基于快照的备份之后不再使用RMAN和其他备份产品。在使用SnapCenter执行块级恢复时、仍然可以使用RMAN。但是、在日常工作中、RMAN、NetBackup和其他产品仅偶尔用于创建每月或每季度归档副本。</block>
   <block id="d0cf0e689669c61d564607d2ef7deb79" category="paragraph">有些客户选择运行<block ref="d308cbfce7e270e5b41a84d84385645f" prefix=" " category="inline-code"></block> 定期对其现有数据库执行完整性检查。NetApp不建议采用这种做法、因为它会产生不必要的I/O负载。如上所述、如果数据库之前未遇到问题、则可能会出现<block ref="d308cbfce7e270e5b41a84d84385645f" prefix=" " category="inline-code"></block> 检测问题几乎为零、此实用程序会在网络和存储系统上创建非常高的顺序I/O负载。除非有理由认为存在损坏、例如暴露于已知的Oracle错误、否则没有理由运行<block ref="d308cbfce7e270e5b41a84d84385645f" prefix=" " category="inline-code"></block>。</block>
-  <block id="db97518eeb3e040b5a78c451efd4b252" category="summary">针对Snapshot优化的备份</block>
   <block id="431bbcf828b8d3513280cb1207824991" category="doc">Oracle Storage Snapshot优化的备份</block>
-  <block id="52fb042c0d82d8e7bdf9ae239c387729" category="paragraph">使用Oracle 12c时、基于Snapshot的备份和恢复变得更加简单、因为无需将数据库置于热备份模式。因此、可以直接在存储系统上计划基于快照的备份、同时仍保留执行完整或时间点恢复的能力。</block>
   <block id="c9447fe684870cf68e9cb4f23f44db43" category="paragraph">尽管数据库管理器(操作步骤)对数据库管理器(数据库管理器)比较熟悉、但长期以来、可以使用数据库处于热备份模式时未创建的快照。在恢复期间、需要对Oracle 10g和11g执行额外的手动步骤、才能使数据库保持一致。采用Oracle 12c、<block ref="a84f4f3da79386c29ab6dfa560af786e" prefix=" " category="inline-code"></block> 和<block ref="075b7d3bd3bbe7767f7ef62f430bc22b" prefix=" " category="inline-code"></block> 包含额外的逻辑、用于重放未处于热备份模式的数据文件备份上的归档日志。</block>
   <block id="5c7dba68615d3fa5c4c90a36dab57bcb" category="paragraph">如前文所述、恢复基于快照的热备份需要两组数据：</block>
   <block id="50a7086972cada154c8164dc1c6b3539" category="list-text">在备份模式下创建的数据文件的快照</block>
@@ -2247,16 +2102,12 @@
   <block id="17108ef3ad2e1e613b844beb5f2c6d29" category="paragraph">快照创建时间显示为3月9日和10：10：06。为了安全起见、快照时间增加了一分钟：</block>
   <block id="904b0a17b003c70e398ea85996f0f9ba" category="paragraph">此时将启动恢复。考虑到可能的时钟差异、它指定了10：11：00的快照时间(比记录的时间晚一分钟)和10：44的目标恢复时间。接下来、sqlplus请求所需的归档日志、以达到所需的恢复时间10：44。</block>
   <block id="91f99c5ad04365fb4d00e509963e2a0c" category="admonition">使用使用快照完成数据库恢复<block ref="3df448f0a5ec82cac76d91ba14c0fa1d" prefix=" " category="inline-code"></block> 命令不需要特定的许可、但需要使用进行时间点恢复<block ref="72104026d9850e8c478c23b2e2e4e8e9" prefix=" " category="inline-code"></block> 需要Oracle高级压缩许可证。</block>
-  <block id="87161b635cff9308859c719a20929913" category="summary">Oracle和NetApp备份工具</block>
   <block id="9173402b63dc5f55506a692258f185e8" category="doc">SnapCenter和其他工具</block>
-  <block id="400937771ac8b3d4e7be82bf39033db5" category="paragraph">ONTAP在应用程序环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制和高效创建FlexClone卷。</block>
   <block id="5459c1727c923baa303ff472498dbe97" category="paragraph">在某些情况下、直接在ONTAP上配置这些核心功能即可满足要求、但更复杂的需求则需要一个业务流程层。</block>
   <block id="aeeb3212c35c26d321183e81d4926e57" category="paragraph">SnapCenter是NetApp的旗舰级数据保护产品。从很低的层面来看、它在执行数据库备份的方式上与SnapManager产品类似、但它是从头开始构建的、用于在NetApp存储系统上提供单一管理平台来进行数据保护管理。</block>
   <block id="e538db970e1ed1ffe018725fdf223f9e" category="paragraph">SnapCenter包括一些基本功能、例如基于Snapshot副本的备份和还原、SnapMirror和SnapVault复制、以及大型企业大规模运行所需的其他功能。这些高级功能包括扩展的基于角色的访问控制(Role-Based Access Control、RBAC)功能、可与第三方业务流程产品集成的REST API、对数据库主机上的SnapCenter插件进行无中断集中管理、以及专为云规模环境设计的用户界面。</block>
   <block id="50780f47f6839d47d60bc4555ee00c3f" category="section-title">REST</block>
   <block id="a0bac638f30c704da8e03aba136da86d" category="paragraph">ONTAP还包含丰富的ESTful API集。这样、第三方供应商就可以创建与ONTAP深度集成的数据保护和其他管理应用程序。此外、希望创建自己的自动化工作流和实用程序的客户也可以轻松使用这种ESTful API。</block>
-  <block id="e4cea644160fe9fa4ccd92ab3f079363" category="summary">基于Oracle快照的备份和恢复</block>
-  <block id="9adc36f162691b8ed14a886b6068f368" category="doc">Oracle联机备份</block>
   <block id="a3b43ae3d4028e3c7ccac3d5720e9fb0" category="paragraph">在备份模式下保护和恢复Oracle数据库需要两组数据。请注意、这不是唯一的Oracle备份选项、但最常见。</block>
   <block id="8e523970ff7c41dba74e723511d14717" category="list-text">备份模式下数据文件的快照</block>
   <block id="deeddf207b1a29c63ae7c1943f90f3d9" category="list-text">数据文件处于备份模式时创建的归档日志</block>
@@ -2274,9 +2125,6 @@
   <block id="6da8ebf3245e4fbe4654e7f92f0330d7" category="list-text">将托管数据文件的磁盘组静置。操作步骤因所选的逻辑卷管理器而异。使用ASM时、此过程需要卸载磁盘组。对于Linux、必须卸载文件系统、并且必须停用逻辑卷和卷组。目标是停止要还原的目标卷组上的所有更新。</block>
   <block id="931ab211ac6773d20c03a998f9f921ce" category="list-text">如果需要完全恢复、请重放所有重做日志。</block>
   <block id="b6575c3fca5eaaa56eeb8e9ce8867f05" category="paragraph">此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须通过使归档日志LUN脱机并执行还原来还原归档日志。这也是一个将归档日志划分为专用卷非常有用的示例。如果归档日志与重做日志共享一个卷组、则必须先将重做日志复制到其他位置、然后才能还原整个一组LUN。此步骤可防止丢失这些最终记录的事务。</block>
-  <block id="1536f0d3e3ee227abdec76f432b89cae" category="summary">Oracle数据保护SLA</block>
-  <block id="e9c8b7044dfae7a21f1a9c4d08628a66" category="doc">恢复时间目标、恢复点目标和服务级别协议</block>
-  <block id="020e620c60ad38b75f0ff2a2fe4067b0" category="paragraph">数据保护策略应根据业务要求进行定义。</block>
   <block id="65fd6f7f97414140b4d6060b743dc645" category="paragraph">这些要求包括恢复速度、允许的最大数据丢失量以及备份保留需求等因素。数据保护计划还必须考虑数据保留和还原方面的各种法规要求。最后、必须考虑不同的数据恢复场景、从因用户或应用程序错误而导致的典型和可预见的恢复到包括站点完全丢失在内的灾难恢复场景。</block>
   <block id="2bd1d35ff88de136066c33905c0fd677" category="paragraph">对数据保护和恢复策略进行微小更改可能会对存储、备份和恢复的整体架构产生显著影响。在开始设计工作之前、必须定义并记录标准、以避免使数据保护架构复杂化。不必要的功能或保护级别会导致不必要的成本和管理开销、而最初被忽视的要求可能会导致项目方向错误或需要在最后一刻更改设计。</block>
   <block id="a60e6b87ede45aef49d8d095435db22b" category="section-title">恢复时间目标</block>
@@ -2310,9 +2158,7 @@
   <block id="1d7c2d97c3bfd5ca9489e0ffeb06b150" category="list-text">许多客户创建独立的季度归档、存储在不同的介质上。</block>
   <block id="61ae175e4a0c88c4624184a0cb9b04d2" category="list-text">不断更新的数据库可能不需要历史数据、备份只需保留几天。</block>
   <block id="8bb85c2149e1e808032e7025b0a27b80" category="list-text">根据法规要求、可能需要在365天内恢复到任意事务的时间点。</block>
-  <block id="a83f7a3ea63946cbdc1977d641e8460c" category="summary">基于ONTAP的Oracle和快照的角色</block>
   <block id="05280349760feacdd6227fb8012e39d7" category="doc">基于Snapshot的备份</block>
-  <block id="5e3f0537b2a1927f4a24b28e9157cc0b" category="paragraph">基于ONTAP的Oracle数据保护的基础是NetApp Snapshot技术。</block>
   <block id="a4c2aeedbfeeda21f232cbf45be91693" category="paragraph">关键值如下：</block>
   <block id="d06c89cff665ecdde6eded3c9d44cd2b" category="list-text">*精简性。*快照是指特定时间点数据容器内容的只读副本。</block>
   <block id="175888ba89c31a851f719bdd271cae9c" category="list-text">*效率。*创建快照时不需要任何空间。只有在数据发生更改时才会占用空间。</block>
@@ -2387,12 +2233,10 @@
   <block id="9dae8634b638a6949dab0f7eaf7988bd" category="list-text">系统会为快照中的每个文件保留写入顺序。</block>
   <block id="7bc868657652757ca8505ddcd297456f" category="paragraph">ONTAP和NetApp Oracle管理产品符合这些要求。</block>
   <block id="9e19caeb431a5e29a1a63e3cee4b36c9" category="doc">借助ONTAP实现Oracle数据保护</block>
-  <block id="6f1383567177df0041e76e845c3629f2" category="paragraph">最关键的任务数据位于数据库中。</block>
   <block id="848aab87f65bfade12f80d4e864ec046" category="paragraph">企业无法在不访问其数据的情况下运营、有时数据决定了业务。这些数据必须受到保护；但是、数据保护不仅仅是确保备份可用、它还需要快速可靠地执行备份、同时还要安全地存储这些备份。</block>
   <block id="28a0304f97f876b27cf541f4ad9a30d7" category="paragraph">数据保护的另一面是数据恢复。如果无法访问数据、则企业会受到影响、并且可能无法运行、直到数据还原为止。此过程必须快速可靠。最后、必须保护大多数数据库免受灾难的影响、这意味着需要维护数据库的副本。副本必须足够最新。使副本成为一个完全正常运行的数据库还必须快速而简单。</block>
   <block id="3d601b26d05eac41fc6a7eba92fdc8b9" category="admonition">本文档可替代先前发布的技术报告_TR-4591：《Oracle数据保护：备份、恢复和复制》</block>
   <block id="21d28aa03f67eb242b1c95a6a0594ff5" category="section-title">规划</block>
-  <block id="0bf5784d6c307e4ee0371d46053937c0" category="summary">Oracle性能测试</block>
   <block id="355ba59494fea8b20be391a73cc755eb" category="paragraph">准确测试数据库存储性能是一个极其复杂的主题。它需要了解以下问题：</block>
   <block id="b57041cc3b57577b5c21eff44739e3f9" category="list-text">IOPS和吞吐量</block>
   <block id="236e7fd957ada95e8094e302623980d3" category="list-text">前台和后台I/O操作之间的区别</block>
@@ -2461,7 +2305,6 @@
   <block id="d3d92f87c5235ad11c8bc69e85fb2fd0" category="section-title">重做日志记录</block>
   <block id="162b54d51a30629d78e153f8da201780" category="paragraph">此处介绍的过程适用于数据文件。Oracle重做日志和归档日志具有不同的I/O模式。例如、重做日志记录是对单个文件的循环覆盖。如果使用默认的512字节块大小、则写入统计信息如下所示：</block>
   <block id="d36dbaa617441d3308f5a9b50cb6f5ca" category="paragraph">I/O将分布在所有直方图分段中、但这不是性能问题。但是、使用4 KB块大小可能会有利于极高的重做日志记录速率。在这种情况下、需要确保重做日志记录LUN正确对齐。但是、这对于获得良好性能并不像数据文件对齐那样重要。</block>
-  <block id="f64f1c647516f5a47c00be152fdbf488" category="summary">Oracle和过时的NFSv3锁定</block>
   <block id="91d9710c9fee248ae3e9c4b810ae704f" category="doc">过时的NFSv3锁定和Oracle数据库</block>
   <block id="3f9e1e3abd12ad7445baea4b681b9ceb" category="paragraph">如果Oracle数据库服务器崩溃、则在重新启动时、陈旧的NFS锁定可能会出现问题。通过仔细注意服务器上的名称解析配置、可以避免此问题。</block>
   <block id="288ebefc25180862eb0448b786b1b9fc" category="paragraph">出现此问题的原因是、创建锁定和清除锁定使用两种略有不同的名称解析方法。其中涉及两个进程、即网络锁定管理器(Network Lock Manager、NLM)和NFS客户端。NLM使用<block ref="e5caaf154dfeed411b9eec65b903a22a" prefix=" " category="inline-code"></block> 要确定主机名、请使用<block ref="d49331f31f40041ebcee19fca74fd9d4" prefix=" " category="inline-code"></block> 流程使用<block ref="330c4316ae6124616389eb1ca9912f7a" prefix=" " category="inline-code"></block>。这些主机名必须匹配、操作系统才能正确清除陈旧锁定。例如、主机可能正在查找属于的锁定<block ref="c7169a6dd344d0f0a38071a1262e4973" prefix=" " category="inline-code"></block>，但主机已将锁定注册为<block ref="0c32c65f5ac66d0bdb4e63bd5fde7f75" prefix=" " category="inline-code"></block>。条件<block ref="330c4316ae6124616389eb1ca9912f7a" prefix=" " category="inline-code"></block> 返回的值与不相同<block ref="5c020b5bb8d1ce1ace51c2a2f4c06fc2" prefix=" " category="inline-code"></block>，则锁定释放过程未成功。</block>
@@ -2470,7 +2313,6 @@
   <block id="2b500e5914ea5a219ade17dea0808f51" category="paragraph">通常、可以通过更改主机在中的显示顺序来查找解决方案<block ref="ad942c725cd0cae65ca4c63717ec464c" prefix=" " category="inline-code"></block>。例如、假设主机文件包含以下条目：</block>
   <block id="22b58ec1cec48707dfc018e6e216e966" category="paragraph">要解析此问题描述、请更改完全限定域名和短主机名的显示顺序：</block>
   <block id="e357ccd0745db58f22ea5c0947b613ee" category="paragraph"><block ref="330c4316ae6124616389eb1ca9912f7a" prefix="" category="inline-code"></block> 现在返回短<block ref="c7169a6dd344d0f0a38071a1262e4973" prefix=" " category="inline-code"></block> 主机名、与的输出匹配<block ref="4040592cec1880aa70936989f05e7c31" prefix=" " category="inline-code"></block>。因此、锁定会在服务器崩溃后自动清除。</block>
-  <block id="547b870352d8464aadbe7bee63d6f3d1" category="summary">数据库虚拟化简介</block>
   <block id="ea4c55be196897a16d86999f5c16d582" category="doc">虚拟化</block>
   <block id="9e28dbd7a4f5940eeaf6d3893c5c4b1f" category="section-title">存储表示</block>
   <block id="151ae53a4100e0a6e83bde4d78083f81" category="list-text">由虚拟机上的iSCSI启动程序(而不是虚拟机管理程序)管理的iSCSI LUN</block>
@@ -3803,7 +3645,6 @@
   <block id="4c5d94eb4dc4bff93f6a96a08ab7b244" category="sidebar">数据安全性</block>
   <block id="cf91513c6fc63cebe4b63a6647238d6d" category="sidebar">RAID</block>
   <block id="83db97189c47f7bb4edd879e8756f6e6" category="sidebar">容量限制</block>
-  <block id="4d2caccc34711835f6ff99da411ac04e" category="sidebar">Storage Virtual Machine</block>
   <block id="af81930661b267e8f1e68c4d66e9ee56" category="sidebar">故障转移和切换</block>
   <block id="dfd1f50170457b961c15bb13ad7e3bed" category="sidebar">数据文件和重做块大小</block>
   <block id="49f83bf3a15b8626eb91fde93c6b1788" category="sidebar">Oracle RAC</block>
@@ -3834,9 +3675,6 @@
   <block id="13a854bdd11f8f57a0b25c00631f1430" category="sidebar">逻辑架构</block>
   <block id="5e7988aeba0e1d3c15c5c78a0db738d1" category="sidebar">SyncMirror</block>
   <block id="3f23f85f537c810b6eca3c767c3ff00c" category="sidebar">Oracle故障转移</block>
-  <block id="5783cab279142a801ff0fd0a03b607d5" category="sidebar">MetroCluster上的单个实例</block>
-  <block id="ea98d1b4d8c0f4b9e705df8dcdf77730" category="sidebar">SM-BC上的单个实例</block>
-  <block id="39520db4a78ddf352897eac9b11c5890" category="sidebar">基于SM-BC的Oracle RAC</block>
   <block id="5ba8ee2f32815884475d1f2244ba16a6" category="sidebar">故障情形</block>
   <block id="e31593850dc03f8f10d036df5dc8633b" category="sidebar">Oracle数据库迁移</block>
   <block id="5102abd5a9cc202678054b832caf678d" category="sidebar">过程</block>
@@ -3954,7 +3792,6 @@
   <block id="945c88a63c229c39ee73ab5592b3ef63" category="paragraph">有关详细信息，请单击 <block ref="03628d0cd13b6640ef56c399aa1c2070" category="inline-link-macro-rx"></block></block>
   <block id="852741d2a7fb0a8a1a5dd748dbbd6734" category="section-title">API RBAC</block>
   <block id="bbbea5fec67f15424fa77aa563754c49" category="paragraph">自动化需要API调用、但并非所有工具都需要完全管理访问权限。为了帮助保护自动化系统的安全、还在API级别提供了RBAC。您可以将自动化用户帐户限制为所需的API调用。例如、监控软件不需要更改访问权限、只需要读取访问权限即可。配置存储的工作流不需要删除存储。</block>
-  <block id="97ad75902b447ba6b23cabdb10252ce8" category="paragraph">要了解更多信息、请开始 <block ref="d3dd665f13f927a9546f36768f8407dd" category="inline-link-macro-rx"></block></block>
   <block id="cb93ad4589e6e6834d2627d2ef8c8456" category="section-title">多管理员验证</block>
   <block id="7604bad489eaec7e27d112c63d3e2936" category="paragraph">通过要求两个不同的管理员(每个管理员都有自己的凭据)批准某些活动、可以进一步实现多"因素"身份验证。其中包括更改登录权限、运行诊断命令和删除数据。</block>
   <block id="e890d04cd745ac382688bbb307655e81" category="paragraph">有关多管理员验证(MAV)的详细信息、请单击 <block ref="88f84d4fec0424d978600980bf11baf0" category="inline-link-macro-rx"></block></block>
@@ -3997,7 +3834,6 @@
   <block id="383a6a5241ecfc558b9fec1d7cff5239" category="summary">PostgreSQL表空间</block>
   <block id="20d0e2519b3555a0a2927c8914c17280" category="summary">PostgreSQL数据保护软件</block>
   <block id="29e2aec511a8e307ecceacbd86c22f14" category="summary">PostgreSQL初始化参数</block>
-  <block id="55e3f073b1864d9281d074e5b23effca" category="doc">Oracle性能优化和基准测试过程</block>
   <block id="035ecd1be6cacde993302b440e396bc2" category="paragraph">现在、大多数数据库客户都选择全闪存阵列、这就需要考虑一些额外的注意事项。例如、考虑在双节点AFF A900系统上进行性能测试：</block>
   <block id="33f545d041b93838074263c0efd2e9da" category="list-text">如果读/写比率为80/20、则两个A900节点可以在延迟甚至超过150µs微秒之前提供超过100万次的随机数据库IOPS。这远远超出了大多数数据库当前的性能需求、因此很难预测预期的改进。存储将作为瓶颈在很大程度上被消除。</block>
   <block id="0445195555faac96ebff962dbff126ea" category="summary">MySQL配置参数</block>
@@ -4034,8 +3870,6 @@
   <block id="b7981516813a09695906aa429b07f48f" category="paragraph">不能使用FC协议将主机直接连接到ONTAP存储系统。原因是使用了NPIV。用于向FC网络标识ONTAP FC端口的WWN使用一种称为NPIV的虚拟化类型。连接到ONTAP系统的任何设备都必须能够识别NPIV WWN。目前没有HBA供应商提供可安装在能够支持NPIV目标的主机中的HBA。</block>
   <block id="97db606ac6781989ea3b189d7be28bf2" category="section-title">直连网络</block>
   <block id="d078ae9a339971900f939db9e82f253d" category="paragraph">存储管理员有时倾向于通过从配置中删除网络交换机来简化其基础架构。在某些情况下、可以支持此功能。</block>
-  <block id="14a07a9c146c886f1cf8b6ebd4b2b418" category="summary">通过ONTAP直接建立网络连接</block>
-  <block id="a4e0be5abb980518338c55619fbfa4df" category="doc">与TCP/IP和FC网络直接连接</block>
   <block id="e817ecc2f82a2b78d828ec8704031da3" category="section-title">直连网络</block>
   <block id="f437881fa7e42bf0e4563bbec8176f81" category="paragraph">运行 ONTAP 软件的系统可以使用 ONTAP 存储服务质量功能来限制文件， LUN ，卷或整个 SVM 等不同存储对象的吞吐量（以 MBps 和 / 或每秒 I/O 数（ IOPS ）为单位）。</block>
   <block id="87e6f97c8ec2f31df616ef84401ffaf4" category="paragraph">追加信息 提供了多种故障排除资源。</block>
@@ -4370,15 +4204,164 @@
   <block id="6ec151851a31c86edd358bc49f80908c" category="paragraph"><block ref="6ec151851a31c86edd358bc49f80908c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="70ff2667d6b190dea65bae42217aa310" category="paragraph">这种方法的主要驱动因素不是ONTAP、这是因为一个虚拟机或虚拟机管理程序LUN可并行处理的操作数存在固有限制。一个ONTAP LUN支持的IOPS通常远远超过主机可以请求的IOPS。单个LUN性能限制几乎是主机操作系统的结果。因此、大多数数据库需要4到8个LUN才能满足其性能需求。</block>
   <block id="59f9d8d1b212a8ff6bd3476975e17620" category="paragraph">VMware架构需要仔细规划其架构、以确保此方法不会遇到数据存储库和/或LUN路径最大值。此外、对于每个数据库、不需要一组唯一的VMFS数据存储库。主要需求是确保每个主机都有一组从虚拟化LUN到存储系统本身上后端LUN的干净的4到8 IO路径。在极少数情况下、即使数据存储库数量更多、也可能有利于满足真正的极致性能需求、但所有数据库中通常有95%的数据库需要使用4到8个LUN。在典型的OS/ONTAP /网络配置下、包含8个LUN的单个ONTAP卷最多可支持250、000次随机Oracle块IOPS。</block>
-  <block id="622b235a9123d972c612737c81eb55a1" category="inline-link">NetApp和VMware的NFSv3 nConnect功能</block>
-  <block id="ee7dab8e6be0e4b3085e8fb1df295146" category="list-text">从ONTAP 9.14.1开始、VMware和NetApp当前支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。有关nconnect的详细信息、请参见<block ref="2668e8271f58131cbbe97dab01f83475" category="inline-link-rx"></block>。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。</block>
   <block id="7564f732469e12963d8b416572cf4efb" category="section-title">什么是vSphere Metro Storage Cluster？</block>
   <block id="830d984ea50f71fa76636d0524167a3a" category="doc">vSphere数据存储库和协议功能概述</block>
-  <block id="7bbcbf5b4bf3f23dc1b710dfd65de967" category="list-text">从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见<block ref="2668e8271f58131cbbe97dab01f83475" category="inline-link-rx"></block></block>
   <block id="1d1d9d816e63b6c7d3057732579e8889" category="list-text">如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 而不是<block ref="61a52f7a75745796f63ec9e3ea2547b4" prefix=" " category="inline-code"></block> 创建或修改导出策略规则时。VAAI副本卸载功能要求使用NFSv4协议才能运行、即使数据协议为NFS3也是如此。将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 包括NFS3和NFSv4版本。</block>
   <block id="cc0f7f705e4495c607aea288505e31bf" category="sidebar">VMSC概述</block>
   <block id="de9a829f775bc333b77fdacbc333f7a1" category="sidebar">vSphere HA解决方案</block>
   <block id="70b29c8dabeb7a16884003c35e163f96" category="sidebar">VMSC设计</block>
   <block id="6c4755219197ce467bf892a552c8663a" category="sidebar">VMSC故障恢复能力</block>
   <block id="13376e3e9b02a56731aa64aeb10947b2" category="sidebar">使用MCC的VMSC场景</block>
+  <block id="7f38ad8ab5454e76108c14e424240237" category="doc">适用于Oracle数据库的FC配置</block>
+  <block id="f0a36f02b824ef55cbd63aa2700a4ec9" category="summary">基于Oracle数据库快照的备份和恢复</block>
+  <block id="77243afc69ab08d8277d0e23dda813d9" category="doc">Oracle数据库联机备份</block>
+  <block id="4ac7e99e454283880f5bdf93e9d59eb9" category="summary">Oracle数据库完整文件FabricPool层</block>
+  <block id="3dd6786160916127fc2f6fc2ec955bbe" category="summary">具有ONTAP零块检测功能的ASM Recasation Utility</block>
+  <block id="bd2f93a60ac38752d2c10a0bdbc6ea07" category="doc">ASM Recandation Utility和ONTAP零块检测</block>
+  <block id="89c60635365825dfa13d154785577592" category="summary">Oracle和TCP/IP以及以太网配置</block>
+  <block id="aaa024a70ffabce1e14fdc1a4b17fe8d" category="doc">Oracle数据库的TCP/IP和以太网配置</block>
+  <block id="665de76ea0059ac13982f04e19e74216" category="summary">使用Microsoft Windows的Oracle数据库</block>
+  <block id="0d4fbbc8820271a0ce5d46a15e7bf90f" category="paragraph">使用ONTAP在Microsoft Windows上配置Oracle数据库主题。</block>
+  <block id="422956aac4f76239935ded6a492144f2" category="summary">ONTAP专为Oracle数据库而设计。了解详情！</block>
+  <block id="795da6575a33e265d7d9a5774cd10e6f" category="summary">基于ONTAP的Oracle数据库的一致性组备份</block>
+  <block id="33c729820ffa60f55745fa3c259e273c" category="doc">Oracle数据库一致性组备份</block>
+  <block id="56abf0735f338713ce53e8cdecd6994e" category="paragraph">要进行最简单的备份、只需将整个Oracle数据库放在一个ONTAP卷中即可</block>
+  <block id="190d2bad1c6e231bc18c33e002e663c7" category="summary">Oracle数据库和直连ONTAP连接</block>
+  <block id="0953588ff4980e20b797cd3bb6d1260f" category="summary">使用MetroCluster进行Oracle数据库故障转移</block>
+  <block id="4a3f422632f7d08bf0e6c05affea24e4" category="summary">采用SyncMirror的Oracle数据库</block>
+  <block id="5bbdf1e19bb3f7b70de51a3764fc5f19" category="doc">Oracle数据库存储Snapshot优化备份</block>
+  <block id="a962af081661ee46d4ef879de33c841e" category="paragraph">在Oracle 12c发布后、基于Snapshot的备份和恢复变得更加简单、因为无需将数据库置于热备份模式。因此、可以直接在存储系统上计划基于快照的备份、同时仍保留执行完整或时间点恢复的能力。</block>
+  <block id="fdf9dde4dc297fff7ac7b3c1458b0dad" category="doc">使用Oracle数据库进行LVM条带化</block>
+  <block id="d3c8171a7167ce43c547aac8fdd86cfb" category="doc">Oracle数据文件迁移</block>
+  <block id="9718528cb14225785c79e3afc4152efc" category="doc">Oracle数据库LUN大小调整和LUN计数</block>
+  <block id="cc04f79220a102bde5449a7c301b1a86" category="summary">使用SnapMirror活动同步进行Oracle数据库故障转移</block>
+  <block id="965468e7c31a9b37ffa82836603c784c" category="paragraph">在SnapMirror活动同步上托管Oracle数据库的主要原因是、在计划内和计划外存储事件期间提供透明的故障转移。</block>
+  <block id="ea7df930bd6bec6222e23d2b3af02a50" category="paragraph">SnapMirror主动同步支持两种类型的存储故障转移操作：计划内和计划外、其工作方式略有不同。管理员手动启动计划内故障转移、以便快速切换到远程站点、而计划外故障转移则由第三个站点上的调解器自动启动。计划内故障转移的主要目的是执行增量修补和升级、执行灾难恢复测试或采用一种正式策略、全年在站点之间切换操作、以证明完全的活动同步功能。</block>
+  <block id="f7c8b0ba16967990d91c2ca78d655eaa" category="paragraph">这些图显示了在正常操作、故障转移和故障恢复操作期间发生的情况。为便于说明、它们显示了一个复制的LUN。在实际的SnapMirror活动同步配置中、复制基于卷、其中每个卷包含一个或多个LUN、但为了简化情况、卷层已被删除。</block>
+  <block id="cfa86460b638615878bbee89b1b6d4c7" category="paragraph">绿线是活动路径、但可能会产生较长的延迟、因为该路径上的IO需要通过SnapMirror活动同步路径传递。额外的延迟取决于用于SnapMirror活动同步的站点之间的互连速度。</block>
+  <block id="175d350addf4717d454787f950938adf" category="paragraph"><block ref="175d350addf4717d454787f950938adf" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="033e21b9b80fa06986d25123f3025db5" category="paragraph"><block ref="033e21b9b80fa06986d25123f3025db5" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="f4d4f8b4d1153d0a9894be19e1f52e4e" category="paragraph"><block ref="f4d4f8b4d1153d0a9894be19e1f52e4e" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="22ea45ef5d49a1b807d571799d80613d" category="paragraph">源系统恢复使用后、SnapMirror活动同步可以重新同步复制、但运行的方向相反。现在、配置与起始点基本相同、只是已翻转主动镜像站点。</block>
+  <block id="3dd37fdc28ae50bae909f461c8eae979" category="paragraph"><block ref="3dd37fdc28ae50bae909f461c8eae979" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2702e101c97ce9a58738b1a4089319df" category="summary">MetroCluster逻辑架构和Oracle数据库</block>
+  <block id="784fdd6bf0ebb9c00eaefafc3f9a9cee" category="doc">RAID和Oracle数据库</block>
+  <block id="204d288bf0e9d1ee9912d68d6282d7a9" category="summary">采用AIX的Oracle数据库</block>
+  <block id="90b3697759466f587c318ce55df76258" category="doc">使用IBM AIX的Oracle数据库</block>
+  <block id="14ab10a24aa8f6c18bfdfd0d8a394dcb" category="paragraph">使用ONTAP的IBM AIX上的Oracle数据库的配置主题。</block>
+  <block id="b67d277a8a8f29f7b869c9bdbff5fcd1" category="summary">Oracle数据库和FabricPool检索策略</block>
+  <block id="2e34d4efdcf01f27eb9407a010ca1621" category="summary">使用FLI迁移Oracle—转换</block>
+  <block id="c5753b0ef1dfc2c724f24235a689d1ab" category="summary">Oracle数据库FabricPool分层策略</block>
+  <block id="57d15767e9302dbb67058ed0bd9eebac" category="doc">Oracle数据库和NVFAIL</block>
+  <block id="4f03272fa32b53344924740fd30fc52d" category="summary">Oracle数据库与Solaris</block>
+  <block id="91b10dcdb3d328fd4cbcf83d1ad8332e" category="summary">采用SnapMirror活动同步的单实例Oracle数据库</block>
+  <block id="eddade472f3875eca5684dbc91b70ee5" category="paragraph"><block ref="eddade472f3875eca5684dbc91b70ee5" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="206960915d76763c590449d5ef03639a" category="summary">基于ONTAP的Oracle数据库和快照的角色</block>
+  <block id="4bc550014af4fefad8f4cc8f0827c4b5" category="doc">Oracle数据库和基于快照的备份</block>
+  <block id="cf5bc9d838fb937caa7978b4a9b0f98a" category="paragraph">基于ONTAP的Oracle数据库数据保护的基础是NetApp Snapshot技术。</block>
+  <block id="ba5a23e78f51c1bcb1b82efbe1797502" category="summary">Oracle数据库参数—db_file_multiblock_read_count</block>
+  <block id="085e756798c73ce14f874c6f323311dc" category="doc">Oracle数据库参数：db_file_multiblock_read_count</block>
+  <block id="ea84db84607112a0d40fca3ff45dfffa" category="summary">使用ONTAP QoS进行Oracle数据库性能管理</block>
+  <block id="0af83eb081b1a831789867d7f0867610" category="summary">Oracle数据库管理和自动化工具</block>
+  <block id="7c58d5a62a9c29d2a846b210deea95f2" category="paragraph">ONTAP在Oracle数据库环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制以及高效创建FlexClone卷。</block>
+  <block id="64e5bd65ef1bbae4e5cbcc7405087f5a" category="summary">具有SnapMirror活动同步的Oracle RAC</block>
+  <block id="cf5f83a34537791646d1c495844a0ca7" category="paragraph">SnapMirror主动同步可精细控制数据集复制、以实现负载平衡或单个应用程序故障转移等目的。整体架构看起来像一个扩展的RAC集群、但某些数据库专用于特定站点、整体负载是分布式的。</block>
+  <block id="ef3f19fdb50e0ad5fa58f9f8dc6eb361" category="paragraph">除了粒度之外、使用SnapMirror主动的Oracle RAC的基本原则和选项与相同 <block ref="f7453402f1e4779ea0ec67d873358932" category="inline-link-macro-rx"></block></block>
+  <block id="591b3149d6cb247a04883c411dab3e24" category="summary">校验和和和和Oracle数据库完整性</block>
+  <block id="56f014c6fc8fac3e242c9d2e42c654c0" category="paragraph">ONTAP及其支持的协议包括多项功能、可保护Oracle数据库完整性、包括空闲数据和通过网络传输的数据。</block>
+  <block id="31b3368edcb737b712ee02926409c837" category="doc">Oracle数据库、MetroCluster和NVFAIL</block>
+  <block id="490e2f530e53cf85f8ce9b052a8336ec" category="paragraph">NVFAIL是ONTAP中的一项通用数据完整性功能、旨在最大限度地提高数据库的数据完整性保护。</block>
+  <block id="f2cf6b943d224a732c92223538580ee9" category="doc">基于MetroCluster的Oracle单实例</block>
+  <block id="4a8b1598ce3e861debc907a154c550bb" category="summary">采用SnapMirror活动同步的Oracle数据库</block>
+  <block id="2c0931d05d138f5ed298de6301f8b914" category="paragraph">SnapMirror主动同步可为各个Oracle数据库和应用程序环境实现选择性的RPO = 0同步镜像。</block>
+  <block id="23ac407fd735aa143b377c5ce899450a" category="paragraph">SnapMirror主动同步本质上是SAN的一项增强型SnapMirror功能、允许主机从托管LUN的系统以及托管其副本的系统访问LUN。</block>
+  <block id="b3bb502fe4549a90a1e8172726d68f50" category="paragraph">SnapMirror主动同步和SnapMirror同步共享一个复制引擎、但是、SnapMirror主动同步还包括一些附加功能、例如、企业级应用程序的透明应用程序故障转移和故障恢复。</block>
+  <block id="174334561d4297360aed6a35cab38797" category="paragraph">通过SnapMirror活动同步、可以使主存储阵列和远程存储阵列中的存储设备对主机操作系统可见。路径可通过非对称逻辑单元访问(AANAA)进行管理、ANAA是一种行业标准协议、用于确定存储系统与主机之间的优化路径。</block>
+  <block id="e1ffc166cd6595b5b47f9c72a57357ed" category="paragraph">SnapMirror活动同步关系位于不同集群上的一对SVM之间。这两个SVM都能够提供数据、但ALUA会优先使用当前拥有LUN所在驱动器所有权的SVM。远程SVM的IO将通过SnapMirror活动同步互连在中代理。</block>
+  <block id="a6c7f963d0151b1e80b754596853d273" category="paragraph">在正常操作下、远程副本始终是RPO = 0的同步副本、但有一个例外。如果无法复制数据、则使用SnapMirror主动同步时、将不再需要复制数据并恢复提供IO。如果客户认为复制链路丢失是近乎灾难的情况、或者不希望在无法复制数据时业务运营暂停、则首选此选项。</block>
+  <block id="ea1d91c32fcf0f4a1090fd0da341c014" category="paragraph">与其他存储灾难恢复解决方案不同、SnapMirror主动同步可提供非对称平台灵活性。每个站点的硬件不必相同。通过此功能、您可以调整用于支持SnapMirror活动同步的硬件的大小。如果需要支持完整的生产工作负载、远程存储系统可以与主站点完全相同；但是、如果灾难导致I/O减少、则与远程站点上较小的系统相比、可能会更经济高效。</block>
+  <block id="fafda72eb75b06280cc3e888b9db81c8" category="paragraph">ONTAP调解器是从NetApp支持下载的软件应用程序。调解器可自动执行主站点和远程站点存储集群的故障转移操作。它可以部署在内部或云端托管的小型虚拟机(VM)上。配置后、它将作为第三个站点来监控这两个站点的故障转移场景。</block>
+  <block id="3873b13983c66ae61dd877b0443a3828" category="summary">Oracle数据库和一致性组灾难恢复</block>
+  <block id="ede2d3fcaec1bb9dcda5a75c90f37368" category="summary">借助基于ONTAP的Oracle数据库最大限度地提高可用性</block>
+  <block id="9688c9c1c1d15e2f91a3a5b8e5f14bd4" category="doc">使用ONTAP可获得Oracle数据库</block>
+  <block id="44e95a6c3878f189a550b4c0314d3b33" category="paragraph">NetApp知道、数据库中的任务关键型数据最多。</block>
+  <block id="7aa93b5fc17b83fc9e4816155f8f59ab" category="summary">Oracle数据库性能测试</block>
+  <block id="f0d314849d584b208a69d7a0dc70ac03" category="doc">Oracle数据库性能优化和基准测试过程</block>
+  <block id="0b3a030b64747fb3830c79e1ffbef7ee" category="summary">Oracle数据库和对象存储访问中断</block>
+  <block id="99a1755be2504777b7e266ed14b33168" category="doc">Oracle数据库和ONTAP控制器故障转移/切换</block>
+  <block id="8dbb58cb7fbd4c7db3f14b9674e7d4e6" category="summary">借助SnapRestore快速恢复Oracle数据库</block>
+  <block id="fd0d4a1100bcbce28e8252537f7c4ef4" category="summary">Oracle数据库数据保护SLA</block>
+  <block id="48130805e35d0c7ab5afbcb71abb1ad0" category="doc">Oracle数据库RTO、RPO和SLA规划</block>
+  <block id="f359cd007fda575e70269cac76fab4af" category="paragraph">借助ONTAP、您可以根据业务需求轻松定制Oracle数据库数据保护策略。</block>
+  <block id="05f9f35345d8f2164958f3b6b7098fa7" category="summary">Oracle部分文件FabricPool分层</block>
+  <block id="48e2495d3eeb1b57ea7d073e06620063" category="doc">通过日志传送实现Oracle数据库迁移</block>
+  <block id="2cba4042f0a43491e4ea8f14238ae6e4" category="summary">Oracle和FabricPool快照层</block>
+  <block id="6f7b1d0f996b7d49f60586ce7fbeca36" category="doc">采用FabricPool快照层的Oracle</block>
+  <block id="35b12c67685c33721c1a59e8b736fd61" category="summary">Oracle数据库的NFS缓存</block>
+  <block id="1404b2da267c376dac716bd5455f4ff3" category="summary">使用FLI迁移Oracle—协议转换</block>
+  <block id="c37c1629ee55e6d553c16bbab86adbde" category="doc">将Oracle数据库迁移到ONTAP存储系统</block>
+  <block id="f1d34b6e878aac7179a735d301e4fb76" category="paragraph">利用新存储平台的功能有一个不可避免的要求：必须将数据放置在新存储系统上。ONTAP简化了迁移过程、包括ONTAP到ONTAP的迁移和升级、外部LUN导入以及直接使用主机操作系统或Oracle数据库软件的过程。</block>
+  <block id="b7433f552fcf8a4e34f2ccc357037d4e" category="doc">Oracle数据库主机数据复制</block>
+  <block id="1cede70bc6077ecbac9a77b03d1bc6e1" category="summary">针对Oracle数据库的数据保护规划</block>
+  <block id="e2bc0913921cafeb725765069883b685" category="paragraph">正确的Oracle数据库数据保护架构取决于数据保留、可恢复性以及各种事件期间中断容错能力方面的业务要求。</block>
+  <block id="c0b79db5f258f0c991a383cbdbf001dd" category="inline-link-macro">SnapMirror活动同步</block>
+  <block id="b271ca7bfee9443d4e34c93aec3bf582" category="paragraph">本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括 <block ref="5c964f26ec7fbbad5ac67aaa5dcf9269" category="inline-link-macro-rx"></block> 和 <block ref="616da5f81198f2eba9be909bb0f0b117" category="inline-link-macro-rx"></block></block>
+  <block id="8a05777f407870cbc2668230c8117503" category="summary">使用Linux和ASMlib/ASM筛选器驱动程序的Oracle数据库</block>
+  <block id="494900ae2c2cdb5abdba3806f4dfaeb0" category="doc">使用ASMLi/AFD的Oracle数据库(ASM筛选器驱动程序)</block>
+  <block id="afae47e326854c63cbc85989720416e0" category="summary">使用FLI迁移Oracle—规划</block>
+  <block id="85cef7bf4ac9d983cf8e1e11785eeef1" category="summary">使用FLI迁移Oracle—完成</block>
+  <block id="a92eff1aa9c637ada9c5a8c7c71a5edc" category="doc">Oracle数据库LUN大小调整和基于LVM的大小调整</block>
+  <block id="0c5284e14535835121effc8afb702b28" category="summary">使用ONTAP进行Oracle数据库灾难恢复</block>
+  <block id="2ba21d57ee7f1d78a405b9e80c6aaf6b" category="paragraph">对于大多数客户而言、灾难恢复不仅需要拥有远程数据副本、还需要能够快速利用这些数据。NetApp提供了两种技术来满足这一需求—MetroCluster和SnapMirror主动同步</block>
+  <block id="107bcc34799abe752a088be24869419c" category="paragraph">SnapMirror活动同步基于SnapMirror同步。通过MetroCluster、每个ONTAP控制器都负责将其驱动器数据复制到远程位置。使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。</block>
+  <block id="d8f57e6104c0329961c4d91e154c4f27" category="paragraph">虽然SnapMirror主动同步和MetroCluster在内部的工作方式截然不同、但对于主机来说、结果却非常相似。主要区别在于粒度。如果您只需要选择要同步复制的工作负载、则SnapMirror活动同步是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SnapMirror主动同步目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。</block>
+  <block id="50ae143b75fc238e91c09c750cf211c1" category="summary">Oracle数据库参数—filesystemio_options</block>
+  <block id="23c61da1d42f69597a6ab97e333a560f" category="doc">Oracle数据库参数：filesystemio_options</block>
+  <block id="8dcef4b75bc24cd58c3153dbfea25d0d" category="summary">Oracle数据库和SnapMirror活动同步失败情形</block>
+  <block id="9e1d7b20d80dca74b98aba2df90c2ac0" category="doc">Oracle数据库和SnapMirror活动同步失败情形</block>
+  <block id="59b0f50492db68037c67566a379980c1" category="paragraph">存在多种SnapMirror活动同步(SM-AS)故障情形、每种情形的结果各不相同。</block>
+  <block id="e4a8a67910cb40e92db607431fb60238" category="cell">故障站点上的服务器显然将不再可用。支持集群的应用程序可以配置为在两个站点上运行、并在备用站点上继续运行、但大多数此类应用程序都需要第三个站点的Tieb破碎 机、就像SM-AS需要调解器一样。
+
+如果没有应用程序级集群、则需要在运行正常的站点上启动应用程序。这会影响可用性、但会保留RPO = 0。不会丢失任何数据。</block>
+  <block id="cf451e0aed3c944d3f1c761387762e56" category="summary">使用Linux的Oracle数据库</block>
+  <block id="e712ed441aacc4eeecb5656d5493c99c" category="summary">使用HP-UX的Oracle数据库</block>
+  <block id="c36ae718fe9d7978c8781b19d0b3dee0" category="paragraph">使用ONTAP在HP-UX上配置Oracle数据库主题。</block>
+  <block id="45df37151f6a0fd8a3b55d0423459f82" category="doc">Oracle数据库I/O的LUN对齐</block>
+  <block id="a73cbc9997ca90c0cc5b6d9e9b475272" category="summary">Oracle数据库FabricPool层管理</block>
+  <block id="857a8adc9eda2d9e197a52323daca558" category="doc">Oracle数据库FabricPool层概述</block>
+  <block id="fd73b1ca3b942a1514078a7e59c7433b" category="summary">Oracle数据库和过时的NFSv3锁定</block>
+  <block id="102aeb54bf1a69403672f53090c52878" category="summary">通过日志传送实现Oracle数据库灾难恢复</block>
+  <block id="d470f5db851ef84aaa776600805af48b" category="summary">Oracle数据库虚拟化简介</block>
+  <block id="b8fc1174bb3f1c65475334182829f75e" category="doc">Oracle数据库虚拟化</block>
+  <block id="b1b3f70e4333a9dbda75a98ceb78db39" category="summary">MetroCluster物理架构和Oracle数据库</block>
+  <block id="250bce9fbefc7872908d9c2708fc753b" category="doc">Oracle数据库备份层</block>
+  <block id="4fbe2d000cdf5390ca980149d98eec4d" category="summary">Oracle数据库迁移规划</block>
+  <block id="d11e22f56fe0c9dd85597038a25cd80d" category="doc">Oracle数据库和存储容量管理</block>
+  <block id="1234e92308935cf0a5a22541f312c541" category="summary">采用SnapMirror和SyncMirror的Oracle数据库</block>
+  <block id="a4cdac841b6453db2f51ce52a1303209" category="paragraph">SnapMirror复制和中断的CG SnapMirror关系可保持卷之间的一致性、而SnapMirror同步和SnapMirror活动同步则可保持成分卷之间的一致性。</block>
+  <block id="454ff7e5f4a8d37cf6b16b804deca2b6" category="summary">Oracle数据库块大小</block>
+  <block id="eed7df980a6ae17f8e0fecdecf0e25f4" category="doc">Oracle迁移操作步骤示例脚本</block>
+  <block id="fac6d6b61dd6bd3ee73d5b425bc5a3b7" category="doc">使用Oracle数据库进行精简配置</block>
+  <block id="35ebaedc3385b350dff13e0cfa869c9f" category="summary">Oracle RAC超时</block>
+  <block id="a920434a7bcd979e2ece4092cd8b8a19" category="doc">Oracle Real Application Clusters (RAC)超时</block>
+  <block id="710cf627a103721a0452cb72494ea742" category="admonition">有关存储效率与预留百分比之间交互的说明、请参见以下有关精简配置的章节。</block>
+  <block id="8bc1cc1880ea3a623cb9b80b8cbb7b72" category="paragraph">数据压缩方法有多种。许多数据库都具有自己的数据压缩功能、但在客户环境中很少出现这种情况。原因通常是对压缩数据*进行更改*会对性能造成影响、此外、对于某些应用程序、数据库级数据压缩的许可成本较高。最后、还会对数据库操作产生整体性能影响。为执行数据压缩和解压缩的CPU支付较高的每CPU许可证成本毫无意义、而不是实际的数据库工作。更好的选择是将压缩工作负载分流到存储系统。</block>
+  <block id="3e98696b9bb83904c14603458a8c3728" category="admonition">自适应数据压缩使用的块大小最多可以增加到32 KB。这可能会提高存储效率、对于事务日志和备份文件等不活动的文件、如果阵列上存储了大量此类数据、则应考虑使用此方法。在某些情况下、使用16 KB或32 KB块大小的活动数据库也可以通过增加要匹配的自适应数据压缩的块大小来受益。请咨询NetApp或合作伙伴代表、了解这是否适合您的工作负载。</block>
+  <block id="0e6f69b7cb8364ed908c411686154808" category="admonition">在流式备份目标上、不应同时使用大于8 KB的数据压缩块大小和重复数据删除。原因是、对备份的数据所做的微小更改会影响32 KB数据压缩窗口。如果窗口发生变化、则生成的压缩数据会在整个文件中有所不同。重复数据删除在数据压缩后进行、这意味着重复数据删除引擎对每个压缩备份的看法不同。如果需要对流式备份进行重复数据删除、则只应使用8 KB块自适应数据压缩。最好使用自适应数据压缩、因为它的块大小较小、不会影响重复数据删除的效率。出于类似的原因、主机端压缩也会影响重复数据删除效率。</block>
+  <block id="e8a7060409e1a82af9dacfe72458ffac" category="paragraph">例如、只有当8 KB写入文件与文件系统本身内的8 KB边界对齐时、才会对其进行压缩。这一点意味着它必须位于文件的前8 KB、文件的后8 KB、依此类推。要确保正确对齐、最简单的方法是使用正确的LUN类型、创建的任何分区都应与设备起始位置偏移8K的倍数、并使用数据库块大小的倍数作为文件系统块大小。</block>
+  <block id="96738983d52a374cb4a8c958e924836e" category="paragraph">备份或事务日志等数据是跨多个块按顺序写入的操作、所有这些块都会进行压缩。因此、无需考虑对齐。唯一关注的I/O模式是随机覆盖文件。</block>
+  <block id="1afe2c0821b67085f9ea2d2deeb2e92a" category="paragraph">数据缩减是一项可提高数据压缩效率的技术。如前文所述、自适应数据压缩本身最多可节省2：1的空间、因为它仅限于在4 KB WAFL块中存储8 KB I/O。块大小越大、压缩方法的效率越高。但是、它们不适用于受到小块覆盖的数据。解压缩32 KB数据单元、更新8 KB部分、重新压缩以及回写驱动器会产生开销。</block>
+  <block id="82116b39cd4d0d1920fab1ab4515603b" category="paragraph">节省的资金数额各不相同。已压缩或加密的数据通常无法进一步压缩、因此、数据集无法从数据缩减中受益。相比之下、新初始化的数据文件包含的块元数据和零数据略多、数据压缩率高达80：1。</block>
+  <block id="648bfcfcbad0911f90c81de48afd0a97" category="paragraph">某些数据不包含重复数据。例如、Oracle块包含数据库全局唯一的标头和几乎唯一的尾部。因此、对Oracle数据库进行重复数据删除很少能节省超过1%的空间。对MS SQL数据库执行重复数据删除的效果稍好、但块级别的唯一元数据仍是一个限制。</block>
+  <block id="2608473fa5767385d01f256eccbc1cc4" category="paragraph">许多争用资源的阵列都声称可以根据数据库被复制多次的假设对数据库进行重复数据删除。在这方面、也可以使用NetApp重复数据删除、但ONTAP提供了一个更好的选择：NetApp FlexClone技术。最终结果是相同的；系统会为一个数据库创建多个副本、这些副本共享大多数底层物理块。与花时间复制数据库文件并对其进行重复数据删除相比、使用FlexClone的效率要高得多。实际上、它是无重复数据删除、而不是重复数据删除、因为从一开始就不会创建重复数据。</block>
+  <block id="7e96c1b651af3f28c27b78807f0310e2" category="paragraph">强烈建议使用精简配置、因为它可以简化管理、同时显著提高可用容量并节省相关成本。原因很简单—数据库环境通常包含大量空空间、大量卷和LUN以及可压缩数据。厚配置会为卷和LUN预留存储空间、以防它们最终达到100%全满并包含100%不可压缩数据。这种情况不大可能发生。通过精简配置、可以回收这些空间并将其用于其他位置、并可以基于存储系统本身进行容量管理、而不是基于许多较小的卷和LUN。</block>
+  <block id="0f55b43344575cc268bf51ae032d47c2" category="paragraph">NetApp建议执行以下操作：</block>
+  <block id="f67b854e2d644480b0ec40d7de2b773d" category="paragraph">在纯闪存AFF系统上运行的ONTAP上创建的卷经过精简配置、并启用了所有实时效率功能。尽管数据库通常不会从重复数据删除中受益、并且可能包含不可压缩的数据、但默认设置适用于几乎所有工作负载。ONTAP旨在高效处理所有类型的数据和I/O模式、无论它们是否可节省空间。只有在完全了解原因且有优势的情况下、才应更改默认值。</block>
+  <block id="649141c6b8267ea3df10949a853d22cb" category="list-text">不要在数据库备份中同时使用32 KB数据压缩和重复数据删除。请参见一节 <block ref="57ee2712afc5e59236f86db0537b05dc" category="inline-xref-macro-rx"></block> 了解详细信息。</block>
+  <block id="5059ada12bae6c7e7fac9338d88301b5" category="doc">Oracle数据库归档日志层</block>
+  <block id="b7e89b3a1ff13c93cc5c038440e48f58" category="paragraph">要了解更多信息、请启动https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html[here.]</block>
+  <block id="3523f36547455fbfe320b80ec95692a1" category="list-text">从ONTAP 9.14.1开始、VMware和NetApp当前支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。有关nconnect的详细信息、请参见 <block ref="02d8f27a1357a6da615dccc5370c5ccc" category="inline-link-macro-rx"></block>。对于采用ONTAP 9.8的FlexGroup、我们建议的最佳实践是、让适用于VMware vSphere的ONTAP工具创建FlexGroup、但随后您应将其卸载、然后使用循环DNS重新挂载、以便在集群中分布负载。ONTAP工具在挂载数据存储库时仅使用一个LIF。重新挂载数据存储库后、可以使用ONTAP工具对其进行监控和管理。</block>
+  <block id="b18f27f1f513fb30a8fe0e92646ceab7" category="list-text">从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见 <block ref="02d8f27a1357a6da615dccc5370c5ccc" category="inline-link-macro-rx"></block>。</block>
+  <block id="4abda684ecc952239d7800547dcf2995" category="sidebar">基于MetroCluster的Oracle SI</block>
+  <block id="8ce34b299aaaa41e3dfdfefd9bd453d0" category="sidebar">采用SnapMirror活动同步的Oracle SI</block>
 </blocks>

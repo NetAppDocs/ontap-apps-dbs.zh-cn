@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dp-planning.html 
 keywords: data protection, DR, snapshots, CG 
-summary: ONTAP数据保护策略 
+summary: 针对Oracle数据库的数据保护规划 
 ---
-= 数据保护规划
+= 针对Oracle数据库的数据保护规划
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: ONTAP数据保护策略
 
 
 [role="lead"]
-正确的企业级数据保护架构取决于数据保留、可恢复性以及在各种事件期间对中断的承受能力方面的业务要求。
+正确的Oracle数据库数据保护架构取决于数据保留、可恢复性以及各种事件期间中断容错能力方面的业务要求。
 
 例如、考虑范围内的应用程序、数据库和重要数据集的数量。为单个数据集构建备份策略以确保符合典型SLA要求相当简单、因为无需管理太多对象。随着数据集数量的增加、监控变得更加复杂、管理员可能不得不花费越来越多的时间来解决备份故障。随着环境达到云和服务提供商规模、需要采用完全不同的方法。
 
@@ -52,7 +52,7 @@ summary: ONTAP数据保护策略
 
 == 复制和灾难恢复架构
 
-本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括 link:../metrocluster/overview.html["MetroCluster"] 和 link:../smbc/overview.html["SnapMirror 业务连续性"]
+本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括 link:../metrocluster/overview.html["MetroCluster"] 和 link:../smbc/overview.html["SnapMirror活动同步"]
 
 灾难恢复RPO受可用网络带宽和所保护数据的总大小限制。创建初始基线传输后、更新仅基于更改后的数据、尽管存在例外情况、但更改后的数据在总数据占用空间中所占的百分比通常很低。
 

@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-migration-planning.html 
 keywords: migration, oracle 
-summary: Oracle迁移规划 
+summary: Oracle数据库迁移规划 
 ---
-= Oracle迁移规划
+= Oracle数据库迁移规划
 :allow-uri-read: 
 
 

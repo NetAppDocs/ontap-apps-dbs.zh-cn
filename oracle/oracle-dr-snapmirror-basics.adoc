@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-snapmirror-basics.html 
 keywords: ontap, snapmirror 
-summary: SnapMirror和SyncMirror 
+summary: 采用SnapMirror和SyncMirror的Oracle数据库 
 ---
-= SnapMirror和SyncMirror
+= 采用SnapMirror和SyncMirror的Oracle数据库
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -72,7 +72,7 @@ StrictSync可保证RPO = 0。无法复制更改会导致I/O错误、这通常会
 
 ONTAP允许创建一致性组快照、从9.13.1开始、ONTAP可以将卷组(请记住、ONTAP术语中的卷不是LUN、而是由一个或多个文件或LUN组成的管理容器)复制为一致的组。
 
-SnapMirror复制和中断CG SnapMirror关系可保持卷之间的一致性、而SnapMirror同步和SnapMirror业务连续性都可保持成分卷之间的一致性。
+SnapMirror复制和中断的CG SnapMirror关系可保持卷之间的一致性、而SnapMirror同步和SnapMirror活动同步则可保持成分卷之间的一致性。
 
 这样、您就可以复制多卷数据集、并确保所有卷都是交叉一致的。此外、这还允许"中断镜像并开始"灾难恢复操作、而无需执行其他应用程序或数据库恢复步骤。
 

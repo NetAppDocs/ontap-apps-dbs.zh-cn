@@ -76,7 +76,7 @@ ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身
 
 自动化需要API调用、但并非所有工具都需要完全管理访问权限。为了帮助保护自动化系统的安全、还在API级别提供了RBAC。您可以将自动化用户帐户限制为所需的API调用。例如、监控软件不需要更改访问权限、只需要读取访问权限即可。配置存储的工作流不需要删除存储。
 
-要了解更多信息、请开始 link:https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html["此处。"]
+要了解更多信息、请启动https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html[here.]
 
 
 

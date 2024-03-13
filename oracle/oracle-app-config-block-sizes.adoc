@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
 permalink: oracle/oracle-app-config-block-sizes.html 
-keywords: oracle, database, ontap, SAN, ASM 
-summary: Oracle块大小 
+keywords: oracle, database, ontap, SAN, ASM, blocks 
+summary: Oracle数据库块大小 
 ---
-= Oracle块大小
+= Oracle数据库块大小
 :allow-uri-read: 
 
 

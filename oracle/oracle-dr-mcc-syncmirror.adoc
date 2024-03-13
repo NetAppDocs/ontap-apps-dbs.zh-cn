@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-syncmirror.html 
 keywords: metrocluster, syncmirror 
-summary: Oracle和SyncMirror 
+summary: 采用SyncMirror的Oracle数据库 
 ---
-= SyncMirror—Oracle
+= 采用SyncMirror的Oracle数据库
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

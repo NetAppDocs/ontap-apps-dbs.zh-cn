@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: oracle/oracle-overview.html 
 keywords: oracle, database, ontap, TR-3633 
-summary: NetApp ONTAP是一款功能强大的数据管理平台、具有本机功能、包括即时备份、还原和克隆功能、实时数据压缩等效率功能、无中断硬件升级以及从外部存储阵列导入LUN的功能。 
+summary: ONTAP专为Oracle数据库而设计。了解详情！ 
 ---
 = 基于ONTAP的Oracle数据库
 :allow-uri-read: 

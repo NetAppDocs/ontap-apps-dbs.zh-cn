@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-nvfail.html 
 keywords: metrocluster, nvfail, switchover 
-summary: NVFAIL 
+summary: Oracle、MetroCluster和NVFAIL 
 ---
-= Oracle、MetroCluster和NVFAIL
+= Oracle数据库、MetroCluster和NVFAIL
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: NVFAIL
 
 
 [role="lead"]
-NVFAIL是ONTAP中的一项常规数据完整性功能、对于数据库工作负载尤为重要。
+NVFAIL是ONTAP中的一项通用数据完整性功能、旨在最大限度地提高数据库的数据完整性保护。
 
 
 NOTE: 本节将详细介绍基本ONTAP NVFAIL、以涵盖MetroCluster特定的主题。

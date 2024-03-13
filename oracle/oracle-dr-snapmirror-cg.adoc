@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-snapmirror-cg.html 
 keywords: oracle, data protection, DR, CG 
-summary: Oracle数据库的一致性组复制 
+summary: Oracle数据库和一致性组灾难恢复 
 ---
-= 一致性组灾难恢复
+= Oracle数据库和一致性组灾难恢复
 :allow-uri-read: 
 
 

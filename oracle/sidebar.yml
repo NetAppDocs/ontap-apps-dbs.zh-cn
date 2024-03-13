@@ -150,19 +150,19 @@ entries:
       url: "/oracle/oracle-dr-mcc-failover.html"
     - title: NVFAIL
       url: "/oracle/oracle-dr-mcc-nvfail.html"
-    - title: MetroCluster上的单个实例
+    - title: 基于MetroCluster的Oracle SI
       url: "/oracle/oracle-dr-mcc-si.html"
     - title: 基于MetroCluster的Oracle RAC
       url: "/oracle/oracle-dr-mcc-rac.html"
-  - title: SnapMirror 业务连续性
+  - title: SnapMirror活动同步
     entries:
     - title: 架构
       url: "/oracle/oracle-dr-smbc-architecture.html"
     - title: 故障转移
       url: "/oracle/oracle-dr-smbc-failover.html"
-    - title: SM-BC上的单个实例
+    - title: 采用SnapMirror活动同步的Oracle SI
       url: "/oracle/oracle-dr-smbc-si.html"
-    - title: 基于SM-BC的Oracle RAC
+    - title: 具有SnapMirror活动同步的Oracle RAC
       url: "/oracle/oracle-dr-smbc-rac.html"
     - title: 故障情形
       url: "/oracle/oracle-dr-smbc-failure-scenarios.html"

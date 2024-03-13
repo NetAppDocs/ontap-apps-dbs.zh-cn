@@ -2,14 +2,14 @@
 sidebar: sidebar 
 permalink: oracle/oracle-host-config-hp-ux.html 
 keywords: oracle, database, ontap, hp-ux 
-summary: 使用HP-UX在ONTAP上运行Oracle 
+summary: 使用HP-UX的Oracle数据库 
 ---
-= HP-UX
+= 使用HP-UX的Oracle数据库
 :allow-uri-read: 
 
 
 [role="lead"]
-特定于HP-UX操作系统的配置主题。
+使用ONTAP在HP-UX上配置Oracle数据库主题。
 
 
 

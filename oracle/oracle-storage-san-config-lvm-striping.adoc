@@ -4,7 +4,7 @@ permalink: oracle/oracle-storage-san-config-lvm-striping.html
 keywords: SAN, ASM, LVM 
 summary: Oracle数据库的LVM条带配置 
 ---
-= 使用Oracle数据库执行LVM带
+= 使用Oracle数据库进行LVM条带化
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-migration-fli-protocol-conversion.html 
 keywords: migration, oracle, FLI 
-summary: 在FLI迁移后更改SAN协议 
+summary: 使用FLI迁移Oracle—协议转换 
 ---
-= FLI协议转换—Oracle
+= 使用FLI迁移Oracle—协议转换
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

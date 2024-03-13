@@ -4,7 +4,7 @@ permalink: oracle/oracle-migration-datafile-move.html
 keywords: migration, oracle, move datafile 
 summary: 迁移单个Oracle数据文件 
 ---
-= 数据文件移动
+= Oracle数据文件迁移
 :allow-uri-read: 
 
 

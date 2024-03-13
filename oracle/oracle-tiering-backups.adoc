@@ -4,7 +4,7 @@ permalink: oracle/oracle-tiering-backups.html
 keywords: tiering, fabricpool 
 summary: Oracle备份层 
 ---
-= Oracle备份层
+= Oracle数据库备份层
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

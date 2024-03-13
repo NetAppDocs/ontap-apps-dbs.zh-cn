@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-physical.html 
 keywords: metrocluster, MCC, MCC-IP 
-summary: MetroCluster物理架构—Oracle 
+summary: MetroCluster物理架构和Oracle数据库 
 ---
-= MetroCluster物理架构—Oracle
+= MetroCluster物理架构和Oracle数据库
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

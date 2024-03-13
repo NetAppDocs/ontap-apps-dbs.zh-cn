@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-storage-san-config-asmru.html 
 keywords: ontap, thin provisioning 
-summary: 带有ONTAP的ASM Recasation实用程序 
+summary: 具有ONTAP零块检测功能的ASM Recasation Utility 
 ---
-= ASM Recandation Utility和零块检测
+= ASM Recandation Utility和ONTAP零块检测
 :allow-uri-read: 
 
 

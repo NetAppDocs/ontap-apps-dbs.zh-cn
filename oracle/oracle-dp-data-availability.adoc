@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dp-data-availability.html 
 keywords: data protection, availability, takeover, giveback, switchover, switchback 
-summary: 借助基于ONTAP的Oracle最大限度地提高可用性 
+summary: 借助基于ONTAP的Oracle数据库最大限度地提高可用性 
 ---
-= 借助ONTAP实现Oracle数据可用性
+= 使用ONTAP可获得Oracle数据库
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

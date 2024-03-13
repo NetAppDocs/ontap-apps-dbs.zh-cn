@@ -4,7 +4,7 @@ permalink: oracle/oracle-ontap-config-failover.html
 keywords: failover, switchover 
 summary: 要确保Oracle数据库操作不会被这些操作中断、需要了解存储接管和切换功能。此外、如果使用不当、接管和切换操作使用的参数可能会影响数据完整性。 
 ---
-= Oracle和ONTAP控制器故障转移/切换
+= Oracle数据库和ONTAP控制器故障转移/切换
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

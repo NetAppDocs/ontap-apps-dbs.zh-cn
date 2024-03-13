@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-tiering-retrieval-policies.html 
 keywords: tiering, FabricPool 
-summary: Pr神奇 分层检索策略 
+summary: Oracle数据库和FabricPool检索策略 
 ---
-= 检索策略
+= Oracle数据库和FabricPool检索策略
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

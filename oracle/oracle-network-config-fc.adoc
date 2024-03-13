@@ -4,7 +4,7 @@ permalink: oracle/oracle-network-config-fc.html
 keywords: SAN, zoning 
 summary: 适用于Oracle数据库的FC网络配置 
 ---
-= 适用于Oracle的FC配置
+= 适用于Oracle数据库的FC配置
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

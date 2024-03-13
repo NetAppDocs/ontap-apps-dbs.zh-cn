@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-snapmirror-log-replay.html 
 keywords: oracle, ontap, disaster recovery, log reply, log shipping 
-summary: 基于ONTAP DR操作步骤的Oracle、具有日志传送功能 
+summary: 通过日志传送实现Oracle数据库灾难恢复 
 ---
-= 通过日志重放实现灾难恢复
+= 通过日志传送实现Oracle数据库灾难恢复
 :allow-uri-read: 
 
 

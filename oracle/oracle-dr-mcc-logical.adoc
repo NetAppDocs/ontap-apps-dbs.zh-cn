@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-logical.html 
 keywords: metrocluster, mcc, mcc-ip 
-summary: MetroCluster逻辑架构—Oracle 
+summary: MetroCluster逻辑架构和Oracle数据库 
 ---
-= MetroCluster逻辑架构—Oracle
+= MetroCluster逻辑架构和Oracle数据库
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

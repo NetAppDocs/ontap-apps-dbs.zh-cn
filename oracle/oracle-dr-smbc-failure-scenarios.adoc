@@ -1,10 +1,10 @@
 ---
 permalink: oracle/oracle-dr-smbc-failure-scenarios.html 
 sidebar: sidebar 
-keywords: SM-BC, smbc, failover 
-summary: Oracle SM-BC故障场景 
+keywords: SnapMirror active sync, smbc, failover 
+summary: Oracle数据库和SnapMirror活动同步失败情形 
 ---
-= Oracle SM-BC故障场景
+= Oracle数据库和SnapMirror活动同步失败情形
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: Oracle SM-BC故障场景
 
 
 [role="lead"]
-存在多种SnapMirror业务连续性(SM-BC)故障情形、每种情形的结果各不相同。
+存在多种SnapMirror活动同步(SM-AS)故障情形、每种情形的结果各不相同。
 
 [cols="1,1"]
 |===
@@ -43,7 +43,7 @@ summary: Oracle SM-BC故障场景
 | 磁盘丢失 | IO最多会连续发生三次磁盘故障。这是RAID-TEC的一部分。 
 
 
-| 在典型部署中丢失整个站点 | 故障站点上的服务器显然将不再可用。支持集群的应用程序可以配置为在两个站点上运行、并在备用站点上继续运行、但大多数此类应用程序都需要第三个站点的Tieb破碎 机、就像SM-BC需要调解器一样。
+| 在典型部署中丢失整个站点 | 故障站点上的服务器显然将不再可用。支持集群的应用程序可以配置为在两个站点上运行、并在备用站点上继续运行、但大多数此类应用程序都需要第三个站点的Tieb破碎 机、就像SM-AS需要调解器一样。
 
 如果没有应用程序级集群、则需要在运行正常的站点上启动应用程序。这会影响可用性、但会保留RPO = 0。不会丢失任何数据。 
 |===

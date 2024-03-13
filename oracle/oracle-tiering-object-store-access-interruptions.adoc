@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-tiering-object-store-access-interruptions.html 
 keywords: tiering, fabricpool, interruption 
-summary: 对象存储访问中断期间的数据库访问 
+summary: Oracle数据库和对象存储访问中断 
 ---
-= 对象存储访问中断
+= Oracle数据库和对象存储访问中断
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

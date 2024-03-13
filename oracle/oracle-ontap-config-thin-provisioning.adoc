@@ -4,7 +4,7 @@ permalink: oracle/oracle-ontap-config-thin-provisioning.html
 keywords: thin provisioning, oracle 
 summary: Oracle和ONTAP精简配置 
 ---
-= 使用Oracle进行精简配置
+= 使用Oracle数据库进行精简配置
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

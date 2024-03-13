@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: oracle/oracle-network-config-ethernet.html 
 keywords: ethernet, jumbo frames, MTU 
-summary: Oracle和TCP/IP以及以太网配置。 
+summary: Oracle和TCP/IP以及以太网配置 
 ---
 = Oracle数据库的TCP/IP和以太网配置
 :hardbreaks:

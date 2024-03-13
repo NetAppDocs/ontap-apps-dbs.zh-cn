@@ -2,14 +2,14 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dp-consistency-group-backup.html 
 keywords: oracle, data, protection, consistency, group, backup, volume, archive, log, redo, controlfiles 
-summary: 基于ONTAP的Oracle一致性组备份 
+summary: 基于ONTAP的Oracle数据库的一致性组备份 
 ---
-= Oracle一致性组备份
+= Oracle数据库一致性组备份
 :allow-uri-read: 
 
 
 [role="lead"]
-要进行最简单的备份、只需将整个Oracle数据库放在一个卷中即可。
+要进行最简单的备份、只需将整个Oracle数据库放在一个ONTAP卷中即可
 
 使用单个快照保护数据文件、归档日志、重做日志和控制文件是一种有效的备份、还原和复制方法。  但是、RPO仅限于备份本身的时间点。它适用于一小时或更长时间的RPO。如果数据库跨越多个卷、则需要使用前面讨论的工具之一创建CG快照。
 

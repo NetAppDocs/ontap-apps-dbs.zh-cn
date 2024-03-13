@@ -4,12 +4,12 @@ permalink: oracle/oracle-migration-overview.html
 keywords: oracle, ontap, migrations, TR-4534 
 summary: Oracle存储迁移简介 
 ---
-= 将Oracle数据库迁移到NetApp存储系统
+= 将Oracle数据库迁移到ONTAP存储系统
 :allow-uri-read: 
 
 
 [role="lead"]
-利用新存储平台的功能有一个不可避免的要求：必须将数据放置在新存储系统上。
+利用新存储平台的功能有一个不可避免的要求：必须将数据放置在新存储系统上。ONTAP简化了迁移过程、包括ONTAP到ONTAP的迁移和升级、外部LUN导入以及直接使用主机操作系统或Oracle数据库软件的过程。
 
 
 NOTE: 本文档将取代先前发布的技术报告_TR-4534：《将Oracle数据库迁移到NetApp存储系统》_

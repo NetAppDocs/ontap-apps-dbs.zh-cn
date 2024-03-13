@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dp-backup-tools.html 
 keywords: ontap, data protection 
-summary: Oracle和NetApp备份工具 
+summary: Oracle数据库管理和自动化工具 
 ---
-= SnapCenter和其他工具
+= Oracle数据库管理和自动化工具
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: Oracle和NetApp备份工具
 
 
 [role="lead"]
-ONTAP在应用程序环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制和高效创建FlexClone卷。
+ONTAP在Oracle数据库环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制以及高效创建FlexClone卷。
 
 在某些情况下、直接在ONTAP上配置这些核心功能即可满足要求、但更复杂的需求则需要一个业务流程层。
 

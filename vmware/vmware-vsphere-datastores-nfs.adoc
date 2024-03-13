@@ -23,7 +23,7 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 +
 ** 由于 NFSv3 和 NFSv4.1 之间不会自动转换数据存储库，因此请创建一个新的 NFSv4.1 数据存储库，并使用 Storage vMotion 将 VM 迁移到新数据存储库。
 ** 请参见中的 NFS v4.1 互操作性表注释 https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^] 支持所需的特定 ESXi 修补程序级别。
-** 从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见 https://docs.netapp.com/us-en/netapp-solutions_nconnect/virtualization/vmware-vsphere8-nfsv3-nconnect.html["NetApp和VMware的NFSv3 nConnect功能"]
+** 从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见 link:vmware-vsphere-network.html#nfs["此处"]。
 
 
 * NFS 导出策略用于控制 vSphere 主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值 `-anon` 和 `-allow-suid` ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：
