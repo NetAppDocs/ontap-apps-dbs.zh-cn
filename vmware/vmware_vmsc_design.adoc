@@ -47,23 +47,23 @@ summary: 《VMSC设计和实施准则》。
 . 右键单击数据中心对象、然后选择"New Cluster"(新建集群)。在基础下、确保已启用vSphere DRS和vSphere HA。完成向导。
 
 
-image::../media/vmsc_3_1.png[自动生成的计算机问题描述的屏幕截图,624,302]
+image::../media/vmsc_3_1.png[新建集群,624,302]
 
 . 选择集群并转到配置选项卡。选择vSphere HA、然后单击编辑。
 . 在"Host Monitoring"(主机监控)下、选择"Enable Host Monitoring"(启用主机监控)选项。
 
 
-image::../media/vmsc_3_2.png[自动生成的计算机问题描述的屏幕截图,624,475]
+image::../media/vmsc_3_2.png[启用主机监控选项,624,475]
 
 . 仍在故障和响应选项卡上的VM监控下、选择仅VM监控选项或VM和应用程序监控选项。
 
 
-image::../media/vmsc_3_3.png[自动生成的计算机问题描述的屏幕截图,624,480]
+image::../media/vmsc_3_3.png[VM监控,624,480]
 
 . 在"Admission Control"(准入控制)下、将HA准入控制选项设置为"Cluster Resource resource"(集群资源预留)；使用50% CPU/MEM。
 
 
-image::../media/vmsc_3_4.png[自动生成的计算机问题描述的屏幕截图,624,479]
+image::../media/vmsc_3_4.png[准入控制,624,479]
 
 . 单击"OK"(确定)。
 . 选择DRS并单击编辑。
@@ -236,22 +236,22 @@ image::../media/vmsc_3_8.png[自动生成的计算机问题描述的屏幕截图
 * NetApp建议在手动模式下配置存储DRS、以便管理员能够决定和控制何时需要进行迁移。
 
 
-image::../media/vmsc_3_9.png[自动生成文本问题描述的特写,528,94]
+image::../media/vmsc_3_9.png[存储 DRS,528,94]
 
 . 验证是否已选中为SDRS建议启用I/O指标复选框；指标设置可以保留默认值。
 
 
-image::../media/vmsc_3_10.png[自动生成的计算机问题描述的屏幕截图,624,241]
+image::../media/vmsc_3_10.png[特别提要建议,624,241]
 
 . 选择HA集群、然后单击"Next"(下一步)。
 
 
-image::../media/vmsc_3_11.png[自动生成的计算机问题描述的屏幕截图,624,149]
+image::../media/vmsc_3_11.png[HA集群,624,149]
 
 . 选择属于站点A的数据存储库、然后单击下一步。
 
 
-image::../media/vmsc_3_12.png[自动生成的计算机问题描述的屏幕截图,624,134]
+image::../media/vmsc_3_12.png[数据存储库,624,134]
 
 . 查看选项、然后单击完成。
 . 重复上述步骤以创建站点B数据存储库集群、并验证是否仅选择了站点B的数据存储库。

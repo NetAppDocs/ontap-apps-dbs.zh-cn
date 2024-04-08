@@ -14,7 +14,7 @@ summary: 基于ONTAP的MySQL
 MySQL及其变体(包括MariaDB和Percona MySQL)是世界上最受欢迎的数据库。
 
 
-NOTE: 此ONTAP和MySQL数据库文档将取代先前发布的_TR-4722：《基于NetApp ONTAP的MySQL数据库最佳实践》。_
+NOTE: 此ONTAP和MySQL数据库文档将取代先前发布的_TR-4722：《基于ONTAP的MySQL数据库最佳实践》。_
 
 ONTAP是MySQL数据库的理想平台、因为ONTAP实际上是为数据库设计的。随机IO延迟优化、高级服务质量(Quality of Service、QoS)和基本FlexClone功能等众多功能专为满足数据库工作负载的需求而创建。
 

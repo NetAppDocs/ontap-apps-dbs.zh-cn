@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-log-directory.html 
+keywords: MSSQL,SQL Server, volumes, LUN, SnapCenter 
+summary: Microsoft SQL Server日志目录 
+---
+= Microsoft SQL Server日志目录
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+日志目录在SQL Server中指定、用于在主机级别存储事务日志备份数据。如果使用SnapCenter备份日志文件、则SnapCenter使用的每个SQL Server主机都必须配置一个主机日志目录、才能执行日志备份。SnapCenter 具有一个数据库存储库、因此与备份、还原或克隆操作相关的元数据存储在一个中央数据库存储库中。
+
+主机日志目录的大小计算如下：
+主机日志目录大小=((最大数据库LDF大小x每日日志更改率%) x (快照保留)÷(1 - LUN开销空间%)
+主机日志目录规模估算公式假定LUN开销空间为10%
+
+将日志目录放在专用卷或LUN上。主机日志目录中的数据量取决于备份的大小以及备份的保留天数。SnapCenter只允许每个SQL Server主机有一个主机日志目录。您可以在SnapCenter --> Host --> Configure Plug-in中配置主机日志目录。
+
+[TIP]
+====
+* NetApp建议*对主机日志目录执行以下操作：
+
+* 确保主机日志目录不会被任何可能损坏备份快照数据的其他类型的数据共享。
+* 请勿将用户数据库或系统数据库放置在托管挂载点的LUN上。
+* 在SnapCenter将事务日志复制到的专用FlexVol卷上创建主机日志目录。
+* 使用SnapCenter向导将数据库迁移到NetApp存储、以便数据库存储在有效位置、从而成功执行SnapCenter备份和还原操作。请注意、迁移过程会造成系统中断、并且在迁移过程中、发生原因会使数据库脱机。
+* 对于SQL Server的故障转移集群实例(FCIS)、必须满足以下条件：
++
+** 如果您使用的是故障转移集群实例、则主机日志目录LUN必须是与要备份的SQL Server实例位于同一集群组中的集群磁盘资源SnapCenter。
+** 如果您使用的是故障转移集群实例、则必须将用户数据库置于共享LUN上、这些共享LUN是分配给与SQL Server实例关联的集群组的物理磁盘集群资源。
+
+
+
+
+====

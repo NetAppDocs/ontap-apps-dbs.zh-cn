@@ -24,7 +24,7 @@ ONTAP在Oracle数据库环境中的主要价值来自核心ONTAP技术、例如�
 
 SnapCenter是NetApp的旗舰级数据保护产品。从很低的层面来看、它在执行数据库备份的方式上与SnapManager产品类似、但它是从头开始构建的、用于在NetApp存储系统上提供单一管理平台来进行数据保护管理。
 
-SnapCenter包括一些基本功能、例如基于Snapshot副本的备份和还原、SnapMirror和SnapVault复制、以及大型企业大规模运行所需的其他功能。这些高级功能包括扩展的基于角色的访问控制(Role-Based Access Control、RBAC)功能、可与第三方业务流程产品集成的REST API、对数据库主机上的SnapCenter插件进行无中断集中管理、以及专为云规模环境设计的用户界面。
+SnapCenter包括一些基本功能、例如基于快照的备份和还原、SnapMirror和SnapVault复制、以及大型企业大规模运行所需的其他功能。这些高级功能包括扩展的基于角色的访问控制(Role-Based Access Control、RBAC)功能、可与第三方业务流程产品集成的REST API、对数据库主机上的SnapCenter插件进行无中断集中管理、以及专为云规模环境设计的用户界面。
 
 
 

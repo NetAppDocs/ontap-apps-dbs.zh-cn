@@ -1,47 +1,9 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-workloads.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+redirect: ontap-apps-dbs/mssql/mssql-overview.html 
 ---
-= Microsoft SQL Server工作负载
-:hardbreaks:
+= 
 :allow-uri-read: 
-:nofooter: 
-:icons: font
-:linkattrs: 
-:imagesdir: ../media/
 
 
-[role="lead"]
-SQL Server数据库平台可以支持许多应用程序。
-
-在部署SQL Server之前、您必须了解SQL Server实例支持的应用程序的数据库工作负载要求。每个应用程序对容量、性能和可用性有不同的要求、因此每个数据库的设计都应以最佳方式支持这些要求。许多组织使用应用程序要求定义SLA、将数据库分为多个管理层。SQL Server工作负载可以描述如下：
-
-* OLTP数据库通常也是组织中最关键的数据库。这些数据库通常为面向客户的应用程序提供支持、并被视为公司核心运营的关键。任务关键型OLTP数据库及其支持的应用程序通常具有SLA、这些SLA要求高性能级别、并且对性能下降和可用性敏感。它们也可能是"无中断故障转移集群"或"无中断可用性"组的候选对象。这些类型数据库的I/O混合通常具有75%到90%的随机读取和25%到10%的写入特征。
-* 决策支持系统(DSS)数据库也可以称为数据仓库。这些数据库在许多依靠分析来开展业务的企业中至关重要。在运行查询时、这些数据库对CPU利用率和磁盘读取操作非常敏感。在许多组织中、DSS数据库在月份、季度和年终都是最重要的此工作负载的读取I/O混合比例通常为100%。
-
-
-
-
-== 基准测试
-
-交易流程委员会(Transaction Process Council、TPC)是一家非营利性公司、旨在定义交易处理和数据库基准、并向行业传播客观、可验证的TPC性能数据。TPC测试模拟了一个完整的计算环境、在该环境中、用户群对数据库执行事务。
-
-[cols="1,1,1"]
-|===
-| 工作负载类型 | 场景 | 读/写比率(百分比) 
-
-
-| OLTP | TPC-C | ~75/5 
-
-
-|  | OLTP | TPC-E 
-
-
-| ~90/10 |  | DSS 
-
-
-| TPC-H | ~100/0 |  
-|===
-虽然可以使用各种工作负载生成选项、但我们通常会将精力集中在衡量处理事务处理工作负载时SQL Server数据库的性能上、并使用Microsoft的TPC-E工具或使用HAMmerDB (link:http://www.hammerdb.com/document.html["HammerDB.com"]^)。有关如何使用这些特定基准的详细说明不在本文档的讨论范围之内。

@@ -1,18 +1,18 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-storage-efficiency.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, efficiency, compression, deduplication 
+summary: Microsoft SQL Server和ONTAP存储效率 
 ---
-= Microsoft SQL Server的ONTAP存储效率
+= Microsoft SQL Server和存储效率
 :allow-uri-read: 
 :imagesdir: ../media/
 
 
 [role="lead"]
-存储效率是指存储和管理SQL Server数据的能力、其占用的存储空间最少、对系统整体性能几乎没有影响、甚至没有影响。
+ONTAP存储效率已进行优化、可存储和管理SQL Server数据、所用存储空间量最低、对系统整体性能几乎没有影响、甚至没有影响。
 
-存储效率是RAID、配置(整体布局和利用率)、镜像和其他数据保护技术的组合。NetApp技术(如Snapshot副本、精简配置、FlexClone)可优化基础架构中的现有存储、推迟或避免未来的存储支出、从而帮助实现成本优势。将这些技术结合使用的次数越多、节省的空间就越大。
+存储效率是RAID、配置(整体布局和利用率)、镜像和其他数据保护技术的组合。包括快照、精简配置和克隆在内的NetApp技术可优化基础架构中的现有存储、并推迟或避免未来的存储支出。将这些技术结合使用的次数越多、节省的空间就越大。
 
 
 
@@ -96,7 +96,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 NOTE: 有关存储效率与预留百分比之间交互的说明、请参见以下有关精简配置的章节。
 
-SQL Server还具有压缩和高效管理数据的功能。SQL Server目前支持两种类型的数据压缩：行压缩和页面压缩。
+SQL Server本身还具有压缩和高效管理数据的功能。SQL Server目前支持两种类型的数据压缩：行压缩和页面压缩。
 
 行压缩会更改数据存储格式。例如、它会将整数和小数更改为可变长度格式、而不是其本机固定长度格式。此外、它还会通过消除空格将固定长度字符串更改为可变长度格式。页面压缩可实现行压缩和另外两种压缩策略(前缀压缩和词典压缩)。有关页面压缩的详细信息、请参见 link:https://learn.microsoft.com/en-us/sql/relational-databases/data-compression/page-compression-implementation?view=sql-server-ver16&redirectedfrom=MSDN["页面压缩实施"^]。
 

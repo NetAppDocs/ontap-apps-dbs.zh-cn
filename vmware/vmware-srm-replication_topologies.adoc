@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-srm-replication_topologies.html 
 keywords: vmware, site, recovery manager, vsrm, replication, technologies, snapmirror layouts, array manager, snapvault, qtress, fc, iscsi, supported 
-summary: 在 ONTAP 9 中，集群管理员可以看到集群的物理组件，但使用集群的应用程序和主机无法直接看到这些物理组件。 
+summary: 将ONTAP与SnapMirror和VMware SRM结合使用的复制拓扑。 
 ---
 = 复制拓扑
 :hardbreaks:
@@ -36,13 +36,13 @@ summary: 在 ONTAP 9 中，集群管理员可以看到集群的物理组件，�
 
 下图显示了 SRM 和 SRA 支持的 SnapMirror 关系布局方案。复制卷中的每个 VM 在每个站点上仅拥有一个 SRM 阵列（ SVM ）上的数据。
 
-image:vsrm-ontap9_image7.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image7.png["SnapMirror关系布局"]
 
-image:vsrm-ontap9_image8.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image8.png["SnapMirror关系布局"]
 
-image:vsrm-ontap9_image9.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image9.png["SnapMirror关系布局"]
 
-image:vsrm-ontap9_image10.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image10.png["SnapMirror关系布局"]
 
 
 
@@ -50,7 +50,7 @@ image:vsrm-ontap9_image10.png["错误：缺少图形映像"]
 
 在 SRM 中使用基于阵列的复制（ ABR ）时，保护组会隔离到一个阵列对中，如以下屏幕截图所示。在此情景中、 `SVM1` 和 `SVM2` 与建立对等关系 `SVM3` 和 `SVM4` 在恢复站点上。但是，在创建保护组时，您只能选择两个阵列对中的一个。
 
-image:vsrm-ontap9_image11.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image11.png["阵列对"]
 
 
 
@@ -58,13 +58,13 @@ image:vsrm-ontap9_image11.png["错误：缺少图形映像"]
 
 不受支持的配置会在单个虚拟机所拥有的多个 SVM 上包含数据（ VMDK 或 RDM ）。在下图所示的示例中、 `VM1` 无法配置为使用SRM进行保护、因为 `VM1` 数据位于两个SVM上。
 
-image:vsrm-ontap9_image12.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image12.png["不支持的配置"]
 
-image:vsrm-ontap9_image13.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image13.png["不支持的配置"]
 
 如果任何复制关系将单个 NetApp 卷从一个源 SVM 复制到同一 SVM 或不同 SVM 中的多个目标，则称为 SnapMirror 扇出。SRM 不支持扇出。在下图所示的示例中、 `VM1` 无法在SRM中配置保护、因为它已通过SnapMirror复制到两个不同位置。
 
-image:vsrm-ontap9_image14.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image14.png["不支持的配置"]
 
 
 
@@ -72,7 +72,7 @@ image:vsrm-ontap9_image14.png["错误：缺少图形映像"]
 
 SRM 不支持 SnapMirror 关系的级联，即，将源卷复制到目标卷，同时使用 SnapMirror 将目标卷复制到另一个目标卷。在下图所示的情形中，不能使用 SRM 在任何站点之间进行故障转移。
 
-image:vsrm-ontap9_image15.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image15.png["SnapMirror关系的级联"]
 
 
 
@@ -103,11 +103,11 @@ SnapVault 是为 ONTAP 8.2 从头开始重建的。虽然以前的 Data ONTAP 7-
 
 下图显示了 SnapMirror 到 SnapVault 的级联配置。如果 SnapVault 目标位于灾难恢复站点或不受主站点中断影响的三级站点上，则可以重新配置环境，以便在故障转移后继续备份。
 
-image:vsrm-ontap9_image16.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image16.png["SnapMirror到SnapVault级联"]
 
 下图显示了使用 SRM 将 SnapMirror 复制反转回主站点后的配置。此外，还对环境进行了重新配置，使 SnapVault 备份从现在的 SnapMirror 源进行。此设置为 SnapMirror SnapVault 扇出配置。
 
-image:vsrm-ontap9_image17.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image17.png["SnapMirror到SnapVault反向级联"]
 
 在 SRM 执行故障恢复并再次反转 SnapMirror 关系后，生产数据将返回到主站点。现在，此数据将通过 SnapMirror 和 SnapVault 备份获得与故障转移到灾难恢复站点之前相同的保护方式。
 

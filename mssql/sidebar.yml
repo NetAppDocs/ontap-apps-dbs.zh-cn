@@ -4,26 +4,26 @@ title: Microsoft SQL Server
 entries:
 - title: 概述
   url: "/mssql/mssql-overview.html"
-- title: 工作负载
-  url: "/mssql/mssql-workloads.html"
 - title: 数据库配置
   pdf-filename: Microsoft SQL Server的数据库配置
   entries:
-  - title: 共享实例与专用实例
-    url: "/mssql/mssql-shared-vs-dedicated.html"
   - title: CPU配置
     url: "/mssql/mssql-cpu-configuration.html"
   - title: 内存配置
     url: "/mssql/mssql-memory-configuration.html"
+  - title: 共享实例与专用实例
+    url: "/mssql/mssql-shared-vs-dedicated.html"
 - title: 存储配置
   pdf-filename: Microsoft SQL Server的存储配置
   entries:
+  - title: 概述
+    url: "/mssql/mssql-storage-considerations.html"
   - title: 数据库文件和文件组
     url: "/mssql/mssql-files-and-filegroups.html"
+  - title: 日志目录
+    url: "/mssql/mssql-log-directory.html"
   - title: tempdb文件
     url: "/mssql/mssql-tempdb.html"
-  - title: 存储注意事项
-    url: "/mssql/mssql-storage-considerations.html"
   - title: 存储效率
     url: "/mssql/mssql-storage-efficiency.html"
 - title: 数据保护

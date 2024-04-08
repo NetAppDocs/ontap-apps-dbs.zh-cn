@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_deploy_hyperv_replica_ce.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 了解如何使用Windows Server故障转移集群部署和配置Hyper-V副本。 
+---
+= 在一个群组环境中部署Hyper-V副本
+:allow-uri-read: 
+
+
+[role="lead"]
+了解如何使用Windows Server故障转移集群部署和配置Hyper-V副本。
+
+
+
+== 前提条件
+
+* 您需要将Hyper-V集群置于相同或不同地理位置、用作主集群和副本集群。查看"link:\l["Hyper-V集群"]"以了解更多详细信息。
+* 如果使用不同的站点、则必须将每个站点的防火墙配置为允许主集群与副本集群之间进行通信。
+* 副本集群必须具有足够的空间来存储复制的工作负载。
+
+
+
+
+== 部署
+
+. 在集群的所有节点上启用防火墙规则。在主集群和副本集群中的所有节点上使用管理员权限运行以下PowerShell cmdlet。
++
+....
+# For Kerberos authentication
+get-clusternode | ForEach-Object \{Invoke-command -computername $_.name -scriptblock \{Enable-Netfirewallrule -displayname "Hyper-V Replica HTTP Listener (TCP-In)"}}
+....
++
+....
+ # For Certificate authentication
+get-clusternode | ForEach-Object \{Invoke-command -computername $_.name -scriptblock \{Enable-Netfirewallrule -displayname "Hyper-V Replica HTTPS Listener (TCP-In)"}}
+....
+. 配置副本集群。
++
+.. 使用NetBIOS名称和IP地址配置Hyper-V副本代理、以用作与用作副本集群的集群的连接点。
++
+... 打开故障转移集群管理器。
+... 展开集群、单击角色、然后单击从操作中配置角色窗格。
+... 在选择角色页面中选择Hyper-V副本代理。
+... 提供要用作集群连接点(客户端访问点)的NetBIOS名称和IP地址。
+... 此过程将创建Hyper-V副本代理角色。验证它是否已成功联机。
+
+
+.. 配置复制设置。
++
+... 右键单击在前面步骤中创建的副本代理、然后单击复制设置。
+... 选择启用此群集作为复本服务器。
+... 在身份验证和端口部分中、选择身份验证方法和端口。
+... 在授权和存储部分中、选择允许将VM复制到此集群的服务器。此外、指定复制的VM的默认存储位置。
+
+
+
+
+
+
+
+
+== Replication
+
+复制过程与一节中所述的过程类似 link:win_deploy_hyperv_replica_oce["在一个或多个副本之间进行复制"]。

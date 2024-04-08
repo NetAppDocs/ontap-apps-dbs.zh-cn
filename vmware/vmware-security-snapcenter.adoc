@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-security-snapcenter.html 
-keywords: WP-7355, security, snapcenter, treat modeling, dast, vulnerability scanning, penetration testing 
-summary:  
+keywords: WP-7355, security, snapcenter, treat modeling, dast, vulnerability scanning, penetration testing,SCV,VMware,vSphere 
+summary: 本文档介绍适用于VMware的SnapCenter插件的安全方面。 
 ---
 = SnapCenter插件VMware vSphere
 :allow-uri-read: 
@@ -16,7 +16,7 @@ summary:
 * *第三方代码货币。*在开发软件和使用开源软件(OSS)的过程中、解决可能与您的产品中所含的OSS相关的安全漏洞非常重要。这是一项持续努力、因为OSS组件的版本可能随时报告新发现的漏洞。
 * * 漏洞扫描。 * 漏洞扫描的目的是在 NetApp 产品发布给客户之前检测其常见和已知安全漏洞。
 * *渗透测试。*渗透测试是指评估系统、Web应用程序或网络以发现攻击者可能利用的安全漏洞的过程。NetApp 的渗透测试（笔测试）由一组经过批准且值得信赖的第三方公司执行。其测试范围包括使用复杂的利用方法或工具对恶意入侵者或黑客等应用程序或软件发起攻击。
-* *产品安全意外事件响应活动。*在公司内部和外部发现安全漏洞、如果不及时解决这些漏洞、可能会给NetApp€的声誉带来严重风险。为了便于执行此过程、产品安全意外事件响应团队(PSIRT)会报告并跟踪漏洞。
+* *产品安全事件响应活动。*安全漏洞在公司内部和外部均已发现、如果不及时解决、可能会对NetApp的声誉造成严重风险。为了便于执行此过程、产品安全意外事件响应团队(PSIRT)会报告并跟踪漏洞。
 
 
 
@@ -43,7 +43,7 @@ individual files in /usr/share/doc/*/copyright.
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 ....
-* *基于角色的访问控制(Role-Based Access Control、RBAC)。*与NetApp ONTAP 工具关联的RBAC控制有两种：
+* * 基于角色的访问控制（ Role-Based Access Control ， RBAC ）。 * ONTAP 工具与两种类型的 RBAC 控制相关联：
 +
 ** 本机vCenter Server特权。
 ** VMware vCenter插件的特定特权。有关详细信息，请参见 https://docs.netapp.com/us-en/sc-plugin-vmware-vsphere/scpivs44_role_based_access_control.html["基于角色的访问控制（ Role-Based Access Control ， RBAC ）"^]。

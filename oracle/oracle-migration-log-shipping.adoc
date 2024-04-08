@@ -36,7 +36,7 @@ summary: 通过日志传送实现Oracle迁移
 
 === environment
 
-在此示例中、源数据库位于ONTAP系统上。创建数据库备份的最简单方法是使用Snapshot副本。数据库将处于热备份模式几秒钟、而处于 `snapshot create` 在托管数据文件的卷上执行此操作。
+在此示例中、源数据库位于ONTAP系统上。创建数据库备份的最简单方法是使用快照。数据库将处于热备份模式几秒钟、而处于 `snapshot create` 在托管数据文件的卷上执行此操作。
 
 ....
 SQL> alter database begin backup;
@@ -50,7 +50,7 @@ Cluster01::*>
 SQL> alter database end backup;
 Database altered.
 ....
-其结果是在名为的磁盘上生成一个Snapshot副本 `hotbackup` 该映像包含处于热备份模式时的数据文件映像。如果将此Snapshot副本中的数据与相应的归档日志结合使用以使数据文件保持一致、则可以将其用作还原或克隆的基础。在这种情况下、它会复制到新服务器。
+结果是在磁盘上生成一个名为的快照 `hotbackup` 该映像包含处于热备份模式时的数据文件映像。如果将此快照中的数据与相应的归档日志结合使用以使数据文件保持一致、则可以将此快照中的数据用作还原或克隆的基础。在这种情况下、它会复制到新服务器。
 
 
 
@@ -58,7 +58,7 @@ Database altered.
 
 现在、必须在新环境中还原备份。这可以通过多种方式实现、包括Oracle RMAN、从备份应用程序(如NetBackup)还原、或者对处于热备份模式的数据文件执行简单的复制操作。
 
-在此示例中、使用SnapMirror将名为热备份的Snapshot副本复制到新位置。
+在此示例中、使用SnapMirror将快照热备份复制到新位置。
 
 . 创建新卷以接收快照数据。从初始化镜像 `jfsc1_oradata` to `vol_oradata`。
 +

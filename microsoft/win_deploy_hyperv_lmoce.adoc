@@ -1,0 +1,67 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_deploy_hyperv_lmoce.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 本附录介绍了如何在集群模式环境之外使用Hyper-V实时迁移 
+---
+= 将Hyper-V实时迁移部署到非群组环境中
+:allow-uri-read: 
+
+
+[role="lead"]
+本节介绍如何在集群环境之外部署Hyper-V实时迁移。
+
+
+
+== 前提条件
+
+* 具有独立存储或共享SMB存储的独立Hyper-V服务器。
+* 源服务器和目标服务器上安装的Hyper-V角色。
+* 这两个Hyper-V服务器属于同一个域或彼此信任的域。
+
+
+
+
+== 部署
+
+要在非集群环境中执行实时迁移、请配置源和目标Hyper-V服务器、以便它们可以发送和接收实时迁移操作。在两个Hyper-V服务器上、完成以下步骤：
+
+. 从Server Manager的Tools部分打开Hyper-V Manager。
+. 在操作中、单击Hyper-V设置。
+. 单击实时迁移、然后选择启用传入和传出实时迁移。
+. 选择是允许任何可用网络上的实时迁移流量、还是仅允许特定网络上的实时迁移流量。
+. 或者、您也可以从Live Migration的Advanced部分配置身份验证协议和性能选项。
+. 如果使用CredSSP作为身份验证协议、请确保在移动虚拟机之前从目标Hyper-V服务器登录到源Hyper-V服务器。
+. 如果使用Kerberos作为身份验证协议、请配置受约束的委派。这样做需要访问Active Directory域控制器。要配置委派、请完成以下步骤：
++
+.. 以管理员身份登录到Active Directory域控制器。
+.. 启动服务器管理器。
+.. 在工具部分中、单击Active Directory用户和计算机。
+.. 展开域并单击计算机。
+.. 从列表中选择源Hyper-V服务器、右键单击该服务器、然后单击属性。
+.. 在委派选项卡中、选择信任此计算机以仅委派给指定服务。
+.. 选择仅使用Kerberos。
+.. 单击添加、此时将打开添加服务向导。
+.. 在"添加服务"中，单击"用户和计算机"，此时将打开"选择用户或计算机**.**"
+.. 提供目标Hyper-V服务器名称、然后单击确定。
++
+*** 要移动VM存储、请选择CIFS。
+*** 要移动VM、请选择Microsoft虚拟系统迁移服务。
+
+
+.. 在委派选项卡中、单击确定。
+.. 从"Computers"文件夹中、从列表中选择目标Hyper-V服务器、然后重复此过程。在Select Users or Computers (选择用户或计算机)中、提供源Hyper-V服务器名称。
+
+
+. 移动虚拟机。
++
+.. 打开Hyper-V Manager。
+.. 右键单击某个虚拟机、然后单击移动。
+.. 选择"Move the Virtual Machine."(移动虚拟机)。
+.. 指定虚拟机的目标Hyper-V服务器。
+.. 选择移动选项。对于共享实时迁移、请选择仅移动虚拟机。对于"Shared Nothing Live Migration"(无共享实时迁移)、请根据您的首选项选择另外两个选项中的任何一个。
+.. 根据您的首选项、提供虚拟机在目标Hyper-V服务器上的位置。
+.. 查看摘要、然后单击确定以移动虚拟机。
+
+
+

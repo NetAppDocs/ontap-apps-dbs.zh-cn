@@ -1,0 +1,63 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_efficiency.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 借助Microsoft Hyper-V提高ONTAP存储效率 
+---
+= 存储效率
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP为包括Microsoft Hyper-V在内的虚拟化环境提供行业领先的存储效率NetApp还提供存储效率担保计划。
+
+
+
+== NetApp重复数据删除
+
+NetApp重复数据删除的工作原理是、在存储卷级别删除重复块、仅存储一个物理副本、而不管存在多少逻辑副本。因此、重复数据删除会造成该块存在大量副本的假象。重复数据删除会自动删除整个卷中4 KB块级别的重复数据块。此过程可通过减少对磁盘的物理写入次数来恢复存储、从而节省空间并潜在地节省性能。重复数据删除可在Hyper-V环境中节省70%以上的空间。
+
+
+
+== 精简配置
+
+精简配置是一种高效的存储配置方式、因为存储不会预先分配。也就是说、在使用精简配置创建卷或LUN时、存储系统上的空间未使用。在将数据写入LUN或卷之前、此空间会一直保持未使用状态、并且仅会使用存储此数据所需的空间。NetApp建议在卷上启用精简配置并禁用LUN预留。
+
+
+
+== Quality of service
+
+通过集群模式ONTAP中的存储服务质量(QoS)、您可以对存储对象进行分组、并为组设置吞吐量限制。存储服务质量(QoS)可用于限制工作负载的吞吐量并监控工作负载性能。借助此功能、存储管理员可以按组织、应用程序、业务单位或生产或开发环境分离工作负载。
+
+在企业环境中、存储服务质量(QoS)有助于实现以下目标：
+
+* 防止用户工作负载相互影响。
+* 保护在IT即服务(ITaaS)环境中必须满足特定响应时间的关键应用程序。
+* 防止租户相互影响。
+* 通过添加每个新租户避免性能下降。
+
+
+使用QoS、您可以限制发送到SVM、灵活卷、LUN或文件的I/O量。I/O可受操作数或原始吞吐量的限制。
+
+下图显示了SVM及其自身的QoS策略强制实施最大吞吐量限制。
+
+image:win_image13.png["具有自己的QoS策略的Storage Virtual Machine、宽度=319、高度=341"]
+
+要为SVM配置自己的QoS策略和监控策略组、请在ONTAP集群上运行以下命令：
+
+....
+# create a new policy group pg1 with a maximum throughput of 5,000 IOPS
+cluster::> qos policy-group create pg1 -vserver vs1 -max-throughput 5000iops
+....
+....
+# create a new policy group pg2 without a maximum throughput
+cluster::> qos policy-group create pg2 -vserver vs2
+....
+....
+# monitor policy group performance
+cluster::> qos statistics performance show
+....
+....
+# monitor workload performance
+cluster::> qos statistics workload performance show
+....

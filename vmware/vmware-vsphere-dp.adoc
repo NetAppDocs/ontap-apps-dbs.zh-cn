@@ -24,7 +24,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 下图显示了 SnapCenter 部署的一个示例。
 
-image:vsphere_ontap_image4.png["错误：缺少图形映像"]
+image:vsphere_ontap_image4.png["SnapCenter部署"]
 
 要增强灾难恢复功能，请考虑将适用于 ONTAP 的 NetApp SRA 与 VMware Site Recovery Manager 结合使用。除了支持将数据存储库复制到灾难恢复站点之外，它还可以通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。通过 SRA 中内置的自动化功能，还可以轻松地从灾难中恢复并在中断解决后重新保护生产。
 

@@ -28,7 +28,7 @@ summary:
 +
 ** 将ONTAP 集群添加到_Storage Systems_下的ONTAP 工具中
 +
-*** 虽然ONTAP 工具和SRA支持集群级别和SVM级别的凭据、但VASA Provider仅支持存储系统的集群级别凭据。这是因为用于vvol的许多API仅在集群级别可用。因此、如果您计划使用ONTAP、则必须使用集群范围的凭据添加此集群。
+*** 虽然ONTAP 工具和SRA支持集群级别和SVM级别的凭据、但VASA Provider仅支持存储系统的集群级别凭据。这是因为许多用于创建卷的API仅在集群级别可用。因此、如果您计划使用ONTAP、则必须使用集群范围的凭据添加此集群。
 
 
 ** 如果ONTAP 数据LIF与VMkernel适配器位于不同子网上、则必须将VMkernel适配器子网添加到ONTAP 工具的设置菜单中的选定子网列表中。默认情况下、ONTAP 工具仅允许本地子网访问、从而确保存储流量的安全。

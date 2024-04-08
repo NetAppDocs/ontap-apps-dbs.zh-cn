@@ -24,13 +24,13 @@ SCP支持为VM的数据Vvol设置最小和/或最大QoS。只有 AFF 系统才�
 
 下图显示了适用于 VMware vSphere 9.8 VVol 的 ONTAP 工具信息板。
 
-image:vsphere_ontap_image7.png["错误：缺少图形映像"]
+image:vsphere_ontap_image7.png["适用于VMware vSphere 9.8 vvol信息板的ONTAP工具"]
 
 定义存储功能配置文件后，可以使用该配置文件来使用存储策略来配置 VM ，以确定其要求。通过 VM 存储策略与数据存储库存储功能配置文件之间的映射， vCenter 可以显示一个兼容数据存储库列表以供选择。这种方法称为基于存储策略的管理。
 
 VASA 提供了查询存储并将一组存储功能返回到 vCenter 的技术。VASA 供应商提供程序可在存储系统 API 和构造与 vCenter 可识别的 VMware API 之间进行转换。适用于ONTAP的NetApp VASA Provider是作为适用于VMware vSphere设备VM的ONTAP工具的一部分提供的、vCenter插件提供了用于配置和管理VVOP数据存储库的界面、并能够定义存储功能配置文件(Storage Capability profile、SCP)。
 
-ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据存储库结合使用可带来 NFS 的一些优势，例如虚拟机级别粒度。下面是一些需要考虑的最佳实践，您可以在中找到追加信息 http://www.netapp.com/us/media/tr-4400.pdf["TR-4400"^]：
+ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据存储库结合使用可带来 NFS 的一些优势，例如虚拟机级别粒度。下面是一些需要考虑的最佳实践，您可以在中找到追加信息 link:vmware-vvols-overview.html["TR-4400"^]：
 
 * 一个 VVOL 数据存储库可以在多个集群节点上包含多个 FlexVol 卷。最简单的方法是使用一个数据存储库，即使卷具有不同的功能也是如此。SPBM 可确保为 VM 使用兼容的卷。但是，这些卷都必须属于一个 ONTAP SVM ，并使用一个协议进行访问。对于每个协议，每个节点一个 LIF 就足够了。避免在一个 VVOL 数据存储库中使用多个 ONTAP 版本，因为存储功能可能因版本而异。
 * 使用适用于 VMware vSphere 的 ONTAP 工具插件创建和管理 VVOL 数据存储库。除了管理数据存储库及其配置文件之外，它还会根据需要自动创建一个协议端点来访问 VVol 。如果使用 LUN ，请注意， LUN PE 会使用 LUN ID 300 及更高版本进行映射。验证ESXi主机的高级系统设置 `Disk.MaxLUN` 允许LUN ID号大于300 (默认值为1、024)。执行此步骤的方法是、在vCenter中选择ESXi主机、然后选择配置选项卡并查找 `Disk.MaxLUN` 在高级系统设置列表中。
@@ -40,4 +40,4 @@ ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据�
 
 下图显示了 VVOL 组件。
 
-image:vsphere_ontap_image8.png["错误：缺少图形映像"]
+image:vsphere_ontap_image8.png["VMware组件"]

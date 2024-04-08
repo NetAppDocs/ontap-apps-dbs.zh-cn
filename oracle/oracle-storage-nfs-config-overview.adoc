@@ -16,7 +16,7 @@ summary: 适用于Oracle数据库的NFS配置
 [role="lead"]
 NetApp提供企业级NFS存储已超过30年、由于其精简性、随着向基于云的基础架构的推进、其使用量也在不断增长。
 
-NFS协议包含多个版本、但要求各不相同。有关使用ONTAP的完整NFS配置问题描述、请参见 link:https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067：《基于NetApp ONTAP的NFS最佳实践》"^]。以下各节介绍了一些更关键的要求和常见的用户错误。
+NFS协议包含多个版本、但要求各不相同。有关使用ONTAP的完整NFS配置问题描述、请参见 link:https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067：《基于ONTAP的NFS最佳实践》"^]。以下各节介绍了一些更关键的要求和常见的用户错误。
 
 
 
@@ -122,7 +122,7 @@ vserver1  orabin     1         sys       true
 
 TIP: *如果需要NFSv4功能、NetApp建议*使用NFSv4.1。在NFSv4.1中、NFSv4协议有一些功能增强功能、可提高某些边缘情况下的故障恢复能力。
 
-与简单地将挂载选项从vs=3更改为vs=4.1相比、切换到NFSv4更为复杂。有关使用ONTAP配置NFSv4的更完整说明、包括有关配置操作系统的指导、请参见 https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067：《基于NetApp ONTAP的NFS最佳实践》"^]。本技术报告的以下各节介绍了使用NFSv4的一些基本要求。
+与简单地将挂载选项从vs=3更改为vs=4.1相比、切换到NFSv4更为复杂。有关使用ONTAP配置NFSv4的更完整说明、包括有关配置操作系统的指导、请参见 https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067：《基于ONTAP的NFS最佳实践》"^]。本技术报告的以下各节介绍了使用NFSv4的一些基本要求。
 
 
 

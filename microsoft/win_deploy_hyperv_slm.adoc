@@ -1,0 +1,32 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_deploy_hyperv_slm.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 如何配置Hyper-V存储实时迁移 
+---
+= 部署Hyper-V存储实时迁移
+:allow-uri-read: 
+
+
+[role="lead"]
+了解如何配置Hyper-V存储实时迁移
+
+
+
+== 前提条件
+
+* 您必须拥有一个独立的Hyper-V服务器、该服务器必须具有独立的存储(DAS或LUN)或SMB存储(本地或在其他Hyper-V服务器之间共享)。
+* 必须为Hyper-V服务器配置实时迁移。查看中有关部署的部分 link:win_deploy_hyperv_replica_oce.html["在已加入的环境之外进行实时迁移"]。
+
+
+
+
+== 部署
+
+. 打开Hyper-V Manager。
+. 右键单击某个虚拟机、然后单击移动。
+. 选择移动虚拟机的存储。
+. 根据您的首选项选择用于移动存储的选项。
+. 提供VM项目的新位置。
+. 查看摘要、然后单击确定以移动虚拟机的存储。
+

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-files-and-filegroups.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, backup, recovery, database file management 
+summary: Microsoft SQL Server数据库文件放置 
 ---
 = Microsoft SQL Server数据库文件和文件组
 :allow-uri-read: 
@@ -10,7 +10,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 
 [role="lead"]
-SQL Server数据库是一组对象、可用于存储和操作数据。
+在初始部署阶段、在ONTAP上正确放置SQL Server数据库文件至关重要。这样可以确保最佳性能、空间管理、备份和还原时间、并可根据您的业务需求进行配置。
 
 从理论上讲、SQL Server (64位)支持每个实例32、767个数据库以及524、272 TB的数据库大小、尽管典型安装通常包含多个数据库。但是、SQL Server可以处理的数据库数量取决于负载和硬件。SQL Server实例托管数十个、数百个甚至数千个小型数据库的情况并不少见。
 
@@ -34,7 +34,7 @@ TIP: * NetApp建议*避免将主文件组用于除系统对象之外的任何其
 
 TIP: * NetApp建议*单个文件组中的所有文件都具有相同的初始大小和自动增长参数，并且增长大小以MB而不是百分比为单位定义。这有助于比例填充算法均匀地平衡数据文件之间的写入活动。
 
-每当SQL Server增加文件大小时、它都会用零填充文件中新分配的空间。该进程会阻止所有需要写入相应文件的会话、或者在事务日志增长时生成事务日志记录。
+每当SQL Server增加文件大小时、它都会用零填充新分配的空间。该进程会阻止所有需要写入相应文件的会话、或者在事务日志增长时生成事务日志记录。
 
 SQL Server始终将事务日志零、并且此行为无法更改。但是、您可以通过启用或禁用即时文件初始化来控制数据文件是否置零。启用即时文件初始化有助于加快数据文件增长速度、并减少创建或还原数据库所需的时间。
 
@@ -48,23 +48,14 @@ image:mssql-security-policy.png["错误：缺少图形映像"]
 
 ....
 DBCC TRACEON(3004,3605,-1)
-
 GO
-
 CREATE DATABASE DelMe
-
 GO
-
 EXECUTE sp_readerrorlog
-
 GO
-
 DROP DATABASE DelMe
-
 GO
-
 DBCC TRACEOFF(3004,3605,-1)
-
 GO
 ....
 如果未启用即时文件初始化、则SQL Server错误日志会显示、除了将ldf日志文件置零之外、SQL Server还会将MDF数据文件置零、如以下示例所示。启用即时文件初始化后、它仅显示日志文件置零。

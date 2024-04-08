@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-srm-operational_best_practices.html 
 keywords: vmware, site, recovery manager, vsrm, datastores, protocols, spbm, vvols, protection, replication, volumes, array, groups, failover test, reportect, failback 
-summary: 如果可能，请始终使用 ONTAP 工具配置数据存储库和卷。这样可以确保卷，接合路径， LUN ， igroup ，导出策略， 以及其他设置均以兼容的方式进行配置。 
+summary: VMware SRM和ONTAP存储的操作最佳实践 
 ---
 = 操作最佳实践
 :hardbreaks:
@@ -25,7 +25,7 @@ summary: 如果可能，请始终使用 ONTAP 工具配置数据存储库和卷�
 * 要确认连接，请始终验证您是否可以从目标 ONTAP 集群在灾难恢复站点挂载和卸载新的测试数据存储库。测试要用于数据存储库连接的每个协议。最佳做法是使用 ONTAP 工具创建测试数据存储库，因为它正在按照 SRM 的指示执行所有数据存储库自动化。
 * 每个站点的 SAN 协议都应是同构的。您可以混合使用 NFS 和 SAN ，但不应在站点内混合使用 SAN 协议。例如，您可以在站点 A 中使用 FCP ，在站点 B 中使用 iSCSI站点 A 不应同时使用 FCP 和 iSCSI原因是 SRA 不会在恢复站点创建混合 igroup ，并且 SRM 不会筛选为 SRA 提供的启动程序列表。
 * 之前的指南建议创建LIF以定位数据。也就是说，始终使用物理拥有卷的节点上的 LIF 挂载数据存储库。在现代版本的 ONTAP 9 中，不再需要此功能。如果给定了集群范围的凭据、则ONTAP工具仍会尽可能选择在数据本地的各个LUN之间进行负载平衡、但这并不是高可用性或高性能的要求。
-* 可以将NetApp ONTAP 9配置为在自动调整大小无法提供足够的紧急容量时自动删除快照、以便在空间不足的情况下保持正常运行时间。此功能的默认设置不会自动删除由SnapMirror创建的快照。如果删除了SnapMirror快照、则NetApp SRA将无法反转和重新同步受影响卷的复制。要防止ONTAP删除SnapMirror快照、请将Snapshot自动删除功能配置为尝试。
+* 可以将ONTAP 9配置为在自动调整大小无法提供足够的紧急容量时自动删除快照、以便在空间不足的情况下保持正常运行时间。此功能的默认设置不会自动删除由SnapMirror创建的快照。如果删除了SnapMirror快照、则NetApp SRA将无法反转和重新同步受影响卷的复制。要防止ONTAP删除SnapMirror快照、请将Snapshot自动删除功能配置为尝试。
 
 
 ....
@@ -45,15 +45,15 @@ snap autodelete modify -volume -commitment try
 
 以下示例显示了已启用的卷复制。
 
-image:vsrm-ontap9_image2.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image2.png["卷复制"]
 
 以下屏幕截图提供了创建 VM 存储策略向导中显示的 SnapMirror 计划示例。
 
-image:vsrm-ontap9_image3.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image3.png["SnapMirror计划"]
 
 ONTAP VASA Provider 支持故障转移到不同的存储。例如，系统可以从边缘位置的 ONTAP Select 故障转移到核心数据中心的 AFF 系统。无论存储相似性如何，您都必须始终为启用了复制的 VM 存储策略配置存储策略映射和反向映射，以确保在恢复站点提供的服务满足预期和要求。以下屏幕截图突出显示了一个示例策略映射。
 
-image:vsrm-ontap9_image4.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image4.png["策略映射"]
 
 
 
@@ -61,9 +61,9 @@ image:vsrm-ontap9_image4.png["错误：缺少图形映像"]
 
 与以前的 VVOL 数据存储库不同，复制的 VVOL 数据存储库必须在启用复制的情况下从头开始创建，并且它们必须使用在具有 SnapMirror 关系的 ONTAP 系统上预创建的卷。这需要预先配置集群对等和 SVM 对等。这些活动应由ONTAP管理员执行、因为这样可以在管理多个站点的ONTAP系统的人员与主要负责vSphere操作的人员之间实现严格的职责分离。
 
-这代表 vSphere 管理员提出了一项新要求。由于卷是在 ONTAP 工具的范围之外创建的，因此在定期计划的重新发现期间之前，它不会意识到 ONTAP 管理员所做的更改。因此，最好在创建要用于 VVol 的卷或 SnapMirror 关系时始终运行重新发现。只需右键单击主机或集群、然后选择NetApp ONTAP工具>更新主机和存储数据、如以下屏幕截图所示。
+这代表 vSphere 管理员提出了一项新要求。由于卷是在 ONTAP 工具的范围之外创建的，因此在定期计划的重新发现期间之前，它不会意识到 ONTAP 管理员所做的更改。因此，最好在创建要用于 VVol 的卷或 SnapMirror 关系时始终运行重新发现。只需右键单击主机或集群、然后选择ONTAP工具>更新主机和存储数据、如以下屏幕截图所示。
 
-image:vsrm-ontap9_image5.png["错误：缺少图形映像"]
+image:vsrm-ontap9_image5.png["更新主机和存储数据"]
 
 对于 VVOL 和 SRM ，应注意一个事项。切勿在同一个 VVOL 数据存储库中混用受保护和未受保护的 VM 。原因是，在使用 SRM 故障转移到灾难恢复站点时，灾难恢复中只会使属于保护组的 VM 联机。因此，在重新保护（将 SnapMirror 从灾难恢复反转至生产环境）时，您可能会覆盖未进行故障转移且可能包含有价值数据的 VM 。
 
@@ -75,7 +75,7 @@ image:vsrm-ontap9_image5.png["错误：缺少图形映像"]
 
 在 SRM 中配置阵列对时，应始终按照将其添加到 ONTAP 工具的方式在 SRM 中添加这些阵列对，也就是说，它们必须使用相同的用户名，密码和管理 LIF 。此要求可确保 SRA 与阵列正确通信。以下屏幕截图说明了集群在 ONTAP 工具中的显示方式以及如何将其添加到阵列管理器中。
 
-image:vsrm-ontap9_image6.jpg["错误：缺少图形映像"]
+image:vsrm-ontap9_image6.jpg["集群"]
 
 
 

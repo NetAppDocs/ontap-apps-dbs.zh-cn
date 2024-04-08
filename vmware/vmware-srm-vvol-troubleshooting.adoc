@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-srm-vvol-troubleshooting.html 
 keywords: vmware, site, recovery manager, vsrm, hybrid, cloud, srm, vvols, replication 
-summary: 使用 VVOL 复制时， SRM 中的工作流与使用 SRA 和传统数据存储库时的工作流有明显不同。 
+summary: 与SRA和传统数据存储库相比、使用VASA进行VVOs复制可提供独特的功能。 
 ---
 = 对使用 VVol 复制的 SRM 进行故障排除
 :hardbreaks:

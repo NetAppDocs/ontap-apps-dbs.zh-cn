@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-storage-considerations.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, volumes, LUN, SnapCenter 
+summary: Microsoft SQL Server存储注意事项 
 ---
 = Microsoft SQL Server存储注意事项
 :allow-uri-read: 
@@ -10,7 +10,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 
 [role="lead"]
-通过将NetApp存储解决方案与Microsoft SQL Server相结合、可以创建企业级数据库存储设计、以满足当今最苛刻的应用程序要求。
+通过将ONTAP存储解决方案与Microsoft SQL Server相结合、可以创建企业级数据库存储设计、以满足当今最苛刻的应用程序要求。
 
 要优化这两种技术、了解SQL Server I/O模式和特征至关重要。SQL Server数据库的存储布局设计合理、可支持SQL Server的性能以及SQL Server基础架构的管理。良好的存储布局还可以成功完成初始部署、并随着业务的增长逐步平稳地扩展环境。
 
@@ -26,9 +26,9 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 == 聚合
 
-聚合是NetApp存储配置的主存储容器、包含一个或多个RAID组、其中既包含数据磁盘、又包含奇偶校验磁盘。NetApp已使用数据文件和事务日志文件分开的共享和专用聚合执行了各种I/O工作负载特征化测试。测试表明、一个具有更多RAID组和磁盘轴的大型聚合可以优化和提高存储性能、并使管理员更易于管理、原因有两个：
+聚合是NetApp存储配置的最低级别存储容器。互联网上存在一些旧文档、建议将IO分隔到不同的底层驱动器组上。不建议在ONTAP中使用此选项。NetApp已使用数据文件和事务日志文件分开的共享和专用聚合执行了各种I/O工作负载特征化测试。测试表明、一个具有更多RAID组和驱动器的大型聚合可以优化和提高存储性能、并使管理员更易于管理、原因有两个：
 
-* 一个大型聚合可使所有磁盘轴的I/O功能对所有文件可用。
+* 一个大型聚合可使所有驱动器的I/O功能对所有文件可用。
 * 一个大型聚合可以最高效地利用磁盘空间。
 
 
@@ -38,7 +38,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 == Volumes
 
-NetApp FlexVol卷会创建并驻留在聚合中。可以在一个聚合中创建多个卷、并且每个卷都可以在聚合之间进行扩展、减少或移动、而无需用户停机。
+NetApp FlexVol卷会创建并驻留在聚合中。此术语有时会引起混淆、因为ONTAP卷不是LUN。  ONTAP卷是数据的管理容器。卷可以包含文件、LUN甚至S3对象。卷不会占用空间、它仅用于管理包含的数据。
 
 
 
@@ -46,14 +46,13 @@ NetApp FlexVol卷会创建并驻留在聚合中。可以在一个聚合中创建
 
 在创建数据库卷设计之前、请务必了解SQL Server I/O模式和特征如何根据工作负载以及备份和恢复要求而有所不同。请参见以下适用于灵活卷的NetApp建议：
 
-* 使用灵活卷存储SQL Server数据库文件、并避免在主机之间共享卷。
+* 避免在主机之间共享卷。例如、虽然可以在一个卷中创建2个LUN并将每个LUN共享到不同的主机、但应避免这种情况、因为它会使管理复杂化。
 * 使用NTFS挂载点而不是驱动器盘符、以超过Windows中26个驱动器盘符的限制。使用卷挂载点时、一般建议为卷标签指定与挂载点相同的名称。
 * 适当时、配置卷自动调整策略以帮助防止出现空间不足情况。17采用ONTAP的Microsoft SQL Server最佳实践指南©2022 NetApp、Inc. 保留所有权利。
-* 当SQL Server数据库I/O配置文件大部分包含大型顺序读取(例如决策支持系统工作负载)时、在卷上启用读取重新分配。读取重新分配可优化块以提供更好的性能。
 * 如果在SMB共享上安装SQL Server、请确保在SMB/Cifis卷上启用了Unicode以创建文件夹。
-* 将卷中的NetApp Snapshot副本预留值设置为零、以便于从操作角度进行监控。
-* 禁用存储Snapshot™副本计划和保留策略。请改用SnapCenter来协调SQL Server数据卷的Snapshot副本。
-* 将SQL Server系统数据库放在专用卷或VMDK上。
+* 将卷中的Snapshot预留值设置为零、以便于从操作角度进行监控。
+* 禁用快照计划和保留策略。请改用SnapCenter来协调SQL Server数据卷的Snapshot副本。
+* 将SQL Server系统数据库放在一个专用卷上。
 * tempdb是一个系统数据库、SQL Server会使用它作为临时工作空间、尤其是用于I/O密集型DBCC CHECKDB操作。因此、请将此数据库放在具有一组单独磁盘轴的专用卷上。在卷数量是一项挑战的大型环境中、您可以在仔细规划后将tempdb整合到较少的卷中、并将其与其他系统数据库存储在同一个卷中。tempdb的数据保护不是高优先级、因为每次重新启动SQL Server时都会重新创建此数据库。
 * 将用户数据文件(.mdf)放在不同的卷上、因为它们是随机读/写工作负载。通常、创建事务日志备份的频率比创建数据库备份的频率更高。因此、请将事务日志文件(.ldf)放置在与数据文件不同的卷或VMDK上、以便可以为每个卷或VMDK创建独立的备份计划。这种分离还会将日志文件的顺序写入I/O与数据文件的随机读/写I/O隔离开来、并显著提高SQL Server性能。
 
@@ -68,33 +67,3 @@ NetApp FlexVol卷会创建并驻留在聚合中。可以在一个聚合中创建
 * 如果使用DiskManager或其他工具创建LUN、请确保在格式化LUN时将分区的分配单元大小设置为64K。
 * 请参见 link:https://www.netapp.com/media/10680-tr4080.pdf["Microsoft Windows和本机MPIO、并遵循适用于现代SAN的ONTAP最佳实践"] 在MPIO属性中将Windows上的多路径支持应用于iSCSI设备。
 
-
-
-
-=== 日志目录
-
-在SQL Server中指定日志目录、用于在主机级别存储事务日志备份数据。如果使用SnapCenter备份日志文件、则SnapCenter使用的每个SQL Server主机都必须配置一个主机日志目录、才能执行日志备份。SnapCenter 具有一个数据库存储库、因此与备份、还原或克隆操作相关的元数据存储在一个中央数据库存储库中。
-
-主机日志目录的大小计算如下：
-主机日志目录大小=((最大数据库LDF大小x每日日志更改率%) x (快照保留)÷(1 - LUN开销空间%)
-主机日志目录规模估算公式假定LUN开销空间为10%
-
-将日志目录放在专用卷或LUN上。主机日志目录中的数据量取决于备份的大小以及备份的保留天数。SnapCenter只允许每个SQL Server主机有一个主机日志目录。您可以在SnapCenter --> Host --> Configure Plug-in中配置主机日志目录。
-
-[TIP]
-====
-* NetApp建议*对主机日志目录执行以下操作：
-
-* 确保主机日志目录不会被任何可能损坏备份快照数据的其他类型的数据共享。
-* 请勿将用户数据库或系统数据库放置在托管挂载点的LUN上。
-* 在SnapCenter将事务日志复制到的专用FlexVol卷上创建主机日志目录。
-* 使用SnapCenter向导将数据库迁移到NetApp存储、以便数据库存储在有效位置、从而成功执行SnapCenter备份和还原操作。请注意、迁移过程会造成系统中断、并且在迁移过程中、发生原因会使数据库脱机。
-* 对于SQL Server的故障转移集群实例(FCIS)、必须满足以下条件：
-+
-** 如果您使用的是故障转移集群实例、则主机日志目录LUN必须是与要备份的SQL Server实例位于同一集群组中的集群磁盘资源SnapCenter。
-** 如果您使用的是故障转移集群实例、则必须将用户数据库置于共享LUN上、这些共享LUN是分配给与SQL Server实例关联的集群组的物理磁盘集群资源。
-
-
-
-
-====

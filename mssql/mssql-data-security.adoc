@@ -1,16 +1,16 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-data-security.html 
-keywords: MS-SQL,mssql,SQL Server, securing databases, security 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, securing databases on ONTAP, snaplock, multiadmin verification, backup, tamperproof snapshots 
+summary: 保护ONTAP上的Microsoft SQL Server安全 
 ---
-= 数据库安全性
+= 保护ONTAP上的Microsoft SQL Server安全
 :allow-uri-read: 
 :imagesdir: ../media/
 
 
 [role="lead"]
-保护数据库环境是一项多方面的工作、不仅限于管理数据库本身。NetApp提供了多种独特的功能、旨在保护数据库基础架构的存储方面。
+保护SQL Server数据库环境的安全不仅仅是管理数据库本身、还需要进行多层面的努力。ONTAP提供了多种独特的功能、旨在保护数据库基础架构的存储方面。
 
 
 

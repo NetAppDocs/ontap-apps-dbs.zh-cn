@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-tempdb.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, tempdb, ONTAP 
+summary: 在ONTAP上放置Microsoft SQL Server tempdb 
 ---
 = Microsoft SQL Server tempdb文件
 :allow-uri-read: 
@@ -10,7 +10,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 
 [role="lead"]
-NetApp建议主动将tempdb文件增大到其全满大小、以避免磁盘碎片化。
+Tempdb数据库的利用率可能会很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、还可以更改tempdb数据文件以减少分配争用
 
 如果SQL Server必须向特殊系统页面写入数据以分配新对象、则全局分配映射(GAM)、共享全局分配映射(SGAM)或页面可用空间(PFS)页面上可能会发生页面争用。闩锁保护(锁定)内存中的这些页面。在繁忙的SQL Server实例上、可能需要很长时间才能在tempdb中的系统页面上获得锁定。这会导致查询运行时间变慢、并称为闩锁争用。请参见以下创建tempdb数据文件的最佳实践：
 

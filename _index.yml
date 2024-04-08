@@ -3,9 +3,13 @@ indexpage:
   title: ONTAP和企业级应用程序
   summary: ONTAP是许多企业级应用程序和数据库技术的数据管理和数据保护基础。以下几页提供了有关ONTAP以及企业级应用程序和基础架构的最佳实践和实施过程的指导。
   keywords: VMware, vSphere, Oracle, SAP, HANA, SAP HANA, MSSQL, SQL Server, Postgres,
-    postgresql, mysql, mariadb
+    postgresql, mysql, mariadb, Hyper-V
   lead: ONTAP是许多企业级应用程序和数据库技术的数据管理和数据保护基础。以下几页提供了有关ONTAP以及企业级应用程序和基础架构的最佳实践和实施过程的指导。
   tiles:
+  - title: Microsoft Hyper-V
+    links:
+    - title: 部署准则和存储最佳实践
+      url: "/microsoft/win_overview.html"
   - title: Microsoft SQL Server
     links:
     - title: 基于ONTAP的Microsoft SQL Server

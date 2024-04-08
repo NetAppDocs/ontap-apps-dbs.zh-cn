@@ -2,19 +2,19 @@
 sidebar: sidebar 
 permalink: vmware/vmware-vvols-overview.html 
 keywords: tr-4400, vvols, ontap, virtual volumes 
-summary:  
+summary: '本节将简要介绍采用ONTAP的VMware vSphere虚拟卷(vvol)' 
 ---
 = 概述
 :allow-uri-read: 
 
 
 [role="lead"]
-二十年来、NetApp ONTAP软件一直是适用于VMware vSphere环境的领先存储解决方案、并不断增加创新功能、以简化管理并降低成本。
+二十年来、ONTAP一直是适用于VMware vSphere环境的领先存储解决方案、并不断增加创新功能、以简化管理并降低成本。
 
 本文档介绍了适用于VMware vSphere虚拟卷(vvol)的ONTAP 功能、包括最新的产品信息和用例以及最佳实践和其他可简化部署和减少错误的信息。
 
 
-NOTE: 本文档将取代先前发布的技术报告_TR-4400：《使用NetApp ONTAP的VMware vSphere虚拟卷(Vvol)》_
+NOTE: 本文档将取代先前发布的技术报告_TR-4400：《使用ONTAP的VMware vSphere虚拟卷(Vvol)》_
 
 最佳实践是指南和兼容性列表等其他文档的补充。它们是根据 NetApp 工程师和客户的实验室测试和丰富的现场经验开发的。它们可能不是唯一有效或受支持的实践、但通常是最简单的解决方案、可满足大多数客户的需求。
 
@@ -109,19 +109,19 @@ image::vvols-image4.png[虚拟机存储策略合规性,320,100]
 
 == NetApp虚拟卷支持
 
-自2012年首次发布以来、NetApp ONTAP 便一直支持此VASA规范。虽然其他NetApp存储系统可能支持VASA、但本文档重点介绍当前受支持的ONTAP 9版本。
+自2012年首次发布以来、ONTAP便一直支持此规范。虽然其他NetApp存储系统可能支持VASA、但本文档重点介绍当前受支持的ONTAP 9版本。
 
 
 
-=== NetApp ONTAP
+=== ONTAP
 
-除了AFF 、ASA 和FAS 系统上的ONTAP 9之外、NetApp还支持ONTAP Select 上的VMware工作负载、Amazon FSx for NetApp ONTAP 与VMware Cloud on AWS、Azure NetApp Files 与Azure VMware解决方案 、Cloud Volumes Service 与Google Cloud VMware Engine以及Equinox中的NetApp私有存储。 但是、具体功能可能会因服务提供商和可用网络连接而异。此外、vSphere子系统还可以访问这些配置以及Cloud Volumes ONTAP 中存储的数据。
+除了AFF、ASA和FAS系统上的ONTAP 9之外、NetApp还支持ONTAP Select上的VMware工作负载、基于AWS上的VMware Cloud的Amazon FSx for NetApp、基于Azure VMware解决方案的Azure NetApp Files、基于Google Cloud VMware Engine的Cloud Volumes Service以及Equinox中的NetApp私有存储。 但是、具体功能可能会因服务提供商和可用网络连接而异。此外、vSphere子系统还可以访问这些配置以及Cloud Volumes ONTAP 中存储的数据。
 
 在本报告发布时、超规模云环境仅限于传统NFS v3数据存储库、因此、Vvol仅适用于内部ONTAP 系统或提供内部系统全部功能的云连接系统、例如由全球NetApp合作伙伴和服务提供商托管的系统。
 
 _有关ONTAP 的详细信息，请参见 https://docs.netapp.com/us-en/ontap-family/["ONTAP 产品文档"^]_
 
-_有关ONTAP 和VMware vSphere最佳实践的详细信息、请参见 https://docs.netapp.com/us-en/netapp-solutions/virtualization/vsphere_ontap_ontap_for_vsphere.html["TR-4597"^]_
+_有关ONTAP 和VMware vSphere最佳实践的详细信息、请参见 link:vmware-vsphere-overview.html["TR-4597"^]_
 
 
 

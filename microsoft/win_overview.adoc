@@ -1,0 +1,52 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_overview.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: Microsoft Windows和Hyper-V与ONTAP的虚拟化概述 
+---
+= 概述
+:allow-uri-read: 
+
+
+[role="lead"]
+Microsoft Windows Server是一款企业级操作系统(OS)、涵盖网络连接、安全性、虚拟化、私有云、混合云、 虚拟桌面基础架构、访问保护、信息保护、Web服务、应用程序平台基础架构、 等等。
+
+
+NOTE: *本文档替代以前发布的技术报告_TR-4568：《适用于Windows Server_*的NetApp部署准则和存储最佳实践》
+
+.NetApp ONTAP (R)管理软件可在NetApp存储控制器上运行。它提供多种格式。
+* 支持文件、对象和块协议的统一架构。这样、存储控制器便可同时用作NAS和SAN设备以及对象存储
+* 一种全SAN阵列(ASA)、仅侧重于块协议、并通过为连接的主机添加对称主动-主动多路径来优化I/O恢复时间(I/O Resume Times、IORT)
+* 软件定义的统一架构
++
+** 在VMware vSphere或KVM上运行的ONTAP Select
+** Cloud Volumes ONTAP作为云原生实例运行
+
+
+* 超超群云提供商提供的第一方产品
++
+** 适用于 NetApp ONTAP 的 Amazon FSX
+** Azure NetApp Files
+** Google Cloud NetApp卷
+
+
+
+
+ONTAP可提供NetApp存储效率功能、例如NetApp SnapSnapshot (R)技术、克隆、重复数据删除、精简配置、精简复制、 数据压缩、虚拟存储分层等、同时提高性能和效率。
+
+Windows Server和ONTAP可以一起在大型环境中运行、为数据中心整合以及私有云或混合云部署带来巨大价值。这种组合还可以高效地提供无中断工作负载、并支持无缝可扩展性。
+
+
+
+== 目标受众
+
+本文档面向为Windows Server设计NetApp存储解决方案的系统和存储架构师。
+
+在本文档中、我们做出以下假设：
+
+* 读者大致了解NetApp硬件和软件解决方案。请参见 https://docs.netapp.com/us-en/ontap/cluster-admin/index.html["《集群管理员系统管理指南》"] 了解详细信息。
+* 读者大致了解块访问协议、例如iSCSI、FC和文件访问协议SMB/CCIFS。请参见 https://docs.netapp.com/us-en/ontap/san-management/index.html["集群模式Data ONTAP SAN管理"] 了解与SAN相关的信息。请参见 https://docs.netapp.com/us-en/ontap/nas-management/index.html["NAS管理"] 了解与CIFS或SMB相关的信息。
+* 读者具备Windows Server操作系统和Hyper-V的基本知识
+
+
+有关经过测试且受支持的SAN和NAS配置的定期更新的完整列表、请参见 http://mysupport.netapp.com/matrix/["互操作性表工具（ IMT ）"] 在NetApp 支持站点 上。通过IMT、您可以确定特定环境支持的确切产品和功能版本。NetApp IMT定义了与NetApp支持的配置兼容的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。

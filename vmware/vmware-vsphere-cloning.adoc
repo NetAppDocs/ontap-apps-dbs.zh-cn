@@ -22,7 +22,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 下图显示了 ONTAP 克隆。
 
-image:vsphere_ontap_image5.png["错误：缺少图形映像"]
+image:vsphere_ontap_image5.png["ONTAP克隆"]
 
 可以通过多种机制将克隆卸载到运行 ONTAP 软件的系统，通常是在 VM ， VVOL 或数据存储库级别。其中包括：
 

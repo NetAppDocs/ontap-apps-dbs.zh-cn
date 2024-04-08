@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-memory-configuration.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, memory 
+summary: Microsoft SQL Server内存配置 
 ---
 = Microsoft SQL Server内存配置
 :allow-uri-read: 
@@ -10,7 +10,7 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 
 [role="lead"]
-以下各节将介绍一些关键内存配置设置。
+下一节将介绍如何配置SQL Server内存设置以优化数据库性能。
 
 
 
@@ -37,17 +37,11 @@ image:mssql-max-server-memory.png["错误：缺少图形映像"]
 
 ....
 EXECUTE sp_configure 'show advanced options', 1
-
 GO
-
 EXECUTE sp_configure 'min server memory (MB)', 2048
-
 GO
-
 EXEC sp_configure 'max server memory (MB)', 120832
-
 GO
-
 RECONFIGURE WITH OVERRIDE
 ....
 
@@ -70,9 +64,9 @@ index create memory选项是另一个高级选项、通常不应更改。
 
 == 每个查询的最小内存
 
-运行查询时、SQL Server会尝试分配最佳内存量、以使其高效运行。
+运行查询时、SQL Server会尝试分配最佳内存量、以便高效运行。
 
-默认情况下、每个查询的最小内存设置会为要运行的每个查询分配>或=到1024KB的空间。最佳做法是、将此设置保留为默认值0、以允许SQL Server动态管理为索引创建操作分配的内存量。但是、如果SQL Server的RAM超过高效运行所需的RAM、则提高此设置可以提高某些查询的性能。因此、只要SQL Server、任何其他应用程序或操作系统未使用服务器上的可用内存、则提高此设置就可以提高SQL Server的整体性能。如果没有可用内存，则增加此设置可能会影响整体性能。
+默认情况下、"每个查询的最小内存"设置会为要运行的每个查询分配>=到1024KB的内存。最佳做法是、将此设置保留为默认值0、以允许SQL Server动态管理为索引创建操作分配的内存量。但是、如果SQL Server的RAM超过高效运行所需的RAM、则提高此设置可以提高某些查询的性能。因此、只要SQL Server、任何其他应用程序或操作系统未使用服务器上的可用内存、则提高此设置就可以提高SQL Server的整体性能。如果没有可用内存，则增加此设置可能会影响整体性能。
 
 image:mssql-min-memory-per-query.png["错误：缺少图形映像"]
 
@@ -108,14 +102,9 @@ image:mssql-min-memory-per-query.png["错误：缺少图形映像"]
 
 ....
 USE master
-
 GO
-
 ALTER SERVER CONFIGURATION
-
 SET BUFFER POOL EXTENSION ON
-
   (FILENAME = ‘P:\BUFFER POOL EXTENSION\SQLServerCache.BUFFER POOL EXTENSION', SIZE = 32 GB);
-
 GO
 ....

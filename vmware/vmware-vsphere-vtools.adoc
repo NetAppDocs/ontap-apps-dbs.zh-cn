@@ -31,7 +31,7 @@ ONTAP 许可证附带了以下工具，无需额外付费。有关这些工具�
 
 下图显示了适用于 vSphere 的 ONTAP 工具。
 
-image:vsphere_ontap_image1.png["错误：缺少图形映像"]
+image:vsphere_ontap_image1.png["适用于vSphere的ONTAP工具"]
 
 
 

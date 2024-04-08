@@ -17,7 +17,7 @@ ONTAP 工具还包括vCenter UI扩展、REST API服务器、适用于VMware Site
 
 == 产品和文档
 
-ONTAP FlexClone许可证(随ONTAP One提供)和ONTAP 工具设备是在NetApp ONTAP 中使用所需的唯一附加产品。最新版本的ONTAP 工具作为一个在ESXi上运行的统一设备提供、可提供以前三个不同设备和服务器的功能。对于vvol、请务必将ONTAP 工具vCenter UI扩展或REST API与提供特定vvol功能的VASA Provider结合使用、作为用于vSphere中ONTAP 功能的常规管理工具和用户界面。传统数据存储库会附带SRA组件、但VMware Site Recovery Manager不会对VVO尔 使用SRA、而是在SRM 8.3及更高版本中实施新服务、从而利用VASA Provider进行VVO尔 复制。
+FlexClone许可证(随ONTAP One提供)和ONTAP工具设备是在ONTAP中使用ONTAP所需的唯一附加产品。最新版本的ONTAP 工具作为一个在ESXi上运行的统一设备提供、可提供以前三个不同设备和服务器的功能。对于vvol、请务必将ONTAP 工具vCenter UI扩展或REST API与提供特定vvol功能的VASA Provider结合使用、作为用于vSphere中ONTAP 功能的常规管理工具和用户界面。传统数据存储库会附带SRA组件、但VMware Site Recovery Manager不会对VVO尔 使用SRA、而是在SRM 8.3及更高版本中实施新服务、从而利用VASA Provider进行VVO尔 复制。
 
 
 

@@ -1,0 +1,125 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_environment.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 了解NetApp存储和Windows Server环境 
+---
+= NetApp存储和Windows服务器环境
+:allow-uri-read: 
+
+
+[role="lead"]
+如中所述 link:win_overview.html["概述"]NetApp存储控制器提供了一个真正统一的架构，支持文件、块和对象协议。其中包括SMB/CCIFS、NFS、NVMe/TCP、NVMe/FC、iSCSI、 FC (FCP)和S3、并创建统一的客户端和主机访问。同一个存储控制器可同时以SAN LUN和文件服务的形式提供块存储服务、如NFS和SMB/CCIFS。ONTAP还可作为全SAN阵列(ASA)使用、它可通过iSCSI和FCP的对称主动-主动多路径功能来优化主机访问、而统一的ONTAP系统则使用非对称主动-主动多路径功能。在这两种模式下、ONTAP都使用ANA进行基于网络结构的NVMe (NVMe-oF)多路径管理。
+
+在Windows Server环境中、运行ONTAP软件的NetApp存储控制器可以支持以下工作负载：
+
+* 在持续可用的SMB 3.0共享上托管的VM
+* 托管在iSCSI或FC上运行的集群共享卷(CSV) LUN上的VM
+* SMB 3.0共享上的SQL Server数据库
+* 基于NVMe-oF、iSCSI或FC的SQL Server数据库
+* 其他应用程序工作负载
+
+
+此外、NetApp存储效率功能还包括重复数据删除、NetApp FlexCLONE (R)副本、NetApp Snapshot技术、精简配置、数据压缩、 存储层为在Windows Server上运行的工作负载提供了显著的价值。
+
+
+
+== ONTAP数据管理
+
+ONTAP是在NetApp存储控制器上运行的管理软件。NetApp存储控制器称为节点、是一种具有处理器、RAM和NVRAM的硬件设备。节点可以连接到SATA、SAS或SSD磁盘驱动器、也可以连接到这些驱动器的组合。
+
+多个节点聚合到一个集群系统中。集群中的节点会持续相互通信、以协调集群活动。此外、这些节点还可以使用冗余路径连接到由两个10 Gb以太网交换机组成的专用集群网络、从而在节点之间透明地移动数据。在任何故障转移情形下、集群中的节点都可以相互接管、以提供高可用性。集群在整个集群而非每个节点上进行管理、并从一个或多个Storage Virtual Machine (SVM)提供数据。一个集群必须至少具有一个SVM才能提供数据。
+
+集群的基本单元是节点、节点会作为高可用性(HA)对的一部分添加到集群中。HA对通过HA互连(与专用集群网络隔离)相互通信并维护与HA对磁盘的冗余连接、从而实现高可用性。尽管磁盘架可能包含属于HA对任一成员的磁盘、但HA对之间不会共享磁盘。下图展示了Windows Server环境中的NetApp存储部署。
+
+image:win_image1.png["在Windows Server环境中部署NetApp存储、宽度=624、高度=479"]
+
+
+
+== Storage Virtual Machine
+
+ONTAP SVM是一种逻辑存储服务器、用于提供从一个或多个逻辑接口(LIFs)到LUN和/或NAS命名空间的数据访问。因此、SVM是存储分段的基本单元、可在ONTAP中实现安全多租户。每个SVM都配置为拥有从分配给物理以太网网络或FC目标端口的物理聚合和逻辑接口(LIP)配置的存储卷。
+
+逻辑磁盘(LUN)或CIFS共享在SVM的卷中创建、并映射到Windows主机和集群、以便为其提供存储空间、如下图所示。SVM与节点无关、并且基于集群；它们可以在集群中的任何位置使用物理资源、例如卷或网络端口。
+
+image:win_image2.png["ONTAP Storage Virtual Machine、宽度=572、高度=443"]
+
+
+
+== 为Windows Server配置NetApp存储
+
+在SAN和NAS环境中、均可将存储配置到Windows Server。在SAN环境中、存储会作为NetApp卷上LUN的磁盘提供为块存储。在NAS环境中、存储作为文件存储在NetApp卷上的CIFS或SMB共享提供。这些磁盘和共享可按如下所示在Windows Server中应用：
+
+* 用于应用程序工作负载的Windows Server主机存储
+* 存储、用于存储NAS服务器和容器
+* 用于单个Hyper-V主机存储VM的存储
+* Hyper-V集群的共享存储、采用LV的形式来存储虚拟机
+* SQL Server数据库的存储
+
+
+
+
+== 管理NetApp存储
+
+要从Windows Server 2016连接、配置和管理NetApp存储、请使用以下方法之一：
+
+* *安全外壳(SSH)。*使用Windows Server上的任何SSH客户端运行NetApp命令行界面命令。
+* * System Manager.*这是NetApp基于GUI的易管理性产品。
+* * NetApp PowerShell工具包。*这是NetApp PowerShell工具包、用于自动化和实施自定义脚本和工作流。
+
+
+
+
+== NetApp PowerShell工具包
+
+NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端自动化并支持NetApp ONTAP的存储管理。ONTAP模块包含2、000多个cmdlet、可帮助管理FAS、NetApp全闪存FAS (AFF)、商用硬件和云资源。
+
+
+
+=== 需要记住的事项
+
+* NetApp不支持Windows Server存储空间。存储空间仅用于JBOD (即一组磁盘)、不适用于任何类型的RAID (直连存储[DAS]或SAN)。
+* ONTAP不支持Windows Server中的集群存储池。
+* NetApp支持在Windows SAN环境中使用共享虚拟硬盘格式(Virtual Hard Disk Format、VHDX)进行子系统集群。
+* Windows Server不支持使用iSCSI或FC LUN创建存储池。
+
+
+
+
+=== 进一步阅读
+
+* 有关NetApp PowerShell工具包的详细信息、请访问 https://mysupport.netapp.com/site/tools/tool-eula/ontap-powershell-toolkit["NetApp 支持站点"]。
+* 有关NetApp PowerShell工具包最佳实践的信息、请参见 https://www.netapp.com/media/16861-tr-4475.pdf?v=93202073432AM["TR-4475：《NetApp PowerShell工具包最佳实践指南》"]。
+
+
+
+
+== 网络最佳实践
+
+以太网网络可以大致分为以下几组：
+
+* VM的客户端网络
+* 再添加一个存储网络(连接到存储系统的iSCSI或SMB)
+* 集群通信网络(集群节点之间的检测信号和其他通信)
+* 管理网络(用于监控系统并对其进行故障排除)
+* 迁移网络(用于主机实时迁移)
+* 虚拟机复制(Hyper-V副本)
+
+
+
+
+=== 最佳实践
+
+* NetApp建议为上述每个功能配置专用物理端口、以实现网络隔离和性能。
+* 对于上述每个网络要求(存储要求除外)、可以聚合多个物理网络端口来分布负载或提供容错功能。
+* NetApp建议在Hyper-V主机上创建一个专用虚拟交换机、用于在虚拟机中建立子系统存储连接。
+* 确保Hyper-V主机和子系统iSCSI数据路径使用不同的物理端口和虚拟交换机、以实现子系统与主机之间的安全隔离。
+* NetApp建议避免对iSCSI NIC进行NIC绑定。
+* NetApp建议使用在主机上配置的ONTAP多路径输入/输出(Multipath input/output、MPIO)进行存储。
+* 如果使用子系统iSCSI启动程序、NetApp建议在子系统VM中使用MPIO。如果使用直通磁盘、则必须避免在子系统中使用MPIO。在这种情况下、只需在主机上安装MPIO即可。
+* NetApp建议不要对分配给存储网络的虚拟交换机应用QoS策略。
+* NetApp建议不要在物理NIC上使用自动专用IP寻址(Automatic Private IP Addressing、APIPA)、因为APIPA不可路由、并且未在DNS中注册。
+* NetApp建议为CSV、iSCSI和实时迁移网络启用巨型帧、以提高吞吐量并缩短CPU周期。
+* NetApp建议取消选中允许管理操作系统共享此网络适配器选项、以便Hyper-V虚拟交换机为VM创建专用网络。
+* NetApp建议为实时迁移和iSCSI网络创建冗余网络路径(多个交换机)、以提供故障恢复能力和QoS。
+

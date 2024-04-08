@@ -1,0 +1,302 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_hyperv_infra.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 采用ONTAP的Hyper-V存储基础架构 
+---
+= 基于NetApp的Hyper-V存储基础架构
+:allow-uri-read: 
+
+
+[role="lead"]
+Hyper-V存储基础架构可以托管在ONTAP存储系统上。可以使用NetApp LUN或NetApp CIFS共享为Hyper-V存储VM文件及其磁盘提供存储、如下图所示。
+
+image:win_image5.png["基于NetApp的Hyper-V存储基础架构、宽度=624、高度=338"]
+
+
+
+== NetApp LUN上的Hyper-V存储
+
+* 在Hyper-V服务器计算机上配置NetApp LUN。有关详细信息，请参阅"link:win_san.html["在SAN环境中配置"]。 "
+* 从Server Manager的Tools部分打开Hyper-V Manager。
+* 选择Hyper-V服务器、然后单击Hyper-V设置。
+* 指定用于将虚拟机及其磁盘存储为LUN的默认文件夹。这样会将默认路径设置为Hyper-V存储的LUN。如果要明确指定VM的路径、则可以在创建VM期间执行此操作。
+
+
+
+
+== NetApp CIFS共享上的Hyper-V存储
+
+开始执行本节中列出的步骤之前，请查看"link:win_smb.html["在SMB环境中配置"]" 要在NetApp CIFS共享上配置Hyper-V存储、请完成以下步骤：
+
+. 从Server Manager的Tools部分打开Hyper-V Manager。
+. 选择Hyper-V服务器、然后单击Hyper-V设置。
+. 指定用于存储VM及其磁盘的默认文件夹作为CIFS共享。这样会将默认路径设置为Hyper-V存储的CIFS共享。如果要明确指定VM的路径、则可以在创建VM期间执行此操作。
+
+
+而Hyper-V中的每个虚拟机又可以获得提供给物理主机的NetApp LUN和CIFS共享。此操作步骤与任何物理主机相同。可以使用以下方法为VM配置存储：
+
+* 使用VM中的FC启动程序添加存储LUN
+* 使用虚拟机中的iSCSI启动程序添加存储LUN
+* 向VM添加直通物理磁盘
+* 从主机将VHD/VHDX添加到VM
+
+
+
+
+=== 最佳实践
+
+* 当VM及其数据存储在NetApp存储上时、NetApp建议定期在卷级别运行NetApp重复数据删除。如果在CSV或SMB共享上托管相同的VM、则这种做法会显著节省空间。重复数据删除在存储控制器上运行、不会影响主机系统和虚拟机的性能。
+* 在对Hyper-V使用iSCSI LUN时、请确保启用 `iSCSI Service (TCP-In) for Inbound` 和 `iSCSI Service (TCP-Out) for Outbound` 在Hyper-V主机的防火墙设置中。这样可以使iSCSI流量进出Hyper-V主机和NetApp控制器。
+* NetApp建议取消选中允许管理操作系统共享Hyper-V虚拟交换机的此网络适配器选项。这样会为VM创建一个专用网络。
+
+
+
+
+=== 需要记住的事项
+
+* 使用虚拟光纤通道配置VM需要N_Port ID Virtualizationâ€"enabled FC HBA。最多支持四个FC端口。
+* 如果主机系统配置有多个FC端口并提供给虚拟机、则必须在虚拟机中安装MPIO才能启用多路径。
+* 如果在主机上使用MPIO、则无法为该主机配置直通磁盘、因为直通磁盘不支持MPIO。
+* 用于VHD/VHDx文件的磁盘应使用64K格式进行分配。
+
+
+
+
+=== 进一步阅读
+
+* 有关FC HBA的信息、请参见 http://mysupport.netapp.com/matrix/["NetApp 互操作性表"]。
+* 有关虚拟光纤通道的详细信息、请参见Microsoft https://technet.microsoft.com/en-us/library/hh831413.aspx["Hyper-V虚拟光纤通道概述"] 页面。
+
+
+
+
+== 卸载数据传输
+
+Microsoft ODX (也称为副本卸载)支持在存储设备内或兼容存储设备之间直接传输数据、而无需通过主机计算机传输数据。NetApp ONTAP支持对CIFS和SAN协议使用ODX功能。如果副本位于同一个卷中、ODX可能会提高性能、降低客户端上的CPU和内存利用率、并降低网络I/O带宽利用率。
+
+借助ODX、可以更快、更高效地在SMB共享内、LUN内以及SMB共享与LUN (如果位于同一卷中)之间复制文件。如果需要在同一个卷中为一个操作系统的黄金映像(VHD/VHDX)创建多个副本、则此方法会更有用。如果同一个黄金映像位于同一个卷中、则创建多个副本所需的时间会显著缩短。ODX还可用于Hyper-V存储实时迁移、用于移动VM存储。
+
+如果复制跨卷、则与基于主机的副本相比、性能可能不会显著提高。
+
+要在CIFS上启用ODX功能、请在NetApp存储控制器上运行以下命令行界面命令：
+
+. 为CIFS启用ODX。
+#将权限级别设置为诊断
+cluster：> set -PRILEGE diagnostic
++
+....
+#enable the odx feature
+cluster::> vserver cifs options modify -vserver <vserver_name> -copy-offload-enabled true
+....
++
+....
+#return to admin privilege level
+cluster::> set privilege admin
+....
+. 要在SAN上启用ODX功能、请在NetApp存储控制器上运行以下命令行界面命令：
+#将权限级别设置为诊断
+cluster：> set -PRILEGE diagnostic
++
+....
+#enable the odx feature
+cluster::> copy-offload modify -vserver <vserver_name> -scsi enabled
+....
++
+....
+#return to admin privilege level
+cluster::> set privilege admin
+....
+
+
+
+
+=== 需要记住的事项
+
+* 对于CIFS、只有当客户端和存储服务器都支持SMB 3.0和ODX功能时、ODX才可用。
+* 对于SAN环境、只有当客户端和存储服务器都支持ODX功能时、ODX才可用。
+
+
+
+
+=== 进一步阅读
+
+有关ODX的信息、请参见 https://docs.netapp.com/us-en/ontap/smb-admin/improve-microsoft-remote-copy-performance-concept.html["提高Microsoft远程复制性能"] 和 https://docs.netapp.com/us-en/ontap/san-admin/microsoft-offloaded-data-transfer-odx-concept.html["Microsoft卸载数据传输"] 。
+
+
+
+== Hyper-V集群：虚拟机的高可用性和可扩展性
+
+故障转移集群可为Hyper-V服务器提供高可用性和可扩展性。故障转移集群是一组独立的Hyper-V服务器、它们协同工作以提高VM的可用性和可扩展性。
+
+Hyper-V集群模式服务器(称为节点)通过物理网络和集群软件进行连接。这些节点使用共享存储来存储VM文件、其中包括配置、虚拟硬盘(Virtual Hard Disk、VHD)文件和Snapshot副本。共享存储可以是NetApp SMB/CCIFS共享、也可以是基于NetApp LUN的CSV、如图6所示。此共享存储可提供一个一致的分布式命名空间、集群中的所有节点均可同时访问此命名空间。因此、如果集群中的一个节点发生故障、另一个节点将通过故障转移过程提供服务。故障转移集群可以使用故障转移集群管理器管理单元和故障转移集群Windows PowerShell cmdlet进行管理。
+
+
+
+=== 集群共享卷
+
+通过NetApp、故障转移集群中的多个节点可以同时对配置为NTFS或ReFS卷的同一个CSV LUN进行读/写访问。借助CSV、集群角色可以快速从一个节点故障转移到另一个节点、而无需更改驱动器所有权或卸载并重新挂载卷。此外、CSV还可以简化对故障转移集群中可能存在的大量LUN的管理。CSV可提供一个通用的集群模式文件系统、该文件系统位于NTFS或ReFS之上。
+
+image:win_image6.png["Hyper-V故障转移集群和NetApp、宽度=624、高度=271"]
+
+
+
+=== 最佳实践
+
+* NetApp建议关闭iSCSI网络上的集群通信、以防止内部集群通信和CSV流量流经同一网络。
+* NetApp建议使用冗余网络路径(多个交换机)来提供故障恢复能力和QoS。
+
+
+
+
+=== 需要记住的事项
+
+* 用于CSV的磁盘必须使用NTFS或ReFS进行分区。使用FAT或FAT32格式化的磁盘不能用于CSV。
+* 用于CSV的磁盘应使用64K格式进行分配。
+
+
+
+
+=== 进一步阅读
+
+有关部署Hyper-V集群的信息、请参见附录B： link:win_deploy_hyperv.html["部署Hyper-V集群"]。
+
+
+
+== Hyper-V实时迁移：迁移虚拟机
+
+有时、在VM的生命周期内、需要将其移至Windows集群上的其他主机。如果主机的系统资源即将用尽、或者由于维护原因需要重新启动主机、则可能需要执行此操作。同样、可能需要将虚拟机移动到其他LUN或SMB共享。如果现有LUN或共享空间即将用尽或性能低于预期、则可能需要执行此操作。Hyper-V实时迁移可将正在运行的虚拟机从一台物理Hyper-V服务器移至另一台物理Hyper-V服务器、而不会影响虚拟机对用户的可用性。您可以在故障转移集群中的Hyper-V服务器之间或不属于任何集群的独立Hyper-V服务器之间实时迁移虚拟机。
+
+
+
+=== 在一个"已加入的环境中进行实时迁移"
+
+VM可以在集群节点之间无缝移动。VM迁移是瞬时的、因为集群中的所有节点都共享同一个存储、并且可以访问VM及其磁盘。下图显示了集群环境中的实时迁移。
+
+image:win_image7.png["集群环境中的实时迁移、宽度=580、高度=295"]
+
+
+
+=== 最佳实践
+
+* 为实时迁移流量配置一个专用端口。
+* 拥有专用的主机实时迁移网络、以避免迁移期间出现与网络相关的问题。
+
+
+
+
+=== 进一步阅读
+
+有关在集群环境中部署实时迁移的信息、请参见 link:win_deploy_hyperv_lmce.html["附录C：在集群环境中部署Hyper-V实时迁移"]。
+
+
+
+=== 在一个或多个环境中进行实时迁移
+
+您可以在两个非集群独立Hyper-V服务器之间实时迁移虚拟机。此过程可以使用共享或无共享实时迁移。
+
+* 在共享实时迁移中、虚拟机存储在SMB共享上。因此、实时迁移虚拟机时、该虚拟机的存储仍保留在中央SMB共享上、以供另一节点即时访问、如下图所示。
+
+
+image:win_image8.png["非集群环境中的共享实时迁移、宽度=331、高度=271"]
+
+* 在无共享实时迁移中、每个Hyper-V服务器都有自己的本地存储(可以是SMB共享、LUN或DAS)、并且虚拟机的存储是其Hyper-V服务器的本地存储。实时迁移VM时、VM的存储会通过客户端网络镜像到目标服务器、然后迁移VM。存储在DAS、LUN或SMB/CCIFS共享上的虚拟机可以移动到另一个Hyper-V服务器上的SMB/CCIFS共享、如下图所示。也可以将其移动到LUN、如第二个图所示。
+
+
+image:win_image9.png["无共享在非集群环境中实时迁移到SMB共享、宽度=624、高度=384"]
+
+image:win_image10.png["在非集群环境中、无共享实时迁移到LUN、宽度=624、高度=384"]
+
+
+
+=== 进一步阅读
+
+有关在集群模式环境之外部署实时迁移的信息、请参见 link:win_deploy_hyperv_lmoce.html["附录D：在集群环境之外部署Hyper-V实时迁移"]。
+
+
+
+=== Hyper-V存储实时迁移
+
+在虚拟机的生命周期内、您可能需要将虚拟机存储(VHD/VHDX)移至其他LUN或SMB共享。如果现有LUN或共享空间即将用尽或性能低于预期、则可能需要执行此操作。
+
+当前托管VM的LUN或共享可能会用尽空间、重新利用或降低性能。在这种情况下、可以将虚拟机移动到另一个LUN或其他卷、聚合或集群上的共享、而无需停机。如果存储系统具有副本卸载功能、则此过程会更快。默认情况下、对于CIFS和SAN环境、NetApp存储系统会启用副本卸载。
+
+ODX功能可在驻留在远程服务器上的两个目录之间执行完整文件或子文件副本。通过在服务器之间复制数据(如果源文件和目标文件位于同一服务器上、则复制数据也可以复制到同一服务器)来创建副本。创建副本时、客户端不会从源读取数据、也不会写入目标。此过程可减少客户端或服务器对处理器和内存的使用、并最大限度地减少网络I/O带宽。如果在同一个卷中复制、则速度会更快。如果复制跨卷、则与基于主机的副本相比、性能可能不会显著提高。在主机上继续执行复制操作之前、请确认已在存储系统上配置副本卸载设置。
+
+从主机启动VM存储实时迁移后、系统将确定源和目标、并将复制活动卸载到存储系统。由于活动由存储系统执行、因此主机CPU、内存或网络的使用率可以忽略不计。
+
+NetApp存储控制器支持以下不同的ODX情形：
+
+* *IntaSVM.*数据属于同一个SVM：
+* *Intravolume、intrinode。*源文件或LUN和目标文件或LUN位于同一个卷中。复制操作采用FlexClone文件技术执行、这种技术可提供额外的远程复制性能优势。
+* *卷间、内部网。*源文件或LUN和目标文件或LUN位于同一节点上的不同卷上。
+* *卷间、节点间。*源文件或LUN和目标文件或LUN位于不同节点上的不同卷上。
+* *InterSVM.*数据属于不同的SVM。
+* *卷间、内部网。*源文件或LUN和目标文件或LUN位于同一节点上的不同卷上。
+* *卷间、节点间。*源文件或LUN和目标文件或LUN位于不同节点上的不同卷上。
+* *集群间。*从ONTAP 9.0开始、SAN环境中的集群间LUN传输也支持ODX。集群间ODE仅支持SAN协议、而不支持SMB。
+
+
+迁移完成后、必须重新配置备份和复制策略、以反映存放VM的新卷。先前创建的任何备份均无法使用。
+
+可以在以下存储类型之间迁移虚拟机存储(VHD/VHDX)：
+
+* DAS和SMB共享
+* DAS和LUN
+* SMB共享和LUN
+* LUN之间
+* SMB共享之间
+
+
+image:win_image11.png["Hyper-V存储实时迁移、宽度=339、高度=352"]
+
+
+
+=== 进一步阅读
+
+有关部署存储实时迁移的信息、请参见 link:win_deploy_hyperv_slm.html["附录E：部署Hyper-V存储实时迁移"]。
+
+
+
+== Hyper-V副本：虚拟机灾难恢复
+
+Hyper-V副本可将Hyper-V虚拟机从主站点复制到二级站点上的副本虚拟机、从而为虚拟机提供异步灾难恢复。托管VM的主站点上的Hyper-V服务器称为主服务器；接收复制的VM的二级站点上的Hyper-V服务器称为副本服务器。下图显示了Hyper-V副本示例场景。您可以在故障转移集群中的Hyper-V服务器之间或不属于任何集群的独立Hyper-V服务器之间对虚拟机使用Hyper-V副本。
+
+image:win_image12.png["Hyper-V副本、宽度=624、高度=201"]
+
+
+
+=== Replication
+
+在主服务器上为虚拟机启用Hyper-V副本后、初始复制会在副本服务器上创建一个相同的虚拟机。初始复制完成后、Hyper-V副本会为虚拟机的VHD维护一个日志文件。根据复制频率、日志文件将按相反顺序重载到副本的VHD。此日志以及反向顺序的使用可确保以异步方式存储和复制最新的更改。如果复制未按预期频率进行、则会发出警报。
+
+
+
+=== 扩展复制
+
+Hyper-V副本支持扩展复制、在此复制中、可以配置二级副本服务器以实现灾难恢复。可以为副本服务器配置辅助副本服务器、使其接收副本VM上的更改。在扩展复制方案中、主服务器上主VM上的更改会复制到副本服务器。然后、所做的更改将复制到扩展副本服务器。只有当主服务器和副本服务器都关闭时、VM才能故障转移到扩展副本服务器。
+
+
+
+=== 故障转移
+
+故障转移不是自动的；必须手动触发该过程。故障转移有三种类型：
+
+* *测试故障转移。*此类型用于验证副本VM是否可以在副本服务器上成功启动并在副本VM上成功启动。此过程会在故障转移期间创建一个重复的测试VM、不会影响常规生产复制。
+* *计划内故障转移。*此类型用于在计划内停机或预期中断期间对VM进行故障转移。此过程会在主VM上启动、必须先在主服务器上关闭主VM、然后才能运行计划内故障转移。计算机故障转移后、Hyper-V副本将在副本服务器上启动副本虚拟机。
+* *计划外故障转移。*发生意外中断时使用此类型。此过程会在副本VM上启动、只有在主计算机出现故障时才应使用。
+
+
+
+
+=== 恢复
+
+在为VM配置复制时、您可以指定恢复点的数量。恢复点表示可以从复制的计算机恢复数据的时间点。
+
+
+
+=== 进一步阅读
+
+* 有关在集群环境之外部署Hyper-V副本的信息，请参阅“link:win_deploy_hyperv_replica_oce.html["将Hyper-V副本部署到非群组环境中"]。 "
+* 有关在集群环境中部署Hyper-V副本的信息，请参阅“link:win_deploy_hyperv_replica_ce.html["在一个群组环境中部署Hyper-V副本"]。 "
+

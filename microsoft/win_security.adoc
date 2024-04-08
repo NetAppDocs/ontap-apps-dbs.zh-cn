@@ -1,0 +1,36 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_security.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 采用Hyper-V的ONTAP存储安全性 
+---
+= 安全性
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP可为Windows操作系统提供安全的存储系统。
+
+
+
+== Windows Defender防病毒
+
+默认情况下，Windows Defender是在Windows Server上安装并启用的反恶意软件。此软件可主动保护Windows Server免受已知恶意软件的影响、并可通过Windows Update定期更新反恶意软件定义。可以使用Windows Defender扫描NetApp LUN和SMB共享。
+
+
+
+=== 进一步阅读
+
+有关详细信息、请参见 https://technet.microsoft.com/windows-server-docs/security/windows-defender/windows-defender-overview-windows-server?f=255&MSPPError=-2147217396["Windows Defender概述"]。
+
+
+
+== BitLocker
+
+BitLocker驱动器加密是一项数据保护功能、从Windows Server 2012开始持续提供。这种加密可保护物理磁盘、LUN和LV。
+
+
+
+=== 最佳实践
+
+启用BitLocker之前、必须将CSV置于维护模式。因此、NetApp建议在CSV上创建VM之前、应先确定与基于BitLocker的安全性相关的决策、以避免停机。

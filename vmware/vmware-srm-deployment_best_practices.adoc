@@ -14,7 +14,7 @@ summary: 借助 ONTAP ， Storage Virtual Machine （ SVM ）的概念可在安�
 
 
 [role="lead"]
-以下各节将介绍VMware和ONTAP SRM的部署最佳实践。
+以下各节概述了ONTAP和VMware SRM的部署最佳实践。
 
 
 

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-vsphere-settings.html 
-keywords:  
-summary:  
+keywords: VMware,vSphere,ESXi,settings,NFS,iSCSI,FC,FCP 
+summary: 本文档对建议的存储和网络设置进行了分类和列举。 
 ---
 = 建议的 ESXi 主机和其他 ONTAP 设置
 :hardbreaks:
@@ -14,7 +14,11 @@ summary:
 
 
 [role="lead"]
-NetApp 已根据 NetApp 测试开发出一组 ESXi 主机多路径和 HBA 超时设置，用于正确处理 ONTAP 。可以使用适用于 VMware vSphere 的 ONTAP 工具轻松设置这些设置。在摘要信息板中，单击主机系统 portlet 中的编辑设置，或者右键单击 vCenter 中的主机，然后导航到 ONTAP tools > Set recommended values 。下面是当前在 9.8 版中建议的主机设置。
+NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提供了有关多路径和HBA超时设置的特定指导、以便根据NetApp和VMware内部测试在ONTAP中正常运行。
+
+可以使用适用于VMware vSphere的ONTAP工具轻松设置这些值：从摘要信息板中、单击主机系统portlet中的编辑设置、或者在vCenter中右键单击主机、然后导航到ONTAP工具>设置建议值。
+
+下面是目前在9.8-9.13版本中建议的主机设置。
 
 |===
 
@@ -48,7 +52,7 @@ NetApp 已根据 NetApp 测试开发出一组 ESXi 主机多路径和 HBA 超时
 
 
 | NFS.MaxVolumes | vSphere 6.0或更高版本、请设置为256
-所有其他NFS配置、设置为64。 | 否 
+所有其他NFS配置均设置为64。 | 否 
 
 
 | NFS41.MaxVolumes | vSphere 6.0或更高版本、请设置为256。 | 否 
@@ -152,7 +156,7 @@ NOTE: 1—使用VMware vSphere ESXi 7.0.1和VMware vSphere ESXi 7.0.2时、NFS�
 虽然当前未使用可用的ONTAP工具进行配置、但NetApp建议使用以下配置选项：
 
 * 在高性能环境中或使用单个 LUN 数据存储库测试性能时，请考虑将轮循（ VMW_PSP_RR ）路径选择策略（ PSP ）的负载平衡设置从默认 IOPS 设置 1000 更改为 1 。请参见 VMware 知识库 https://kb.vmware.com/s/article/2069356["2069356"^] 了解更多信息。
-* 在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟如果在具有非等效路径连接的环境中使用该工具，则可能会受益，例如，一条路径上的网络跃点多于另一条路径，或者使用 NetApp 全 SAN 阵列系统时。请参见 https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/GUID-B7AD0CA0-CBE2-4DB4-A22C-AD323226A257.html?hWord=N4IghgNiBcIA4Gc4AIJgC4FMB2BjAniAL5A["路径选择插件和策略"^] 有关详细信息 ...
+* 在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟在路径连接不等的环境中使用它可能会受益、例如、一条路径上的网络跃点比另一条路径多、或者使用NetApp全SAN阵列系统。请参见 https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/GUID-B7AD0CA0-CBE2-4DB4-A22C-AD323226A257.html?hWord=N4IghgNiBcIA4Gc4AIJgC4FMB2BjAniAL5A["路径选择插件和策略"^] 有关详细信息 ...
 
 
 

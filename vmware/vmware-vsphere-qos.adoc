@@ -90,7 +90,7 @@ ONTAP QoS 和 VMware vSphere 存储 I/O 控制（ SIOC ）是 vSphere 和存储�
 
 VMware Storage Distributed Resource Scheduler （ SDRS ）是一项 vSphere 功能，可根据当前 I/O 延迟和空间使用情况将 VM 放置在存储上。然后，它会在数据存储库集群（也称为 Pod ）中的数据存储库之间无中断地移动虚拟机或 VMDK ，从而选择最佳数据存储库，以便将虚拟机或 VMDK 放置在数据存储库集群中。数据存储库集群是一组相似的数据存储库、从vSphere管理员的角度来看、这些数据存储库会聚合到一个使用单元中。
 
-在将 SDRS 与适用于 VMware vSphere 的 NetApp ONTAP 工具结合使用时，您必须先使用此插件创建数据存储库，使用 vCenter 创建数据存储库集群，然后将此数据存储库添加到其中。创建数据存储库集群后，可以直接从详细信息页面上的配置向导将其他数据存储库添加到数据存储库集群中。
+在将SDRS与适用于VMware vSphere的ONTAP工具结合使用时、您必须先使用此插件创建数据存储库、使用vCenter创建数据存储库集群、然后再将此数据存储库添加到其中。创建数据存储库集群后，可以直接从详细信息页面上的配置向导将其他数据存储库添加到数据存储库集群中。
 
 有关 SDRS 的其他 ONTAP 最佳实践包括：
 
@@ -116,13 +116,13 @@ SCP支持为VM的数据Vvol设置最小和/或最大QoS。只有 AFF 系统才�
 
 下图显示了适用于 VMware vSphere 9.8 VVol 的 ONTAP 工具信息板。
 
-image:vsphere_ontap_image7.png["错误：缺少图形映像"]
+image:vsphere_ontap_image7.png["适用于VMware vSphere 9.8 vvol信息板的ONTAP工具"]
 
 定义存储功能配置文件后，可以使用该配置文件来使用存储策略来配置 VM ，以确定其要求。通过 VM 存储策略与数据存储库存储功能配置文件之间的映射， vCenter 可以显示一个兼容数据存储库列表以供选择。这种方法称为基于存储策略的管理。
 
 VASA 提供了查询存储并将一组存储功能返回到 vCenter 的技术。VASA 供应商提供程序可在存储系统 API 和构造与 vCenter 可识别的 VMware API 之间进行转换。适用于ONTAP的NetApp VASA Provider是作为适用于VMware vSphere设备VM的ONTAP工具的一部分提供的、vCenter插件提供了用于配置和管理VVOP数据存储库的界面、并能够定义存储功能配置文件(Storage Capability profile、SCP)。
 
-ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据存储库结合使用可带来 NFS 的一些优势，例如虚拟机级别粒度。下面是一些需要考虑的最佳实践，您可以在中找到追加信息 http://www.netapp.com/us/media/tr-4400.pdf["TR-4400"^]：
+ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据存储库结合使用可带来 NFS 的一些优势，例如虚拟机级别粒度。下面是一些需要考虑的最佳实践，您可以在中找到追加信息 link:vmware-vvols-overview.html["TR-4400"^]：
 
 * 一个 VVOL 数据存储库可以在多个集群节点上包含多个 FlexVol 卷。最简单的方法是使用一个数据存储库，即使卷具有不同的功能也是如此。SPBM 可确保为 VM 使用兼容的卷。但是，这些卷都必须属于一个 ONTAP SVM ，并使用一个协议进行访问。对于每个协议，每个节点一个 LIF 就足够了。避免在一个 VVOL 数据存储库中使用多个 ONTAP 版本，因为存储功能可能因版本而异。
 * 使用适用于 VMware vSphere 的 ONTAP 工具插件创建和管理 VVOL 数据存储库。除了管理数据存储库及其配置文件之外，它还会根据需要自动创建一个协议端点来访问 VVol 。如果使用 LUN ，请注意， LUN PE 会使用 LUN ID 300 及更高版本进行映射。验证ESXi主机的高级系统设置 `Disk.MaxLUN` 允许LUN ID号大于300 (默认值为1、024)。执行此步骤的方法是、在vCenter中选择ESXi主机、然后选择配置选项卡并查找 `Disk.MaxLUN` 在高级系统设置列表中。
@@ -132,7 +132,7 @@ ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据�
 
 下图显示了 VVOL 组件。
 
-image:vsphere_ontap_image8.png["错误：缺少图形映像"]
+image:vsphere_ontap_image8.png["VMware组件"]
 
 
 
@@ -141,7 +141,7 @@ image:vsphere_ontap_image8.png["错误：缺少图形映像"]
 ONTAP 的另一个优势是广泛支持混合云，将内部私有云中的系统与公有云功能相结合。以下是可与 vSphere 结合使用的一些 NetApp 云解决方案：
 
 * *云卷。*适用于Amazon Web Services或Google云平台的NetApp Cloud Volumes Service和适用于ANF的Azure NetApp Files可在领先的公共云环境中提供高性能、多协议托管存储服务。它们可以直接由 VMware Cloud VM 子系统使用。
-* * Cloud Volumes ONTAP 。 * NetApp Cloud Volumes ONTAP 数据管理软件可在您选择的云中控制，保护，灵活性和效率您的数据。Cloud Volumes ONTAP 是基于 NetApp ONTAP 存储软件构建的云原生数据管理软件。与 Cloud Manager 结合使用，可与内部 ONTAP 系统一起部署和管理 Cloud Volumes ONTAP 实例。利用高级NAS和iSCSI SAN功能以及统一数据管理、包括快照和SnapMirror复制。
+* * Cloud Volumes ONTAP 。 * NetApp Cloud Volumes ONTAP 数据管理软件可在您选择的云中控制，保护，灵活性和效率您的数据。Cloud Volumes ONTAP是基于ONTAP存储构建的云原生数据管理软件。与 Cloud Manager 结合使用，可与内部 ONTAP 系统一起部署和管理 Cloud Volumes ONTAP 实例。利用高级NAS和iSCSI SAN功能以及统一数据管理、包括快照和SnapMirror复制。
 * * 云服务。 * 使用 Cloud Backup Service 或 SnapMirror 云保护数据免受使用公有云存储的内部系统的影响。Cloud Sync 有助于在 NAS ，对象存储和 Cloud Volumes Service 存储之间迁移和保持数据同步。
 * * FabricPool 。 * FabricPool 可为 ONTAP 数据快速轻松地分层。冷块可以迁移到公有云或私有StorageGRID对象存储中的对象存储、并在再次访问ONTAP数据时自动重新调用。或者，使用对象层作为已由 SnapVault 管理的数据的第三级保护。这种方法可以让您做到 https://www.linkedin.com/pulse/rethink-vmware-backup-again-keith-aasen/["为VM存储更多快照"^] 在主和 / 或二级 ONTAP 存储系统上。
 * * ONTAP Select 。 * 使用 NetApp 软件定义的存储将您的私有云扩展到 Internet 上的远程设施和办公室，您可以在这些设施和办公室使用 ONTAP Select 支持块和文件服务以及您在企业数据中心拥有的相同 vSphere 数据管理功能。
@@ -177,10 +177,10 @@ ONTAP 上的典型虚拟基础架构部署包含多个组件，这些组件分�
 
 以下屏幕截图显示了 Active IQ Unified Manager 虚拟机视图。
 
-image:vsphere_ontap_image9.png["错误：缺少图形映像"]
+image:vsphere_ontap_image9.png["Active IQ Unified Manager虚拟机视图"]
 
 Unified Manager 以拓扑视图形式呈现虚拟环境的底层子系统，用于确定计算节点，网络或存储是否发生延迟问题描述。此视图还会突出显示导致执行补救步骤和解决底层问题描述时出现性能滞后的特定对象。
 
 以下屏幕截图显示了 AIQUM 扩展拓扑。
 
-image:vsphere_ontap_image10.png["错误：缺少图形映像"]
+image:vsphere_ontap_image10.png["AIQUM扩展拓扑"]

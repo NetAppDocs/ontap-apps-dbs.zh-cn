@@ -1,29 +1,29 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-data-protection.html 
-keywords: MS-SQL,mssql,SQL Server, SnapCenter, data protection 
-summary: 使用ONTAP保护Microsoft SQL Server数据 
+keywords: MSSQL,SQL Server, SnapCenter, data protection, app-consistent backup, ONTAP 
+summary: 使用SnapCenter和T-SQL命令保护ONTAP上的Microsoft SQL Server数据库。 
 ---
-= 使用ONTAP保护Microsoft SQL Server数据
+= 使用NetApp管理软件保护Microsoft SQL Server数据
 :allow-uri-read: 
 :imagesdir: ../media/
 
 
 [role="lead"]
-保护数据库对于任何组织都至关重要。随着数据大小和数据库数量的增加、维护恢复时间目标(RTO)和恢复点目标(RPO)至关重要。
-
-数据库备份的主要注意事项是利用NetApp Snapshot技术。应用程序一致的备份和数据库布局是实现可由NetApp SnapCenter协调的RTO和RPO的另一个重要考虑因素。
+根据业务需求规划数据库备份。通过将ONTAP的NetApp Snapshot技术与Microsoft SQL Server API相结合、无论用户数据库大小如何、您都可以快速创建应用程序一致的备份。为了满足更高级或横向扩展的数据管理要求、NetApp提供了SnapCenter。
 
 
 
 == SnapCenter
 
-SnapCenter是适用于企业应用程序的NetApp数据保护软件。使用NetApp SnapCenter软件以及适用于SQL Server的插件和适用于Microsoft Windows的插件、可以快速轻松地保护SQL Server数据库。
+SnapCenter是一款适用于企业级应用程序的NetApp数据保护软件。使用适用于SQL Server的SnapCenter插件以及适用于Microsoft Windows的SnapCenter插件管理的操作系统、可以快速轻松地保护SQL Server数据库。
 
-此产品支持应用程序一致的备份、自动克隆以及SQL Server数据库、实例或可用性组的还原和恢复。
+SQL Server实例可以是独立设置、故障转移集群实例、也可以始终位于可用性组上。这样、可以通过单一管理平台从主副本或二级副本保护、克隆和还原数据库。SnapCenter可以管理内部、云端和混合配置中的SQL Server数据库。此外、还可以在原始主机或备用主机上几分钟内创建数据库副本、以供开发或报告之用。
 
 
-TIP: * NetApp建议*使用SnapCenter创建Snapshot副本。
+TIP: * NetApp建议*使用SnapCenter创建Snapshot副本。下文所述的T-SQL方法也有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。无需预配置。
+...
+SQL Server还要求操作系统和存储之间进行协调、以确保创建快照时Snapshot中存在正确的数据。在大多数情况下、执行此操作的唯一安全方法是使用SnapCenter或T-SQL。如果未进行这种额外协调、则创建的快照可能无法可靠地恢复。
 
 有关适用于SnapCenter的SQL Server插件的详细信息、请参见 link:https://www.netapp.com/pdf.html?item=/media/12400-tr4714.pdf["TR-4714：《使用NetApp SnapCenter的SQL Server最佳实践指南》"^]。
 
@@ -31,11 +31,11 @@ TIP: * NetApp建议*使用SnapCenter创建Snapshot副本。
 
 == 使用T-SQL快照保护数据库
 
-在SQL Server 2022中、Microsoft引入了T-SQL快照、与数据库管理员不易使用的传统方法相比、它具有内置优势。利用ONTAP REST API、您可以调用命令来创建卷快照。
+在SQL Server 2022中、Microsoft引入了T-SQL快照、可通过它编写脚本并自动执行备份操作。您可以为快照准备数据库、而不是执行全尺寸副本。数据库备份就绪后、您可以利用ONTAP REST API创建快照。
 
 以下是备份工作流示例：
 
-. 使用alter命令冻结数据库—提供在底层存储上执行一致快照的机会。之后、您可以使用backup命令解冻数据库并记录快照。
+. 使用alter命令冻结数据库。这样可以使数据库在底层存储上为一致的快照做好准备。冻结后、您可以解冻数据库并使用backup命令记录快照。
 . 使用新的backup group和backup server命令同时对存储卷上的多个数据库执行快照。
 . 执行完整备份或copy_only完整备份。这些备份也会记录在msdb中。
 . 在快照完整备份之后、使用通过正常流式传输方法创建的日志备份执行时间点恢复。如果需要、还支持流式差异备份。

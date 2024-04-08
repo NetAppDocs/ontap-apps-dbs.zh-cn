@@ -1,0 +1,144 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_smb.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 使用SMB3的适用于Hyper-V的ONTAP NAS存储 
+---
+= 在SMB环境中配置
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP使用SMB3协议为Hyper-V虚拟机提供具有故障恢复能力的高性能NAS存储。
+
+使用CIFS协议创建SVM时、CIFS服务器会在Windows Active Directory域中的SVM之上运行。SMB共享可用于主目录以及托管Hyper-V和SQL Server工作负载。ONTAP支持以下SMB 3.0功能：
+
+* 永久性句柄(持续可用的文件共享)
+* 见证协议
+* 集群客户端故障转移
+* 横向扩展感知
+* ODX
+* 远程VSS
+
+
+
+
+== 在Windows Server上配置SMB共享
+
+
+
+=== 前提条件
+
+在Windows Server的NAS环境中使用NetApp存储具有以下要求：
+
+* ONTAP集群具有有效的CIFS许可证。
+* 已至少创建一个聚合。
+* 此时将创建一个数据逻辑接口(LIF)、并且必须为CIFS配置数据LIF。
+* 存在DNS配置的Windows Active Directory域服务器和域管理员凭据。
+* NetApp集群中的每个节点都会与Windows域控制器进行时间同步。
+
+
+
+
+=== Active Directory域控制器
+
+NetApp存储控制器可以加入与Windows Server类似的Active Directory并在其中运行。在创建SVM期间、您可以通过提供域名和名称服务器详细信息来配置DNS。SVM会尝试通过向DNS查询Active Directory/轻型目录访问协议(Lightweight-Directory Access Protocol、LDAP)服务器来搜索Active Directory域控制器、其方式与Windows Server类似。
+
+要使CIFS设置正常工作、NetApp存储控制器必须与Windows域控制器进行时间同步。NetApp建议Windows域控制器与NetApp存储控制器之间的时间偏差不超过五分钟。最佳做法是、为ONTAP集群配置网络时间协议(Network Time Protocol、NTP)服务器、以便与外部时间源同步。要将Windows域控制器配置为NTP服务器、请在ONTAP集群上运行以下命令：
+
+....
+$domainControllerIP = "<input IP Address of windows domain controller>"
+cluster::> system services ntp server create â€“server $domainControllerIP
+....
+
+
+=== 部署
+
+. 创建启用了NAS协议CIFS的新SVM。可以使用以下任一方法创建新的SVM：
++
+** NetApp ONTAP上的命令行界面命令
+** System Manager
+** NetApp PowerShell工具包
+
+
+. 配置CIFS协议
++
+.. 提供CIFS服务器名称。
+.. 提供CIFS服务器必须加入的Active Directory。您必须具有域管理员凭据才能将CIFS服务器加入Active Directory。
+
+
+. 在每个集群节点上为SVM分配带有SVM的许可证。
+. 在SVM上启动CIFS服务。
+. 从聚合创建采用NTFS安全模式的卷。
+. 在卷上创建qtree (可选)。
+. 创建与卷或qtree目录对应的共享、以便可以从Windows Server访问这些共享。如果共享用于Hyper-V存储、请在创建共享期间选择为Hyper-V启用持续可用性。这样可以为文件共享启用高可用性。
+. 编辑已创建的共享、并根据需要修改访问此共享的权限。必须配置SMB共享的权限、才能为访问此共享的所有服务器的计算机帐户授予访问权限。
+
+
+
+
+=== 主机集成
+
+NAS协议CIFS本机集成到ONTAP中。因此、Windows Server不需要任何其他客户端软件即可访问NetApp ONTAP上的数据。NetApp存储控制器在网络上显示为本机文件服务器、并支持Microsoft Active Directory身份验证。
+
+要检测先前使用Windows Server创建的CIFS共享、请完成以下步骤：
+
+. 以管理员组成员的身份登录到Windows Server。
+. 转至run.exe并键入为访问此共享而创建的CIFS共享的完整路径。
+. 要将共享永久映射到Windows Server、请右键单击此PC、单击映射网络驱动器、然后提供CIFS共享的路径。
+. 某些CIFS管理任务可以使用Microsoft管理控制台(MMC)来执行。在执行这些任务之前、您必须使用MMC菜单命令将MMC连接到NetApp ONTAP存储。
++
+.. 要在Windows Server中打开MMC、请单击Server Manager的Tools部分中的Computer Management。
+.. 单击更多操作并连接到另一台计算机、此时将打开选择计算机对话框。
+.. 输入CIFS服务器的名称或SVM LIF的IP地址以连接到CIFS服务器。
+.. 展开系统工具和共享文件夹以查看和管理打开的文件、会话和共享。
+
+
+
+
+
+
+=== 最佳实践
+
+* 为了确认在将卷从一个节点移至另一个节点时或在某个节点出现故障时不会出现停机、NetApp建议您在文件共享上启用持续可用性选项。
+* 在为基于SMB的Hyper-V环境配置VM时、NetApp建议您在存储系统上启用副本卸载。这样可以缩短VM的配置时间。
+* 如果存储集群托管多个SMB工作负载、例如SQL Server、Hyper-V和CIFS服务器、则NetApp建议将不同的SMB工作负载托管在不同聚合上的不同SVM上。这种配置非常有用、因为其中每个工作负载都需要具有唯一的存储网络和卷布局。
+* NetApp建议使用10 GB网络(如果有)连接Hyper-V主机和NetApp ONTAP存储。如果使用1 GB网络连接、NetApp建议创建一个由多个1 GB端口组成的接口组。
+* 在将VM从一个SMB 3.0共享迁移到另一个共享时、NetApp建议在存储系统上启用CIFS副本卸载功能、以便加快迁移速度。
+
+
+
+
+=== 需要记住的事项
+
+* 在为SMB环境配置卷时、必须使用NTFS安全模式创建卷。
+* 应相应地设置集群中节点的时间设置。如果NetApp CIFS服务器必须加入Windows Active Directory域、请使用NTP。
+* 永久性句柄仅在HA对中的节点之间起作用。
+* 见证协议仅在HA对中的节点之间有效。
+* 只有Hyper-V和SQL Server工作负载才支持持续可用的文件共享。
+* 从ONTAP 9.4开始、支持SMB多通道。
+* 不支持RDMA。
+* 不支持ReFS。
+
+
+
+
+== 在NFS服务器上配置SMB共享
+
+在NetApp存储控制器上访问CIFS共享上的数据时、纳米服务器不需要额外的客户端软件。
+
+要将文件从到文件复制到CIFS共享、请在远程服务器上运行以下cmdlet：
+
+ $ip = "<input IP Address of the Nano Server>"
+....
+# Create a New PS Session to the Nano Server
+$session = New-PSSession -ComputerName $ip -Credential ~\Administrator
+....
+ Copy-Item -FromSession $s -Path C:\Windows\Logs\DISM\dism.log -Destination \\cifsshare
+* `cifsshare` 是NetApp存储控制器上的CIFS共享。
+* 若要将文件复制到"之时"、请运行以下cmdlet：
++
+ Copy-Item -ToSession $s -Path \\cifsshare\<file> -Destination C:\
+
+
+要复制文件夹的整个内容、请指定文件夹名称、并在cmdlet末尾使用-Recurse参数。

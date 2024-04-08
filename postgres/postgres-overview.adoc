@@ -14,7 +14,7 @@ summary: 基于ONTAP的PostgreSQL数据库
 
 
 [role="lead"]
-PostgreSQL附带的变体包括PostgreSQL、PostgreSQL Plus和EDB Postgrers Advanced Server (ePAS)。PostgreSQL通常部署为多层应用程序的后端数据库。它受常见中间件包(如PHP、Java、Python、Tcl/Tk、ODBC、 和JDBC)、并且一直以来都是开源数据库管理系统的常用选择。对于运行PostgreSQL数据库来说、NetApp ONTAP的可靠性、高性能和高效的数据管理功能是一个绝佳的选择。
+PostgreSQL附带的变体包括PostgreSQL、PostgreSQL Plus和EDB Postgrers Advanced Server (ePAS)。PostgreSQL通常部署为多层应用程序的后端数据库。它受常见中间件包(如PHP、Java、Python、Tcl/Tk、ODBC、 和JDBC)、并且一直以来都是开源数据库管理系统的常用选择。对于运行PostgreSQL数据库来说、ONTAP的可靠性、高性能和高效的数据管理功能是一个绝佳的选择。
 
 
 NOTE: 有关ONTAP和PostgreSQL数据库的本文档将取代先前发布的_TR-4770：《基于ONTAP的PostgreSQL数据库最佳实践》。_

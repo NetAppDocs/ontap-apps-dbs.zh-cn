@@ -1,31 +1,23 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-overview.html 
-keywords: MS-SQL,mssql,SQL Server,TR-4590 
+keywords: MSSQL,SQL Server,TR-4590, SnapCenter, ONTAP 
 summary: 基于ONTAP的Microsoft SQL Server 
 ---
-= Microsoft SQL Server概述
+= 基于ONTAP的Microsoft SQL Server
 :allow-uri-read: 
 :imagesdir: ../media/
 
 
 [role="lead"]
-SQL Server是Microsoft数据平台的基础、可通过内存技术提供任务关键型性能、并加快对任何数据(无论是内部数据还是云数据)的洞察力。
+ONTAP为您的Microsoft SQL Server数据库提供企业级安全性和性能解决方案、同时还提供世界一流的工具来管理您的环境。
 
 
 NOTE: 本文档将取代先前发布的技术报告_TR-4590：《采用ONTAP的Microsoft SQL Server最佳实践指南》
 
-Microsoft SQL Server基于先前版本中提供的任务关键型功能构建、为任务关键型应用程序提供突破性的性能、可用性和易管理性。存储系统是影响SQL Server数据库整体性能的关键因素。NetApp提供了多种产品、使您的SQL Server数据库能够提供企业级性能、同时提供世界一流的工具来管理您的环境。
+NetApp假定读者具备以下方面的实践知识：
 
-
-
-== 目的和范围
-
-本节介绍在运行NetApp ONTAP软件的NetApp存储系统上部署SQL Server的最佳实践、并深入介绍相关设计注意事项、目的是实现高效的存储部署以及端到端数据保护和保留规划。本指南的范围仅限于根据NetApp在部署SQL Server时为存储基础架构建议的设计原则和首选标准制定的技术设计准则。端到端实施不在本报告的讨论范围之内。
-
-通过本指南中介绍的最佳实践和建议、SQL Server架构师和NetApp存储管理员可以规划高度可用且易于管理的SQL Server环境、并满足严格的SLA要求。NetApp假定读者具备以下方面的实践知识：
-
-* NetApp ONTAP软件
+* ONTAP 软件
 * NetApp SnapCenter作为备份软件、其中包括：
 +
 ** 适用于 Microsoft Windows 的 SnapCenter 插件
@@ -35,4 +27,16 @@ Microsoft SQL Server基于先前版本中提供的任务关键型功能构建、
 * Microsoft SQL Server架构和管理
 
 
-有关整个NetApp堆栈的配置兼容性、请参见 link:http://mysupport.netapp.com/NOW/products/interoperability/["NetApp 互操作性表工具（ IMT ）"^]。
+本最佳实践部分的范围仅限于根据NetApp为存储基础架构建议的设计原则和首选标准进行技术设计。端到端实施已超出范围。
+
+有关NetApp产品之间的配置兼容性、请参见 link:https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具（ IMT ）"^]。
+
+
+
+== Microsoft SQL Server工作负载
+
+在部署SQL Server之前、您必须了解SQL Server实例支持的应用程序的数据库工作负载要求。每个应用程序对容量、性能和可用性有不同的要求、因此每个数据库的设计都应以最佳方式支持这些要求。许多组织使用应用程序要求定义SLA、将数据库分为多个管理层。SQL Server工作负载可以描述如下：
+
+* OLTP数据库通常也是组织中最关键的数据库。这些数据库通常为面向客户的应用程序提供支持、并被视为公司核心运营的关键。任务关键型OLTP数据库及其支持的应用程序通常具有SLA、这些SLA要求高性能级别、并且对性能下降和可用性敏感。它们也可能是"无中断故障转移集群"或"无中断可用性"组的候选对象。这些类型数据库的I/O混合通常具有75%到90%的随机读取和25%到10%的写入特征。
+* 决策支持系统(DSS)数据库也可以称为数据仓库。这些数据库在许多依靠分析来开展业务的企业中至关重要。在运行查询时、这些数据库对CPU利用率和磁盘读取操作非常敏感。在许多组织中、DSS数据库在月份、季度和年终都是最重要的此工作负载的读取I/O混合比例通常为100%。
+

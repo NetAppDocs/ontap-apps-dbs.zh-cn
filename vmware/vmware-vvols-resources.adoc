@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-vvols-resources.html 
 keywords: tr-4400, vvols, ontap, virtual volumes, protect 
-summary:  
+summary: 更多的卷资源 
 ---
 = 故障排除
 :allow-uri-read: 

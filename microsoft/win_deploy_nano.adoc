@@ -1,0 +1,130 @@
+---
+sidebar: sidebar 
+permalink: microsoft/win_deploy_nano.html 
+keywords: Windows,Hyper-V,VHDX,VM,Virtual 
+summary: 了解如何部署Microsoft Windows MicroServer 
+---
+= 部署一个存储管理器
+:allow-uri-read: 
+
+
+[role="lead"]
+了解如何部署Microsoft Windows MicroServer。
+
+
+
+== 部署
+
+要将一个Hyper－V主机部署为一个Hyper－V主机，请完成以下步骤：
+
+. 以管理员组成员的身份登录到Windows Server。
+. 将NanoServerImageGenerator文件夹从Windows Server ISO中的\NanoServer文件夹复制到本地硬盘驱动器。
+. 要创建一个"Vano Server VHD/VHDX"、请完成以下步骤：
++
+.. 以管理员身份启动Windows PowerShell、导航到本地硬盘驱动器上复制的NanoServerImageGenerator文件夹、然后运行以下cmdlet：
++
+....
+Set-ExecutionPolicy RemoteSigned
+Import-Module .\NanoServerImageGenerator -Verbose
+....
+.. 通过运行以下PowerShell cmdlet、为作为Hyper-V主机的Hyper Server创建一个vHD。此命令会提示您输入新的HD的管理员密码。
++
+ New-NanoServerImage -Edition Standard -DeploymentType Guest -MediaPath <"input the path to the root of the contents of Windows Server 2016 ISO"> -TargetPath <"input the path, including the filename and extension where the resulting VHD/VHDX will be created"> -ComputerName <"input the name of the nano server computer you are about to create"> -Compute
+.. 在以下示例中、我们创建了一个启用了故障转移集群的Hyper-V主机功能的"Hyper Server VHD"。此示例将从装载在f：\的ISO创建一个红外服务器VHD。新创建的VHD将放置在运行cmdlet的文件夹中名为纳诺服务器的文件夹中。计算机名称为NanoServer、生成的VHD包含Windows Server的标准版本。
++
+ New-NanoServerImage -Edition Standard -DeploymentType Guest -MediaPath f:\ -TargetPath .\NanoServer.vhd -ComputerName NanoServer -Compute -Clustering
+.. 使用cmdlet New-NamoServerImage、配置参数以设置IP地址、子网掩码、默认网关、DNS服务器、域名、 等等。
+
+
+. 在虚拟机或物理主机中使用vHD将Hyper Server部署为Hyper-V主机：
++
+.. 要在虚拟机上部署、请在Hyper-V Manager中创建一个新虚拟机、并使用步骤3中创建的vHD。
+.. 要在物理主机上部署、请将该虚拟磁盘复制到物理计算机、并将其配置为此新的虚拟磁盘启动。首先、挂载该vHD、运行bcdboot e：\windows (其中、该vHD挂载在E：\下)、卸载该vHD、重新启动物理计算机、然后启动到"ano Server"(数据源)。
+
+
+. 将该服务器加入域(可选)：
++
+.. 登录到域中的任何计算机并运行以下PowerShell cmdlet创建数据Blob：
++
+....
+$domain = "<input the domain to which the Nano Server is to be joined>"
+$nanoserver = "<input name of the Nano Server>"
+....
++
+ djoin.exe /provision /domain $domain /machine $nanoserver /savefile C:\temp\odjblob /reuse
+.. 通过在远程计算机上运行以下PowerShell cmdlet、将odjblob文件复制到"No"服务器：
++
+....
+$nanoserver = "<input name of the Nano Server>"
+$nanouname = ""<input username of the Nano Server>"
+$nanopwd = ""<input password of the Nano Server>"
+....
++
+....
+$filePath = 'c:\temp\odjblob'
+$fileContents = Get-Content -Path $filePath -Encoding Unicode
+....
++
+....
+$securenanopwd = ConvertTo-SecureString -AsPlainText -Force $nanopwd
+$nanosecurecred = new-object management.automation.pscredential $nanouname, $securenanopwd
+....
++
+....
+Invoke-Command -VMName $nanoserver -Credential $nanosecurecred -ArgumentList @($filePath,$fileContents) -ScriptBlock \{
+    param($filePath,$data)
+    New-Item -ItemType directory -Path c:\temp
+    Set-Content -Path $filePath -Value $data -Encoding Unicode
+    cd C:\temp
+    djoin /requestodj /loadfile c:\temp\odjblob /windowspath c:\windows /localos
+}
+....
+.. 重新启动"The "The "The "The "
+
+
+
+
+
+
+== 连接到AO服务器
+
+要使用PowerShell远程连接到AO服务器、请完成以下步骤：
+
+. 通过在远程服务器上运行以下cmdlet、将该客户端添加为远程计算机上的受信任主机：
++
+ Set-Item WSMan:\LocalHost\Client\TrustedHosts "<input IP Address of the Nano Server>"
+. 如果环境安全、并且您要将要添加为服务器上可信主机的所有主机设置为可信主机、请运行以下命令：
++
+ Set-Item WSMan:\LocalHost\Client\TrustedHosts *
+. 通过在远程服务器上运行以下cmdlet来启动远程会话。出现提示时、请提供该服务器的密码。
++
+ Enter-PSSession -ComputerName "<input IP Address of the Nano Server>" -Credential ~\Administrator
+
+
+要使用GUI管理工具从远程Windows Server远程连接到AO Server、请完成以下命令：
+
+. 以管理员组成员的身份登录到Windows Server。
+. 启动服务器管理器**.**
+. 要从服务器管理器远程管理一个"栏"、请右键单击"所有服务器"、单击"添加服务器"、提供"栏"信息、然后添加。现在、您可以在服务器列表中看到列出的"办事 项"。选择"Fibre Server"、右键单击它、然后使用提供的各种选项开始对其进行管理。
+. 要远程管理在一台至一台至多台的服务器上运行的服务、请完成以下步骤：
++
+.. 从服务器管理器的工具部分打开服务。
+.. 右键单击"Services (Local)"(服务(本地))。
+.. 单击连接到服务器。
+.. 提供"The "The "为 您提供"详细信息、以查看和管理"The "为 您提供的服务。
+
+
+. 如果在Hyper服务器上启用了Hyper-V角色、请完成以下步骤以从Hyper-V Manager远程管理它：
++
+.. 从Server Manager的Tools部分打开Hyper-V Manager。
+.. 右键单击Hyper-V Manager。
+.. 单击Connect to Server (连接到服务器)、然后提供有关该服务器的详细信息。现在、可以将该Hyper服务器作为Hyper-V服务器进行管理、以便在其上创建和管理VM。
+
+
+. 如果已在该服务器上启用故障转移集群角色、请完成以下步骤、以便从故障转移集群管理器远程管理该角色：
++
+.. 从服务器管理器的"Tools"部分打开故障转移集群管理器。
+.. 使用该软件执行与集群相关的操作。
+
+
+

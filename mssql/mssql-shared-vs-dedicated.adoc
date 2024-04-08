@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-shared-vs-dedicated.html 
-keywords: MS-SQL,mssql,SQL Server 
-summary: 基于ONTAP的Microsoft SQL Server 
+keywords: MSSQL,SQL Server, multiple instances, dedicated instance, ONTAP 
+summary: Microsoft SQL Server实例部署 
 ---
 = Microsoft SQL Server共享实例与专用实例
 :allow-uri-read: 
@@ -10,9 +10,9 @@ summary: 基于ONTAP的Microsoft SQL Server
 
 
 [role="lead"]
-如果应用程序具有许多模式和存储过程、则可能会影响共享SQL Server实例的其他应用程序。
+可以将多个SQL Server配置为每个服务器一个实例、也可以配置为多个实例。正确的决策通常取决于多种因素、例如服务器是用于生产还是开发、实例是否被视为对业务运营和性能目标至关重要。
 
-实例资源可能会被划分或锁定、进而导致在共享SQL Server实例上托管数据库的其他应用程序出现性能问题。
+共享实例配置最初可能更易于配置、但可能会导致资源被划分或锁定的问题、进而导致在共享SQL Server实例上托管数据库的其他应用程序出现性能问题。
 
 对性能问题进行故障排除可能非常复杂、因为您必须确定哪个实例是根发生原因。此问题会与操作系统许可证和SQL Server许可证的成本进行权衡。如果应用程序性能至关重要、则强烈建议使用专用实例。
 

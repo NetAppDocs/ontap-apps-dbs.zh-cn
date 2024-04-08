@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-vsphere-network.html 
 keywords: vSphere, datastore, VMFS, FC, FCoE, NVMe/FC, iSCSI, NFS, vVols 
-summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解决方案的最佳实践。 
+summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方案的最佳实践。 
 ---
 = 网络配置：
 :hardbreaks:
@@ -20,7 +20,7 @@ summary: 本页介绍在 VMware vSphere 环境中实施 NetApp ONTAP Storage 解
 
 * 将存储网络流量与其他网络分开。可以通过使用专用 VLAN 或单独的存储交换机来实现单独的网络。如果存储网络共享上行链路等物理路径，您可能需要 QoS 或其他上行链路端口来确保带宽充足。请勿将主机直接连接到存储；使用交换机提供冗余路径、并允许VMware HA在没有干预的情况下运行。请参见 link:vmware-vsphere-network.html["直连网络"] 适用于追加信息 。
 * 如果您的网络需要并支持巨型帧，则可以使用巨型帧，尤其是在使用 iSCSI 时。如果使用这些协议，请确保在存储和 ESXi 主机之间的路径中的所有网络设备， VLAN 等上对其进行相同的配置。否则，您可能会看到性能或连接问题。此外，还必须在 ESXi 虚拟交换机， VMkernel 端口以及每个 ONTAP 节点的物理端口或接口组上以相同的方式设置 MTU 。
-* NetApp 仅建议在 ONTAP 集群中的集群网络端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用。请参见 http://www.netapp.com/us/media/tr-4182.pdf["TR-4182"^] 了解有关流量控制的更多背景信息。
+* NetApp 仅建议在 ONTAP 集群中的集群网络端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用它。请参见 http://www.netapp.com/us/media/tr-4182.pdf["TR-4182"^] 了解有关流量控制的更多背景信息。
 * 当 ESXi 和 ONTAP 存储阵列连接到以太网存储网络时， NetApp 建议将这些系统连接到的以太网端口配置为快速生成树协议（ RSTP ）边缘端口或使用 Cisco PortFast 功能。NetApp 建议在使用 Cisco PortFast 功能且为 ESXi 服务器或 ONTAP 存储阵列启用了 802.1Q VLAN 中继的环境中启用生成树 PortFast 中继功能。
 * NetApp 建议采用以下链路聚合最佳实践：
 +
@@ -77,11 +77,11 @@ VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据
 
 vSphere 内置了对存储设备的多条路径的支持，称为原生多路径（ NMP ）。NMP 可以检测受支持存储系统的存储类型，并自动配置 NMP 堆栈以支持正在使用的存储系统的功能。
 
-NMP 和 NetApp ONTAP 均支持非对称逻辑单元访问（ Asymmetric Logical Unit Access ， ALUA ）来协商优化和非优化路径。在 ONTAP 中，经过 ALUA 优化的路径遵循直接数据路径，并使用托管所访问 LUN 的节点上的目标端口。默认情况下，在 vSphere 和 ONTAP 中均已启用 ALUA 。NMP会将ONTAP集群识别为ALOA、并使用ALOA存储阵列类型插件 (`VMW_SATP_ALUA`)、然后选择轮循环路径选择插件 (`VMW_PSP_RR`）。
+NMP和ONTAP都支持通过非对称逻辑单元访问(ANAA)来协商优化和非优化路径。在 ONTAP 中，经过 ALUA 优化的路径遵循直接数据路径，并使用托管所访问 LUN 的节点上的目标端口。默认情况下，在 vSphere 和 ONTAP 中均已启用 ALUA 。NMP会将ONTAP集群识别为ALOA、并使用ALOA存储阵列类型插件 (`VMW_SATP_ALUA`)、然后选择循环路径选择插件 (`VMW_PSP_RR`）。
 
 ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi 无法识别超出这些限制的任何 LUN 或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。
 
-SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关 SLM 的详细信息，请查看的第 5.9 节 http://www.netapp.com/us/media/tr-4080.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
+SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意、在8.3之前的版本中创建的LUN会公布所有路径、需要进行修改、以便仅向托管HA对公布路径。有关 SLM 的详细信息，请查看的第 5.9 节 http://www.netapp.com/us/media/tr-4080.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
 
 * 默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。
 * 对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM `lun mapping remove-reporting-nodes` 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。
@@ -92,11 +92,11 @@ SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每�
 要考虑的其他最佳实践：
 
 * 确保为 ONTAP 集群中每个节点上的每个 SVM 创建一个逻辑接口（ LIF ），以最大程度地提高可用性和移动性。ONTAP SAN 最佳实践是，每个节点使用两个物理端口和 LIF ，每个网络结构使用一个。ALUA 用于解析路径并识别活动优化（直接）路径与活动非优化路径。ALUA 用于 FC ， FCoE 和 iSCSI 。
-* 对于 iSCSI 网络，如果存在多个虚拟交换机，请在采用 NIC 绑定的不同网络子网上使用多个 VMkernel 网络接口。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 并提高吞吐量。下图提供了多路径连接的示例。在 ONTAP 中，使用连接到两个或更多交换机的两个或更多链路配置一个单模式接口组以进行故障转移，或者使用 LACP 或其他具有多模式接口组的链路聚合技术来提供 HA 和链路聚合的优势。
+* 对于 iSCSI 网络，如果存在多个虚拟交换机，请在采用 NIC 绑定的不同网络子网上使用多个 VMkernel 网络接口。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 并提高吞吐量。下图提供了多路径连接的示例。在ONTAP中、使用单模式接口组与不同交换机建立多条链路、或者使用LACP与多模式接口组建立连接、以实现高可用性和链路聚合优势。
 * 如果在ESXi中使用质询握手身份验证协议(Challenge-Handshake Authentication Protocol、CHAP)进行目标身份验证、则还必须在ONTAP中使用命令行界面配置此协议 (`vserver iscsi security create`)或使用System Manager (在"Storage">"SVM">"SVM Settings"(SVM设置)>"Protocols"(协议)>"iSCSI"下编辑"Initiator Security"(启动程序安全性)。
 * 使用适用于 VMware vSphere 的 ONTAP 工具创建和管理 LUN 和 igroup 。此插件会自动确定服务器的 WWPN 并创建适当的 igroup 。它还会根据最佳实践配置 LUN 并将其映射到正确的 igroup 。
 * 请谨慎使用VMM、因为它们更难管理、而且它们还会使用路径、如前文所述、这些路径会受到限制。ONTAP LUN 支持这两者 https://kb.vmware.com/s/article/2009226["物理和虚拟兼容模式"^] RDM 。
-* 有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分 https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html["《 ONTAP NVMe/FC 主机配置指南》"^] 和 http://www.netapp.com/us/media/tr-4684.pdf["TR-4684."^]下图显示了从 vSphere 主机到 ONTAP LUN 的多路径连接。
+* 有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分 https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html["《 ONTAP NVMe/FC 主机配置指南》"^] 和 http://www.netapp.com/us/media/tr-4684.pdf["TR-4684."^]。下图显示了从vSphere主机到ONTAP LUN的多路径连接。
 
 
 image:vsphere_ontap_image2.png["错误：缺少图形映像"]
@@ -110,12 +110,12 @@ image:vsphere_ontap_image2.png["错误：缺少图形映像"]
 将 ONTAP NFS 与 vSphere 结合使用时，建议采用以下最佳实践：
 
 * 为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。
-* 当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 for NFS v3新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。
+* 当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 for NFS v3新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。您可以通过了解有关nconnect功能及其如何提高性能的更多信息 link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vmware-vsphere8-nfsv3-nconnect.html["NetApp和VMware的NFSv3 nConnect功能"]。
 
 
 值得注意的是、NFSv3和NFSv4.1使用不同的锁定机制。NFSv3使用客户端锁定、而NFSv4.1使用服务器端锁定。虽然ONTAP卷可以通过这两种协议导出、但ESXi只能通过一种协议挂载数据存储库。但是、这并不意味着其他ESXi主机不能通过其他版本挂载同一数据存储库。为了避免出现任何问题、请务必指定挂载时要使用的协议版本、以确保所有主机使用相同版本、从而使用相同的锁定模式。请务必避免在主机之间混用NFS版本。如果可能、请使用主机配置文件检查合规性。
 **由于NFSv3和NFSv4.1之间不会自动转换数据存储库，因此请创建一个新的NFSv4.1数据存储库并使用Storage vMotion将VM迁移到新数据存储库。
-**请参阅中的NFS v4.1互操作性表说明 https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^] 支持所需的特定 ESXi 修补程序级别。
+**请参阅中的NFS v4.1互操作性表说明 link:https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^] 支持所需的特定 ESXi 修补程序级别。
 * NFS导出策略用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值 `-anon` 和 `-allow-suid` ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：
 **访问协议：nfs3.
 **客户端匹配规范：192.168.42.21
@@ -132,14 +132,14 @@ image:vsphere_ontap_image2.png["错误：缺少图形映像"]
 **匿名UID
 **超级用户：sys (使用VAAI的根卷也需要此功能)
 *使用适用于VMware vSphere的ONTAP工具(最重要的最佳实践)：
-**使用适用于VMware vSphere的ONTAP工具配置数据存储库，因为它可以简化导出策略的自动管理。
+**使用适用于VMware vSphere的ONTAP工具配置数据存储库，因为这样可以简化导出策略的自动管理。
 **使用此插件为VMware集群创建数据存储库时，请选择此集群，而不是单个ESX服务器。选择此选项会将数据存储库自动挂载到集群中的所有主机。
 **使用插件挂载功能将现有数据存储库应用于新服务器。
 **如果不使用适用于VMware vSphere的ONTAP工具，请对所有服务器或需要额外访问控制的每个服务器群集使用一个导出策略。
 *虽然ONTAP提供了一种灵活的卷命名空间结构、可通过接合将卷排列在树中、但此方法对于vSphere没有任何价值。无论存储的命名空间层次结构如何，它都会在数据存储库的根目录下为每个 VM 创建一个目录。因此，最佳实践是，只需将 vSphere 卷的接合路径挂载到 SVM 的根卷，即适用于 VMware vSphere 的 ONTAP 工具如何配置数据存储库。如果没有嵌套的接合路径，也意味着任何卷都不依赖于根卷以外的任何卷，即使有意使某个卷脱机或销毁该卷，也不会影响指向其他卷的路径。
 *对于NFS数据存储库上的NTFS分区、块大小为4k即可。下图显示了从 vSphere 主机到 ONTAP NFS 数据存储库的连接。
 
-image:vsphere_ontap_image3.png["错误：缺少图形映像"]
+image:vsphere_ontap_image3.png["从vSphere主机连接到ONTAP NFS数据存储库"]
 
 下表列出了 NFS 版本和支持的功能。
 
@@ -192,7 +192,7 @@ image:vsphere_ontap_image3.png["错误：缺少图形映像"]
 
 === iSCSI和NVMe/TCP
 
-使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会产生两条独立的数据流路径。丢失路径、端口或控制器不会阻止使用另一个路径。
+使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会导致数据流有两条独立的路径。丢失路径、端口或控制器不会阻止使用另一个路径。
 
 
 
