@@ -3153,19 +3153,10 @@
   <block id="3e4627f6667f830baceaaf35890b575a" category="summary">要了解有关本文档中所述信息的更多信息，请查看以下文档和 / 或网站：</block>
   <block id="092bf78f9c97ba171b8232ddff585392" category="doc">追加信息</block>
   <block id="7d5b957cd473f6eaf5ad335a9c63c4ff" category="paragraph">要了解有关本文档中所述信息的更多信息，请查看以下文档和 / 或网站：</block>
-  <block id="18df8e05a5400abd9d0980b1c5bc9ef3" category="list-text">TR-4015 《适用于 ONTAP 9 的 SnapMirror 配置最佳实践指南》
-<block ref="e361bd9d6f7b20da762bc23fcb3d09c2" category="inline-link-rx"></block></block>
   <block id="cbe2f6eb2a73f4a2c871a06264f10dc7" category="inline-link"><block ref="cbe2f6eb2a73f4a2c871a06264f10dc7" category="inline-link-rx"></block></block>
-  <block id="249b98331fa56dc46bf6ba51dc6c39d5" category="list-text">适用于 ONTAP 的 RBAC User Creator
-<block ref="6b15b91279acfce2bbee060bdb17db43" category="inline-link-rx"></block></block>
   <block id="c88037eb28ae3cceb0e32c2cd3c322d7" category="inline-link"><block ref="c88037eb28ae3cceb0e32c2cd3c322d7" category="inline-link-rx"></block></block>
-  <block id="1a57e0f74e725c1a5e2d53b4d4b4460d" category="list-text">适用于 VMware vSphere 的 ONTAP 工具资源
-<block ref="80c496cd9ab75e5683007d8f66ca6fbf" category="inline-link-rx"></block></block>
   <block id="9aa6e8f8fac5c131e5924ee033660d29" category="inline-link"><block ref="9aa6e8f8fac5c131e5924ee033660d29" category="inline-link-rx"></block></block>
-  <block id="91a48e1708df22b7464bced79c745ad2" category="list-text">VMware Site Recovery Manager 文档
-<block ref="92ad802ced4838839b492be6d0bf427d" category="inline-link-rx"></block></block>
   <block id="c9dd6bad4c7d561872f2e2d498a990bf" category="inline-link">互操作性表工具（ IMT ）</block>
-  <block id="97cd1357ea4a16b44bd9e360127a1a9d" category="paragraph">请参见<block ref="99cfde592e1d7fa7832b186d73ee4002" category="inline-link-rx"></block> 在 NetApp 支持站点上，验证您的特定环境是否支持本文档中所述的确切产品和功能版本。NetApp IMT 定义了可用于构建 NetApp 支持的配置的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。</block>
   <block id="1f82b18dcba5f32a085bc502cdd0c6b7" category="summary">借助 ONTAP ， Storage Virtual Machine （ SVM ）的概念可在安全多租户环境中提供严格的分段。</block>
   <block id="7520e12a140ccf3de279fe2fd48889e4" category="doc">部署最佳实践</block>
   <block id="1b4574c516231b685bb37b013b789b06" category="section-title">SMT 的 SVM 布局和分段</block>
@@ -4390,7 +4381,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="4380a9c5c56776fad0f4492a0d3c63f5" category="list-text">从虚拟机应驻留的集群中选择节点。</block>
   <block id="a8be7e73ae88a070ad15a4a6f6d515fe" category="list-text">在虚拟机创建向导中、提供共享存储(SMB共享或CSV)作为存储虚拟机及其磁盘的路径。</block>
   <block id="9da4e10b0da989c65844cd59ed2a0991" category="list-text">使用Hyper-V Manager将共享存储(SMB共享或CSV)设置为Hyper-V服务器存储虚拟机及其磁盘的默认路径。</block>
-  <block id="7bfcd2ed65eadd56b87a3ad2ccf40dff" category="list-text">测试计划内故障转移。通过实时迁移、快速迁移或存储迁移(移动)将VM移动到另一个节点。查看"<block ref="389dcc9a311ede7b2257b650a030a873" category="inline-link-macro-rx"></block>"以了解更多详细信息。</block>
   <block id="064cd683bf50cb65205de6b9298201b3" category="list-text">测试计划外故障转移。停止VM所属服务器上的集群服务。</block>
   <block id="c7bfaead2ee1aea320b1d91da7ba31d7" category="summary">了解NetApp存储和Windows Server环境</block>
   <block id="3654a2a95a62ead550b874d74dd4bbe8" category="doc">NetApp存储和Windows服务器环境</block>
@@ -4455,15 +4445,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0d3e51fc3c7ecb31cb6dcf3ea104060c" category="list-text">NetApp建议为实时迁移和iSCSI网络创建冗余网络路径(多个交换机)、以提供故障恢复能力和QoS。</block>
   <block id="72a46482f366b350b6b0215baa631137" category="summary">适用于Microsoft Windows和Hyper-V的其他资源</block>
   <block id="4bb047f8c530785002e490ef17fa725e" category="doc">从何处查找追加信息</block>
-  <block id="654b5ef83fa66dad8993f3654a8bebb5" category="list-text">ONTAP 概念</block>
-  <block id="836022e29667128997850a15d18e8759" category="paragraph"><block ref="836022e29667128997850a15d18e8759" category="inline-link-rx"></block></block>
-  <block id="3c4676f4bca8b513c846ad2af3faccbd" category="list-text">现代SAN的最佳实践</block>
-  <block id="49df8abaa6163afdde37b69f7f59185c" category="paragraph"><block ref="49df8abaa6163afdde37b69f7f59185c" category="inline-link-rx"></block></block>
-  <block id="162a16b6ce79384fa5f7280046025873" category="list-text">NetApp全SAN阵列数据可用性和NetApp ASA完整性</block>
-  <block id="8f140ecff12b563e3c96a8cff991aedb" category="paragraph"><block ref="8f140ecff12b563e3c96a8cff991aedb" category="inline-link-rx"></block></block>
-  <block id="a5328e6434e6dca1eceeffb0159744e9" category="list-text">SMB协议最佳实践</block>
-  <block id="8dde74cc713b527ca86df68c5efea489" category="list-text"><block ref="136d5353e9c99477f1d3147e966df5af" category="inline-link-rx"></block> 开始使用的是带有+号的存储
-<block ref="abdd6de84336a7f761fbe384605879e9" category="inline-link-rx"></block></block>
   <block id="0650b34324cf33e3bf1ba6d5db9aa14c" category="list-text">Hyper-V在Windows Server +上的新增功能
 <block ref="8508224d602483e88bde8402b5d1f2d1" category="inline-link-rx"></block></block>
   <block id="1139a59d4aa15acd59f31d05c5a9d642" category="summary">本附录介绍如何在集群环境之外部署Hyper-V副本。</block>
@@ -4504,8 +4485,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="94faab2d3840f3d8320e20ad4a90e6cd" category="list-text">单击故障转移对虚拟机进行故障转移。</block>
   <block id="4be45953e45cfa5fc987ba108c1e5793" category="summary">本附录介绍如何在集群环境中部署实时迁移。</block>
   <block id="407f0c958d87180b9cc5045be0f28bd4" category="doc">在群组环境中部署Hyper-V实时迁移</block>
-  <block id="9774bdda08aa75b382aa5e42ff0441b6" category="inline-link-macro">Hyper-V集群</block>
-  <block id="a897bc62277be342ef178e68f04b5c92" category="paragraph">要部署实时迁移、您需要在具有共享存储的故障转移集群中配置Hyper-V服务器。查看部分 <block ref="2ba01ece72ad73715f4a19148fab7c67" category="inline-link-macro-rx"></block> 有关详细信息：</block>
   <block id="388b92a1de3321595dcfbdc1c67ce749" category="paragraph">要在集群环境中使用实时迁移、请完成以下步骤：</block>
   <block id="b66a6c742469f1d08a2d11bcf4f211ff" category="list-text">在故障转移集群管理器中、选择并展开集群。如果集群不可见、请单击故障转移集群管理器、单击连接到集群并提供集群名称。</block>
   <block id="e3883376513ba0aeb2f3d190d4e0377d" category="list-text">单击"Roles"(角色)、其中列出了集群中的所有可用虚拟机。</block>
@@ -4653,7 +4632,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8d9091beebb755bb6e68a4f04d3288f6" category="paragraph">BitLocker驱动器加密是一项数据保护功能、从Windows Server 2012开始持续提供。这种加密可保护物理磁盘、LUN和LV。</block>
   <block id="0494cad48bf6f5dd2105391f0426af1a" category="paragraph">启用BitLocker之前、必须将CSV置于维护模式。因此、NetApp建议在CSV上创建VM之前、应先确定与基于BitLocker的安全性相关的决策、以避免停机。</block>
   <block id="e2e4ca1a6c3bcca61ed5ec3ea10c90c0" category="summary">了解如何使用Windows Server故障转移集群部署和配置Hyper-V副本。</block>
-  <block id="8127ab9fa104e0306d7d39fd7950c254" category="list-text">您需要将Hyper-V集群置于相同或不同地理位置、用作主集群和副本集群。查看"<block ref="ea7aa0b79f69b4796e1e78e5a203a5d7" category="inline-link-macro-rx"></block>"以了解更多详细信息。</block>
   <block id="5674fdbee301f444dd0ca3836c682957" category="list-text">如果使用不同的站点、则必须将每个站点的防火墙配置为允许主集群与副本集群之间进行通信。</block>
   <block id="6cc66ed27b17f9c380f924d533e633d6" category="list-text">副本集群必须具有足够的空间来存储复制的工作负载。</block>
   <block id="ff71768b9e039ee5012c181eb29bdc39" category="list-text">在集群的所有节点上启用防火墙规则。在主集群和副本集群中的所有节点上使用管理员权限运行以下PowerShell cmdlet。</block>
@@ -4914,11 +4892,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8e00c91ecf143f76c94e3aa1668fc92b" category="inline-image-macro">ONTAP克隆</block>
   <block id="9c7295440be885852a164f5880627146" category="paragraph"><block ref="9c7295440be885852a164f5880627146" category="inline-image-macro-rx" type="image"></block></block>
   <block id="1eed6756a7834e04fb7716ee8d830425" category="inline-link-macro"><block ref="1eed6756a7834e04fb7716ee8d830425" category="inline-link-rx"></block></block>
-  <block id="8da9c2cbb1fa115b8d5d719e3db3375d" category="list-text">TR-4597 ：适用于 ONTAP 的 VMware vSphere
-<block ref="9e6a16c482927bdc7bc737986ae09658" category="inline-link-macro-rx"></block></block>
   <block id="0e4a75553a081fffff029a37e55f5d71" category="inline-link-macro"><block ref="0e4a75553a081fffff029a37e55f5d71" category="inline-link-rx"></block></block>
-  <block id="82ce198298a8d30a65e9e49a1e9328a4" category="list-text">TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷
-<block ref="4752e298e06276577ddb7ded2f908b71" category="inline-link-macro-rx"></block></block>
   <block id="2e633a7cd484b8152bb61b1eee51006b" category="paragraph">FlexClone许可证(随ONTAP One提供)和ONTAP工具设备是在ONTAP中使用ONTAP所需的唯一附加产品。最新版本的ONTAP 工具作为一个在ESXi上运行的统一设备提供、可提供以前三个不同设备和服务器的功能。对于vvol、请务必将ONTAP 工具vCenter UI扩展或REST API与提供特定vvol功能的VASA Provider结合使用、作为用于vSphere中ONTAP 功能的常规管理工具和用户界面。传统数据存储库会附带SRA组件、但VMware Site Recovery Manager不会对VVO尔 使用SRA、而是在SRM 8.3及更高版本中实施新服务、从而利用VASA Provider进行VVO尔 复制。</block>
   <block id="32fd58743bd2ce579949a47db1b95ca8" category="summary">与SRA和传统数据存储库相比、使用VASA进行VVOs复制可提供独特的功能。</block>
   <block id="daf6970022e96957e3a4ea5b6a599a27" category="list-text">虽然ONTAP 工具和SRA支持集群级别和SVM级别的凭据、但VASA Provider仅支持存储系统的集群级别凭据。这是因为许多用于创建卷的API仅在集群级别可用。因此、如果您计划使用ONTAP、则必须使用集群范围的凭据添加此集群。</block>
@@ -5026,4 +5000,35 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0726f4e9c3c98564af638f1b4cd17a9e" category="sidebar">在集群环境之外部署Hyper-V实时迁移</block>
   <block id="1bbd09497cd931a02f8dc0ee3cfcf19d" category="sidebar">在集群环境之外部署Hyper-V副本</block>
   <block id="832a116d7f9184d8880a539553a0cb52" category="sidebar">在集群环境中部署Hyper-V副本</block>
+  <block id="1a85c0d242c43eb56cc500e60d323331" category="paragraph">VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据存储库。可以为VMFS数据存储库配置使用FC、iSCSI、FCoE访问的LUN、或者配置使用NVMe/FC或NVMe/TCP协议访问的NVMe命名区。VMFS允许集群中的每个ESX服务器同时访问存储。从ONTAP 9.12.1P2 (以及ASA系统中的更早版本)开始、最大LUN大小通常为128 TB；因此、可以使用一个LUN来创建大小上限为64 TB的VMFS 5或6数据存储库。</block>
+  <block id="5d7771be7242d0b5e76913e2ea5d3dad" category="paragraph">ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi不会发现任何超出这些限制的LUN或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。</block>
+  <block id="8983ee0717807e5385f3c8b2c70a177c" category="list-text">TR-4597 ：适用于 ONTAP 的 VMware vSphere
+<block ref="0bff808225ac084b8184e7670c17aa52" category="inline-link-macro-rx"></block></block>
+  <block id="1f7ff87198d4a8563ac0d42354d47052" category="list-text">TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷
+<block ref="57ea579fe6c0d333a496008248ad03e2" category="inline-link-macro-rx"></block></block>
+  <block id="ef8c76bd50596fa93881a13dac3f23b3" category="inline-link-macro"><block ref="ef8c76bd50596fa93881a13dac3f23b3" category="inline-link-rx"></block></block>
+  <block id="6e5923e0b2d91653ee7dd35aa5f48141" category="list-text">TR-4015 《适用于 ONTAP 9 的 SnapMirror 配置最佳实践指南》
+<block ref="6a851721cd10ebeb2f9cfa107f963956" category="inline-link-macro-rx"></block></block>
+  <block id="1e626dbc797733633cd43ac045564b36" category="list-text">适用于 ONTAP 的 RBAC User Creator
+<block ref="51416f5c8b6f7981eb23be678ab313ad" category="inline-link-macro-rx"></block></block>
+  <block id="eaef75afe923a97ffd4ccab86876f8da" category="list-text">适用于 VMware vSphere 的 ONTAP 工具资源
+<block ref="9d52dd6d1c195e015d4baef3146522a8" category="inline-link-macro-rx"></block></block>
+  <block id="58b39d11ffaef440efc4e3c365487610" category="list-text">VMware Site Recovery Manager 文档
+<block ref="18c037ca2f7fe7180f506030fe7e514c" category="inline-link-macro-rx"></block></block>
+  <block id="bc11d67bfced1da7778c2cabee9e7615" category="paragraph">请参见 <block ref="de89165a46abdf575eb9a1ba0995e131" category="inline-link-macro-rx"></block> 在 NetApp 支持站点上，验证您的特定环境是否支持本文档中所述的确切产品和功能版本。NetApp IMT 定义了可用于构建 NetApp 支持的配置的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。</block>
+  <block id="e651877073d877e1ee090d986eafc550" category="list-text">您需要将Hyper-V集群置于相同或不同地理位置、用作主集群和副本集群。请查看 <block ref="8a150f92c22920868769b8738759e23d" category="inline-link-macro-rx"></block> 有关详细信息：</block>
+  <block id="8762adae157b34ee542f2e614401603a" category="list-text">ONTAP 概念
+<block ref="836022e29667128997850a15d18e8759" category="inline-link-rx"></block></block>
+  <block id="e7b3912abd11fa36935a211d0189ebc2" category="list-text">现代SAN的最佳实践
+<block ref="49df8abaa6163afdde37b69f7f59185c" category="inline-link-rx"></block></block>
+  <block id="05c54431756e1b1a7114938bc6f4b199" category="list-text">NetApp全SAN阵列数据可用性和NetApp ASA完整性
+<block ref="8f140ecff12b563e3c96a8cff991aedb" category="inline-link-rx"></block></block>
+  <block id="61eccac29e55aa58f22643ddd6cf3587" category="list-text">SMB协议最佳实践
+<block ref="63b1df1d0a5ff0e604f9987b8b1b21db" category="inline-link-rx"></block></block>
+  <block id="bc96f334e3988ce96701a7082c0e23b5" category="list-text">开始使用您的安装和使用的软件+
+<block ref="abdd6de84336a7f761fbe384605879e9" category="inline-link-rx"></block></block>
+  <block id="0e660b82d6e28b6935041a5223ed1aed" category="paragraph">要部署实时迁移、您需要在具有共享存储的故障转移集群中配置Hyper-V服务器。请查看 <block ref="8a150f92c22920868769b8738759e23d" category="inline-link-macro-rx"></block> 有关详细信息：</block>
+  <block id="1dd1e97374852e1f244963d9fdb0c414" category="list-text">测试计划内故障转移。通过实时迁移、快速迁移或存储迁移(移动)将VM移动到另一个节点。请查看 <block ref="ba8afff2d0e4662eeb47d28935e79828" category="inline-link-macro-rx"></block> 有关详细信息：</block>
+  <block id="8737a5d2bc43b0eb76ab5674d0fcb094" category="sidebar">使用ONTAP的SRM概述</block>
+  <block id="76f6daa4bfab6ca8a7350e46d3d6718f" category="sidebar">适用于SRM的追加信息</block>
 </blocks>

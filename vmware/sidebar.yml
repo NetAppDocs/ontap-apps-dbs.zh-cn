@@ -50,7 +50,7 @@ entries:
     url: "/vmware/vmware-vvols-resources.html"
 - title: 采用ONTAP的VMware Site Recovery Manager
   entries:
-  - title: 概述
+  - title: 使用ONTAP的SRM概述
     url: "/vmware/vmware-srm-overview.html"
   - title: 部署最佳实践
     url: "/vmware/vmware-srm-deployment_best_practices.html"
@@ -60,6 +60,8 @@ entries:
     url: "/vmware/vmware-srm-replication_topologies.html"
   - title: 对使用 VVol 复制的 SRM 进行故障排除
     url: "/vmware/vmware-srm-vvol-troubleshooting.html"
+  - title: 适用于SRM的追加信息
+    url: "/vmware/vmware-srm-additional-information.html"
 - title: 采用ONTAP的vSphere Metro存储集群
   entries:
   - title: VMSC概述

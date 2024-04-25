@@ -15,7 +15,7 @@ summary: 本附录介绍如何在集群环境中部署实时迁移。
 
 == 前提条件
 
-要部署实时迁移、您需要在具有共享存储的故障转移集群中配置Hyper-V服务器。查看部分 link:win_deploy_hyperv.html["Hyper-V集群"] 有关详细信息：
+要部署实时迁移、您需要在具有共享存储的故障转移集群中配置Hyper-V服务器。请查看 link:win_deploy_hyperv.html["部署Hyper-V集群"] 有关详细信息：
 
 
 

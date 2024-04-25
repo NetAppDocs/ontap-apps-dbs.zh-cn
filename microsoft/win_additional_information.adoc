@@ -12,19 +12,14 @@ summary: 适用于Microsoft Windows和Hyper-V的其他资源
 适用于Microsoft Windows和Hyper-V的其他资源
 
 * ONTAP 概念
-+
 https://docs.netapp.com/us-en/ontap/concepts/introducing-data-management-software-concept.html[]
-
 * 现代SAN的最佳实践
-+
 https://www.netapp.com/media/10680-tr4080.pdf[]
-
 * NetApp全SAN阵列数据可用性和NetApp ASA完整性
-+
 https://www.netapp.com/pdf.html?item=/media/85671-tr-4968.pdf[]
-
 * SMB协议最佳实践
-* https://www.netapp.com/pdf.html?item=/media/10678-tr-4543pdf.pdfGetting[] 开始使用的是带有+号的存储
+https://www.netapp.com/pdf.html?item=/media/10678-tr-4543pdf.pdf[]
+* 开始使用您的安装和使用的软件+
 https://technet.microsoft.com/library/mt126167.aspx[]
 * Hyper-V在Windows Server +上的新增功能
 https://technet.microsoft.com/windows-server-docs/compute/hyper-v/what-s-new-in-hyper-v-on-windows[]
