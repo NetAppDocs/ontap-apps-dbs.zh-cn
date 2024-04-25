@@ -4,8 +4,13 @@ permalink: microsoft/win_deploy_hyperv_replica_ce.html
 keywords: Windows,Hyper-V,VHDX,VM,Virtual 
 summary: 了解如何使用Windows Server故障转移集群部署和配置Hyper-V副本。 
 ---
-= 在一个群组环境中部署Hyper-V副本
+= 在集群环境中部署Hyper-V副本
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media
 
 
 [role="lead"]
@@ -32,7 +37,7 @@ get-clusternode | ForEach-Object \{Invoke-command -computername $_.name -scriptb
 ....
 +
 ....
- # For Certificate authentication
+# For Certificate authentication
 get-clusternode | ForEach-Object \{Invoke-command -computername $_.name -scriptblock \{Enable-Netfirewallrule -displayname "Hyper-V Replica HTTPS Listener (TCP-In)"}}
 ....
 . 配置副本集群。

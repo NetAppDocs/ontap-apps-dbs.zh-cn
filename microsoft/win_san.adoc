@@ -5,7 +5,12 @@ keywords: Windows,Hyper-V,VHDX,VM,Virtual,SAN,LUN,NVMe
 summary: 在SAN环境中为Windows和Hyper-V配置ONTAP存储 
 ---
 = 在SAN环境中配置
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media
 
 
 [role="lead"]
@@ -51,21 +56,19 @@ ONTAP SVM支持块协议iSCSI和FC。使用块协议iSCSI或FC创建SVM时、SVM
 . 使用SVM SVM创建iSCSI和/或FC端口集。
 . 使用创建的端口集为Windows创建iSCSI和/或FC启动程序组。
 . 将启动程序添加到启动程序组。启动程序是iSCSI的IQN和FC的WWPN。可以通过运行PowerShell cmdlet GET－InitiatorPort从Windows Server查询这些参数。
++
+....
+# Get the IQN for iSCSI
+Get-InitiatorPort | Where \{$_.ConnectionType -eq 'iSCSI'} | Select-Object -Property NodeAddress
+....
++
+....
+# Get the WWPN for FC
+Get-InitiatorPort | Where \{$_.ConnectionType -eq 'Fibre Channel'} | Select-Object -Property PortAddress
+....
++
+ # While adding initiator to the initiator group in case of FC, make sure to provide the initiator(PortAddress) in the standard WWPN format
 
-
-
-
-= 获取iSCSI的IQN +
-
-获取InitiatorPort |、其中\｛$_.ConnectionType -eq 'iSCSI'｝| Select-Object -Property NodeAddress
-
-
-
-= 获取FC +的WWPN
-
-获取InitiatorPort |其中\｛$_.ConnectionType -eq ' Fibre Channel'｝| Select-Object -Property PortAddress +
- +
-#在使用FC向启动程序组添加启动程序时、请确保以标准WWPN格式提供启动程序(端口地址)
 
 也可以在iSCSI启动程序属性的配置中检查Windows Server上iSCSI的IQN。
 

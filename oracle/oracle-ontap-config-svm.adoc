@@ -35,4 +35,4 @@ SVM (在ONTAP命令行界面中称为Vserver)是存储的基本功能单元、�
 * 用于敏感业务数据(例如人力资源或财务报告数据)的SVM、必须限制管理团队
 
 
-在多租户环境中、可以为每个租户的数据分配一个专用SVM。每个集群、HA对和节点的SVM和LIP数量限制取决于所使用的协议、节点型号和ONTAP版本。  请参见 link:https://hwu.netapp.com/["NetApp Hardware Universe"^] 的限制。
+在多租户环境中、可以为每个租户的数据提供一个专用SVM。每个集群、HA对和节点的SVM和LIP数量限制取决于所使用的协议、节点型号和ONTAP版本。  请参见 link:https://hwu.netapp.com/["NetApp Hardware Universe"^] 的限制。

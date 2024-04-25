@@ -4,8 +4,13 @@ permalink: microsoft/win_deploy_hyperv_lmce.html
 keywords: Windows,Hyper-V,VHDX,VM,Virtual 
 summary: 本附录介绍如何在集群环境中部署实时迁移。 
 ---
-= 在群组环境中部署Hyper-V实时迁移
+= 在集群环境中部署Hyper-V实时迁移
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media
 
 
 [role="lead"]

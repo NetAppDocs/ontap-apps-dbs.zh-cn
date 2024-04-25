@@ -5,7 +5,12 @@ keywords: Windows,Hyper-V,VHDX,VM,Virtual
 summary: 采用ONTAP的Hyper-V存储基础架构 
 ---
 = 基于NetApp的Hyper-V存储基础架构
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media
 
 
 [role="lead"]
@@ -25,7 +30,7 @@ image:win_image5.png["基于NetApp的Hyper-V存储基础架构、宽度=624、�
 
 
 
-== NetApp CIFS共享上的Hyper-V存储
+== 基于NetApp CIFS的Hyper-V存储
 
 开始执行本节中列出的步骤之前，请查看"link:win_smb.html["在SMB环境中配置"]" 要在NetApp CIFS共享上配置Hyper-V存储、请完成以下步骤：
 
@@ -169,7 +174,7 @@ image:win_image6.png["Hyper-V故障转移集群和NetApp、宽度=624、高度=2
 
 
 
-=== 在一个"已加入的环境中进行实时迁移"
+=== 集群环境中的实时迁移
 
 VM可以在集群节点之间无缝移动。VM迁移是瞬时的、因为集群中的所有节点都共享同一个存储、并且可以访问VM及其磁盘。下图显示了集群环境中的实时迁移。
 
@@ -191,7 +196,7 @@ image:win_image7.png["集群环境中的实时迁移、宽度=580、高度=295"]
 
 
 
-=== 在一个或多个环境中进行实时迁移
+=== 在集群环境之外进行实时迁移
 
 您可以在两个非集群独立Hyper-V服务器之间实时迁移虚拟机。此过程可以使用共享或无共享实时迁移。
 

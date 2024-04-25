@@ -4,8 +4,13 @@ permalink: microsoft/win_environment.html
 keywords: Windows,Hyper-V,VHDX,VM,Virtual 
 summary: 了解NetApp存储和Windows Server环境 
 ---
-= NetApp存储和Windows服务器环境
+= NetApp存储和Windows Server环境
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media
 
 
 [role="lead"]

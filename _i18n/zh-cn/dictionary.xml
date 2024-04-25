@@ -127,8 +127,6 @@
   <block id="d7023f86951b6c3c009891a468c3effd" category="paragraph">最简单的一个层面是、同步复制意味着、在确认镜像存储之前、必须对镜像存储的两端进行任何更改。例如、如果数据库正在写入日志、或者VMware子系统正在修补、则写入操作绝不能丢失。作为协议级别、在将写入提交到两个站点上的非易失性介质之前、存储系统不得确认写入。只有这样、才能安全地继续操作、而不会丢失数据。</block>
   <block id="eee4f7a4e0ed3a8646a97bcf3e118fb9" category="paragraph">使用同步复制技术是设计和管理同步复制解决方案的第一步。最重要的注意事项是了解在各种计划内和计划外故障情形下可能发生的情况。并非所有同步复制解决方案都能提供相同的功能。如果您需要的解决方案能够实现零恢复点目标(RPO)、即零数据丢失、则必须考虑所有故障情形。特别是、如果由于站点间连接断开而无法进行复制、则会产生什么预期结果？</block>
   <block id="71554672a088c43ab21c759ddd161928" category="section-title">SyncMirror数据可用性</block>
-  <block id="bec293a9cf8e49ec40e6a4fdc02b9146" category="paragraph">MetroCluster复制基于NetApp SyncMirror技术、该技术旨在高效地切换至同步模式和切换至同步模式之外。此功能可满足需要同步复制、但也需要数据服务高可用性的客户的要求。例如、如果与远程站点的连接断开、则通常最好让存储系统继续在未复制的状态下运行。</block>
-  <block id="9a9ce41f4b23474045b6c6e0ac7752af" category="paragraph">许多同步复制解决方案只能在同步模式下运行。这种类型的全或全不复制有时称为Domino模式。此类存储系统将停止提供数据、而不是允许数据的本地和远程副本不同步。如果强制中断复制、重新同步可能会非常耗时、并且可能会使客户在重新建立镜像期间完全丢失数据。</block>
   <block id="8646bb558f8f18a200cce2f70602627a" category="paragraph">SyncMirror不仅可以在无法访问远程站点时无缝切换出同步模式、还可以在恢复连接后快速重新同步到RPO = 0状态。远程站点上的陈旧数据副本也可以在重新同步期间保留在可用状态、从而确保本地和远程数据副本始终存在。</block>
   <block id="995f5151d2d1c0a4e8371b2b3c9b6e5b" category="paragraph">如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还提供了应用程序级选项、例如Oracle DataGuard或主机端磁盘镜像的扩展超时。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。</block>
   <block id="1d12d7a206d9b5337ae6fa442f23d377" category="doc">仅快照</block>
@@ -145,12 +143,10 @@
   <block id="10d8500e282e8bbacd668af6f773f412" category="paragraph">使用此策略、块将立即视为冷数据块、并有资格立即分层到容量层。</block>
   <block id="ec583de0216b95bc673c84e4ec9356e6" category="paragraph">此策略尤其适用于长期备份。它还可用作分层存储管理(HSM)的一种形式。过去、HSM通常用于将文件的数据块分层到磁带、同时使文件本身在文件系统上保持可见。使用的FabricPool卷<block ref="a181a603769c1f98ad927e7367c7aa51" prefix=" " category="inline-code"></block> 通过策略、您可以将文件存储在一个可见且易于管理的位置、但几乎不会占用本地存储层上的空间。</block>
   <block id="79768a069a539d4f130e672a660bf45f" category="doc">分区</block>
-  <block id="79da1502ddfac887bfdf0d92f2428fe6" category="paragraph">这包括典型的规划措施、例如、确保主机和存储系统之间的SAN具有足够的带宽、检查所有必需设备之间是否存在所有SAN路径、使用FC交换机供应商所需的FC端口设置、避免ISL争用、 并使用适当的SAN网络结构监控。</block>
   <block id="a0bdb98e8b9da585816478d24278e42f" category="paragraph">一个FC分区不应包含多个启动程序。这种安排最初可能看起来有效、但启动程序之间的串扰最终会影响性能和稳定性。</block>
   <block id="8ef958d9e25538841b306960ab117626" category="paragraph">虽然在极少数情况下、不同供应商的FC目标端口的行为会导致问题、但多目标区域通常被视为安全区域。例如、避免将NetApp和非NetApp存储阵列的目标端口都包含在同一分区中。此外、将NetApp存储系统和磁带设备置于同一分区更容易出现发生原因问题。</block>
   <block id="642223473862db290604321fe2ebe763" category="doc">svms</block>
   <block id="47ea917cf14ad91c68c407f90a7a189d" category="paragraph">SVM (在ONTAP命令行界面中称为Vserver)是存储的基本功能单元、将SVM与VMware ESX服务器上的子系统进行比较非常有用。</block>
-  <block id="9efbaa34de852e33319ca8ceb1861832" category="paragraph">首次安装时、ESX没有预配置的功能、例如托管子操作系统或支持最终用户应用程序。在定义虚拟机(VM)之前、此容器为空容器。ONTAP与此类似。首次安装ONTAP时、在创建SVM之前、它无法提供数据。SVM特性用于定义数据服务。</block>
   <block id="13ce2622b2cc2118c44d3aae7df8167d" category="paragraph">与存储架构的其他方面一样、SVM和逻辑接口(LIF)设计的最佳选项在很大程度上取决于扩展要求和业务需求。</block>
   <block id="8fb41a27984f0beba2e12fb920a486aa" category="paragraph">目前尚无为ONTAP配置SVM的官方最佳实践。正确的方法取决于管理和安全要求。</block>
   <block id="f4d8541bb6d07f7533a6b5aa6cfb2455" category="paragraph">大多数客户都会运行一个主SVM来满足大多数日常需求、但随后会创建少量SVM来满足特殊需求。例如、您可能希望创建：</block>
@@ -158,7 +154,6 @@
   <block id="0e10f2715884f3538282397d69b2cd00" category="list-text">开发组的SVM、该开发组拥有完全的管理控制权、因此可以独立管理自己的存储</block>
   <block id="7624156e307247e4ea1ec8bf574136a1" category="list-text">用于敏感业务数据(例如人力资源或财务报告数据)的SVM、必须限制管理团队</block>
   <block id="e5e09031843479ef9ef8cbbd4c2f404c" category="inline-link-macro">NetApp Hardware Universe</block>
-  <block id="bd32656670155eb09690047819fc0971" category="paragraph">在多租户环境中、可以为每个租户的数据分配一个专用SVM。每个集群、HA对和节点的SVM和LIP数量限制取决于所使用的协议、节点型号和ONTAP版本。  请参见 <block ref="41f66f34b3a905f864500c9319fdff8f" category="inline-link-macro-rx"></block> 的限制。</block>
   <block id="fb012f1e7970d8285bd5d6c5a7f7d523" category="doc">SSD聚合、包括AFF系统</block>
   <block id="cb8e4651c457f71d5788f38eac01471f" category="paragraph">可用空间是指未用于实际数据的任何空间、其中包括聚合本身上的未分配空间以及成分卷中的未使用空间。此外、还必须考虑精简配置。例如、卷可能包含1 TB的LUN、其中实际数据仅利用了50%的空间。在精简配置环境中、这将正确地显示为占用500 GB的空间。但是、在完全配置的环境中、1 TB的全部容量似乎正在使用中。500 GB的未分配空间将被隐藏。实际数据未使用此空间、因此应将此空间计入总可用空间。</block>
   <block id="d3487661d9a0702bd5915d49070f62dc" category="paragraph">对于用于企业级应用程序的存储系统、NetApp建议如下：</block>
@@ -3608,11 +3603,9 @@
   <block id="4f0dae2ba2fd11c533349d6ade4f81de" category="paragraph">ONTAP为管理登录提供了功能强大的基于角色的访问控制(Role-Based Access Control、RBAC)。某些管理员可能需要完全集群访问权限、而其他管理员则可能只需要访问某些SVM。高级帮助台人员可能需要增加卷大小的能力。这样、您就可以为管理用户授予执行其工作职责所需的访问权限、而无需执行任何其他操作。此外、您还可以使用不同供应商提供的PKI来保护这些登录、限制对ssh密钥的访问、并强制执行失败登录尝试锁定。</block>
   <block id="6ae13b0198daa7d13d79a8631297e64d" category="paragraph">有关管理访问控制的详细信息、请单击 <block ref="db5be08b697b5ef26e0e94da1d5f4970" category="inline-link-macro-rx"></block></block>
   <block id="671a94a08dff3cf44fad087e2346c8b0" category="section-title">多因素身份验证</block>
-  <block id="c6595c32ea3c4aa315aa5c66b88b0a54" category="paragraph">ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身份验证。其结果是、用户名/密码被泄露本身并不是没有第二个因素(例如FOB或智能手机应用程序)的数据的安全线程。</block>
   <block id="945c88a63c229c39ee73ab5592b3ef63" category="paragraph">有关详细信息，请单击 <block ref="03628d0cd13b6640ef56c399aa1c2070" category="inline-link-macro-rx"></block></block>
   <block id="852741d2a7fb0a8a1a5dd748dbbd6734" category="section-title">API RBAC</block>
   <block id="bbbea5fec67f15424fa77aa563754c49" category="paragraph">自动化需要API调用、但并非所有工具都需要完全管理访问权限。为了帮助保护自动化系统的安全、还在API级别提供了RBAC。您可以将自动化用户帐户限制为所需的API调用。例如、监控软件不需要更改访问权限、只需要读取访问权限即可。配置存储的工作流不需要删除存储。</block>
-  <block id="cb93ad4589e6e6834d2627d2ef8c8456" category="section-title">多管理员验证</block>
   <block id="7604bad489eaec7e27d112c63d3e2936" category="paragraph">通过要求两个不同的管理员(每个管理员都有自己的凭据)批准某些活动、可以进一步实现多"因素"身份验证。其中包括更改登录权限、运行诊断命令和删除数据。</block>
   <block id="e890d04cd745ac382688bbb307655e81" category="paragraph">有关多管理员验证(MAV)的详细信息、请单击 <block ref="88f84d4fec0424d978600980bf11baf0" category="inline-link-macro-rx"></block></block>
   <block id="b39c0496b44447232912303246b46aaa" category="paragraph">如果预期顺序IO较多、则可以按下一节所述增加NFS传输大小。</block>
@@ -4060,7 +4053,6 @@
   <block id="2c0931d05d138f5ed298de6301f8b914" category="paragraph">SnapMirror主动同步可为各个Oracle数据库和应用程序环境实现选择性的RPO = 0同步镜像。</block>
   <block id="23ac407fd735aa143b377c5ce899450a" category="paragraph">SnapMirror主动同步本质上是SAN的一项增强型SnapMirror功能、允许主机从托管LUN的系统以及托管其副本的系统访问LUN。</block>
   <block id="b3bb502fe4549a90a1e8172726d68f50" category="paragraph">SnapMirror主动同步和SnapMirror同步共享一个复制引擎、但是、SnapMirror主动同步还包括一些附加功能、例如、企业级应用程序的透明应用程序故障转移和故障恢复。</block>
-  <block id="174334561d4297360aed6a35cab38797" category="paragraph">通过SnapMirror活动同步、可以使主存储阵列和远程存储阵列中的存储设备对主机操作系统可见。路径可通过非对称逻辑单元访问(AANAA)进行管理、ANAA是一种行业标准协议、用于确定存储系统与主机之间的优化路径。</block>
   <block id="e1ffc166cd6595b5b47f9c72a57357ed" category="paragraph">SnapMirror活动同步关系位于不同集群上的一对SVM之间。这两个SVM都能够提供数据、但ALUA会优先使用当前拥有LUN所在驱动器所有权的SVM。远程SVM的IO将通过SnapMirror活动同步互连在中代理。</block>
   <block id="a6c7f963d0151b1e80b754596853d273" category="paragraph">在正常操作下、远程副本始终是RPO = 0的同步副本、但有一个例外。如果无法复制数据、则使用SnapMirror主动同步时、将不再需要复制数据并恢复提供IO。如果客户认为复制链路丢失是近乎灾难的情况、或者不希望在无法复制数据时业务运营暂停、则首选此选项。</block>
   <block id="ea1d91c32fcf0f4a1090fd0da341c014" category="paragraph">与其他存储灾难恢复解决方案不同、SnapMirror主动同步可提供非对称平台灵活性。每个站点的硬件不必相同。通过此功能、您可以调整用于支持SnapMirror活动同步的硬件的大小。如果需要支持完整的生产工作负载、远程存储系统可以与主站点完全相同；但是、如果灾难导致I/O减少、则与远程站点上较小的系统相比、可能会更经济高效。</block>
@@ -4136,7 +4128,6 @@
   <block id="96738983d52a374cb4a8c958e924836e" category="paragraph">备份或事务日志等数据是跨多个块按顺序写入的操作、所有这些块都会进行压缩。因此、无需考虑对齐。唯一关注的I/O模式是随机覆盖文件。</block>
   <block id="1afe2c0821b67085f9ea2d2deeb2e92a" category="paragraph">数据缩减是一项可提高数据压缩效率的技术。如前文所述、自适应数据压缩本身最多可节省2：1的空间、因为它仅限于在4 KB WAFL块中存储8 KB I/O。块大小越大、压缩方法的效率越高。但是、它们不适用于受到小块覆盖的数据。解压缩32 KB数据单元、更新8 KB部分、重新压缩以及回写驱动器会产生开销。</block>
   <block id="82116b39cd4d0d1920fab1ab4515603b" category="paragraph">节省的资金数额各不相同。已压缩或加密的数据通常无法进一步压缩、因此、数据集无法从数据缩减中受益。相比之下、新初始化的数据文件包含的块元数据和零数据略多、数据压缩率高达80：1。</block>
-  <block id="648bfcfcbad0911f90c81de48afd0a97" category="paragraph">某些数据不包含重复数据。例如、Oracle块包含数据库全局唯一的标头和几乎唯一的尾部。因此、对Oracle数据库进行重复数据删除很少能节省超过1%的空间。对MS SQL数据库执行重复数据删除的效果稍好、但块级别的唯一元数据仍是一个限制。</block>
   <block id="2608473fa5767385d01f256eccbc1cc4" category="paragraph">许多争用资源的阵列都声称可以根据数据库被复制多次的假设对数据库进行重复数据删除。在这方面、也可以使用NetApp重复数据删除、但ONTAP提供了一个更好的选择：NetApp FlexClone技术。最终结果是相同的；系统会为一个数据库创建多个副本、这些副本共享大多数底层物理块。与花时间复制数据库文件并对其进行重复数据删除相比、使用FlexClone的效率要高得多。实际上、它是无重复数据删除、而不是重复数据删除、因为从一开始就不会创建重复数据。</block>
   <block id="7e96c1b651af3f28c27b78807f0310e2" category="paragraph">强烈建议使用精简配置、因为它可以简化管理、同时显著提高可用容量并节省相关成本。原因很简单—数据库环境通常包含大量空空间、大量卷和LUN以及可压缩数据。厚配置会为卷和LUN预留存储空间、以防它们最终达到100%全满并包含100%不可压缩数据。这种情况不大可能发生。通过精简配置、可以回收这些空间并将其用于其他位置、并可以基于存储系统本身进行容量管理、而不是基于许多较小的卷和LUN。</block>
   <block id="0f55b43344575cc268bf51ae032d47c2" category="paragraph">NetApp建议执行以下操作：</block>
@@ -4221,7 +4212,6 @@ SQL Server还要求操作系统和存储之间进行协调、以确保创建快�
   <block id="dabc72adea00cc712e7650b066f1d8c6" category="inline-link">TR-4067：《基于ONTAP的NFS最佳实践》</block>
   <block id="36911cfd2b35ef0ca97dab53c7e045f0" category="paragraph">与简单地将挂载选项从vs=3更改为vs=4.1相比、切换到NFSv4更为复杂。有关使用ONTAP配置NFSv4的更完整说明、包括有关配置操作系统的指导、请参见<block ref="92f446ddde3e320c4e32b449cbe3112d" category="inline-link-rx"></block>。本技术报告的以下各节介绍了使用NFSv4的一些基本要求。</block>
   <block id="a80438f1b3354b284cf31082c45b33b3" category="summary">采用ONTAP的Hyper-V存储基础架构</block>
-  <block id="77d9e17a96fcc62f4b2f3f1b9eb8f6f3" category="doc">基于NetApp的Hyper-V存储基础架构</block>
   <block id="cfbb26e347d5746581822f8046be20c4" category="paragraph">Hyper-V存储基础架构可以托管在ONTAP存储系统上。可以使用NetApp LUN或NetApp CIFS共享为Hyper-V存储VM文件及其磁盘提供存储、如下图所示。</block>
   <block id="25aa60030552ee28c6e802f74d96f111" category="inline-image-macro">基于NetApp的Hyper-V存储基础架构、宽度=624、高度=338</block>
   <block id="818a20c74e71223c5a644895a6dd4095" category="paragraph"><block ref="818a20c74e71223c5a644895a6dd4095" category="inline-image-macro-rx" type="image"></block></block>
@@ -4231,7 +4221,6 @@ SQL Server还要求操作系统和存储之间进行协调、以确保创建快�
   <block id="2771a58b129233810f1c389eedd2207f" category="list-text">从Server Manager的Tools部分打开Hyper-V Manager。</block>
   <block id="ee15a170a42b1f37e0d70bf3b367f2ee" category="list-text">选择Hyper-V服务器、然后单击Hyper-V设置。</block>
   <block id="b9cc0276ae5386d0ed5e9ed31ceb340d" category="list-text">指定用于将虚拟机及其磁盘存储为LUN的默认文件夹。这样会将默认路径设置为Hyper-V存储的LUN。如果要明确指定VM的路径、则可以在创建VM期间执行此操作。</block>
-  <block id="551348ade1eff79be71e03da6bf03bea" category="section-title">NetApp CIFS共享上的Hyper-V存储</block>
   <block id="72feffd29972ad4bc2fb9f5705e60864" category="inline-link-macro">在SMB环境中配置</block>
   <block id="ace87f7890ab6204f4ef6abd0afaf28a" category="paragraph">开始执行本节中列出的步骤之前，请查看"<block ref="f9d723fa339e7968f40a99719593036c" category="inline-link-macro-rx"></block>" 要在NetApp CIFS共享上配置Hyper-V存储、请完成以下步骤：</block>
   <block id="d3f9aa7fc4289533bdeb015bbd645a22" category="list-text">指定用于存储VM及其磁盘的默认文件夹作为CIFS共享。这样会将默认路径设置为Hyper-V存储的CIFS共享。如果要明确指定VM的路径、则可以在创建VM期间执行此操作。</block>
@@ -4243,17 +4232,14 @@ SQL Server还要求操作系统和存储之间进行协调、以确保创建快�
   <block id="50fba9282607c757ab39ad110cd0fde4" category="list-text">当VM及其数据存储在NetApp存储上时、NetApp建议定期在卷级别运行NetApp重复数据删除。如果在CSV或SMB共享上托管相同的VM、则这种做法会显著节省空间。重复数据删除在存储控制器上运行、不会影响主机系统和虚拟机的性能。</block>
   <block id="6421e175d1ef977d73a52a6a90626eb8" category="list-text">在对Hyper-V使用iSCSI LUN时、请确保启用<block ref="0a6a9fc5db5706ee3ac704f21780cb07" prefix=" " category="inline-code"></block> 和<block ref="d8ed6ba87266cde713ed7ac6c907ff7e" prefix=" " category="inline-code"></block> 在Hyper-V主机的防火墙设置中。这样可以使iSCSI流量进出Hyper-V主机和NetApp控制器。</block>
   <block id="6b4ecf09c5310b6b905c86b910a57012" category="list-text">NetApp建议取消选中允许管理操作系统共享Hyper-V虚拟交换机的此网络适配器选项。这样会为VM创建一个专用网络。</block>
-  <block id="8bd7919dcdb07a06e0c90028167583b1" category="section-title">需要记住的事项</block>
   <block id="d39c100d166d09a8e573d5c4980c0674" category="list-text">使用虚拟光纤通道配置VM需要N_Port ID Virtualizationâ€"enabled FC HBA。最多支持四个FC端口。</block>
   <block id="8f20505d01de58b8e00048581d2d7244" category="list-text">如果主机系统配置有多个FC端口并提供给虚拟机、则必须在虚拟机中安装MPIO才能启用多路径。</block>
   <block id="e003acc3eceda748125d4c7bf41052e7" category="list-text">如果在主机上使用MPIO、则无法为该主机配置直通磁盘、因为直通磁盘不支持MPIO。</block>
   <block id="aa7c5f68a034b43fa3bafa90ea6a6c2b" category="list-text">用于VHD/VHDx文件的磁盘应使用64K格式进行分配。</block>
-  <block id="4dc66bc568b2cb9bcd58e7a2d13c424a" category="section-title">进一步阅读</block>
   <block id="bc8be72fdc9d6054f356bb2b7f80fd12" category="inline-link">NetApp 互操作性表</block>
   <block id="34de012edea0d70cf76edda88efae407" category="list-text">有关FC HBA的信息、请参见<block ref="03bbc27528de80852aa5d0d1250f8442" category="inline-link-rx"></block>。</block>
   <block id="5aa08a9ab39b4ff0ad3ec476f9c0a7a9" category="inline-link">Hyper-V虚拟光纤通道概述</block>
   <block id="17d2fe1a1b42dbc4c914a82ff9a06cbf" category="list-text">有关虚拟光纤通道的详细信息、请参见Microsoft<block ref="ffefda586e5fabc71f0e43393b116d4c" category="inline-link-rx"></block> 页面。</block>
-  <block id="da74a9322c811ab8d1f8f1e3a8de77ae" category="section-title">卸载数据传输</block>
   <block id="fadcc8cea091e223f4d4a49a0c02b9cb" category="paragraph">Microsoft ODX (也称为副本卸载)支持在存储设备内或兼容存储设备之间直接传输数据、而无需通过主机计算机传输数据。NetApp ONTAP支持对CIFS和SAN协议使用ODX功能。如果副本位于同一个卷中、ODX可能会提高性能、降低客户端上的CPU和内存利用率、并降低网络I/O带宽利用率。</block>
   <block id="6736b7040d05d12679268b13fae93377" category="paragraph">借助ODX、可以更快、更高效地在SMB共享内、LUN内以及SMB共享与LUN (如果位于同一卷中)之间复制文件。如果需要在同一个卷中为一个操作系统的黄金映像(VHD/VHDX)创建多个副本、则此方法会更有用。如果同一个黄金映像位于同一个卷中、则创建多个副本所需的时间会显著缩短。ODX还可用于Hyper-V存储实时迁移、用于移动VM存储。</block>
   <block id="53003aec095203ae2075a8150e8ead4e" category="paragraph">如果复制跨卷、则与基于主机的副本相比、性能可能不会显著提高。</block>
@@ -4269,7 +4255,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="f41987326c80680c60b359697adfa4cc" category="inline-link">提高Microsoft远程复制性能</block>
   <block id="fcb65106bb1fd73c88cf9528cb579ed5" category="inline-link">Microsoft卸载数据传输</block>
   <block id="65994fb0563b49bfe0e59359edf5513d" category="paragraph">有关ODX的信息、请参见<block ref="29f9e15a4017cdf9ae06e098a7a28381" category="inline-link-rx"></block> 和<block ref="f884f78ec6d36ebebd3d9fc57e8c3734" category="inline-link-rx"></block> 。</block>
-  <block id="5900297dc6c562ff01ee433afebbac1e" category="section-title">Hyper-V集群：虚拟机的高可用性和可扩展性</block>
   <block id="20029977789a74e480e6f8d14c07b48a" category="paragraph">故障转移集群可为Hyper-V服务器提供高可用性和可扩展性。故障转移集群是一组独立的Hyper-V服务器、它们协同工作以提高VM的可用性和可扩展性。</block>
   <block id="982112e1f4d4e4c9d7ded4eff9e38200" category="paragraph">Hyper-V集群模式服务器(称为节点)通过物理网络和集群软件进行连接。这些节点使用共享存储来存储VM文件、其中包括配置、虚拟硬盘(Virtual Hard Disk、VHD)文件和Snapshot副本。共享存储可以是NetApp SMB/CCIFS共享、也可以是基于NetApp LUN的CSV、如图6所示。此共享存储可提供一个一致的分布式命名空间、集群中的所有节点均可同时访问此命名空间。因此、如果集群中的一个节点发生故障、另一个节点将通过故障转移过程提供服务。故障转移集群可以使用故障转移集群管理器管理单元和故障转移集群Windows PowerShell cmdlet进行管理。</block>
   <block id="1b5f8c43b61e9249f3c82e39f9649160" category="section-title">集群共享卷</block>
@@ -4292,7 +4277,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="7c021f26d9ab2ec9934fc24d167ceaa4" category="list-text">拥有专用的主机实时迁移网络、以避免迁移期间出现与网络相关的问题。</block>
   <block id="a725857d2338d476a409fd1fb67b1f56" category="inline-link-macro">附录C：在集群环境中部署Hyper-V实时迁移</block>
   <block id="45f7134e494aae2cba3b60b3fe769caa" category="paragraph">有关在集群环境中部署实时迁移的信息、请参见 <block ref="b584c2d96a6b139fbe05976580afae94" category="inline-link-macro-rx"></block>。</block>
-  <block id="4373b97ea25c2f936187bcd85e56945d" category="section-title">在一个或多个环境中进行实时迁移</block>
   <block id="07cb5e9c694ee3a8dcc475a38371ad5c" category="paragraph">您可以在两个非集群独立Hyper-V服务器之间实时迁移虚拟机。此过程可以使用共享或无共享实时迁移。</block>
   <block id="e71df2d29ba96f271b3da69baa09714f" category="list-text">在共享实时迁移中、虚拟机存储在SMB共享上。因此、实时迁移虚拟机时、该虚拟机的存储仍保留在中央SMB共享上、以供另一节点即时访问、如下图所示。</block>
   <block id="87b94a12a79a6dbc08decd540810bb26" category="inline-image-macro">非集群环境中的共享实时迁移、宽度=331、高度=271</block>
@@ -4328,13 +4312,11 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="eccf932baf8f6019c69035ea09e26c2c" category="paragraph"><block ref="eccf932baf8f6019c69035ea09e26c2c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="319572d5872182625e2834b8615517f2" category="inline-link-macro">附录E：部署Hyper-V存储实时迁移</block>
   <block id="04a136595cb35e5c42e3ea764e9cd259" category="paragraph">有关部署存储实时迁移的信息、请参见 <block ref="e0d213bcf75379722df0c1b3af5063a2" category="inline-link-macro-rx"></block>。</block>
-  <block id="0284c4228f4ca29dcfaa0da79f4ff585" category="section-title">Hyper-V副本：虚拟机灾难恢复</block>
   <block id="86174aa4d77b1853f72b6e1a6f32c753" category="paragraph">Hyper-V副本可将Hyper-V虚拟机从主站点复制到二级站点上的副本虚拟机、从而为虚拟机提供异步灾难恢复。托管VM的主站点上的Hyper-V服务器称为主服务器；接收复制的VM的二级站点上的Hyper-V服务器称为副本服务器。下图显示了Hyper-V副本示例场景。您可以在故障转移集群中的Hyper-V服务器之间或不属于任何集群的独立Hyper-V服务器之间对虚拟机使用Hyper-V副本。</block>
   <block id="28e90920ae557bd81a8056f93fb4b0ee" category="inline-image-macro">Hyper-V副本、宽度=624、高度=201</block>
   <block id="4fc821418df9e4488323cc70692d5083" category="paragraph"><block ref="4fc821418df9e4488323cc70692d5083" category="inline-image-macro-rx" type="image"></block></block>
   <block id="8c340dc334134096f68b880b42a8692c" category="section-title">Replication</block>
   <block id="b9bce4677e5b3ea1c310fddca6123c9f" category="paragraph">在主服务器上为虚拟机启用Hyper-V副本后、初始复制会在副本服务器上创建一个相同的虚拟机。初始复制完成后、Hyper-V副本会为虚拟机的VHD维护一个日志文件。根据复制频率、日志文件将按相反顺序重载到副本的VHD。此日志以及反向顺序的使用可确保以异步方式存储和复制最新的更改。如果复制未按预期频率进行、则会发出警报。</block>
-  <block id="5a5778eba70a76865cae590f81e9f490" category="section-title">扩展复制</block>
   <block id="ec9fc8b78968b1d0daadf7598a4e2ab6" category="paragraph">Hyper-V副本支持扩展复制、在此复制中、可以配置二级副本服务器以实现灾难恢复。可以为副本服务器配置辅助副本服务器、使其接收副本VM上的更改。在扩展复制方案中、主服务器上主VM上的更改会复制到副本服务器。然后、所做的更改将复制到扩展副本服务器。只有当主服务器和副本服务器都关闭时、VM才能故障转移到扩展副本服务器。</block>
   <block id="a3f36244dba1d116dac91134dda3b9db" category="paragraph">故障转移不是自动的；必须手动触发该过程。故障转移有三种类型：</block>
   <block id="f8487dcb10cf762a4d3f28da4635bd2a" category="list-text">*测试故障转移。*此类型用于验证副本VM是否可以在副本服务器上成功启动并在副本VM上成功启动。此过程会在故障转移期间创建一个重复的测试VM、不会影响常规生产复制。</block>
@@ -4383,7 +4365,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9da4e10b0da989c65844cd59ed2a0991" category="list-text">使用Hyper-V Manager将共享存储(SMB共享或CSV)设置为Hyper-V服务器存储虚拟机及其磁盘的默认路径。</block>
   <block id="064cd683bf50cb65205de6b9298201b3" category="list-text">测试计划外故障转移。停止VM所属服务器上的集群服务。</block>
   <block id="c7bfaead2ee1aea320b1d91da7ba31d7" category="summary">了解NetApp存储和Windows Server环境</block>
-  <block id="3654a2a95a62ead550b874d74dd4bbe8" category="doc">NetApp存储和Windows服务器环境</block>
   <block id="5c8c98e7f403562b754941b4d0c17f65" category="paragraph">如中所述 <block ref="ba92ae7cf3bb4a058d2b231c16067714" category="inline-link-macro-rx"></block>NetApp存储控制器提供了一个真正统一的架构，支持文件、块和对象协议。其中包括SMB/CCIFS、NFS、NVMe/TCP、NVMe/FC、iSCSI、 FC (FCP)和S3、并创建统一的客户端和主机访问。同一个存储控制器可同时以SAN LUN和文件服务的形式提供块存储服务、如NFS和SMB/CCIFS。ONTAP还可作为全SAN阵列(ASA)使用、它可通过iSCSI和FCP的对称主动-主动多路径功能来优化主机访问、而统一的ONTAP系统则使用非对称主动-主动多路径功能。在这两种模式下、ONTAP都使用ANA进行基于网络结构的NVMe (NVMe-oF)多路径管理。</block>
   <block id="98ae8a9e34d3f73da98da55a46678554" category="paragraph">在Windows Server环境中、运行ONTAP软件的NetApp存储控制器可以支持以下工作负载：</block>
   <block id="b39d47dbcb48e2064ea0978dea0793ae" category="list-text">在持续可用的SMB 3.0共享上托管的VM</block>
@@ -4402,14 +4383,12 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="ded35f53d6a4c12f9aa23622a273290c" category="paragraph">逻辑磁盘(LUN)或CIFS共享在SVM的卷中创建、并映射到Windows主机和集群、以便为其提供存储空间、如下图所示。SVM与节点无关、并且基于集群；它们可以在集群中的任何位置使用物理资源、例如卷或网络端口。</block>
   <block id="66bfba6c82925242c27d2f07403b627e" category="inline-image-macro">ONTAP Storage Virtual Machine、宽度=572、高度=443</block>
   <block id="9bcb5e161ae4c106ccd0f2dc96989097" category="paragraph"><block ref="9bcb5e161ae4c106ccd0f2dc96989097" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="a4b249fe3614883d2e2cce7079c39aeb" category="section-title">为Windows Server配置NetApp存储</block>
   <block id="8f64c369fcdc9c990f5540ce53430671" category="paragraph">在SAN和NAS环境中、均可将存储配置到Windows Server。在SAN环境中、存储会作为NetApp卷上LUN的磁盘提供为块存储。在NAS环境中、存储作为文件存储在NetApp卷上的CIFS或SMB共享提供。这些磁盘和共享可按如下所示在Windows Server中应用：</block>
   <block id="8572daf67b8cf4929b8a104909d42a03" category="list-text">用于应用程序工作负载的Windows Server主机存储</block>
   <block id="460622219d2e0a7fe2d7339d37894127" category="list-text">存储、用于存储NAS服务器和容器</block>
   <block id="24148b9d626dc3494e0f1a07f5ddf180" category="list-text">用于单个Hyper-V主机存储VM的存储</block>
   <block id="c9d2a95802a3dc0a7c1033928d3cfc3f" category="list-text">Hyper-V集群的共享存储、采用LV的形式来存储虚拟机</block>
   <block id="76c319d8818e93b50538dff2f4427cbc" category="list-text">SQL Server数据库的存储</block>
-  <block id="8e7e7423d4c5b4575cf1a6830fca5d79" category="section-title">管理NetApp存储</block>
   <block id="13a4fb282282699692756c149d94bbbe" category="paragraph">要从Windows Server 2016连接、配置和管理NetApp存储、请使用以下方法之一：</block>
   <block id="81ef8774b45c60d7387b0e91d9c4eb05" category="list-text">*安全外壳(SSH)。*使用Windows Server上的任何SSH客户端运行NetApp命令行界面命令。</block>
   <block id="935df6062271011aad64300fe0f8a6c7" category="list-text">* System Manager.*这是NetApp基于GUI的易管理性产品。</block>
@@ -4423,7 +4402,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="570d38aae09bbf84ba37f9219909a7cb" category="list-text">有关NetApp PowerShell工具包的详细信息、请访问<block ref="12f72d9ce1eab5b7cd58718fecdd145c" category="inline-link-rx"></block>。</block>
   <block id="699f0a44719fb3de5404046fc6caa8af" category="inline-link">TR-4475：《NetApp PowerShell工具包最佳实践指南》</block>
   <block id="532d077f114744273b1a7cd2a4794077" category="list-text">有关NetApp PowerShell工具包最佳实践的信息、请参见<block ref="87b47631a9123c9d2a382039a9ba503e" category="inline-link-rx"></block>。</block>
-  <block id="3f8ab3a6d193b8b730105448fea2b95a" category="section-title">网络最佳实践</block>
   <block id="64f3248fbae79dd41841377bf7dd37c6" category="paragraph">以太网网络可以大致分为以下几组：</block>
   <block id="0047d4a23ffec6d4afe912d0a2598e58" category="list-text">VM的客户端网络</block>
   <block id="d6cf6da705ce58c7b649fea1cd43c470" category="list-text">再添加一个存储网络(连接到存储系统的iSCSI或SMB)</block>
@@ -4448,7 +4426,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0650b34324cf33e3bf1ba6d5db9aa14c" category="list-text">Hyper-V在Windows Server +上的新增功能
 <block ref="8508224d602483e88bde8402b5d1f2d1" category="inline-link-rx"></block></block>
   <block id="1139a59d4aa15acd59f31d05c5a9d642" category="summary">本附录介绍如何在集群环境之外部署Hyper-V副本。</block>
-  <block id="e80afdb83a9f81a61c1b60253a4c4122" category="doc">将Hyper-V副本部署到非群组环境中</block>
   <block id="be9cfe5b3b6e5354686be0cb736fe70d" category="list-text">您需要将独立的Hyper-V服务器置于同一或不同的地理位置、用作主服务器和副本服务器。</block>
   <block id="427aef80e259ae74b835c2b646e8fba8" category="list-text">如果使用不同的站点、则必须将每个站点的防火墙配置为允许主服务器和副本服务器之间进行通信。</block>
   <block id="3ac92c1d06a47463c6ea9f2c4289a625" category="list-text">副本服务器必须有足够的空间来存储复制的工作负载。</block>
@@ -4484,7 +4461,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="c01438bcded7cda6d1ee326fa268f93c" category="list-text">在Hyper-V Manager中、右键单击副本虚拟机、单击复制、然后单击故障转移。</block>
   <block id="94faab2d3840f3d8320e20ad4a90e6cd" category="list-text">单击故障转移对虚拟机进行故障转移。</block>
   <block id="4be45953e45cfa5fc987ba108c1e5793" category="summary">本附录介绍如何在集群环境中部署实时迁移。</block>
-  <block id="407f0c958d87180b9cc5045be0f28bd4" category="doc">在群组环境中部署Hyper-V实时迁移</block>
   <block id="388b92a1de3321595dcfbdc1c67ce749" category="paragraph">要在集群环境中使用实时迁移、请完成以下步骤：</block>
   <block id="b66a6c742469f1d08a2d11bcf4f211ff" category="list-text">在故障转移集群管理器中、选择并展开集群。如果集群不可见、请单击故障转移集群管理器、单击连接到集群并提供集群名称。</block>
   <block id="e3883376513ba0aeb2f3d190d4e0377d" category="list-text">单击"Roles"(角色)、其中列出了集群中的所有可用虚拟机。</block>
@@ -4501,7 +4477,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="f5025b9fcd1b24276af8ec2da3aa4cd7" category="list-text">横向扩展感知</block>
   <block id="81abcea6e16bc538d9843e8808b2066b" category="list-text">ODX</block>
   <block id="f4ad9c4d51155dbb3fb746c7c497c145" category="list-text">远程VSS</block>
-  <block id="3449a74b82cb004b788a86c512094db4" category="section-title">在Windows Server上配置SMB共享</block>
   <block id="56a26f5f5f602966c3a3088fc05c7383" category="paragraph">在Windows Server的NAS环境中使用NetApp存储具有以下要求：</block>
   <block id="5f3a2953a5f6d187ed4babba3c754b95" category="list-text">ONTAP集群具有有效的CIFS许可证。</block>
   <block id="2744237d602ca5ed3f1a6370ed8ebe91" category="list-text">已至少创建一个聚合。</block>
@@ -4524,7 +4499,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="1418b945a2d25e4f6514fc52e9d6c7ef" category="list-text">在卷上创建qtree (可选)。</block>
   <block id="f0bbe023b40d4d11ed83d36a68894cae" category="list-text">创建与卷或qtree目录对应的共享、以便可以从Windows Server访问这些共享。如果共享用于Hyper-V存储、请在创建共享期间选择为Hyper-V启用持续可用性。这样可以为文件共享启用高可用性。</block>
   <block id="9ef47a6b1a5d19245750aa732054173a" category="list-text">编辑已创建的共享、并根据需要修改访问此共享的权限。必须配置SMB共享的权限、才能为访问此共享的所有服务器的计算机帐户授予访问权限。</block>
-  <block id="ab748827acb6cea568808e325dfb52a3" category="section-title">主机集成</block>
   <block id="413353879b081038ef89f78350859cad" category="paragraph">NAS协议CIFS本机集成到ONTAP中。因此、Windows Server不需要任何其他客户端软件即可访问NetApp ONTAP上的数据。NetApp存储控制器在网络上显示为本机文件服务器、并支持Microsoft Active Directory身份验证。</block>
   <block id="053003e418b94e54d509f16e6a5ac54f" category="paragraph">要检测先前使用Windows Server创建的CIFS共享、请完成以下步骤：</block>
   <block id="9eb306535570bd14746bad4f0768684f" category="list-text">以管理员组成员的身份登录到Windows Server。</block>
@@ -4548,7 +4522,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="fa2e04a9f0cdcb5ad0e9f1e5ad1ada82" category="list-text">从ONTAP 9.4开始、支持SMB多通道。</block>
   <block id="f357368b2f195de4f8b4463eed2bf004" category="list-text">不支持RDMA。</block>
   <block id="f55cb235b18bf3d499f9276cd235bfb6" category="list-text">不支持ReFS。</block>
-  <block id="beec46689e2b8966c6ef9cedfc5b1a16" category="section-title">在NFS服务器上配置SMB共享</block>
   <block id="fb97dc994a0600d8610daca021159b33" category="paragraph">在NetApp存储控制器上访问CIFS共享上的数据时、纳米服务器不需要额外的客户端软件。</block>
   <block id="2be09e0be799992463b5c9542ce31dd8" category="paragraph">要将文件从到文件复制到CIFS共享、请在远程服务器上运行以下cmdlet：</block>
   <block id="2e0d4f41db110bf64a66493b31c9b168" category="list-text"><block ref="6f88c516ba3d9ab0cd23b81fc43dd697" prefix="" category="inline-code"></block> 是NetApp存储控制器上的CIFS共享。</block>
@@ -4567,11 +4540,8 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="13d0ba1c0320910efd0d040f2d461527" category="list-text">提供VM项目的新位置。</block>
   <block id="6efadc6e298c560f1699100ac97c7378" category="list-text">查看摘要、然后单击确定以移动虚拟机的存储。</block>
   <block id="b2d949a2d7f46bb1e39037d38eea14e4" category="summary">借助Microsoft Hyper-V提高ONTAP存储效率</block>
-  <block id="91b681e174a782226d26fb4056e14081" category="doc">存储效率</block>
   <block id="bd2eab4ffe0ab602b60386dfdd3ef913" category="paragraph">ONTAP为包括Microsoft Hyper-V在内的虚拟化环境提供行业领先的存储效率NetApp还提供存储效率担保计划。</block>
-  <block id="00c669d0ad76fdc5f38284497ce751a4" category="section-title">NetApp重复数据删除</block>
   <block id="e957a0e8016b502f05bb1966b2ec6064" category="paragraph">NetApp重复数据删除的工作原理是、在存储卷级别删除重复块、仅存储一个物理副本、而不管存在多少逻辑副本。因此、重复数据删除会造成该块存在大量副本的假象。重复数据删除会自动删除整个卷中4 KB块级别的重复数据块。此过程可通过减少对磁盘的物理写入次数来恢复存储、从而节省空间并潜在地节省性能。重复数据删除可在Hyper-V环境中节省70%以上的空间。</block>
-  <block id="a65c22e6af9f696dc25755536ae95d1c" category="section-title">精简配置</block>
   <block id="44ee5e4157e5291ffc8bc5d1d9b5959d" category="paragraph">精简配置是一种高效的存储配置方式、因为存储不会预先分配。也就是说、在使用精简配置创建卷或LUN时、存储系统上的空间未使用。在将数据写入LUN或卷之前、此空间会一直保持未使用状态、并且仅会使用存储此数据所需的空间。NetApp建议在卷上启用精简配置并禁用LUN预留。</block>
   <block id="8bc14f0cb78851f59e85c1d447c2c99f" category="section-title">Quality of service</block>
   <block id="5f4c07a9f526ef861fd661ab7d801ef0" category="paragraph">通过集群模式ONTAP中的存储服务质量(QoS)、您可以对存储对象进行分组、并为组设置吞吐量限制。存储服务质量(QoS)可用于限制工作负载的吞吐量并监控工作负载性能。借助此功能、存储管理员可以按组织、应用程序、业务单位或生产或开发环境分离工作负载。</block>
@@ -4665,12 +4635,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="80967cdacf7a48c49276c07097765c46" category="list-text">使用SVM SVM创建iSCSI和/或FC端口集。</block>
   <block id="2d59cbd9d3169fc27e47164a0bf60c42" category="list-text">使用创建的端口集为Windows创建iSCSI和/或FC启动程序组。</block>
   <block id="b6efc79e22c0381d9fcc8c3f40ff674f" category="list-text">将启动程序添加到启动程序组。启动程序是iSCSI的IQN和FC的WWPN。可以通过运行PowerShell cmdlet GET－InitiatorPort从Windows Server查询这些参数。</block>
-  <block id="bf1c6b696a94a39a463a62136c5eb36d" category="section-title">获取iSCSI的IQN +</block>
-  <block id="8e155014dca56282d4a9f246c7a4ad19" category="paragraph">获取InitiatorPort |、其中\｛$_.ConnectionType -eq 'iSCSI'｝| Select-Object -Property NodeAddress</block>
-  <block id="5a4f145b3ff22d5b22bb7c3cf2cd5db4" category="section-title">获取FC +的WWPN</block>
-  <block id="f91306a56cf57876ce0ec5a6f8cf44cd" category="paragraph">获取InitiatorPort |其中\｛$_.ConnectionType -eq ' Fibre Channel'｝| Select-Object -Property PortAddress +
- +
-#在使用FC向启动程序组添加启动程序时、请确保以标准WWPN格式提供启动程序(端口地址)</block>
   <block id="ab39c1b30c8045ee5b2419b682b64e5c" category="paragraph">也可以在iSCSI启动程序属性的配置中检查Windows Server上iSCSI的IQN。</block>
   <block id="83f0120a854049de17bd46bb97e5c5fa" category="list-text">使用创建LUN向导创建LUN、并将其与创建的启动程序组关联。</block>
   <block id="186c31b1cbf72f8c54f9c6a0edca1cfe" category="paragraph">Windows Server使用非对称逻辑单元访问(ALUA)扩展MPIO来确定LUN的直接和间接路径。即使SVM拥有的每个LIF都接受其LUN的读/写请求、但在任何给定时刻、实际上只有一个集群节点拥有支持该LUN的磁盘。这会将LUN的可用路径划分为两种类型：直接路径或间接路径、如下图所示。</block>
@@ -4705,7 +4669,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="fdcb9587e9c4d393ea337f94fb0e1f5f" category="list-text">您还必须使用第二条路径进行连接。因此、重复步骤5到步骤8、但这次为第二个路径选择启动程序IP和目标门户IP。</block>
   <block id="cb35c153406b8cdeb5963bd9a0ceb501" category="list-text">在iSCSI属性主窗口的已发现目标中选择iSCSI目标、然后单击属性。</block>
   <block id="2a3977b58760a2b4c9e557175a5e494e" category="list-text">“属性”窗口显示检测到多个会话。选择会话、单击设备、然后单击MPIO以配置负载平衡策略。此时将显示为设备配置的所有路径、并且支持所有负载平衡策略。NetApp通常建议使用子集进行轮循环、并且此设置是启用了ALUA的阵列的默认设置。对于不支持AUA的主动-主动阵列、默认设置为轮由。</block>
-  <block id="01b914bd47e455b3edf222a4866ab128" category="section-title">检测块存储</block>
   <block id="7b7b8262c038321869fc17ba522bbe07" category="paragraph">要在Windows Server上检测iSCSI或FC块存储、请完成以下步骤：</block>
   <block id="7554b29976a023cca6089775e3a7fd73" category="list-text">单击服务器管理器的工具部分中的计算机管理。</block>
   <block id="b7e726cedaa814db32dbfe4395773cc4" category="list-text">在计算机管理中、单击存储中的磁盘管理部分、然后单击更多操作和重新执行磁盘。这样会显示原始iSCSI LUN。</block>
@@ -4725,11 +4688,9 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8e08d5639ddc5bf9f71aeea2f9df6706" category="list-text">检测块存储。</block>
   <block id="ad04ba98fa2a26c6e2a4f71314b1c4c7" category="section-title">从SAN启动</block>
   <block id="e29512aa6180bca309f145289f08337c" category="paragraph">物理主机(服务器)或Hyper-V虚拟机可以直接从NetApp LUN (而不是其内部硬盘)启动Windows Server操作系统。在从SAN启动方法中、要从中启动的操作系统映像驻留在连接到物理主机或VM的NetApp LUN上。对于物理主机、物理主机的HBA会配置为使用NetApp LUN进行启动。对于VM、NetApp LUN作为直通磁盘连接以进行启动。</block>
-  <block id="ca67b8d4183c246318656b138774f18c" category="section-title">NetApp FlexClone方法</block>
   <block id="2cf07cb81d5366158ac32b0d02e3bf39" category="paragraph">使用NetApp FlexClone技术、可以即时克隆具有操作系统映像的启动LUN并将其连接到服务器和VM、以快速提供干净的操作系统映像、如下图所示。</block>
   <block id="e60c0a021a1a11ca0fd66050c818b441" category="inline-image-macro">使用NetApp FlexClone启动LUN、宽度=561、高度=357</block>
   <block id="79f4f54e05eb2f1c2084e0542e66f182" category="paragraph"><block ref="79f4f54e05eb2f1c2084e0542e66f182" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="d5b83a3e5eac367b2681029c1f37ecb5" category="section-title">从SAN启动物理主机</block>
   <block id="738e6a96e2bf795b59ac62d4827a779e" category="list-text">物理主机(服务器)具有正确的iSCSI或FC HBA。</block>
   <block id="7957c1b3b06b3ca5c17a05da5e59c9ec" category="list-text">您已为支持Windows Server的服务器下载合适的HBA设备驱动程序。</block>
   <block id="1810f78aa22a9972644e65ac2cdad107" category="list-text">服务器具有合适的CD/DVD驱动器或虚拟介质以插入Windows Server ISO映像、并且已下载HBA设备驱动程序。</block>
@@ -4746,7 +4707,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="3472e7b0e2c4389366cf3e0f09f6376d" category="list-text">从Windows Server ISO启动安装设置。</block>
   <block id="8423662d97649ae1012d665b6594f514" category="list-text">当安装程序询问“Where do you want to Install Windows？”时，单击安装屏幕底部的“Load Driver”(加载驱动程序)以启动“Select Driver to Install”(选择要安装的驱动程序)页。提供先前下载的HBA设备驱动程序的路径、然后完成驱动程序的安装。</block>
   <block id="4d0de28cb0fe5a517374a0c7fdaaff27" category="list-text">现在、先前创建的启动LUN必须显示在Windows安装页面上。选择用于在启动LUN上安装Windows Server的启动LUN、然后完成安装。</block>
-  <block id="63e71d44aa7ef64411f8ff6f341b706d" category="section-title">从SAN启动虚拟机</block>
   <block id="0dbc8e7afe6136a3b34471c047b28f83" category="paragraph">要为VM配置从SAN启动、请完成以下步骤：</block>
   <block id="6af97eac32eef9a62687eac41262ae48" category="list-text">在NetApp存储控制器上为iSCSI或FC创建启动程序组时、请将iSCSI的IQN或Hyper-V服务器FC的WWN添加到控制器中。</block>
   <block id="c18de5a7c8558c6b9b749ea9d61336da" category="list-text">在NetApp存储控制器上创建LUN或LUN克隆、并将其与上一步中创建的启动程序组相关联。这些LUN可用作VM的启动LUN。</block>
@@ -4762,7 +4722,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9865f9e3af02eaca8b480229a22515f4" category="list-text">如果存在多个LUN、请务必在磁盘管理中记下LUN的磁盘编号。这样做是必要的、因为为虚拟机列出的磁盘都是使用磁盘编号列出的。此外、选择该磁盘作为虚拟机的直通磁盘也是基于该磁盘编号。</block>
   <block id="15b11e66e58b25dffc74ff36f6529d4d" category="list-text">NetApp建议使用在主机上配置的ONTAP MPIO进行存储。</block>
   <block id="154e178d8f948264ecf34dcfd8ad3112" category="summary">本附录介绍了如何在集群模式环境之外使用Hyper-V实时迁移</block>
-  <block id="98806bebb03edce0f8fc90a03ff487ce" category="doc">将Hyper-V实时迁移部署到非群组环境中</block>
   <block id="3a37015d23bf5b95b8aaeeb60e7149f6" category="paragraph">本节介绍如何在集群环境之外部署Hyper-V实时迁移。</block>
   <block id="34076d85579973b175bda646666488f5" category="list-text">具有独立存储或共享SMB存储的独立Hyper-V服务器。</block>
   <block id="6d3867adf71fde2bd2e28c3530f980e2" category="list-text">源服务器和目标服务器上安装的Hyper-V角色。</block>
@@ -4808,7 +4767,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="1215f8190533dfdf63d2224a6d88266f" category="list-text">Google Cloud NetApp卷</block>
   <block id="7ad18871bdb08a3899a3f7ed4e463284" category="paragraph">ONTAP可提供NetApp存储效率功能、例如NetApp SnapSnapshot (R)技术、克隆、重复数据删除、精简配置、精简复制、 数据压缩、虚拟存储分层等、同时提高性能和效率。</block>
   <block id="538a662f2ecbeba6af56e41386484f67" category="paragraph">Windows Server和ONTAP可以一起在大型环境中运行、为数据中心整合以及私有云或混合云部署带来巨大价值。这种组合还可以高效地提供无中断工作负载、并支持无缝可扩展性。</block>
-  <block id="e3d5affaa1de885da64636ba32e51cd8" category="section-title">目标受众</block>
   <block id="8f0442ea7c58fe8ab4000f5aaeac415b" category="paragraph">本文档面向为Windows Server设计NetApp存储解决方案的系统和存储架构师。</block>
   <block id="f6f27d1607ed17a4b610676f16f68357" category="paragraph">在本文档中、我们做出以下假设：</block>
   <block id="e9d690b9eb25093e460ea369baa55496" category="inline-link">《集群管理员系统管理指南》</block>
@@ -5031,4 +4989,42 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="1dd1e97374852e1f244963d9fdb0c414" category="list-text">测试计划内故障转移。通过实时迁移、快速迁移或存储迁移(移动)将VM移动到另一个节点。请查看 <block ref="ba8afff2d0e4662eeb47d28935e79828" category="inline-link-macro-rx"></block> 有关详细信息：</block>
   <block id="8737a5d2bc43b0eb76ab5674d0fcb094" category="sidebar">使用ONTAP的SRM概述</block>
   <block id="76f6daa4bfab6ca8a7350e46d3d6718f" category="sidebar">适用于SRM的追加信息</block>
+  <block id="3ebf71fd7bd7392466a892c2228b2f58" category="section-title">在Windows Server上配置SMB共享</block>
+  <block id="674b9c5bbf2379d6c48343d029972e53" category="section-title">主机集成</block>
+  <block id="16ce478a465011bacaa6e508063c2648" category="section-title">需要记住的事项</block>
+  <block id="83f04319244758f7531b398c51aa9f38" category="section-title">在NFS服务器上配置SMB共享</block>
+  <block id="2323e97f7cf2da464750911f1f3e1af6" category="doc">在集群环境中部署Hyper-V副本</block>
+  <block id="38792c1c1d72aaa53d18f0b79d2621aa" category="doc">部署Hyper-V torage实时迁移</block>
+  <block id="36b10adb4505559b63b091b53614af1f" category="section-title">NetApp重复数据删除</block>
+  <block id="1ba5c1747d37a3d7ae84fd1dcac77603" category="section-title">进一步阅读</block>
+  <block id="50802d3e5a25b93d471686a10da03dd8" category="section-title">最佳实践</block>
+  <block id="67bd1e9f90c0abcd3fe89dce2e8b6307" category="doc">在集群环境之外部署Hyper-V实时迁移</block>
+  <block id="f2b84afd0523a6df7547c404aa3647d8" category="section-title">目标受众</block>
+  <block id="458ed20ed5d1729b427e233e0e52f797" category="section-title">为Windows Server配置NetApp存储</block>
+  <block id="e648c74a53b161f90c8e915624ce6135" category="section-title">管理NetApp存储</block>
+  <block id="9292ee6bce21e93911c38cd0a1c2e209" category="section-title">网络最佳实践</block>
+  <block id="381400d1babe5b80783d5e46896d832e" category="doc">部署完成的服务器</block>
+  <block id="02676c7c18a8d411999242a1f5731de2" category="section-title">基于NetApp CIFS的Hyper-V存储</block>
+  <block id="00a66fbc09172147ac7be9c85b708a6b" category="section-title">卸载数据传输</block>
+  <block id="39d0bfdf27f1fc555ae2f030e21f8818" category="section-title">Hyper-V集群：虚拟机的高可用性和可扩展性</block>
+  <block id="10fd9c0040ca7b99a67758c3cd638746" category="section-title">集群环境中的实时迁移</block>
+  <block id="ed7cd01cb26e2db33a36eaa87ac85ff1" category="section-title">在集群环境之外进行实时迁移</block>
+  <block id="023196611fee49915adf49422b3289e6" category="section-title">Hyper-V副本：虚拟机灾难恢复</block>
+  <block id="e78f6d0414a6dde66f4e12a3e218620b" category="section-title">扩展复制</block>
+  <block id="e43f3be13a49d6eeab4304d80790eaa0" category="section-title">检测块存储</block>
+  <block id="adc95a9707f2f351740aa0d52f08981e" category="section-title">NetApp FlexClone方法</block>
+  <block id="0bee1618a00f62535bd1e3f03af6a8f0" category="section-title">从SAN启动物理主机</block>
+  <block id="68468d5f213be162fe50260787894f8f" category="section-title">从SAN启动虚拟机</block>
+  <block id="5b6253395cb699e828a4e33bbe3ad99e" category="doc">在集群环境之外部署Hyper-V副本</block>
+  <block id="c56bd6d44fe37df3133f12e09059b492" category="doc">部署Hyper-V集群</block>
+  <block id="284558d4613b1e72103300f1b8973b3b" category="paragraph">首次安装时、ESX没有预配置的功能、例如托管子操作系统或支持最终用户应用程序。在定义虚拟机(VM)之前、此容器为空容器。ONTAP与此类似。首次安装ONTAP时、在创建SVM之前、它无法提供数据。SVM特性用于定义数据服务。</block>
+  <block id="2737c9012caaebb1cbb9e526400a2345" category="paragraph">在多租户环境中、可以为每个租户的数据提供一个专用SVM。每个集群、HA对和节点的SVM和LIP数量限制取决于所使用的协议、节点型号和ONTAP版本。  请参见 <block ref="41f66f34b3a905f864500c9319fdff8f" category="inline-link-macro-rx"></block> 的限制。</block>
+  <block id="8463ed7d5167a086a7f342d40b0340ea" category="paragraph">通过SnapMirror、活动同步使主存储阵列和远程存储阵列中的存储设备对主机操作系统可见。路径可通过非对称逻辑单元访问(AANAA)进行管理、ANAA是一种行业标准协议、用于确定存储系统与主机之间的优化路径。</block>
+  <block id="50812cc1b8d48579d382b689e4393be6" category="paragraph">某些数据不包含重复数据。例如、Oracle块包含数据库全局唯一的标头和几乎唯一的尾部。因此、对Oracle数据库进行重复数据删除很少能节省超过1%的空间。对MS SQL数据库执行重复数据删除略有改进、但块级别的唯一元数据仍是一个限制。</block>
+  <block id="e237dd01ca20b300861ea50239fefbf9" category="paragraph">这包括典型的规划措施、例如、确保主机和存储系统之间的SAN具有足够的带宽、检查所有必需设备之间是否存在所有SAN路径、使用FC交换机供应商所需的FC端口设置、避免ISL争用、 并使用适当的SAN网络结构监控。</block>
+  <block id="bab63c3a8b4ae009c3596c809e27d73b" category="paragraph">MetroCluster复制基于NetApp SyncMirror技术、该技术旨在高效地切换至同步模式和切换至同步模式之外。此功能可满足需要同步复制、但也需要数据服务高可用性的客户的要求。例如、如果与远程站点的连接断开、则通常最好让存储系统继续在未复制的状态下运行。</block>
+  <block id="bf4d44f407dab4b746f1eaeb06e897af" category="paragraph">许多同步复制解决方案只能在同步模式下运行。这种类型的全或全不复制有时称为Domino模式。此类存储系统将停止提供数据、而不是允许本地和远程数据副本处于不同步状态。如果强制中断复制、重新同步可能会非常耗时、并且可能会使客户在重新建立镜像期间完全丢失数据。</block>
+  <block id="8f076395fe8f8f46c03efb655db313e6" category="section-title">FC直连</block>
+  <block id="722830ffc5e46dbe206670f85cd1d889" category="paragraph">ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身份验证(MFA)。其结果是、用户名/密码被泄露本身并不是没有第二个因素(例如FOB或智能手机应用程序)的数据的安全线程。</block>
+  <block id="37c43820ab88f1340855c30955eec330" category="section-title">多管理员验证(MAV)</block>
 </blocks>
