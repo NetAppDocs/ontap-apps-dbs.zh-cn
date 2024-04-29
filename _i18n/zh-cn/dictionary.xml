@@ -2426,8 +2426,6 @@
   <block id="2803a799fd66056eff404a17ba640c2b" category="paragraph">在ONTAP 工具9.7.1的SRM支持初始版本中、需要先预先创建FlexVol并启用SnapMirror保护、然后再将其用作VVO尔 数据存储库的后备卷。从ONTAP 工具9.10开始、不再需要此过程。现在、您可以向现有备份卷添加SnapMirror保护、并更新VM存储策略、以便利用与SRM集成的灾难恢复和迁移流程编排及自动化功能、实现基于策略的管理。</block>
   <block id="8142fcf496d02a58ce02a17558db863e" category="paragraph">目前、VMware SRM是NetApp支持的唯一适用于vvol的灾难恢复和迁移自动化解决方案 、ONTAP 工具将检查是否存在已向vCenter注册的SRM 8.3或更高版本服务器、然后再允许您启用vvol复制。 虽然可以利用ONTAP 工具REST API创建您自己的服务。</block>
   <block id="7d8e8eced8d8b1a50f20640ffb5d363a" category="section-title">使用SRM进行的卷复制</block>
-  <block id="4d30574e6d5bc9a71718858eeb30774c" category="inline-image-macro">使用SRM进行的卷复制、300</block>
-  <block id="5844b0ec1ad8db5185ec67effeb9a7b7" category="paragraph"><block ref="5844b0ec1ad8db5185ec67effeb9a7b7" category="inline-image-macro-rx" type="image"></block></block>
   <block id="c95aede1de7a41511c9d962deba49054" category="section-title">MetroCluster 支持</block>
   <block id="3f15bb720adb42bd521a2ce1cb3a2974" category="paragraph">虽然ONTAP 工具无法触发MetroCluster 切换、但它支持在统一vSphere Metro Storage Cluster (VMSC)配置中使用NetApp MetroCluster 系统作为Vvol的后备卷。MetroCluster 系统的切换将按常规方式进行。</block>
   <block id="cde16c5ee89c209c821e120caf65bb81" category="paragraph">虽然NetApp SnapMirror业务连续性(SM-BC)也可用作VMSC配置的基础、但Vvol目前不支持它。</block>
@@ -2447,8 +2445,6 @@
   <block id="02f41838319aab980999b60967d7fd53" category="paragraph">现在、借助NetApp SnapCenter、您可以基于标记和/或文件夹为Vvol创建资源组、以便为基于Vvol的VM自动利用ONTAP基于FlexVol的快照。这样、您可以定义备份和恢复服务、当VM在环境中动态配置时、这些服务将自动保护VM。</block>
   <block id="4549a2943666c4815098331d30a872da" category="paragraph">适用于VMware vSphere的SnapCenter 插件部署为注册为vCenter扩展的独立设备、可通过vCenter UI或REST API进行管理、以实现备份和恢复服务自动化。</block>
   <block id="26e2418d177df1dddb008e455ce28752" category="section-title">SnapCenter 架构</block>
-  <block id="3b345c0fb5d2f0451ef84d991b21dcac" category="inline-image-macro">SnapCenter 架构、300</block>
-  <block id="af9bca7d8452705ba7f607cd036dba01" category="paragraph"><block ref="af9bca7d8452705ba7f607cd036dba01" category="inline-image-macro-rx" type="image"></block></block>
   <block id="c32197281aa44f57ae568a9a42c7b3b6" category="paragraph">由于其他SnapCenter插件在撰写本文时尚不支持虚拟卷、因此我们将在本文档中重点介绍独立部署模式。</block>
   <block id="6750052f2c0fb06d80a8efd7cb871190" category="paragraph">由于SnapCenter 使用ONTAP FlexVol 快照、因此vSphere不会产生任何开销、也不会像使用vCenter托管快照的传统VM那样对性能造成任何影响。此外、由于选择控制阀的功能通过REST API公开、因此可以使用VMware Aia Automation、Ansable、Terraform等工具以及几乎任何其他能够使用标准REST API的自动化工具轻松创建自动化工作流。</block>
   <block id="0c889d77d71512ceb7241bd0f6d6ca23" category="inline-link">REST API 概述</block>
@@ -2466,8 +2462,6 @@
   <block id="604eb779cbb9af378f7bda71633b5b31" category="list-text">使用符合组织定义的恢复点目标(Recovery Point目标、Recovery Point目标、RPO)的保留设置设计备份策略</block>
   <block id="067ff91a08d3ff453b59d81993b96182" category="list-text">在资源组上配置通知设置、以便在备份运行时收到状态通知(请参见下面的图10)</block>
   <block id="c3add00693172bbbb4dd864bf0ad9116" category="section-title">资源组通知选项</block>
-  <block id="c728df76dc3609672a7969e320e39e32" category="inline-image-macro">资源组通知选项,300</block>
-  <block id="45281309785094533b5880fe6d0fd1ea" category="paragraph"><block ref="45281309785094533b5880fe6d0fd1ea" category="inline-image-macro-rx" type="image"></block></block>
   <block id="6eae9510711f8df8f55a15e1761875d9" category="section-title">使用这些文档开始使用选择控制阀</block>
   <block id="235a656535515ab3518937c09836e60d" category="inline-link">了解适用于 VMware vSphere 的 SnapCenter 插件</block>
   <block id="79eb02d2a96cc634df87bec5bd511bbe" category="paragraph"><block ref="79eb02d2a96cc634df87bec5bd511bbe" category="inline-link-rx"></block></block>
@@ -5027,4 +5021,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8f076395fe8f8f46c03efb655db313e6" category="section-title">FC直连</block>
   <block id="722830ffc5e46dbe206670f85cd1d889" category="paragraph">ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身份验证(MFA)。其结果是、用户名/密码被泄露本身并不是没有第二个因素(例如FOB或智能手机应用程序)的数据的安全线程。</block>
   <block id="37c43820ab88f1340855c30955eec330" category="section-title">多管理员验证(MAV)</block>
+  <block id="1910dc5a02cb649cc24df5670c631e34" category="paragraph"><block ref="1910dc5a02cb649cc24df5670c631e34" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="416d0d3efc5f3919abcdaaa2364738d9" category="paragraph"><block ref="416d0d3efc5f3919abcdaaa2364738d9" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="28c6217e46797f76e427c591070cf50c" category="paragraph"><block ref="28c6217e46797f76e427c591070cf50c" category="inline-image-macro-rx" type="image"></block></block>
 </blocks>

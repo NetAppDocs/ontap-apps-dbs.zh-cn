@@ -5,7 +5,12 @@ keywords: WP-7355, security, snapcenter, treat modeling, dast, vulnerability sca
 summary: 本文档介绍适用于VMware的SnapCenter插件的安全方面。 
 ---
 = SnapCenter插件VMware vSphere
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
 
 
 [role="lead"]

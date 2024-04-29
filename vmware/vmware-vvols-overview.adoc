@@ -6,6 +6,10 @@ summary: '本节将简要介绍采用ONTAP的VMware vSphere虚拟卷(vvol)'
 ---
 = 概述
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
 
 
 [role="lead"]

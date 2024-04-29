@@ -5,7 +5,12 @@ keywords: tr-4400, vvols, ontap
 summary: 本文档讨论适用于 VMware vSphere 的 ONTAP 工具的产品安全性。 
 ---
 = 将ONTAP 与虚拟卷结合使用
+:hardbreaks:
 :allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
 
 
 [role="lead"]

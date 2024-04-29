@@ -49,7 +49,7 @@ ONTAP 工具9.7.1与VMware Site Recovery Manager (SRM) 8.3版结合使用、可�
 
 === 使用SRM进行的卷复制
 
-image:vvols-image17.png["使用SRM进行的卷复制、300"]
+image:vvols-image17.png["使用SRM进行的卷复制"]
 
 
 
@@ -91,7 +91,7 @@ vSphere 8.0支持是在SCV 4.7中引入的、它使用一个隔离的本地插�
 
 === SnapCenter 架构
 
-image:vvols-image18.png["SnapCenter 架构、300"]
+image:snapcenter_arch.png["SnapCenter 架构"]
 
 由于其他SnapCenter插件在撰写本文时尚不支持虚拟卷、因此我们将在本文档中重点介绍独立部署模式。
 
@@ -155,7 +155,7 @@ image:vvols-image18.png["SnapCenter 架构、300"]
 
 === 资源组通知选项
 
-image:vvols-image19.png["资源组通知选项,300"]
+image:vvols-image19.png["资源组通知选项"]
 
 
 
