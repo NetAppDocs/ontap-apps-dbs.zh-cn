@@ -381,8 +381,6 @@
   <block id="5cf4dc4d1ce52ff655ea7f1157a72e2e" category="paragraph">幸运的是、这些风险可以通过仔细配置来解决<block ref="f9e1f2ea1a2becbaf82dd54e55a12e6b" prefix=" " category="inline-code"></block> 和<block ref="24d554277b3513bb6cef3f0a336725a9" prefix=" " category="inline-code"></block> 策略。正如其名称所暗示的那样、这些选项使用户能够创建策略、以自动清除快照占用的空间或增加卷以容纳更多数据。有多种选项可供选择、不同客户的需求也会有所不同。</block>
   <block id="6a28738961e6f6e4b57e4dd70c446600" category="inline-link-macro">逻辑存储管理文档</block>
   <block id="01570cb5a3aec2324ab56e318e1de04d" category="paragraph">请参见 <block ref="e69bd75bdb49183ee90588843edb33f4" category="inline-link-macro-rx"></block> 有关这些功能的完整讨论。</block>
-  <block id="8cf44a7a390ab582c5010ba430143d4b" category="section-title">LUN精简配置</block>
-  <block id="ba0bdf51bc57bacdd6f3f0bd26b7674c" category="paragraph">随着数据被删除、文件系统环境中活动LUN的精简配置效率可能会逐渐降低。除非已删除的数据被零覆盖或空间通过TRIM/UNMAP空间回收释放、否则"已删除"的数据会在文件系统中占用越来越多的未分配空格。此外、活动LUN的精简配置在许多数据库环境中的用途有限、因为数据文件在创建时会初始化为其完整大小。</block>
   <block id="e10d46632bc86306cf4c22633ee930ab" category="paragraph">仔细规划LVM配置可以提高效率、并最大限度地减少存储配置和LUN大小调整的需求。使用Veritas VLVM或Oracle ASM等LVM时、底层LUN会划分为仅在需要时才使用的块区。例如、如果数据集的大小从2 TB开始、但随着时间的推移可能会增长到10 TB、则可以将此数据集放置在LVM磁盘组中组织的10 TB精简配置LUN上。在创建时、它只会占用2 TB的空间、并且只会在为满足数据增长而分配块区时占用额外空间。只要空间受到监控、此过程就会很安全。</block>
   <block id="66a41fd6fc38c454973e91d92cf0e291" category="section-title">预留百分比</block>
   <block id="e8a206fe65814e0ea465e32487544751" category="paragraph">预留百分比是指卷中LUN在空间效率方面的行为。选项<block ref="c1acac5c4332e37ec1f281fcbaf0765a" prefix=" " category="inline-code"></block> 设置为100%时、卷中的所有数据在使用任何数据模式时均可实现100%的周转率、而不会耗尽卷上的空间。</block>
@@ -5024,4 +5022,34 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="28c6217e46797f76e427c591070cf50c" category="paragraph"><block ref="28c6217e46797f76e427c591070cf50c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="d03e09c345dd723011486de3855c13b2" category="list-text">SMB文档
 <block ref="409ef354547d1e3428907ed7fdd2dc6e" category="inline-link-rx"></block></block>
+  <block id="834873443aaaf2c09b851c8b0f7b2497" category="section-title">数据库压缩</block>
+  <block id="2ee3c7318caa2523e9c749e4e2152266" category="paragraph">首次接触ONTAP的客户通常会感到困惑的一点是、FlexVol的使用、通常简称为"卷"。</block>
+  <block id="ff2dabe8a40c84d01b0584c50319a79e" category="paragraph">卷不是LUN。这些术语与许多其他供应商产品(包括云提供商)同义。ONTAP卷只是管理容器。它们不会自行提供数据、也不会占用空间。它们是文件或LUN的容器、旨在提高和简化易管理性、尤其是大规模管理。</block>
+  <block id="92a5781e05d0d9b7044f44e2ef7bff84" category="section-title">卷和LUN</block>
+  <block id="faf1e8eebcac2d18d4ac10e75f416a3f" category="paragraph">相关LUN通常位于同一个卷中。例如、需要10个LUN的数据库通常会将所有10个LUN放置在同一个卷上。</block>
+  <block id="3a5bf2895b95fa2b89fce4dcf94fd2f9" category="list-text">采用1：1的LUN与卷比率(即每个卷一个LUN)是一种*不*正式的最佳实践。</block>
+  <block id="1886f4ac4aa2f64bf8224f178a36ba92" category="list-text">而是应将卷视为工作负载或数据集的容器。每个卷可能有一个LUN、也可能有多个LUN。正确的问题解答取决于易管理性要求。</block>
+  <block id="0de05608a70e8ec5863afc41ba150178" category="list-text">将LUN分散在不必要数量的卷上可能会导致额外开销和操作计划问题、例如快照操作、UI中显示的对象数量过多、并导致在达到LUN限制之前达到平台卷限制。</block>
+  <block id="0955dbd01a9f8194cad5a6876b931f5a" category="section-title">卷、LUN和快照</block>
+  <block id="9bbd4f2fca3a1e1aaa76abf8cb43351c" category="paragraph">Snapshot策略和计划放置在卷上、而不是LUN上。如果包含10个LUN的数据集位于同一个卷中、则这些LUN只需要一个Snapshot策略。</block>
+  <block id="f34f28bb7a1701ded173c2ab504f5c20" category="paragraph">此外、在一个卷中将给定数据集的所有相关LUN同位可实现原子快照操作。例如、如果基础LUN都位于一个卷上、则驻留在10个LUN上的数据库或包含10个不同操作系统的基于VMware的应用程序环境可以作为一个一致的对象进行保护。如果将它们放置在不同的卷上、则快照可能会(也可能不会)完全同步、即使是同时计划的也是如此。</block>
+  <block id="fe7797cb1dbe36223357d4c25ff30c9e" category="paragraph">在某些情况下、由于恢复要求、可能需要将一组相关LUN拆分为两个不同的卷。例如、一个数据库可能有四个用于数据文件的LUN和两个用于日志的LUN。在这种情况下、最好使用包含4个LUN的数据文件卷和包含2个LUN的日志卷。原因是独立可恢复性。例如、可以有选择地将数据文件卷还原到先前的状态、这意味着所有四个LUN都将还原到快照的状态、而日志卷及其关键数据不会受到影响。</block>
+  <block id="66383d632fe33f1b7c20af9c1c142028" category="section-title">卷、LUN和SnapMirror</block>
+  <block id="8fb29c5f40886ece62abcd994f1aa202" category="paragraph">SnapMirror策略和操作与快照操作一样、在卷上执行、而不是在LUN上执行。</block>
+  <block id="7d8d0afc8d9998a7e6457c6251b4defc" category="paragraph">通过在一个卷中将相关LUN同位、您可以创建一个SnapMirror关系、并通过一次更新来更新所有包含的数据。与快照一样、更新也是一项原子操作。保证SnapMirror目标具有源LUN的单个时间点副本。如果LUN分布在多个卷上、则这些副本之间可能一致、也可能不一致。</block>
+  <block id="e45ffde45b5f4090fe8c92a49d38bcb2" category="section-title">卷、LUN和QoS</block>
+  <block id="756a4c619fb81eafd00bc072334a5877" category="paragraph">虽然可以有选择地将QoS应用于各个LUN、但在卷级别设置QoS通常更容易。例如、给定ESX服务器中子系统使用的所有LUN都可以放置在一个卷上、然后应用ONTAP自适应QoS策略。因此、会产生一个可自行扩展的每TB IOPS限制、用于对所有LUN执行适用场景操作。</block>
+  <block id="fb219ca81e7a635609b70d290a7a3aa2" category="paragraph">同样、如果数据库需要10万次IOPS并占用10个LUN、则在单个卷上设置一个10万次IOPS限制比在每个LUN上设置10个单独的10万次IOPS限制更容易。</block>
+  <block id="56739402ea66bd29b7303b69ee165d5b" category="section-title">多卷布局</block>
+  <block id="c509cb5f7def30cc77b15b0e91ab39a4" category="paragraph">在某些情况下、在多个卷之间分布LUN可能会很有用。主要原因是控制器条带化。例如、一个HA存储系统可能托管一个数据库、其中需要每个控制器的全部处理和缓存潜力。在这种情况下、典型的设计是、将一半的LUN放置在控制器1上的一个卷中、而将另一半LUN放置在控制器2上的一个卷中。</block>
+  <block id="ad328d1793d6c3621e91d83556548a01" category="paragraph">同样、控制器条带化也可用于负载平衡。如果HA系统托管100个数据库、每个数据库包含10个LUN、则可以设计该系统、其中每个数据库在两个控制器中的每个控制器上都接收一个5 LUN卷。这样、在配置更多数据库时、可以保证每个控制器的负载对称。</block>
+  <block id="4cd2d5d8d873ad1f707d88334324153a" category="paragraph">但是、这些示例均不涉及卷与LUN的比例为1：1。我们的目标仍然是通过在卷中主机代管相关LUN来优化易管理性。</block>
+  <block id="a9fd7be1f3363701ad1b35b16af02c9e" category="paragraph">例如、LUN与卷的比例为1：1就意味着容器化、在容器化中、每个LUN可能真正代表一个工作负载、需要逐个进行管理。在这种情况下、1：1的比例可能是最佳的。</block>
+  <block id="64e5a77897fe6326f14436eaaaf5432b" category="section-title">可用空间和LVM空间分配</block>
+  <block id="702db8f3db66a0eec35817fe5d2e4544" category="inline-link-macro">ASMRU</block>
+  <block id="096ca5ad0b3774fee4699e2da1bfa884" category="paragraph">随着数据被删除、文件系统环境中活动LUN的精简配置效率可能会逐渐降低。除非删除的数据被零覆盖(另请参见 <block ref="5b58c4ec517e475a59d0a785f87cabdc" category="inline-link-macro-rx"></block> 或者通过TRIM/UNMAP空间回收释放空间、"已擦除"的数据会在文件系统中占用越来越多的未分配空格。此外、活动LUN的精简配置在许多数据库环境中的用途有限、因为数据文件在创建时会初始化为其完整大小。</block>
+  <block id="ceb8ec6ec593174c2c6f33be2ca966eb" category="summary">Oracle和ONTAP卷以及LUN放置</block>
+  <block id="0724b56ced27e0a66fb4692a57fb1436" category="doc">Oracle数据库LUN放置</block>
+  <block id="f595bf3bf71ab0c91a5503ba4efb8ea4" category="paragraph">数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。</block>
+  <block id="05a1ffdb277b8c7ac1dca78adae0017e" category="sidebar">LUN放置</block>
 </blocks>
