@@ -1,0 +1,59 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-mutual-tls.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南、存储管理连接的相互TLS加密。 
+---
+= 相互TLS (基于证书的身份验证)
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP 9.7及更高版本支持相互TLS通信。从适用于VMware和vSphere 9.12的ONTAP工具开始、可使用相互TLS与新添加的集群进行通信(具体取决于ONTAP版本)。
+
+
+
+== ONTAP
+
+对于先前添加的所有存储系统：在升级期间、所有添加的存储系统都将获得自动信任、并配置基于证书的身份验证机制。
+
+如以下屏幕截图所示、集群设置页面将显示为每个集群配置的相互TLS (基于证书的身份验证)的状态。
+
+image:vmware-otv-hardening-mutual-tls-image2.png["图像2、宽度=468、高度=158"]
+
+
+
+=== *集群添加*
+
+在集群添加工作流期间、如果要添加的集群支持MTLS、则默认情况下会配置MTLS。用户无需为此执行任何配置。以下屏幕截图显示了在添加集群期间向用户显示的屏幕。
+
+image:vmware-otv-hardening-mutual-tls-image3.png["添加存储系统、宽度=450、高度=400"]
+
+image:vmware-otv-hardening-mutual-tls-image4.png["添加存储系统、宽度=468、高度=416"]
+
+image:vmware-otv-hardening-mutual-tls-image5.png["添加存储系统、宽度=450、高度=400"]
+
+image:vmware-otv-hardening-mutual-tls-image6.png["添加存储系统、宽度=468、高度=516"]
+
+
+
+=== 集群编辑
+
+在集群编辑操作期间、有两种情形：
+
+* 如果ONTAP证书过期、则用户必须获取新证书并上传。
+* 如果OTV证书过期、则用户可以通过选中复选框来重新生成它。
++
+** 为ONTAP生成新的客户端证书_
+
+
+
+
+image:vmware-otv-hardening-mutual-tls-image7.png["修改存储系统、宽度=468、高度=461"]
+
+image:vmware-otv-hardening-mutual-tls-image8.png["修改存储系统、宽度=468、高度=461"]

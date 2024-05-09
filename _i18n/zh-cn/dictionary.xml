@@ -2797,7 +2797,6 @@
   <block id="636da39a2033c6179a718983c5ce1222" category="inline-link">《 ONTAP NVMe/FC 主机配置指南》</block>
   <block id="81ef6507a13da5635951bc5b533deb59" category="inline-link">TR-4684.</block>
   <block id="15483b0826bb9a4b11d1c89af2029c5c" category="list-text">有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分<block ref="6b4ed262d14e47ef641cd57b65c32c38" category="inline-link-rx"></block> 和<block ref="7a29b2f31035a451d5b068728d2b79a7" category="inline-link-rx"></block>下图显示了从 vSphere 主机到 ONTAP LUN 的多路径连接。</block>
-  <block id="f9fd9ea22ea7a2e8ec9e95254a449831" category="paragraph"><block ref="f9fd9ea22ea7a2e8ec9e95254a449831" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f2a693e1f056b96566c4551fcab418f2" category="paragraph">通过 vSphere ，客户可以使用企业级 NFS 阵列为 ESXi 集群中的所有节点提供对数据存储库的并发访问。如数据存储库一节所述，在将 NFS 与 vSphere 结合使用时，可以获得一些易用性和存储效率可见性优势。</block>
   <block id="743fa5a7bc7d4ba215b096e34779d298" category="paragraph">将 ONTAP NFS 与 vSphere 结合使用时，建议采用以下最佳实践：</block>
   <block id="c05061b6d3055b83136fa96cb38f0f9a" category="list-text">为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。</block>
@@ -5052,4 +5051,163 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0724b56ced27e0a66fb4692a57fb1436" category="doc">Oracle数据库LUN放置</block>
   <block id="f595bf3bf71ab0c91a5503ba4efb8ea4" category="paragraph">数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。</block>
   <block id="05a1ffdb277b8c7ac1dca78adae0017e" category="sidebar">LUN放置</block>
+  <block id="9d5c13d45bbf74999764cfe8d4798562" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、HTTPS证书管理。</block>
+  <block id="0f464051d2b3e2c46fd57cb0c7edb4a9" category="doc">ONTAP工具HTTPS证书</block>
+  <block id="d6a1787b51b08315bfcc44f3a9bb4b2f" category="paragraph">默认情况下、ONTAP工具会使用安装期间自动创建的自签名证书来保护对Web UI的HTTPS访问。ONTAP工具提供以下功能：</block>
+  <block id="1eddd0f3479da31541c39e5ddddfa930" category="list-text">重新生成HTTPS证书</block>
+  <block id="61bf3033b18d202012951f5bf7be4fa9" category="paragraph">在ONTAP工具安装期间、会安装HTTPS CA证书、并将该证书存储在密钥库中。用户可以选择通过maine控制台重新生成HTTPS证书。</block>
+  <block id="b363a018e3596ec66080579ce5bd4c2d" category="paragraph">通过导航到"Application Configuration"(应用程序配置)→"Re-generate certificates"(重新生成证书)、可以在_maint_控制台中访问上述选项</block>
+  <block id="43d609906e5ac2fd9406eddd67d6f82a" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、用户访问点。</block>
+  <block id="3562b87b566382dc56e8b6fb2b849126" category="doc">适用于VMware vSphere访问点(用户)的ONTAP工具</block>
+  <block id="c015e2af845448c5e88873c4e51c8cac" category="paragraph">适用于VMware vSphere的ONTAP工具安装会创建和使用三种类型的用户：</block>
+  <block id="6399e228248ba3e1f084750197938b67" category="list-text">System User：root用户帐户</block>
+  <block id="2a408bd40a0a3130a390340955a699ef" category="list-text">应用程序用户：管理员用户、maintuser和数据库用户帐户</block>
+  <block id="5d212a60c02bc59306c8863b31342276" category="list-text">支持用户：diag用户帐户</block>
+  <block id="3c2b7b0ce42bb5eb8141643a9729f4ee" category="section-title">1.系统用户</block>
+  <block id="b277c4882e7365ab0ac88d56cd6154b3" category="paragraph">system(root)用户是通过在底层操作系统(DeBM)上安装ONTAP工具来创建的。</block>
+  <block id="155b9191864da17a7eaaf07b64d596d8" category="list-text">默认系统用户"root"是通过安装ONTAP工具在Debian上创建的。其默认值为禁用、可通过"aint"控制台临时启用。</block>
+  <block id="159efbffccd1957bc8c4c78b2a74c085" category="section-title">2.应用程序用户</block>
+  <block id="170cab8b15d5b37a17e43144afe7308d" category="paragraph">应用程序用户在ONTAP工具中命名为本地用户。这些用户是在ONTAP工具应用程序中创建的。下表列出了应用程序用户的类型：</block>
+  <block id="e01ca242f9b1bef82800de4c209149c7" category="cell">* 用户 *</block>
+  <block id="f14c276c07197ebef1394a5a219087a1" category="cell">* 问题描述 *</block>
+  <block id="9eb92414db7b53ac16645af9b0f64e58" category="cell">管理员用户</block>
+  <block id="ccf6887baccb4288ae3579b56fac8d2a" category="cell">它是在ONTAP工具安装期间创建的、用户在部署ONTAP工具时提供凭据。用户可以选择在"aint"控制台中更改密码。密码将在90天后过期、用户应更改此密码。</block>
+  <block id="55df75b800db0f96de770b3c38f676b4" category="cell">维护用户</block>
+  <block id="a2bc121b09cae43d6c478870f5298ae5" category="cell">它是在ONTAP工具安装期间创建的、用户在部署ONTAP工具时提供凭据。用户可以选择在"aint"控制台中更改密码。此用户为维护用户、创建此用户名是为了执行维护控制台操作。</block>
+  <block id="b124032a093d41b9efbb43f40c538bcb" category="cell">数据库用户</block>
+  <block id="86a670227d3e81e8fa34eb4aede3129a" category="section-title">3.支持用户(diag用户)</block>
+  <block id="e482d8f0e37161e7916c7a78d2cf7210" category="paragraph">在ONTAP工具安装期间、系统会创建一个支持用户。此用户可用于在服务器发生任何问题描述或中断时访问ONTAP工具并收集日志。默认情况下、此用户处于禁用状态、但可以通过"aint"控制台临时启用。需要注意的是、此用户将在特定时间段后自动禁用。</block>
+  <block id="562596399deefc1e2a6cc32eb489976c" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南。</block>
+  <block id="1bc8028b63c10101b776e8b8ff907571" category="doc">端口和协议</block>
+  <block id="80dd7fd00106118cf9c10abf911b7111" category="paragraph">此处列出的是支持在适用于VMware vSphere服务器的ONTAP工具与其他实体(如受管存储系统、服务器和其他组件)之间进行通信所需的端口和协议。</block>
+  <block id="d40dfcfdaecc4e8015535acd5de00398" category="section-title">OTV需要入站和出站端口</block>
+  <block id="834b74ce890c61455ad330759d44eff2" category="paragraph">请注意下表、其中列出了ONTAP工具正常运行所需的入站和出站端口。请务必确保仅为远程计算机的连接打开表中提到的端口、而为远程计算机的连接应阻止所有其他端口。这将有助于确保系统的安全性和安全性。</block>
+  <block id="5732d3577c35dfcce968ba967a9a6149" category="cell">*TCP v4/v6端口#*</block>
+  <block id="e71a4b7488a97c0e5d8b3ab3efe619e4" category="cell">* 方向 *</block>
+  <block id="bc437eb0df24b836c84a74f47b391093" category="cell">*函数*</block>
+  <block id="576fe92cf4e45714b61ed10e5c856aa5" category="cell">HTTPS连接+
+用于基于HTTPS的SOAP连接+
+必须打开此端口、客户端才能连接到ONTAP工具API服务器。</block>
+  <block id="4e31bd5bdc8239bb7c98471d3500d951" category="cell">HTTPS连接- VP和SRA +
+用于基于HTTPS的SOAP连接</block>
+  <block id="7e6b20d014d1c659e4eaf20dc2dcd7eb" category="cell">8443</block>
+  <block id="aaa2d7fe63bee55de8ffca52cb61fbd5" category="cell">远程插件</block>
+  <block id="25fa62922a9b3c1c2763bbf88014e217" category="cell">Derby数据库端口、仅在此计算机与自身之间、不接受外部连接—仅限内部连接</block>
+  <block id="c68bd9055776bf38d8fc43c0ed283678" category="cell">8150</block>
+  <block id="b482bc4bf0e383b0858c5d9eb0e96ba9" category="cell">日志完整性服务在端口上运行</block>
+  <block id="9956361dfa33899fc0efed6ee3946512" category="section-title">控制对Derby数据库的远程访问</block>
+  <block id="58b7326b56820f4b18dfd73dc9707831" category="paragraph">管理员可以使用以下命令访问derby数据库。可通过ONTAP工具本地VM和远程服务器通过以下步骤访问它：</block>
+  <block id="296068c08046bbf197300e38c4e851cb" category="paragraph">*[.underline]#示例：#*</block>
+  <block id="10046bc1eb8463e6ca6ae51bd3b7a574" category="inline-image-macro">Derby、宽度=468、高度=136</block>
+  <block id="36434da35edb72a1f85cbbcc1ff2b197" category="paragraph"><block ref="36434da35edb72a1f85cbbcc1ff2b197" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="f21dd7ffc271f1301878c3078a59692d" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》、登录横幅。</block>
+  <block id="8bea3b588d20824cc56c9e5629943f1a" category="doc">登录横幅</block>
+  <block id="67f78f0bab8fe81a2b6971543c716d3d" category="paragraph">用户在登录提示符中输入用户名后、将显示以下登录横幅。请注意、默认情况下、SSH处于禁用状态、从VM控制台启用SSH后、它仅允许一次性登录。</block>
+  <block id="ae20daf991a940f9de7033ff0a1af410" category="paragraph">用户通过 SSH 通道完成登录后，将显示以下文本：</block>
+  <block id="8f1b6f904292913013b1f6e578d7b074" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、完整性验证。</block>
+  <block id="cedd87fff2ad5101cd8565e33950e1fb" category="doc">验证适用于VMware vSphere的ONTAP工具安装包的完整性</block>
+  <block id="aeeb9f5277554716592480db544d25f3" category="paragraph">客户可以通过两种方法验证其ONTAP工具安装包的完整性。</block>
+  <block id="126ba7383e25522e071a963ddd6f220f" category="list-text">验证校验和</block>
+  <block id="deccc645a0c8869a44e645f2f4247dbd" category="list-text">验证签名</block>
+  <block id="e5f3970dd7fabab1726b53d58d636de2" category="paragraph">OTV安装包的下载页面上提供了校验和。用户必须根据下载页面上提供的校验和验证已下载软件包的校验和。</block>
+  <block id="7452fe022f94726684aeea655673eb0f" category="section-title">验证ONTAP工具OVA的签名</block>
+  <block id="373d060b52f94a014177952dcca0c4e9" category="paragraph">vapp安装包以tarball的形式提供。此tarball包含虚拟设备的中间证书和根证书、以及自述文件和OVA软件包。README文件可指导用户如何验证vapp OVA软件包的完整性。</block>
+  <block id="48fefdb76906b256f183e6f68b23eba1" category="paragraph">客户还必须上传vCenter 7.0U3和更高版本上提供的根证书和中间证书。  对于7.0.1和7.0.U三e之间的vCenter版本、VMware不支持验证证书的功能。客户不需要上传vCenter 6.x的任何证书</block>
+  <block id="84a005842347a9560b170cfcd79c5203" category="section-title">将可信根证书上传到vCenter</block>
+  <block id="57f60da4817dc5d71c45890bb182781e" category="list-text">使用VMware vSphere Client登录到vCenter Server。</block>
+  <block id="72282f16a7aca6b61acfc6fe27ce55c7" category="list-text">为administrator@vsphere.local或vCenter Single Sign-On Administrators组的其他成员指定用户名和密码。如果您在安装期间指定了其他域、请以管理员身份@mydomain登录。</block>
+  <block id="9470c9e64c285d5b66a039ab668ab64a" category="list-text">导航到证书管理用户界面：a.从主菜单中、选择管理。B在"证书"下、单击"证书管理"。</block>
+  <block id="43a75b176810226695d2db6f52c87b73" category="list-text">如果系统提示您、请输入vCenter Server的凭据。</block>
+  <block id="5f51c5b3cb2f48fd1d670bf384d1006d" category="list-text">在可信根证书下、单击添加。</block>
+  <block id="55c3b759c54a437c7ced6432f1c62de0" category="list-text">单击浏览并选择证书.prom文件(OTV_OVA_inter_root_CERT_chain.prom)的位置。</block>
+  <block id="8acdedaaa4134bb6ae49472b4bc268a7" category="list-text">单击添加。此时、证书将添加到存储中。</block>
+  <block id="e2200da08ea15bdea0f97dbfc4e9f1c7" category="inline-link-macro">将可信根证书添加到证书存储</block>
+  <block id="6eeecddd909e7e017ba2732e46dc739c" category="paragraph">请参见 <block ref="b8e45b03638af10d852f253eba7e63e3" category="inline-link-macro-rx"></block> 有关详细信息 ...在部署vapp时(使用OVA文件)、可以在"查看详细信息"页面上验证vapp包的数字签名。如果下载的vapp软件包为正版、"发布者"列将显示"可信证书"(如以下屏幕截图所示)。</block>
+  <block id="a13b63a149750821fb588cd3cb41c209" category="inline-image-macro">可信证书</block>
+  <block id="a83d8109f7a0cf9c4a04c65c40ecd354" category="paragraph"><block ref="a83d8109f7a0cf9c4a04c65c40ecd354" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="61dc5ac976a8bd4a8744d8890305d26e" category="section-title">验证ONTAP工具ISO和SRA tar.gz的签名</block>
+  <block id="d4f26c1c073b64ba200e3fa71762c256" category="paragraph">NetApp会在产品下载页面上与客户共享其代码签名证书、以及OTV-ISO和sra.tgz的产品zip文件。</block>
+  <block id="a7ac1e7561da5cc70126cfea891de159" category="paragraph">用户可以从代码签名证书中提取公共密钥、如下所示：</block>
+  <block id="5f4345a6f62f7a3926b2c3d92f5574f6" category="paragraph">然后，应使用公共密钥验证ISO和tgz产品zip的签名，如下所示：</block>
+  <block id="81eeab9506186e2dca8faefa78d54067" category="paragraph">示例</block>
+  <block id="c6666237b03fcb86e315a0a06e73b6ef" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、存储管理连接的相互TLS加密。</block>
+  <block id="a1f873acd76a0948013378ff10927a74" category="doc">相互TLS (基于证书的身份验证)</block>
+  <block id="53893182b7e17fb2da37935ee3ffda55" category="paragraph">ONTAP 9.7及更高版本支持相互TLS通信。从适用于VMware和vSphere 9.12的ONTAP工具开始、可使用相互TLS与新添加的集群进行通信(具体取决于ONTAP版本)。</block>
+  <block id="1be712dee4c47804142318ffb739e46b" category="paragraph">对于先前添加的所有存储系统：在升级期间、所有添加的存储系统都将获得自动信任、并配置基于证书的身份验证机制。</block>
+  <block id="d39adf53eaace0fbba30d4e13760a974" category="paragraph">如以下屏幕截图所示、集群设置页面将显示为每个集群配置的相互TLS (基于证书的身份验证)的状态。</block>
+  <block id="c036889d83926f57571c8b12e4f7fb6f" category="inline-image-macro">图像2、宽度=468、高度=158</block>
+  <block id="095064767a4b9cadb4016dfc2788237c" category="paragraph"><block ref="095064767a4b9cadb4016dfc2788237c" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="53f061d401dd80027634ccca2a19cd8d" category="section-title">*集群添加*</block>
+  <block id="7ce4b2757e70979f49bcf8f64ba36363" category="paragraph">在集群添加工作流期间、如果要添加的集群支持MTLS、则默认情况下会配置MTLS。用户无需为此执行任何配置。以下屏幕截图显示了在添加集群期间向用户显示的屏幕。</block>
+  <block id="3c1556a297200019d3a0b8045c0956b9" category="inline-image-macro">添加存储系统、宽度=450、高度=400</block>
+  <block id="3a225aabc3c5c25670ad0b4d131da24f" category="paragraph"><block ref="3a225aabc3c5c25670ad0b4d131da24f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="987de6e025f6af1fc4451710295ca76f" category="inline-image-macro">添加存储系统、宽度=468、高度=416</block>
+  <block id="576a9128888c73fc82869b3ae173c7d2" category="paragraph"><block ref="576a9128888c73fc82869b3ae173c7d2" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="307eba22b8070bb93e642827620f8588" category="paragraph"><block ref="307eba22b8070bb93e642827620f8588" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="71cfed326a2cabd3b505c6580123a459" category="inline-image-macro">添加存储系统、宽度=468、高度=516</block>
+  <block id="a3a8f9da50b3f15d69f3186129f159f6" category="paragraph"><block ref="a3a8f9da50b3f15d69f3186129f159f6" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="3b3ebbeea272602ddec07bb77e34668a" category="section-title">集群编辑</block>
+  <block id="d2562e450657937f981a45d9d18ff4ec" category="paragraph">在集群编辑操作期间、有两种情形：</block>
+  <block id="500bcb89776517849e2e07073aad4eca" category="list-text">如果ONTAP证书过期、则用户必须获取新证书并上传。</block>
+  <block id="edf2227e3378b5b0864ef73e58d39d77" category="list-text">如果OTV证书过期、则用户可以通过选中复选框来重新生成它。</block>
+  <block id="6db8cdf80049c7cf629fe6f8f6e3a9c0" category="list-text">为ONTAP生成新的客户端证书_</block>
+  <block id="acba923a9524c642724d6ff34f5dac93" category="inline-image-macro">修改存储系统、宽度=468、高度=461</block>
+  <block id="6a59df9970674c274e20b1d91be2df8a" category="paragraph"><block ref="6a59df9970674c274e20b1d91be2df8a" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="75545011d3e6abe8a2cd8cd5bc21c6fd" category="paragraph"><block ref="75545011d3e6abe8a2cd8cd5bc21c6fd" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="14a73da2f5fe352620bed1b49a3319ed" category="summary">《适用于VMware vSphere的ONTAP工具的安全增强指南》、《针对DOS攻击的网络安全保护》。</block>
+  <block id="7dc9b3603fa2b925d4d44930e25f1afa" category="doc">每个用户的最大并发请求数(网络安全保护：DOS攻击)</block>
+  <block id="8f7e7bd942f453f0550dc4f907e88810" category="paragraph">默认情况下、每个用户的最大并发请求数为48个。ONTAP工具中的root用户可以根据其环境的要求更改此值。*此值不应设置为非常高的值，因为它提供了一种防止拒绝服务(DOS)攻击的机制。*</block>
+  <block id="99c1088ea27d16b42c6b45d794f59d3f" category="paragraph">用户可以在*__/opt/NetApp/vscserver/etc/dosfilterParams.json_*文件中更改最大并发会话数和其他受支持的参数。</block>
+  <block id="5e7c907630f5a432ac6b39f0b8c04c28" category="paragraph">我们可以通过以下参数配置筛选器：</block>
+  <block id="a35f2f4ccb228969a85b8719ea25b047" category="list-text">*_delayMs_*：在考虑之前，所有请求超出速率限制的延迟(以毫秒为单位)。提供-1仅拒绝请求。</block>
+  <block id="f1b9d5fde713093a3a80f140d1439d37" category="list-text">*_throtleMs_*：等待信标的非同步等待时间。</block>
+  <block id="aa363bec6acd7600aedeee5377470bde" category="list-text">*_maxRequestMs_*：允许此请求运行的时间长度。</block>
+  <block id="351b695725caafd647abb749c50a7e6f" category="list-text">*_ipWhitlist_*：不受速率限制的IP地址的逗号分隔列表。(可以是vCenter、ESXi和SRA IP)</block>
+  <block id="058e1fe7e6afcd3bcff86482a583976b" category="list-text">*_maxRequestsPerSec_*：每秒从连接发出的最大请求数。</block>
+  <block id="1c1496a21f967d57b50fe5ebb0e62125" category="paragraph">*_dosfilterParams file_:*中的默认值</block>
+  <block id="ca49b2b6b0c4bb4aa0596879eef667f5" category="inline-image-macro">多路径连接</block>
+  <block id="de3698c6b3c2722a1b82c99522519f4f" category="paragraph"><block ref="de3698c6b3c2722a1b82c99522519f4f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="9afb15056a8bc8b4402d55eba2274dad" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。</block>
+  <block id="bad9c891abe49e73c2bf4fb95fbe61ba" category="doc">网络时间协议(NTP)配置</block>
+  <block id="48edbd8a951efb0ad617f7868b27a6c0" category="paragraph">有时、由于网络时间配置的差异、可能会出现安全问题。请务必确保网络中的所有设备都具有准确的时间设置、以防止出现此类问题。</block>
+  <block id="a55d703ea2930e8e72e94ce11c3297ab" category="section-title">*虚拟设备*</block>
+  <block id="5a65f4c9ca6d99f573528348d36914fa" category="paragraph">您可以从虚拟设备的维护控制台配置NTP服务器。  用户可以在_System Configuration_=&gt;_Add new NTP Server_选项下添加NTP服务器详细信息</block>
+  <block id="90ab4fc7a1c530bceac36bda71efbc5f" category="paragraph">默认情况下、NTP的服务为ntpd.这是一项传统服务、在某些情况下不适用于虚拟机。</block>
+  <block id="6801ecdb823d018c7370042d27b5ee2c" category="section-title">*Debian</block>
+  <block id="dc3bb5166d38d2aec53765aca7c0d24c" category="paragraph">在Debian上、用户可以访问/etc/ntp.conf文件以获取NTP服务器详细信息。</block>
+  <block id="08fe6a0b481c7eba55985eb19ee19e1e" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》概述和简介。</block>
+  <block id="baecfb438214487bb004e49d325c66bf" category="doc">适用于VMware vSphere的ONTAP工具安全增强指南</block>
+  <block id="8d1618af2c6a6379783e2978ba4a551c" category="paragraph">《适用于VMware vSphere的ONTAP工具安全增强指南》提供了一套全面的说明、用于配置最安全的设置。</block>
+  <block id="fec65f0c33739368ce5845fadb6cb880" category="paragraph">这些指南适用于设备本身的应用程序和子操作系统。</block>
+  <block id="5aaf8fc9424d7872cf500fb7adcb3b97" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》、密码策略配置。</block>
+  <block id="ca80b83fb98de16af35b38476df589c3" category="doc">密码策略</block>
+  <block id="53477738359cebc12d4e01727ee8b5e7" category="paragraph">首次部署ONTAP工具或升级到9.12或更高版本的用户需要同时遵循管理员和数据库用户的强密码策略。在部署过程中、系统将提示新用户输入其密码。对于升级到9.12或更高版本的brownfield用户、维护控制台中将提供遵循强密码策略的选项。</block>
+  <block id="7afd9be20a239f83f98bdbc7f90512ef" category="list-text">用户登录maIT控制台后、系统将根据复杂规则集检查密码、如果发现未遵循此规则、则会要求用户重置相同密码。</block>
+  <block id="1e048d74f3d9375186833526a00f4309" category="list-text">密码默认有效期为90天、75天后、用户将开始收到更改密码的通知。</block>
+  <block id="dbb73ef3f8e9b61d387a809281a654cc" category="list-text">需要在每个周期设置新密码、系统不会将最后一个密码作为新密码。</block>
+  <block id="210b05d5e7375bcb02bcf09a873bbda6" category="list-text">每当用户登录maIT控制台时、它都会检查密码策略、如以下屏幕截图、然后再加载主菜单：</block>
+  <block id="bc66b4fce20ef49b05e4a54f053e65a6" category="inline-image-macro">主菜单、宽度=468、高度=116</block>
+  <block id="4661acb75237098be364b3c05d7d9b7c" category="paragraph"><block ref="4661acb75237098be364b3c05d7d9b7c" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="8f09c69f731d4d6f2e8d6135082aa8e4" category="list-text">如果发现不符合密码策略、或者不符合ONTAP工具9.11或更早版本的升级设置。然后、用户将看到以下屏幕以重置密码：</block>
+  <block id="4499d4bfb9610056781e2e61956dd0ca" category="inline-image-macro">密码重置屏幕，宽度=468，高度=116</block>
+  <block id="a84278f7bf3ee281e39e467fca1fe454" category="paragraph"><block ref="a84278f7bf3ee281e39e467fca1fe454" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="47e6664ac0a72e1d719cfc288383b4f8" category="list-text">如果用户尝试设置弱密码或再次提供最后一个密码、则用户将看到以下错误：</block>
+  <block id="fe04952c38b6a9a7db1a75bbb4905232" category="inline-image-macro">弱密码错误、宽度=468、高度=101</block>
+  <block id="2c59de9ea5183e73d5fa6382fa7f3fc1" category="paragraph"><block ref="2c59de9ea5183e73d5fa6382fa7f3fc1" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="8463a61dd94ff5934036d4c8a8936e32" category="doc">非活动超时</block>
+  <block id="704c7fc6c4d40b9af6aafb7cf9b44022" category="paragraph">为了防止未经授权的访问、系统会设置非活动超时、以便在使用授权资源时自动注销在特定时间段内处于非活动状态的用户。这样可以确保只有授权用户才能访问资源、并有助于保持安全性。</block>
+  <block id="80f9ebebc8f94450338d28bcb4a2164d" category="inline-link">配置vSphere Client超时值</block>
+  <block id="3748702da26b5718f1f7c769ce58b009" category="list-text">默认情况下、vSphere Client会话会在空闲120分钟后关闭、需要用户重新登录才能继续使用客户端。您可以通过编辑webclient.properties文件来更改超时值。 您可以配置vSphere Client的超时<block ref="ec8715bde1a929a6f64160d5372f4574" category="inline-link-rx"></block></block>
+  <block id="e4306c4cf124046d8f90518752cd5021" category="list-text">ONTAP工具的web-cli会话注销时间为30分钟。</block>
+  <block id="7fb0cadcdae6feac05c7b8274b97b3c7" category="sidebar">ONTAP工具强化概述</block>
+  <block id="10b486896b1a91f5d38214dfb30c4263" category="sidebar">验证ONTAP工具安装包的完整性</block>
+  <block id="7c7c4cc4771d6114aa8b4d38f5817a85" category="sidebar">端口和协议</block>
+  <block id="919e26ea009ce7fa2dcc499a27ccc6aa" category="sidebar">访问点(用户)</block>
+  <block id="333dd505db0523536c6885f47456518c" category="sidebar">相互TLS</block>
+  <block id="6a3f3799bc264d32568bb7169ddd515a" category="sidebar">HTTPS证书</block>
+  <block id="4b7ad38343c4b2010cf81e6b2933e186" category="sidebar">登录横幅</block>
+  <block id="bfdb89134acf30ff5da790924cefa0ac" category="sidebar">非活动超时</block>
+  <block id="cb197b06aa92a742d01e256d58d3e34b" category="sidebar">DOS攻击</block>
+  <block id="d870a4bd29f74339732a958574d2c4eb" category="sidebar">NTP配置</block>
+  <block id="339ce1d4220ba7045e3a35ef35279ad3" category="sidebar">密码策略</block>
 </blocks>

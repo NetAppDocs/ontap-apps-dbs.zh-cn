@@ -1,0 +1,68 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-integrity.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南、完整性验证。 
+---
+= 验证适用于VMware vSphere的ONTAP工具安装包的完整性
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+客户可以通过两种方法验证其ONTAP工具安装包的完整性。
+
+. 验证校验和
+. 验证签名
+
+
+OTV安装包的下载页面上提供了校验和。用户必须根据下载页面上提供的校验和验证已下载软件包的校验和。
+
+
+
+== 验证ONTAP工具OVA的签名
+
+vapp安装包以tarball的形式提供。此tarball包含虚拟设备的中间证书和根证书、以及自述文件和OVA软件包。README文件可指导用户如何验证vapp OVA软件包的完整性。
+
+客户还必须上传vCenter 7.0U3和更高版本上提供的根证书和中间证书。  对于7.0.1和7.0.U三e之间的vCenter版本、VMware不支持验证证书的功能。客户不需要上传vCenter 6.x的任何证书
+
+
+
+=== 将可信根证书上传到vCenter
+
+. 使用VMware vSphere Client登录到vCenter Server。
+. 为administrator@vsphere.local或vCenter Single Sign-On Administrators组的其他成员指定用户名和密码。如果您在安装期间指定了其他域、请以管理员身份@mydomain登录。
+. 导航到证书管理用户界面：a.从主菜单中、选择管理。B在"证书"下、单击"证书管理"。
+. 如果系统提示您、请输入vCenter Server的凭据。
+. 在可信根证书下、单击添加。
+. 单击浏览并选择证书.prom文件(OTV_OVA_inter_root_CERT_chain.prom)的位置。
+. 单击添加。此时、证书将添加到存储中。
+
+
+请参见 link:https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.authentication.doc/GUID-B635BDD9-4F8A-4FD8-A4FE-7526272FC87D.html["将可信根证书添加到证书存储"] 有关详细信息 ...在部署vapp时(使用OVA文件)、可以在"查看详细信息"页面上验证vapp包的数字签名。如果下载的vapp软件包为正版、"发布者"列将显示"可信证书"(如以下屏幕截图所示)。
+
+image:vmware-otv-hardening-trusted-publisher.png["可信证书"]
+
+
+
+== 验证ONTAP工具ISO和SRA tar.gz的签名
+
+NetApp会在产品下载页面上与客户共享其代码签名证书、以及OTV-ISO和sra.tgz的产品zip文件。
+
+用户可以从代码签名证书中提取公共密钥、如下所示：
+
+ #> openssl x509 -in <code-sign-cert, pem file> -pubkey -noout > <public-key name>
+然后，应使用公共密钥验证ISO和tgz产品zip的签名，如下所示：
+
+ #> openssl dgst -sha256 -verify <public-key> -signature <signature-file>  <binary-name>
+示例
+
+....
+#> openssl x509 -in OTV_ISO_CERT.pem -pubkey -noout > OTV_ISO.pub
+#> openssl dgst -sha256 -verify OTV_ISO.pub -signature netapp-ontap-tools-for-vmware-vsphere-9.12-upgrade-iso.sig netapp-ontap-tools-for-vmware-vsphere-9.12-upgrade.iso
+Verified OK  => response
+....

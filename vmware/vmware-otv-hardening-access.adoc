@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-access.html 
+keywords: VMware, Data protection, security, ONTAP tools, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南、用户访问点。 
+---
+= 适用于VMware vSphere访问点(用户)的ONTAP工具
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+适用于VMware vSphere的ONTAP工具安装会创建和使用三种类型的用户：
+
+. System User：root用户帐户
+. 应用程序用户：管理员用户、maintuser和数据库用户帐户
+. 支持用户：diag用户帐户
+
+
+
+
+== 1.系统用户
+
+system(root)用户是通过在底层操作系统(DeBM)上安装ONTAP工具来创建的。
+
+* 默认系统用户"root"是通过安装ONTAP工具在Debian上创建的。其默认值为禁用、可通过"aint"控制台临时启用。
+
+
+
+
+== 2.应用程序用户
+
+应用程序用户在ONTAP工具中命名为本地用户。这些用户是在ONTAP工具应用程序中创建的。下表列出了应用程序用户的类型：
+
+[cols="22%,78%"]
+|===
+| * 用户 * | * 问题描述 * 
+
+
+| 管理员用户 | 它是在ONTAP工具安装期间创建的、用户在部署ONTAP工具时提供凭据。用户可以选择在"aint"控制台中更改密码。密码将在90天后过期、用户应更改此密码。 
+
+
+| 维护用户 | 它是在ONTAP工具安装期间创建的、用户在部署ONTAP工具时提供凭据。用户可以选择在"aint"控制台中更改密码。此用户为维护用户、创建此用户名是为了执行维护控制台操作。 
+
+
+| 数据库用户 | 它是在ONTAP工具安装期间创建的、用户在部署ONTAP工具时提供凭据。用户可以选择在"aint"控制台中更改密码。密码将在90天后过期、用户应更改此密码。 
+|===
+
+
+== 3.支持用户(diag用户)
+
+在ONTAP工具安装期间、系统会创建一个支持用户。此用户可用于在服务器发生任何问题描述或中断时访问ONTAP工具并收集日志。默认情况下、此用户处于禁用状态、但可以通过"aint"控制台临时启用。需要注意的是、此用户将在特定时间段后自动禁用。

@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-ntp.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。 
+---
+= 网络时间协议(NTP)配置
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+有时、由于网络时间配置的差异、可能会出现安全问题。请务必确保网络中的所有设备都具有准确的时间设置、以防止出现此类问题。
+
+
+
+== *虚拟设备*
+
+您可以从虚拟设备的维护控制台配置NTP服务器。  用户可以在_System Configuration_=>_Add new NTP Server_选项下添加NTP服务器详细信息
+
+默认情况下、NTP的服务为ntpd.这是一项传统服务、在某些情况下不适用于虚拟机。
+
+
+
+== *Debian
+
+在Debian上、用户可以访问/etc/ntp.conf文件以获取NTP服务器详细信息。

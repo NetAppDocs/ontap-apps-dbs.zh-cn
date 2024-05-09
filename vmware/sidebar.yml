@@ -80,3 +80,27 @@ entries:
     url: "/vmware/vmware-security-tools.html"
   - title: 适用于 VMware vSphere 的 SnapCenter 插件
     url: "/vmware/vmware-security-snapcenter.html"
+- title: 适用于VMware vSphere的ONTAP工具安全增强指南
+  entries:
+  - title: ONTAP工具强化概述
+    url: "/vmware/vmware-otv-hardening-overview.html"
+  - title: 验证ONTAP工具安装包的完整性
+    url: "/vmware/vmware-otv-hardening-integrity.html"
+  - title: 端口和协议
+    url: "/vmware/vmware-otv-hardening-ports.html"
+  - title: 访问点(用户)
+    url: "/vmware/vmware-otv-hardening-access.html"
+  - title: 相互TLS
+    url: "/vmware/vmware-otv-hardening-mutual-tls.html"
+  - title: HTTPS证书
+    url: "/vmware/vmware-otv-hardening-https-cert.html"
+  - title: 登录横幅
+    url: "/vmware/vmware-otv-hardening-login-banner.html"
+  - title: 非活动超时
+    url: "/vmware/vmware-otv-hardening-timeout.html"
+  - title: DOS攻击
+    url: "/vmware/vmware-otv-hardening-dos.html"
+  - title: NTP配置
+    url: "/vmware/vmware-otv-hardening-ntp.html"
+  - title: 密码策略
+    url: "/vmware/vmware-otv-hardening-passwords.html"

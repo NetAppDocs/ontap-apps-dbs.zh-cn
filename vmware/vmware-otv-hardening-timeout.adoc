@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-timeout.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南。 
+---
+= 非活动超时
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+为了防止未经授权的访问、系统会设置非活动超时、以便在使用授权资源时自动注销在特定时间段内处于非活动状态的用户。这样可以确保只有授权用户才能访问资源、并有助于保持安全性。
+
+* 默认情况下、vSphere Client会话会在空闲120分钟后关闭、需要用户重新登录才能继续使用客户端。您可以通过编辑webclient.properties文件来更改超时值。 您可以配置vSphere Client的超时 https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vcenterhost.doc/GUID-975412DE-CDCB-49A1-8E2A-0965325D33A5.html["配置vSphere Client超时值"]
+* ONTAP工具的web-cli会话注销时间为30分钟。
+

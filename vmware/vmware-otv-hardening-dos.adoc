@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-dos.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 《适用于VMware vSphere的ONTAP工具的安全增强指南》、《针对DOS攻击的网络安全保护》。 
+---
+= 每个用户的最大并发请求数(网络安全保护：DOS攻击)
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+默认情况下、每个用户的最大并发请求数为48个。ONTAP工具中的root用户可以根据其环境的要求更改此值。*此值不应设置为非常高的值，因为它提供了一种防止拒绝服务(DOS)攻击的机制。*
+
+用户可以在*__/opt/NetApp/vscserver/etc/dosfilterParams.json_*文件中更改最大并发会话数和其他受支持的参数。
+
+我们可以通过以下参数配置筛选器：
+
+* *_delayMs_*：在考虑之前，所有请求超出速率限制的延迟(以毫秒为单位)。提供-1仅拒绝请求。
+* *_throtleMs_*：等待信标的非同步等待时间。
+* *_maxRequestMs_*：允许此请求运行的时间长度。
+* *_ipWhitlist_*：不受速率限制的IP地址的逗号分隔列表。(可以是vCenter、ESXi和SRA IP)
+* *_maxRequestsPerSec_*：每秒从连接发出的最大请求数。
+
+
+*_dosfilterParams file_:*中的默认值
+
+....
+{"delayMs":"-1",
+"throttleMs":"1800000",
+"maxRequestMs":"300000",
+"ipWhitelist":"10.224.58.52",
+"maxRequestsPerSec":"48"}
+....

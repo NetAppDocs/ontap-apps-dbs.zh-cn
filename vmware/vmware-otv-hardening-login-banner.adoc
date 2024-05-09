@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-login-banner.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 《适用于VMware vSphere的ONTAP工具安全增强指南》、登录横幅。 
+---
+= 登录横幅
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+用户在登录提示符中输入用户名后、将显示以下登录横幅。请注意、默认情况下、SSH处于禁用状态、从VM控制台启用SSH后、它仅允许一次性登录。
+
+....
+WARNING: Unauthorized access to this system is forbidden and will be
+prosecuted by law. By accessing this system, you agree that your actions
+may be monitored if unauthorized usage is suspected.
+....
+用户通过 SSH 通道完成登录后，将显示以下文本：
+
+ Linux UnifiedVSC 5.10.0-21-amd64 #1 SMP Debian 5.10.162-1 (2023-01-21) x86_64
+....
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+....
+....
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+....

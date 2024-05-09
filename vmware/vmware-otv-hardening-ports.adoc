@@ -1,0 +1,79 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-ports.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 适用于VMware vSphere的ONTAP工具安全增强指南。 
+---
+= 端口和协议
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+此处列出的是支持在适用于VMware vSphere服务器的ONTAP工具与其他实体(如受管存储系统、服务器和其他组件)之间进行通信所需的端口和协议。
+
+
+
+== OTV需要入站和出站端口
+
+请注意下表、其中列出了ONTAP工具正常运行所需的入站和出站端口。请务必确保仅为远程计算机的连接打开表中提到的端口、而为远程计算机的连接应阻止所有其他端口。这将有助于确保系统的安全性和安全性。
+
+下表介绍了打开的端口详细信息。
+
+[cols="18%,21%,61%"]
+|===
+| *TCP v4/v6端口#* | * 方向 * | *函数* 
+
+
+| 8143. | 入站 | 用于 REST API 的 HTTPS 连接 
+
+
+| 8043 | 入站 | HTTPS 连接 
+
+
+| 9060 | 入站 | HTTPS连接+
+用于基于HTTPS的SOAP连接+
+必须打开此端口、客户端才能连接到ONTAP工具API服务器。 
+
+
+| 22. | 入站 | SSH （默认为禁用） 
+
+
+| 9080 | 入站 | HTTPS 连接— VP 和 SRA —仅从环回进行内部连接 
+
+
+| 9083. | 入站 | HTTPS连接- VP和SRA +
+用于基于HTTPS的SOAP连接 
+
+
+| 1162. | 入站 | VP SNMP 陷阱数据包 
+
+
+| 8443 | 入站 | 远程插件 
+
+
+| 1527. | 仅限内部 | Derby数据库端口、仅在此计算机与自身之间、不接受外部连接—仅限内部连接 
+
+
+| 8150 | 仅限内部 | 日志完整性服务在端口上运行 
+
+
+| 443. | 双向 | 用于连接到 ONTAP 集群 
+|===
+
+
+== 控制对Derby数据库的远程访问
+
+管理员可以使用以下命令访问derby数据库。可通过ONTAP工具本地VM和远程服务器通过以下步骤访问它：
+
+....
+java -classpath "/opt/netapp/vpserver/lib/*" org.apache.derby.tools.ij;
+connect 'jdbc:derby://<OTV-IP>:1527//opt/netapp/vpserver/vvoldb;user=<user>;password=<password>';
+....
+*[.underline]#示例：#*
+
+image:vmware-otv-hardening-ports.png["Derby、宽度=468、高度=136"]

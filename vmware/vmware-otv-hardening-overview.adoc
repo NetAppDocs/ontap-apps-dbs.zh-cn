@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-otv-hardening-overview.html 
+keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
+summary: 《适用于VMware vSphere的ONTAP工具安全增强指南》概述和简介。 
+---
+= 适用于VMware vSphere的ONTAP工具安全增强指南
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+《适用于VMware vSphere的ONTAP工具安全增强指南》提供了一套全面的说明、用于配置最安全的设置。
+
+这些指南适用于设备本身的应用程序和子操作系统。
