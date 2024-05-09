@@ -5175,9 +5175,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="90ab4fc7a1c530bceac36bda71efbc5f" category="paragraph">默认情况下、NTP的服务为ntpd.这是一项传统服务、在某些情况下不适用于虚拟机。</block>
   <block id="6801ecdb823d018c7370042d27b5ee2c" category="section-title">*Debian</block>
   <block id="dc3bb5166d38d2aec53765aca7c0d24c" category="paragraph">在Debian上、用户可以访问/etc/ntp.conf文件以获取NTP服务器详细信息。</block>
-  <block id="08fe6a0b481c7eba55985eb19ee19e1e" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》概述和简介。</block>
-  <block id="baecfb438214487bb004e49d325c66bf" category="doc">适用于VMware vSphere的ONTAP工具安全增强指南</block>
-  <block id="8d1618af2c6a6379783e2978ba4a551c" category="paragraph">《适用于VMware vSphere的ONTAP工具安全增强指南》提供了一套全面的说明、用于配置最安全的设置。</block>
   <block id="fec65f0c33739368ce5845fadb6cb880" category="paragraph">这些指南适用于设备本身的应用程序和子操作系统。</block>
   <block id="5aaf8fc9424d7872cf500fb7adcb3b97" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》、密码策略配置。</block>
   <block id="ca80b83fb98de16af35b38476df589c3" category="doc">密码策略</block>
@@ -5210,4 +5207,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="cb197b06aa92a742d01e256d58d3e34b" category="sidebar">DOS攻击</block>
   <block id="d870a4bd29f74339732a958574d2c4eb" category="sidebar">NTP配置</block>
   <block id="339ce1d4220ba7045e3a35ef35279ad3" category="sidebar">密码策略</block>
+  <block id="3698338a95ad1801e25ed154adaf1a70" category="summary">适用于VMware vSphere的ONTAP工具安全强化指南概述和简介。</block>
+  <block id="47d29daaa26fbfa9c9a069d4cd023ac1" category="doc">适用于VMware vSphere的ONTAP工具安全强化指南</block>
+  <block id="fe0e23a929284a636c245a362ada6472" category="paragraph">适用于VMware vSphere的ONTAP工具的安全强化指南提供了一套全面的说明、用于配置最安全的设置。</block>
 </blocks>

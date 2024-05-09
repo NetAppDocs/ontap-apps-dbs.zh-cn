@@ -48,6 +48,8 @@ indexpage:
     links:
     - title: 采用ONTAP的VMware vSphere
       url: "/vmware/vmware-vsphere-overview.html"
+    - title: 适用于VMware vSphere的ONTAP工具安全强化指南
+      url: "/vmware/vmware-otv-hardening-overview.html.html"
     - title: 使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
       url: "/vmware/vmware-vvols-overview.html"
     - title: 采用ONTAP的VMware Site Recovery Manager
