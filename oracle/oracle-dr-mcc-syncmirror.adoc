@@ -34,4 +34,4 @@ MetroCluster复制基于NetApp SyncMirror技术、该技术旨在高效地切换
 
 SyncMirror不仅可以在无法访问远程站点时无缝切换出同步模式、还可以在恢复连接后快速重新同步到RPO = 0状态。远程站点上的陈旧数据副本也可以在重新同步期间保留在可用状态、从而确保本地和远程数据副本始终存在。
 
-如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还提供了应用程序级选项、例如Oracle DataGuard或主机端磁盘镜像的扩展超时。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。
+如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还存在应用程序级选项、例如Oracle DataGuard或SQL Server Always On可用性组。可以选择操作系统级磁盘镜像。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。

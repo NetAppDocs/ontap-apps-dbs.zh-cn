@@ -128,7 +128,6 @@
   <block id="eee4f7a4e0ed3a8646a97bcf3e118fb9" category="paragraph">使用同步复制技术是设计和管理同步复制解决方案的第一步。最重要的注意事项是了解在各种计划内和计划外故障情形下可能发生的情况。并非所有同步复制解决方案都能提供相同的功能。如果您需要的解决方案能够实现零恢复点目标(RPO)、即零数据丢失、则必须考虑所有故障情形。特别是、如果由于站点间连接断开而无法进行复制、则会产生什么预期结果？</block>
   <block id="71554672a088c43ab21c759ddd161928" category="section-title">SyncMirror数据可用性</block>
   <block id="8646bb558f8f18a200cce2f70602627a" category="paragraph">SyncMirror不仅可以在无法访问远程站点时无缝切换出同步模式、还可以在恢复连接后快速重新同步到RPO = 0状态。远程站点上的陈旧数据副本也可以在重新同步期间保留在可用状态、从而确保本地和远程数据副本始终存在。</block>
-  <block id="995f5151d2d1c0a4e8371b2b3c9b6e5b" category="paragraph">如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还提供了应用程序级选项、例如Oracle DataGuard或主机端磁盘镜像的扩展超时。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。</block>
   <block id="1d12d7a206d9b5337ae6fa442f23d377" category="doc">仅快照</block>
   <block id="64c29f2f2feedeb607ff588b13d9758b" category="paragraph">。<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block><block ref="964193481f440d73ce3474a7a09bc3ac" prefix=" " category="inline-code"></block> 仅适用于未与活动文件系统共享的块。实际上、它需要对数据库备份进行层化。创建快照后、块将成为分层的候选块、然后将其覆盖、从而导致块仅存在于快照中。之前的延迟<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block> 块被视为冷却由控制<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 卷的设置。从ONTAP 9.8开始、此范围为2到183天。</block>
   <block id="ebd9889c847a7a3ddeccd2717ead46f2" category="paragraph">许多数据集的更改率较低、因此此策略节省的空间极少。例如、在ONTAP上观察到的典型数据库每周的更改率小于5%。数据库归档日志可能会占用大量空间、但它们通常仍存在于活动文件系统中、因此不适合在此策略下进行分层。</block>
@@ -1547,20 +1546,13 @@
   <block id="2623b589ddbc1cdb6184ba32aa06e83f" category="inline-link-macro">NVFAIL</block>
   <block id="a4feacea8b05d0f24e5a4612a164a055" category="paragraph">通常的最佳实践仍然适用、如果您的需求仅需要RPO = 0数据保护、则MetroCluster可以满足该需求。但是、大多数客户使用MetroCluster不仅可以实现RROT=0的数据保护、还可以在灾难情形下提高RTO、并在站点维护活动中提供透明的故障转移。</block>
   <block id="3ff8bcf18c694581aa25b0a347508e0f" category="section-title">使用预配置的操作系统进行故障转移</block>
-  <block id="9bd9ad7f296a0e8ac3df804b3c6a392f" category="paragraph">SyncMirror在灾难恢复站点提供数据的同步副本、但要使数据可用、需要使用操作系统和相关应用程序。基本自动化可以显著缩短整个环境的故障转移时间。Oracle RAC、Veritas Cluster Server (VCS)或VMware HA等集群软件产品通常用于在站点间创建集群、在许多情况下、可以使用简单的脚本来驱动故障转移过程。</block>
-  <block id="c5a2f3b867d990c681a218d29a55fcfa" category="paragraph">如果主节点丢失、则会将集群软件(或脚本)配置为在备用站点使应用程序联机。一种选择是、创建为构成应用程序的NFS或SAN资源预先配置的备用服务器。如果主站点发生故障、则集群软件或脚本化备用站点将执行一系列类似以下内容的操作：</block>
   <block id="442f34633164f1be348a442b2c62d29d" category="list-text">强制执行MetroCluster切换</block>
   <block id="e081e79ea1b1040c51d4a452e46de76d" category="list-text">发现FC LUN (仅限SAN)</block>
-  <block id="6f3fd86521759fc98ed93853eaf8a03a" category="list-text">挂载文件系统</block>
-  <block id="9d9ea7a9c532a3cec63305130018a45b" category="list-text">正在启动应用程序</block>
-  <block id="b8eca7b573624230962095fcadb03ddf" category="paragraph">此方法的主要要求是在远程站点上运行操作系统。它必须预配置应用程序二进制文件、这也意味着必须在主站点和备用站点上执行修补等任务。或者、可以将应用程序二进制文件镜像到远程站点、并在声明发生灾难时进行挂载。</block>
   <block id="e60946bf73021e18706a6ac33386b376" category="paragraph">实际激活操作步骤非常简单。LUN发现等命令只需对每个FC端口执行几个命令即可。文件系统挂载只不过是一个<block ref="19822b1b15d9eefc54c07ab49f87b100" prefix=" " category="inline-code"></block> 命令、数据库和ASM均可通过CLI使用一个命令来启动和停止。如果在切换之前灾难恢复站点未使用卷和文件系统、则无需设置<block ref="3b93661df04b698b1340ff2da3238d16" prefix=" " category="inline-code"></block> 卷上。</block>
   <block id="486eed21f55b6fb544db5504294592e6" category="section-title">使用虚拟化操作系统进行故障转移</block>
   <block id="bf65e943f86f26b49698bfdac9b95f81" category="paragraph">数据库环境的故障转移可以扩展到包括操作系统本身。理论上、这种故障转移可以使用启动LUN来完成、但大多数情况下、这种故障转移是通过虚拟化操作系统来完成的。操作步骤类似于以下步骤：</block>
   <block id="7c37589384e83d2b43bba430c18a45aa" category="list-text">挂载托管数据库服务器虚拟机的数据存储库</block>
   <block id="3d4d04d6cdab90b7ca0deb0344f04eec" category="list-text">启动虚拟机</block>
-  <block id="ba2f22f63087151f0a0694be5f35fcf2" category="list-text">手动启动数据库或将虚拟机配置为自动启动数据库</block>
-  <block id="810078f3b19b93e24de8638d68f727b5" category="paragraph">例如、ESX集群可以跨越多个站点。发生灾难时、可以在切换后将灾难恢复站点上的虚拟机置于联机状态。只要在发生灾难时托管虚拟化数据库服务器的数据存储库未在使用中、就不需要进行设置<block ref="3b93661df04b698b1340ff2da3238d16" prefix=" " category="inline-code"></block> 在关联卷上。</block>
   <block id="c702c387f07bcb4f18482e68d69a155a" category="paragraph">使用MetroCluster系统进行Oracle数据保护的基础是SyncMirror、这是一种性能最高的横向扩展同步镜像技术。</block>
   <block id="9028b52caaa7bdbfb9be779eeb1fe00e" category="summary">采用MetroCluster的Oracle扩展RAC</block>
   <block id="dbcedb2fd86e6012347a3c9ad111f3a8" category="doc">基于MetroCluster的扩展Oracle RAC</block>
@@ -5210,4 +5202,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="3698338a95ad1801e25ed154adaf1a70" category="summary">适用于VMware vSphere的ONTAP工具安全强化指南概述和简介。</block>
   <block id="47d29daaa26fbfa9c9a069d4cd023ac1" category="doc">适用于VMware vSphere的ONTAP工具安全强化指南</block>
   <block id="fe0e23a929284a636c245a362ada6472" category="paragraph">适用于VMware vSphere的ONTAP工具的安全强化指南提供了一套全面的说明、用于配置最安全的设置。</block>
+  <block id="bc86ce4caa57368f9094a93dd72ffd28" category="paragraph">如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还存在应用程序级选项、例如Oracle DataGuard或SQL Server Always On可用性组。可以选择操作系统级磁盘镜像。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。</block>
+  <block id="ef0892c4d97bdcd9e4bada330c24ee8b" category="paragraph">MetroCluster是ONTAP的一项功能、可通过站点间的RPO = 0同步镜像保护Oracle数据库、并可进行扩展以在一个MetroCluster系统上支持数百个数据库。它也易于使用。使用MetroCluster并不一定会增加或更改运行企业级应用程序和数据库的任何最佳网络竞赛。</block>
 </blocks>
