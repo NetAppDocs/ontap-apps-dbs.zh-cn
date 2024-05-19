@@ -1,0 +1,36 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-vsphere-encryption.html 
+keywords: Data protection, Space reclamation, VM and datastore cloning, Storage efficiency, thin provisioning, QoS, SIOC, Storage Distributed Resource Scheduler, DRS, Active IQ Unified Manager, Encryption 
+summary: 对空闲数据进行加密的需求不断增加、这种需求已超出传统数据的范畴、扩展到所有已存储的数据类型。 
+---
+= vSphere 数据加密
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+如今，通过加密保护空闲数据的需求日益增长。虽然最初的关注点是金融和医疗保健信息、但人们越来越关注保护所有信息、无论是存储在文件、数据库中还是其他数据类型中。
+
+运行 ONTAP 软件的系统可通过空闲加密轻松保护任何数据。NetApp 存储加密（ NetApp Storage Encryption ， NSE ）使用带有 ONTAP 的自加密磁盘驱动器来保护 SAN 和 NAS 数据。NetApp 还提供 NetApp 卷加密和 NetApp 聚合加密，这是一种基于软件的简单方法，用于对任何磁盘驱动器上的卷进行加密。这种软件加密不需要特殊的磁盘驱动器或外部密钥管理器、ONTAP客户可以免费使用。您可以在不中断客户端或应用程序的情况下升级并开始使用它，并且它们已通过 FIPS 140-2 1 级标准（包括板载密钥管理器）的验证。
+
+可以通过多种方法保护在 VMware vSphere 上运行的虚拟化应用程序的数据。一种方法是在子操作系统级别使用虚拟机中的软件保护数据。vSphere 6.5 等较新的虚拟机管理程序现在支持在 VM 级别进行加密，这是另一种替代方案。但是， NetApp 软件加密简单易用，并且具有以下优势：
+
+* * 对虚拟服务器 CPU 没有影响。 * 某些虚拟服务器环境需要为其应用程序提供每个可用的 CPU 周期，但测试表明，使用虚拟机管理程序级别的加密最多需要 5 倍的 CPU 资源。即使加密软件支持英特尔的AES-NI指令集来卸载加密工作负载(就像NetApp软件加密一样)、但由于需要新CPU来与旧服务器不兼容、因此这种方法可能不可行。
+* * 包括板载密钥管理器。 * NetApp 软件加密包括板载密钥管理器，无需额外付费，无需购买和使用复杂的高可用性密钥管理服务器即可轻松启动。
+* * 对存储效率没有影响。 * 重复数据删除和数据压缩等存储效率技术目前已广泛应用，是经济高效地使用闪存磁盘介质的关键。但是，加密数据通常无法进行重复数据删除或压缩。与其他方法不同， NetApp 硬件和存储加密的运行级别较低，并允许充分利用行业领先的 NetApp 存储效率功能。
+* * 轻松的数据存储库粒度加密。 * 借助 NetApp 卷加密，每个卷都获得自己的 AES 256 位密钥。如果需要更改，只需使用一个命令即可。如果您有多个租户或需要为不同部门或应用程序证明独立加密，则此方法非常适合。此加密在数据存储库级别进行管理，比管理单个虚拟机要简单得多。
+
+
+软件加密入门非常简单。安装许可证后，只需通过指定密码短语来配置板载密钥管理器，然后创建新卷或移动存储端卷以启用加密即可。NetApp 正在努力在其未来版本的 VMware 工具中增加对加密功能的集成支持。
+
+要深入了解更多安全主题、请参阅以下资源。
+
+* link:https://docs.netapp.com/us-en/ontap-technical-reports/security.html["安全技术报告"]
+* link:https://docs.netapp.com/us-en/ontap-technical-reports/security-hardening-guides.html["安全强化指南"]
+* link:https://docs.netapp.com/us-en/ontap/security-encryption/index.html["ONTAP安全性和数据加密产品文档"]
+

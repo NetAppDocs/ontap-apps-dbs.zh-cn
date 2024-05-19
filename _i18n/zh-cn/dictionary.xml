@@ -2464,8 +2464,6 @@
   <block id="fff460b039580a1bd42725a397b4c8be" category="inline-link">_ NetApp 支持站点 _</block>
   <block id="897515b5a8a03f8d5cbed44fd47ef9f3" category="paragraph"><block ref="897515b5a8a03f8d5cbed44fd47ef9f3" category="inline-link-rx"></block></block>
   <block id="4020fd07f5ee2361dd23956e6a334ffd" category="paragraph">有关其他解决方案 文档、请访问：</block>
-  <block id="503a41e1e31e362793f7e86af9102c41" category="inline-link">_NetApp虚拟化解决方案_</block>
-  <block id="33d455bce1363bad4500664eb6208860" category="paragraph"><block ref="33d455bce1363bad4500664eb6208860" category="inline-link-rx"></block></block>
   <block id="baf17f6d2396be5fd3676baf863a331f" category="section-title">产品故障排除</block>
   <block id="9d6d7fa1a5253698556ac2b0cda2207d" category="paragraph">ONTAP 工具的各种组件(例如vCenter插件、VASA Provider和Storage Replication Adapter)都记录在NetApp文档库中。但是、每个都有一个单独的知识库子部分、并且可能具有特定的故障排除过程。这些说明解决了使用VASA Provider时可能遇到的最常见问题。</block>
   <block id="ae2a93a809929192ecc7b468f234af84" category="section-title">VASA Provider UI问题</block>
@@ -2649,8 +2647,6 @@
 所有其他NFS配置、设置为30</block>
   <block id="93cba07454f06a4a960172bbd6e2a435" category="cell">是的。</block>
   <block id="504e96cc79e7efe30a8271cea152d9d1" category="cell">Net.TcpipHeapMax</block>
-  <block id="a8af33a99dd728969fd947da27a2f69f" category="cell">对于大多数vSphere 6.X版本、设置为512 MB。
-对于6.5U3、6.7U3和7.0或更高版本、设置为1024 MB。</block>
   <block id="5f1e7b6431061565550e292d05c73588" category="cell">NFS.MaxVolumes</block>
   <block id="3058676a1cf088aa4a73312ac36f2a58" category="cell">NFS41.MaxVolumes</block>
   <block id="62c07f94c64184ee5d530e4c0917093f" category="cell">vSphere 6.0或更高版本、请设置为256。</block>
@@ -2831,8 +2827,6 @@
   <block id="45701e6ef9bc09dca07f8f4abe661dc6" category="cell">是（在 vSphere 6.5 及更高版本中进行了增强，可支持 AES ， krb5i ）</block>
   <block id="76969a36155d2f41fc6cc3bd3faff244" category="cell">多路径支持</block>
   <block id="be0ec3d9251292dd856ea0924ecc6873" category="doc">服务质量（ QoS ）</block>
-  <block id="8fdd6138f63aa45f1c51b48d9a01b19d" category="paragraph">吞吐量限制对于在部署之前控制未知或测试工作负载非常有用、可确保它们不会影响其他工作负载。它们还可用于在确定抢占资源的工作负载后对其进行限制。此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。</block>
-  <block id="3e4a2dc31acddb628ba286d25b1bd36e" category="paragraph">对于 NFS 数据存储库，可以将 QoS 策略应用于整个 FlexVol 卷或其中的单个 VMDK 文件。对于使用 ONTAP LUN 的 VMFS 数据存储库，可以将 QoS 策略应用于包含 LUN 或单个 LUN 的 FlexVol 卷，但不能应用于单个 VMDK 文件，因为 ONTAP 无法识别 VMFS 文件系统。使用 VVOL 时，可以使用存储功能配置文件和 VM 存储策略在各个 VM 上设置最小和 / 或最大 QoS 。</block>
   <block id="534ecd446aac2f9c809eef9064f44aab" category="paragraph">可以使用 MBps 和 / 或 IOPS 设置对象的 QoS 最大吞吐量限制。如果同时使用这两者，则 ONTAP 会强制实施达到的第一个限制。一个工作负载可以包含多个对象，一个 QoS 策略可以应用于一个或多个工作负载。将一个策略应用于多个工作负载时，这些工作负载将共享此策略的总限制。不支持嵌套对象（例如，卷中的文件不能各自具有自己的策略）。QoS 最小值只能以 IOPS 为单位进行设置。</block>
   <block id="040f184b126879657b253b6d258661d9" category="paragraph">目前，以下工具可用于管理 ONTAP QoS 策略并将其应用于对象：</block>
   <block id="de134183bea5df515a6756a539ce6f18" category="list-text">ONTAP 命令行界面</block>
@@ -2842,12 +2836,9 @@
   <block id="8cc4e713850f67a131e9dbf8b997f61e" category="list-text">适用于 ONTAP 的 NetApp PowerShell 工具包</block>
   <block id="fcdb48d0d22627e4910a8352c80bd87a" category="list-text">适用于 VMware vSphere VASA Provider 的 ONTAP 工具</block>
   <block id="e6defd03e0f49585b6d47614713e97f7" category="paragraph">要将 QoS 策略分配给 NFS 上的 VMDK ，请注意以下准则：</block>
-  <block id="10509998e8d4c4d7be30fc1d0b6b2a1e" category="list-text">必须将此策略应用于<block ref="a1bb63c284b58c32f1afb554a12e3e9a" prefix=" " category="inline-code"></block> 包含实际虚拟磁盘映像、而不是<block ref="aa26c73336ecfd98ed727b3e249c7f90" prefix=" " category="inline-code"></block> (虚拟磁盘描述符文件)或<block ref="092eb4dd2ca488962f4c22b3e8cc4ca0" prefix=" " category="inline-code"></block> (VM描述符文件)。</block>
   <block id="2175e0e29bc4b213fa8b9c7afd591b6b" category="list-text">不要将策略应用于其他虚拟机文件、例如虚拟交换文件 <block ref="aa33c3c1850a3f99cec7426e2c411d08" prefix="(" category="inline-code"></block>）。</block>
   <block id="8230e9b5c1e9862fedb2c69f7cc5d3d1" category="list-text">在使用vSphere Web Client查找文件路径("数据存储库"&gt;"文件")时、请注意、它会合并的信息<block ref="f149d7424e10a266ec998ca5b32b81bb" prefix=" " category="inline-code"></block> 和<block ref="4a78be158c13cd6b2dc2100a80bb7070" prefix=" " category="inline-code"></block> 只需显示一个名为的文件<block ref="4a78be158c13cd6b2dc2100a80bb7070" prefix=" " category="inline-code"></block> 但的大小<block ref="f149d7424e10a266ec998ca5b32b81bb" prefix=" " category="inline-code"></block>。添加<block ref="4fc4e556dbb9dcede037ccd80fabd784" prefix=" " category="inline-code"></block> 以获取正确的路径。</block>
   <block id="1d4614aca13104c98d5d8cc2d415b941" category="paragraph">要为 LUN （包括 VMFS 和 RDM ）分配 QoS 策略，可以从适用于 VMware vSphere 的 ONTAP 工具主页上的存储系统菜单获取 ONTAP SVM （显示为 Vserver ）， LUN 路径和序列号。选择存储系统(SVM)、然后选择相关对象&gt; SAN。  使用 ONTAP 工具之一指定 QoS 时，请使用此方法。</block>
-  <block id="cc97a1a52adc0bd6f188de1545eea887" category="paragraph">使用适用于 VMware vSphere 的 ONTAP 工具或 Virtual Storage Console 7.1 及更高版本，可以轻松地为基于 VVOL 的虚拟机分配最大和最小 QoS 。在为VVOV容器创建存储功能配置文件时、请在性能功能下指定一个最大和/或最小IOPS值、然后使用虚拟机的存储策略引用此SCP。在创建虚拟机时使用此策略或将此策略应用于现有虚拟机。</block>
-  <block id="421c9efa4ff1b039a5378be7bc1e2e49" category="paragraph">在使用适用于 VMware vSphere 9.8 及更高版本的 ONTAP 工具时， FlexGroup 数据存储库可提供增强的 QoS 功能。您可以轻松地在数据存储库中的所有 VM 或特定 VM 上设置 QoS 。有关详细信息，请参见本报告的 FlexGroup 一节。</block>
   <block id="77bb2ba950959bd3f1c55da523ace0be" category="section-title">ONTAP QoS 和 VMware SIOC</block>
   <block id="b2e21dac6070ea83831ff6521a66a447" category="paragraph">ONTAP QoS 和 VMware vSphere 存储 I/O 控制（ SIOC ）是 vSphere 和存储管理员可以结合使用的补充技术，用于管理运行 ONTAP 软件的系统上托管的 vSphere VM 的性能。每个工具都有自己的优势，如下表所示。由于 VMware vCenter 和 ONTAP 的作用域不同，因此某些对象可以由一个系统查看和管理，而不能由另一个系统查看和管理。</block>
   <block id="5ad234cb2cde4266195252a23ca7d84e" category="cell">属性</block>
@@ -2879,8 +2870,6 @@
   <block id="01e838e1c124042f75adb374a81f72a6" category="paragraph">通过 VMware vSphere 存储感知 API （ VASA ），存储管理员可以轻松地为数据存储库配置定义明确的功能，并允许 VM 管理员在需要时使用这些功能来配置 VM ，而无需彼此交互。值得一看的是、这种方法可以帮助您简化虚拟化存储操作、避免大量琐碎的工作。</block>
   <block id="0ce8b0e3e0d7dc7f39c62fb74a28b3bf" category="section-title">云迁移和备份</block>
   <block id="4fe11b4a91ff38ec9933009a15dd5b0b" category="paragraph">ONTAP 的另一个优势是广泛支持混合云，将内部私有云中的系统与公有云功能相结合。以下是可与 vSphere 结合使用的一些 NetApp 云解决方案：</block>
-  <block id="e18ab5f123ad4ce169202479f07f3f0f" category="list-text">*云卷。*适用于Amazon Web Services或Google云平台的NetApp Cloud Volumes Service和适用于ANF的Azure NetApp Files可在领先的公共云环境中提供高性能、多协议托管存储服务。它们可以直接由 VMware Cloud VM 子系统使用。</block>
-  <block id="2a11701c0c01affc0ce96eb0d0c16ed9" category="list-text">* 云服务。 * 使用 Cloud Backup Service 或 SnapMirror 云保护数据免受使用公有云存储的内部系统的影响。Cloud Sync 有助于在 NAS ，对象存储和 Cloud Volumes Service 存储之间迁移和保持数据同步。</block>
   <block id="99c6c4d349151c1f4a6694e424aef741" category="inline-link">为VM存储更多快照</block>
   <block id="01fa297dbdab5aceb83a45a98161efe0" category="list-text">* FabricPool 。 * FabricPool 可为 ONTAP 数据快速轻松地分层。冷块可以迁移到公有云或私有StorageGRID对象存储中的对象存储、并在再次访问ONTAP数据时自动重新调用。或者，使用对象层作为已由 SnapVault 管理的数据的第三级保护。这种方法可以让您做到<block ref="60d027dbb3c3f076cbb70c6b246eb433" category="inline-link-rx"></block> 在主和 / 或二级 ONTAP 存储系统上。</block>
   <block id="1a7072854c9dd945a98f4314b3f77408" category="list-text">* ONTAP Select 。 * 使用 NetApp 软件定义的存储将您的私有云扩展到 Internet 上的远程设施和办公室，您可以在这些设施和办公室使用 ONTAP Select 支持块和文件服务以及您在企业数据中心拥有的相同 vSphere 数据管理功能。</block>
@@ -3664,7 +3653,6 @@
   <block id="97db606ac6781989ea3b189d7be28bf2" category="section-title">直连网络</block>
   <block id="d078ae9a339971900f939db9e82f253d" category="paragraph">存储管理员有时倾向于通过从配置中删除网络交换机来简化其基础架构。在某些情况下、可以支持此功能。</block>
   <block id="e817ecc2f82a2b78d828ec8704031da3" category="section-title">直连网络</block>
-  <block id="f437881fa7e42bf0e4563bbec8176f81" category="paragraph">运行 ONTAP 软件的系统可以使用 ONTAP 存储服务质量功能来限制文件， LUN ，卷或整个 SVM 等不同存储对象的吞吐量（以 MBps 和 / 或每秒 I/O 数（ IOPS ）为单位）。</block>
   <block id="87e6f97c8ec2f31df616ef84401ffaf4" category="paragraph">追加信息 提供了多种故障排除资源。</block>
   <block id="52d04863ac62a6fa67e1b49a31086928" category="paragraph">以下各节概述了VMware SRM和ONTAP存储的最佳操作实践。</block>
   <block id="f24ef4a42850a2b3e3d77e610ae46fee" category="doc">计划内和计划外事件的故障恢复能力</block>
@@ -4915,8 +4903,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="ff6fdc6e7749c69219fc26d54c625bd5" category="paragraph">NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提供了有关多路径和HBA超时设置的特定指导、以便根据NetApp和VMware内部测试在ONTAP中正常运行。</block>
   <block id="bc25cf0638b9454338db449fa254150f" category="paragraph">可以使用适用于VMware vSphere的ONTAP工具轻松设置这些值：从摘要信息板中、单击主机系统portlet中的编辑设置、或者在vCenter中右键单击主机、然后导航到ONTAP工具&gt;设置建议值。</block>
   <block id="8b31cb1f15553175f0c1621a39bdbb79" category="paragraph">下面是目前在9.8-9.13版本中建议的主机设置。</block>
-  <block id="e04f2f88f5ffb51e545bb057e058d8d3" category="cell">保留默认值(0)、但可以根据需要进行更改。
-有关详细信息，请参见 <block ref="68c2cf0ecb6a1c6abaf6e56c035d5866" category="inline-link-macro-rx"></block></block>
   <block id="baee97fad9d55c529dc7a7eb07fd1ba4" category="cell">vSphere 6.0或更高版本、请设置为256
 所有其他NFS配置均设置为64。</block>
   <block id="f52dc930699add83bc126704edf5400b" category="list-text">在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟在路径连接不等的环境中使用它可能会受益、例如、一条路径上的网络跃点比另一条路径多、或者使用NetApp全SAN阵列系统。请参见<block ref="f5ecc69f2970e2e9c8638ad278ec38f7" category="inline-link-rx"></block> 有关详细信息 ...</block>
@@ -4975,7 +4961,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="16ce478a465011bacaa6e508063c2648" category="section-title">需要记住的事项</block>
   <block id="83f04319244758f7531b398c51aa9f38" category="section-title">在NFS服务器上配置SMB共享</block>
   <block id="2323e97f7cf2da464750911f1f3e1af6" category="doc">在集群环境中部署Hyper-V副本</block>
-  <block id="38792c1c1d72aaa53d18f0b79d2621aa" category="doc">部署Hyper-V torage实时迁移</block>
   <block id="36b10adb4505559b63b091b53614af1f" category="section-title">NetApp重复数据删除</block>
   <block id="1ba5c1747d37a3d7ae84fd1dcac77603" category="section-title">进一步阅读</block>
   <block id="50802d3e5a25b93d471686a10da03dd8" category="section-title">最佳实践</block>
@@ -5204,4 +5189,71 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="fe0e23a929284a636c245a362ada6472" category="paragraph">适用于VMware vSphere的ONTAP工具的安全强化指南提供了一套全面的说明、用于配置最安全的设置。</block>
   <block id="bc86ce4caa57368f9094a93dd72ffd28" category="paragraph">如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还存在应用程序级选项、例如Oracle DataGuard或SQL Server Always On可用性组。可以选择操作系统级磁盘镜像。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。</block>
   <block id="ef0892c4d97bdcd9e4bada330c24ee8b" category="paragraph">MetroCluster是ONTAP的一项功能、可通过站点间的RPO = 0同步镜像保护Oracle数据库、并可进行扩展以在一个MetroCluster系统上支持数百个数据库。它也易于使用。使用MetroCluster并不一定会增加或更改运行企业级应用程序和数据库的任何最佳网络竞赛。</block>
+  <block id="8059304404c995bd8a349056e7d40e32" category="inline-link">_VMware虚拟化NetApp解决方案，由Broadcom提供_</block>
+  <block id="cc5363f91541e771ebd890b2330cb8ba" category="paragraph"><block ref="cc5363f91541e771ebd890b2330cb8ba" category="inline-link-rx"></block></block>
+  <block id="c90946faf2ed37e17d936e0b3acde7a7" category="summary">对空闲数据进行加密的需求不断增加、这种需求已超出传统数据的范畴、扩展到所有已存储的数据类型。</block>
+  <block id="b1e1676a19b222da72a55b95aa86d3e9" category="paragraph">要深入了解更多安全主题、请参阅以下资源。</block>
+  <block id="e6bd708199eed7d8bf33ef8308be0b3e" category="inline-link-macro">安全技术报告</block>
+  <block id="fb7f6edb08c080e81bd91a922a9d08f8" category="list-text"><block ref="fb7f6edb08c080e81bd91a922a9d08f8" category="inline-link-macro-rx"></block></block>
+  <block id="ff8c9f0959eb84d21416835c3f9c89d6" category="inline-link-macro">安全强化指南</block>
+  <block id="589b1ebfaed268e1548717208be6131f" category="list-text"><block ref="589b1ebfaed268e1548717208be6131f" category="inline-link-macro-rx"></block></block>
+  <block id="e44de13cc4b452eccde9961bbe9da42b" category="inline-link-macro">ONTAP安全性和数据加密产品文档</block>
+  <block id="c76e848365d3a2199dfced47ddbf8690" category="list-text"><block ref="c76e848365d3a2199dfced47ddbf8690" category="inline-link-macro-rx"></block></block>
+  <block id="b0451de97a6470424561bcadeb5893bd" category="summary">ONTAP软件广泛支持混合云。</block>
+  <block id="0e8f1228bcea37dc870b3c00ddfebb6b" category="list-text">*第一方产品。* Amazon FSx for NetApp ONTAP、Google Cloud NetApp Volumes和Azure NetApp Files for ANF可在领先的公共云环境中提供高性能、多协议托管存储服务。它们可直接由VMware Cloud on AWS (AWS上的VMC)、Azure VMware Solution (AVS)和Google Cloud VMware Engine (GCVE)用作子操作系统(GOS)和计算实例的数据存储库或存储。</block>
+  <block id="2c95b4b56070479502ffc85344c7d8b2" category="list-text">*云服务。*使用BlueXP备份和恢复或SnapMirror Cloud保护使用公共云存储的内部系统中的数据。Cloud Sync 有助于在 NAS ，对象存储和 Cloud Volumes Service 存储之间迁移和保持数据同步。BlueXP灾难恢复提供了一个经济高效的解决方案、可利用NetApp技术作为强大且功能强大的灾难恢复解决方案的基础、用于灾难恢复到云、灾难恢复到内部以及内部到内部。</block>
+  <block id="1a523ba4ece9125275b92ebb41e3cf23" category="inline-link-macro">Cloud Volumes ONTAP 文档</block>
+  <block id="e4501a9ef639002a658af0113906add9" category="list-text"><block ref="e4501a9ef639002a658af0113906add9" category="inline-link-macro-rx"></block></block>
+  <block id="7436b418bed093768e360d32105591d2" category="inline-link-macro">ONTAP Select 文档</block>
+  <block id="82fe32c89de73116e2188701ca735c39" category="list-text"><block ref="82fe32c89de73116e2188701ca735c39" category="inline-link-macro-rx"></block></block>
+  <block id="c756b6b1ba6b752239a8d49eda5ad2a4" category="inline-link-macro">BlueXP备份和恢复文档</block>
+  <block id="f99b2e5828a20fe99efc9b8c25b42d83" category="list-text"><block ref="f99b2e5828a20fe99efc9b8c25b42d83" category="inline-link-macro-rx"></block></block>
+  <block id="b044111e167403664c9e3432eca1f25a" category="inline-link-macro">BlueXP灾难恢复文档</block>
+  <block id="ec39a9c8e559c87efc4a1ac3c8dfd136" category="list-text"><block ref="ec39a9c8e559c87efc4a1ac3c8dfd136" category="inline-link-macro-rx"></block></block>
+  <block id="f5c286d9dc4cdaffcb8e5c86388e6ed8" category="list-text"><block ref="f5c286d9dc4cdaffcb8e5c86388e6ed8" category="inline-link-macro-rx"></block></block>
+  <block id="4dab2f9796b0af6304d00e21e2b9dfb4" category="inline-link-macro">基于 AWS 的 VMware Cloud</block>
+  <block id="560d5b2cd40977bd7b77b31d7088f657" category="list-text"><block ref="560d5b2cd40977bd7b77b31d7088f657" category="inline-link-macro-rx"></block></block>
+  <block id="e6aa20b5d3923ee0466f5d7e7bfed821" category="inline-link-macro">什么是Azure NetApp Files？
+</block>
+  <block id="810dc5c2e801b56b11325dd2aca0775c" category="list-text"><block ref="810dc5c2e801b56b11325dd2aca0775c" category="inline-link-macro-rx"></block></block>
+  <block id="9789f0612fda153726aa8ad87265e4b9" category="inline-link-macro">Azure VMware 解决方案</block>
+  <block id="f068ad668d317d445bc0da61125c318f" category="list-text"><block ref="f068ad668d317d445bc0da61125c318f" category="inline-link-macro-rx"></block></block>
+  <block id="8cb69aa5b1609d0a39f0fcd576c07df6" category="inline-link-macro">Google Cloud VMware 引擎</block>
+  <block id="dadb2f85467c159b9d8387744cdd0ce6" category="list-text"><block ref="dadb2f85467c159b9d8387744cdd0ce6" category="inline-link-macro-rx"></block></block>
+  <block id="e6288bb2b93ca74537fbff66317f01d9" category="inline-link-macro">什么是Google Cloud NetApp卷？</block>
+  <block id="e19aa8cca2f701dba5fc123376bebdb5" category="list-text"><block ref="e19aa8cca2f701dba5fc123376bebdb5" category="inline-link-macro-rx"></block></block>
+  <block id="fe0d13586251492122aca2ce92a53779" category="cell">保留默认值(0)、但可以根据需要进行更改。
+有关详细信息，请参见 <block ref="b982e0cf7a2ddd8de49cd5a4b5cefbd7" category="inline-link-macro-rx"></block></block>
+  <block id="b44c4aa4ed40a2c01a89549bc8746cbd" category="cell">对于大多数vSphere 6.X版本、设置为512 MB。
+对于6.5U3、6.7U3和7.0或更高版本、设置为默认值(1024MB)。</block>
+  <block id="f3c4f211a4831f8f7c223705b0fccd5d" category="paragraph">在控制服务级别、管理未知工作负载或在部署之前测试应用程序以确保它们不会影响生产环境中的其他工作负载时、吞吐量限制非常有用。它们还可用于在确定抢占资源的工作负载后对其进行限制。</block>
+  <block id="5ab12aefceb83851b73081a686bd30ab" category="section-title">ONTAP QoS策略支持</block>
+  <block id="3efec0f095dea3c3f13e003eafd76710" category="paragraph">运行ONTAP软件的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps为单位)和/或每秒I/O数(IOPS)。</block>
+  <block id="8aa45e69fd8330d5e4d2f6e16309ff41" category="paragraph">此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。</block>
+  <block id="98d229565d14d4d286f57a588a784c1e" category="inline-link-macro">性能监控和管理概述</block>
+  <block id="b7629a90716592b8dcae7480ad66d224" category="paragraph">请参见 <block ref="de4b907e949a377b72cd0f0b0595d155" category="inline-link-macro-rx"></block> 有关详细信息 ...</block>
+  <block id="81eba6b819a671b6c8962061afd13a78" category="section-title">非卷NFS数据存储库</block>
+  <block id="5bafceb9f14cf4b07086992cd31326a5" category="paragraph">ONTAP QoS策略可应用于整个数据存储库或其中的各个VMDK文件。但是、请务必了解、传统(非Vvol) NFS数据存储库上的所有VM都会共享给定主机的一个通用I/O队列。如果任何虚拟机受到ONTAP QoS策略的控制、则实际上会导致该主机上该数据存储库的所有I/O都受到控制。</block>
+  <block id="1520a4910ffa6efc27379931cc307d0b" category="paragraph">* 示例： *
+*对于主机ESXi -01作为传统NFS数据存储库挂载的卷、您需要在vm1.vmdk上配置QoS限制。
+*同一主机(ESXi -01)正在使用vm2.vmdk、并且位于同一个卷上。
+*如果vm1.vmdk受到节流、则vm2.vmdk也会显示为已节流、因为它与vm1.vmdk共享同一个IO队列。</block>
+  <block id="7105e6aafd96e59bb7664db98d24dcfc" category="paragraph">*注意：*这不适用于Svol。</block>
+  <block id="caf18b31d986fc095c3c0cd6a1f19f9e" category="paragraph">从vSphere 6.5开始、您可以利用具有存储I/O控制(SIIOC) v2的基于存储策略的管理(Storage Policy-Based Management、SPBM)来管理非Vvol数据存储库的文件粒度限制。</block>
+  <block id="c28029445f9803e209550517678387a9" category="paragraph">有关使用SIC和SPBM策略管理性能的详细信息、请参见以下链接。</block>
+  <block id="8bef032522908e987555b77fb50dbb85" category="inline-link-macro">SPBM基于主机的规则：SIIOC v2</block>
+  <block id="98a7507b3e8be801707c07e336bc5506" category="inline-link-macro">使用vSphere管理存储I/O资源</block>
+  <block id="37b0c263c77e85e59d9f00438e870fa4" category="paragraph"><block ref="ea373db41b8c05446b96b46f4bbe1141" category="inline-link-macro-rx"></block>
+<block ref="c5badf4fd27434d786395fe52801b533" category="inline-link-macro-rx"></block></block>
+  <block id="cd6af799ac31b0fbf81bcbba1d3d6bf1" category="list-text">必须将此策略应用于<block ref="3b9aef0680339707b430261c2f800255" prefix=" " category="inline-code"></block> 包含实际虚拟磁盘映像、而不是<block ref="aa26c73336ecfd98ed727b3e249c7f90" prefix=" " category="inline-code"></block> (虚拟磁盘描述符文件)或<block ref="092eb4dd2ca488962f4c22b3e8cc4ca0" prefix=" " category="inline-code"></block> (VM描述符文件)。</block>
+  <block id="9aa28dc739b66a86d9f73ba24b9dd4c2" category="paragraph">在使用适用于 VMware vSphere 9.8 及更高版本的 ONTAP 工具时， FlexGroup 数据存储库可提供增强的 QoS 功能。您可以轻松地在数据存储库中的所有 VM 或特定 VM 上设置 QoS 。有关详细信息，请参见本报告的 FlexGroup 一节。请注意、上述传统NFS数据存储库的QoS限制仍然适用。</block>
+  <block id="b5380e34617914719b059f6d55b97b66" category="section-title">VMFS数据存储库</block>
+  <block id="b74c42e3de8c5b901769e263bf236711" category="paragraph">使用ONTAP LUN、可以将QoS策略应用于包含LUN或单个LUN的FlexVol卷、但不能应用于单个VMDK文件、因为ONTAP无法识别VMFS文件系统。</block>
+  <block id="e122a7a507ac1f580cc5b9f2632a851c" category="section-title">数据存储库</block>
+  <block id="be1ca5bcad3b34c08e2b2d7bfc8a95e3" category="paragraph">使用基于存储策略的管理和Vvol、可以轻松地在各个VM或VMDK上设置最小和/或最大QoS、而不会影响任何其他VM或VMDK。</block>
+  <block id="f5ac983ee93a7017d283971566bc828e" category="paragraph">在为VVOV容器创建存储功能配置文件时、请在性能功能下指定一个最大和/或最小IOPS值、然后使用虚拟机的存储策略引用此SCP。在创建虚拟机时使用此策略或将此策略应用于现有虚拟机。</block>
+  <block id="1f23e960871a0a77a49731a6b47646c5" category="inline-link-macro">采用ONTAP的VMware vSphere虚拟卷(Vvol)</block>
+  <block id="136d0794411ea29f9fb5130ec2655f35" category="paragraph">*注意：* VVOLs要求使用适用于VMware vSphere的ONTAP工具、该工具可用作适用于ONTAP的VASA Provider。请参见 <block ref="2486a36e844a24e9d1cf22351b1f1514" category="inline-link-macro-rx"></block> 了解有关的最佳实践。</block>
+  <block id="8743b08c4d707cd145a4e7acce189480" category="cell">是(数据存储库可能会受到控制)</block>
+  <block id="b2891bc898f2a418aa349b623568299e" category="summary">借助Active IQ Unified Manager、可以监控VMware vSphere环境中的NetApp存储和性能问题并对其进行故障排除。</block>
 </blocks>

@@ -33,7 +33,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 
 
 | VMFS3.EnableBlockDelete | 保留默认值(0)、但可以根据需要进行更改。
-有关详细信息，请参见 link:https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=2007427["VMware知识库2007427"] | 否 
+有关详细信息，请参见 link:https://knowledge.broadcom.com/external/article?legacyId=2007427["VMware知识库2007427"] | 否 
 
 
 | VMFS3.EnableVMFS6Unmap | 保留默认值(1)
@@ -48,7 +48,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 
 
 | Net.TcpipHeapMax | 对于大多数vSphere 6.X版本、设置为512 MB。
-对于6.5U3、6.7U3和7.0或更高版本、设置为1024 MB。 | 是的。 
+对于6.5U3、6.7U3和7.0或更高版本、设置为默认值(1024MB)。 | 是的。 
 
 
 | NFS.MaxVolumes | vSphere 6.0或更高版本、请设置为256

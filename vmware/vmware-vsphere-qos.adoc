@@ -14,11 +14,15 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 
 [role="lead"]
-运行 ONTAP 软件的系统可以使用 ONTAP 存储服务质量功能来限制文件， LUN ，卷或整个 SVM 等不同存储对象的吞吐量（以 MBps 和 / 或每秒 I/O 数（ IOPS ）为单位）。
+在控制服务级别、管理未知工作负载或在部署之前测试应用程序以确保它们不会影响生产环境中的其他工作负载时、吞吐量限制非常有用。它们还可用于在确定抢占资源的工作负载后对其进行限制。
 
-吞吐量限制对于在部署之前控制未知或测试工作负载非常有用、可确保它们不会影响其他工作负载。它们还可用于在确定抢占资源的工作负载后对其进行限制。此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。
 
-对于 NFS 数据存储库，可以将 QoS 策略应用于整个 FlexVol 卷或其中的单个 VMDK 文件。对于使用 ONTAP LUN 的 VMFS 数据存储库，可以将 QoS 策略应用于包含 LUN 或单个 LUN 的 FlexVol 卷，但不能应用于单个 VMDK 文件，因为 ONTAP 无法识别 VMFS 文件系统。使用 VVOL 时，可以使用存储功能配置文件和 VM 存储策略在各个 VM 上设置最小和 / 或最大 QoS 。
+
+== ONTAP QoS策略支持
+
+运行ONTAP软件的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps为单位)和/或每秒I/O数(IOPS)。
+
+此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。
 
 可以使用 MBps 和 / 或 IOPS 设置对象的 QoS 最大吞吐量限制。如果同时使用这两者，则 ONTAP 会强制实施达到的第一个限制。一个工作负载可以包含多个对象，一个 QoS 策略可以应用于一个或多个工作负载。将一个策略应用于多个工作负载时，这些工作负载将共享此策略的总限制。不支持嵌套对象（例如，卷中的文件不能各自具有自己的策略）。QoS 最小值只能以 IOPS 为单位进行设置。
 
@@ -32,18 +36,54 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 * 适用于 VMware vSphere VASA Provider 的 ONTAP 工具
 
 
+要为 LUN （包括 VMFS 和 RDM ）分配 QoS 策略，可以从适用于 VMware vSphere 的 ONTAP 工具主页上的存储系统菜单获取 ONTAP SVM （显示为 Vserver ）， LUN 路径和序列号。选择存储系统(SVM)、然后选择相关对象> SAN。  使用 ONTAP 工具之一指定 QoS 时，请使用此方法。
+
+请参见 link:https://docs.netapp.com/us-en/ontap/performance-admin/index.html["性能监控和管理概述"] 有关详细信息 ...
+
+
+
+== 非卷NFS数据存储库
+
+ONTAP QoS策略可应用于整个数据存储库或其中的各个VMDK文件。但是、请务必了解、传统(非Vvol) NFS数据存储库上的所有VM都会共享给定主机的一个通用I/O队列。如果任何虚拟机受到ONTAP QoS策略的控制、则实际上会导致该主机上该数据存储库的所有I/O都受到控制。
+
+* 示例： *
+*对于主机ESXi -01作为传统NFS数据存储库挂载的卷、您需要在vm1.vmdk上配置QoS限制。
+*同一主机(ESXi -01)正在使用vm2.vmdk、并且位于同一个卷上。
+*如果vm1.vmdk受到节流、则vm2.vmdk也会显示为已节流、因为它与vm1.vmdk共享同一个IO队列。
+
+*注意：*这不适用于Svol。
+
+从vSphere 6.5开始、您可以利用具有存储I/O控制(SIIOC) v2的基于存储策略的管理(Storage Policy-Based Management、SPBM)来管理非Vvol数据存储库的文件粒度限制。
+
+有关使用SIC和SPBM策略管理性能的详细信息、请参见以下链接。
+
+link:https://blogs.vmware.com/virtualblocks/2019/07/02/spbm-host-based-rules/["SPBM基于主机的规则：SIIOC v2"]
+link:https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-resource-management/GUID-7686FEC3-1FAC-4DA7-B698-B808C44E5E96.html["使用vSphere管理存储I/O资源"]
+
 要将 QoS 策略分配给 NFS 上的 VMDK ，请注意以下准则：
 
-* 必须将此策略应用于 `vmname- flat.vmdk` 包含实际虚拟磁盘映像、而不是 `vmname.vmdk` (虚拟磁盘描述符文件)或 `vmname.vmx` (VM描述符文件)。
+* 必须将此策略应用于 `vmname-flat.vmdk` 包含实际虚拟磁盘映像、而不是 `vmname.vmdk` (虚拟磁盘描述符文件)或 `vmname.vmx` (VM描述符文件)。
 * 不要将策略应用于其他虚拟机文件、例如虚拟交换文件 (`vmname.vswp`）。
 * 在使用vSphere Web Client查找文件路径("数据存储库">"文件")时、请注意、它会合并的信息 `- flat.vmdk` 和 `. vmdk` 只需显示一个名为的文件 `. vmdk` 但的大小 `- flat.vmdk`。添加 `-flat` 以获取正确的路径。
 
 
-要为 LUN （包括 VMFS 和 RDM ）分配 QoS 策略，可以从适用于 VMware vSphere 的 ONTAP 工具主页上的存储系统菜单获取 ONTAP SVM （显示为 Vserver ）， LUN 路径和序列号。选择存储系统(SVM)、然后选择相关对象> SAN。  使用 ONTAP 工具之一指定 QoS 时，请使用此方法。
+在使用适用于 VMware vSphere 9.8 及更高版本的 ONTAP 工具时， FlexGroup 数据存储库可提供增强的 QoS 功能。您可以轻松地在数据存储库中的所有 VM 或特定 VM 上设置 QoS 。有关详细信息，请参见本报告的 FlexGroup 一节。请注意、上述传统NFS数据存储库的QoS限制仍然适用。
 
-使用适用于 VMware vSphere 的 ONTAP 工具或 Virtual Storage Console 7.1 及更高版本，可以轻松地为基于 VVOL 的虚拟机分配最大和最小 QoS 。在为VVOV容器创建存储功能配置文件时、请在性能功能下指定一个最大和/或最小IOPS值、然后使用虚拟机的存储策略引用此SCP。在创建虚拟机时使用此策略或将此策略应用于现有虚拟机。
 
-在使用适用于 VMware vSphere 9.8 及更高版本的 ONTAP 工具时， FlexGroup 数据存储库可提供增强的 QoS 功能。您可以轻松地在数据存储库中的所有 VM 或特定 VM 上设置 QoS 。有关详细信息，请参见本报告的 FlexGroup 一节。
+
+== VMFS数据存储库
+
+使用ONTAP LUN、可以将QoS策略应用于包含LUN或单个LUN的FlexVol卷、但不能应用于单个VMDK文件、因为ONTAP无法识别VMFS文件系统。
+
+
+
+== 数据存储库
+
+使用基于存储策略的管理和Vvol、可以轻松地在各个VM或VMDK上设置最小和/或最大QoS、而不会影响任何其他VM或VMDK。
+
+在为VVOV容器创建存储功能配置文件时、请在性能功能下指定一个最大和/或最小IOPS值、然后使用虚拟机的存储策略引用此SCP。在创建虚拟机时使用此策略或将此策略应用于现有虚拟机。
+
+*注意：* VVOLs要求使用适用于VMware vSphere的ONTAP工具、该工具可用作适用于ONTAP的VASA Provider。请参见 link:/vmware/vmware-vvols-overview.html["采用ONTAP的VMware vSphere虚拟卷(Vvol)"] 了解有关的最佳实践。
 
 
 
@@ -70,10 +110,10 @@ ONTAP QoS 和 VMware vSphere 存储 I/O 控制（ SIOC ）是 vSphere 和存储�
 | 是否为 LUN 设置 QoS （ RDM ）？ | 是的。 | 否 
 
 
-| 是否为 LUN （ VMFS ）设置 QoS ？ | 是的。 | 否 
+| 是否为 LUN （ VMFS ）设置 QoS ？ | 是的。 | 是(数据存储库可能会受到控制) 
 
 
-| 是否为卷（ NFS 数据存储库）设置 QoS ？ | 是的。 | 否 
+| 是否为卷（ NFS 数据存储库）设置 QoS ？ | 是的。 | 是(数据存储库可能会受到控制) 
 
 
 | 是否在 SVM （租户）上设置 QoS ？ | 是的。 | 否 
@@ -133,54 +173,3 @@ ONTAP 同时支持 VMFS 和 NFS VVol 数据存储库。将 VVOL 与 SAN 数据�
 下图显示了 VVOL 组件。
 
 image:vsphere_ontap_image8.png["VMware组件"]
-
-
-
-== 云迁移和备份
-
-ONTAP 的另一个优势是广泛支持混合云，将内部私有云中的系统与公有云功能相结合。以下是可与 vSphere 结合使用的一些 NetApp 云解决方案：
-
-* *云卷。*适用于Amazon Web Services或Google云平台的NetApp Cloud Volumes Service和适用于ANF的Azure NetApp Files可在领先的公共云环境中提供高性能、多协议托管存储服务。它们可以直接由 VMware Cloud VM 子系统使用。
-* * Cloud Volumes ONTAP 。 * NetApp Cloud Volumes ONTAP 数据管理软件可在您选择的云中控制，保护，灵活性和效率您的数据。Cloud Volumes ONTAP是基于ONTAP存储构建的云原生数据管理软件。与 Cloud Manager 结合使用，可与内部 ONTAP 系统一起部署和管理 Cloud Volumes ONTAP 实例。利用高级NAS和iSCSI SAN功能以及统一数据管理、包括快照和SnapMirror复制。
-* * 云服务。 * 使用 Cloud Backup Service 或 SnapMirror 云保护数据免受使用公有云存储的内部系统的影响。Cloud Sync 有助于在 NAS ，对象存储和 Cloud Volumes Service 存储之间迁移和保持数据同步。
-* * FabricPool 。 * FabricPool 可为 ONTAP 数据快速轻松地分层。冷块可以迁移到公有云或私有StorageGRID对象存储中的对象存储、并在再次访问ONTAP数据时自动重新调用。或者，使用对象层作为已由 SnapVault 管理的数据的第三级保护。这种方法可以让您做到 https://www.linkedin.com/pulse/rethink-vmware-backup-again-keith-aasen/["为VM存储更多快照"^] 在主和 / 或二级 ONTAP 存储系统上。
-* * ONTAP Select 。 * 使用 NetApp 软件定义的存储将您的私有云扩展到 Internet 上的远程设施和办公室，您可以在这些设施和办公室使用 ONTAP Select 支持块和文件服务以及您在企业数据中心拥有的相同 vSphere 数据管理功能。
-
-
-在设计基于 VM 的应用程序时，请考虑未来的云移动性。例如，与其将应用程序和数据文件放在一起，不如对数据使用单独的 LUN 或 NFS 导出。这样，您就可以将虚拟机和数据单独迁移到云服务。
-
-
-
-== vSphere 数据加密
-
-如今，通过加密保护空闲数据的需求日益增长。虽然最初的关注点是金融和医疗保健信息、但人们越来越关注保护所有信息、无论是存储在文件、数据库中还是其他数据类型中。
-
-运行 ONTAP 软件的系统可通过空闲加密轻松保护任何数据。NetApp 存储加密（ NetApp Storage Encryption ， NSE ）使用带有 ONTAP 的自加密磁盘驱动器来保护 SAN 和 NAS 数据。NetApp 还提供 NetApp 卷加密和 NetApp 聚合加密，这是一种基于软件的简单方法，用于对任何磁盘驱动器上的卷进行加密。这种软件加密不需要特殊的磁盘驱动器或外部密钥管理器、ONTAP客户可以免费使用。您可以在不中断客户端或应用程序的情况下升级并开始使用它，并且它们已通过 FIPS 140-2 1 级标准（包括板载密钥管理器）的验证。
-
-可以通过多种方法保护在 VMware vSphere 上运行的虚拟化应用程序的数据。一种方法是在子操作系统级别使用虚拟机中的软件保护数据。vSphere 6.5 等较新的虚拟机管理程序现在支持在 VM 级别进行加密，这是另一种替代方案。但是， NetApp 软件加密简单易用，并且具有以下优势：
-
-* * 对虚拟服务器 CPU 没有影响。 * 某些虚拟服务器环境需要为其应用程序提供每个可用的 CPU 周期，但测试表明，使用虚拟机管理程序级别的加密最多需要 5 倍的 CPU 资源。即使加密软件支持英特尔的AES-NI指令集来卸载加密工作负载(就像NetApp软件加密一样)、但由于需要新CPU来与旧服务器不兼容、因此这种方法可能不可行。
-* * 包括板载密钥管理器。 * NetApp 软件加密包括板载密钥管理器，无需额外付费，无需购买和使用复杂的高可用性密钥管理服务器即可轻松启动。
-* * 对存储效率没有影响。 * 重复数据删除和数据压缩等存储效率技术目前已广泛应用，是经济高效地使用闪存磁盘介质的关键。但是，加密数据通常无法进行重复数据删除或压缩。与其他方法不同， NetApp 硬件和存储加密的运行级别较低，并允许充分利用行业领先的 NetApp 存储效率功能。
-* * 轻松的数据存储库粒度加密。 * 借助 NetApp 卷加密，每个卷都获得自己的 AES 256 位密钥。如果需要更改，只需使用一个命令即可。如果您有多个租户或需要为不同部门或应用程序证明独立加密，则此方法非常适合。此加密在数据存储库级别进行管理，比管理单个虚拟机要简单得多。
-
-
-软件加密入门非常简单。安装许可证后，只需通过指定密码短语来配置板载密钥管理器，然后创建新卷或移动存储端卷以启用加密即可。NetApp 正在努力在其未来版本的 VMware 工具中增加对加密功能的集成支持。
-
-
-
-== Active IQ Unified Manager
-
-通过 Active IQ Unified Manager 可以查看虚拟基础架构中的虚拟机，并监控虚拟环境中的存储和性能问题并对其进行故障排除。
-
-ONTAP 上的典型虚拟基础架构部署包含多个组件，这些组件分布在计算层，网络层和存储层上。VM 应用程序中的任何性能滞后都可能是由于各个层的各个组件同时面临的延迟造成的。
-
-以下屏幕截图显示了 Active IQ Unified Manager 虚拟机视图。
-
-image:vsphere_ontap_image9.png["Active IQ Unified Manager虚拟机视图"]
-
-Unified Manager 以拓扑视图形式呈现虚拟环境的底层子系统，用于确定计算节点，网络或存储是否发生延迟问题描述。此视图还会突出显示导致执行补救步骤和解决底层问题描述时出现性能滞后的特定对象。
-
-以下屏幕截图显示了 AIQUM 扩展拓扑。
-
-image:vsphere_ontap_image10.png["AIQUM扩展拓扑"]
