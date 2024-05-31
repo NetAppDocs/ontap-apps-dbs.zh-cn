@@ -159,7 +159,6 @@
   <block id="678e476783bceae80094bcb4c1f32969" category="admonition">* NetApp建议*至少留出10%的可用空间。这包括所有未使用的空间、包括聚合或卷中的可用空间、以及由于使用完全配置而分配但实际数据未使用的任何可用空间。逻辑空间并不重要、问题是可用于数据存储的实际可用物理空间有多少。</block>
   <block id="2171d172d184f1202a686849c85dce91" category="paragraph">建议10%的可用空间非常保守。SSD聚合可以支持利用率更高的工作负载、而不会对性能产生任何影响。但是、随着聚合利用率的提高、如果不仔细监控利用率、用尽空间的风险也会增加。此外、在以99%的容量运行系统时、可能不会影响性能、但可能会导致管理工作、试图在订购额外硬件时阻止系统完全填满、并且可能需要一些时间来采购和安装额外的驱动器。</block>
   <block id="789243e17acb0b134f435d6c4c1350f2" category="section-title">HDD聚合、包括Flash Pool聚合</block>
-  <block id="7302e9f16fb8c5bc30f6035fe4098b52" category="admonition">* NetApp建议*使用旋转驱动器时至少留出15%的可用空间。这包括所有未使用的空间、包括聚合或卷中的可用空间、以及由于使用完全配置而分配但实际数据未使用的任何可用空间。当言论自由接近10%时、性能将受到影响。</block>
   <block id="0b0a68e2dedde9c0b9a3ea4276f4b85c" category="paragraph">。<block ref="9df22f196a33acd0b372fe502de51211" prefix=" " category="inline-code"></block> 策略是最适合备份数据的策略。这样可以确保在达到冷却阈值时及时分层、而不管这些文件是已删除还是仍位于主文件系统中。将所有可能需要的文件存储在活动文件系统中的一个位置也可以简化管理。没有理由通过搜索快照来查找需要还原的文件。</block>
   <block id="11a75a1257cc68a4a46bc553dabe0c0d" category="paragraph">。<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block> 可以使策略有效、但该策略仅适用于不再位于活动文件系统中的适用场景块。因此、必须先删除NFS或SMB共享上的文件、然后才能对数据进行分层。</block>
   <block id="b4af96e8cea99b56592db816cab30fce" category="paragraph">对于LUN配置、此策略的效率甚至会更低、因为从LUN中删除文件只会从文件系统元数据中删除文件引用。LUN上的实际块将一直保留在原位、直到被覆盖为止。这种情况可能会在删除文件和覆盖块并成为可进行层的候选块之间造成长时间延迟。移动有一些好处<block ref="8805d416ce540c5f2df34af5b18d742b" prefix=" " category="inline-code"></block> 块到容量层、但总体而言、FabricPool备份数据管理最适合与结合使用<block ref="9df22f196a33acd0b372fe502de51211" prefix=" " category="inline-code"></block> 策略。</block>
@@ -3464,7 +3463,6 @@
   <block id="2c6d98297c340e390e0783220b038545" category="sidebar">物理架构</block>
   <block id="13a854bdd11f8f57a0b25c00631f1430" category="sidebar">逻辑架构</block>
   <block id="5e7988aeba0e1d3c15c5c78a0db738d1" category="sidebar">SyncMirror</block>
-  <block id="3f23f85f537c810b6eca3c767c3ff00c" category="sidebar">Oracle故障转移</block>
   <block id="5ba8ee2f32815884475d1f2244ba16a6" category="sidebar">故障情形</block>
   <block id="e31593850dc03f8f10d036df5dc8633b" category="sidebar">Oracle数据库迁移</block>
   <block id="5102abd5a9cc202678054b832caf678d" category="sidebar">过程</block>
@@ -5029,7 +5027,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="f595bf3bf71ab0c91a5503ba4efb8ea4" category="paragraph">数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。</block>
   <block id="05a1ffdb277b8c7ac1dca78adae0017e" category="sidebar">LUN放置</block>
   <block id="9d5c13d45bbf74999764cfe8d4798562" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、HTTPS证书管理。</block>
-  <block id="0f464051d2b3e2c46fd57cb0c7edb4a9" category="doc">ONTAP工具HTTPS证书</block>
   <block id="d6a1787b51b08315bfcc44f3a9bb4b2f" category="paragraph">默认情况下、ONTAP工具会使用安装期间自动创建的自签名证书来保护对Web UI的HTTPS访问。ONTAP工具提供以下功能：</block>
   <block id="1eddd0f3479da31541c39e5ddddfa930" category="list-text">重新生成HTTPS证书</block>
   <block id="61bf3033b18d202012951f5bf7be4fa9" category="paragraph">在ONTAP工具安装期间、会安装HTTPS CA证书、并将该证书存储在密钥库中。用户可以选择通过maine控制台重新生成HTTPS证书。</block>
@@ -5055,7 +5052,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="86a670227d3e81e8fa34eb4aede3129a" category="section-title">3.支持用户(diag用户)</block>
   <block id="e482d8f0e37161e7916c7a78d2cf7210" category="paragraph">在ONTAP工具安装期间、系统会创建一个支持用户。此用户可用于在服务器发生任何问题描述或中断时访问ONTAP工具并收集日志。默认情况下、此用户处于禁用状态、但可以通过"aint"控制台临时启用。需要注意的是、此用户将在特定时间段后自动禁用。</block>
   <block id="562596399deefc1e2a6cc32eb489976c" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南。</block>
-  <block id="1bc8028b63c10101b776e8b8ff907571" category="doc">端口和协议</block>
   <block id="80dd7fd00106118cf9c10abf911b7111" category="paragraph">此处列出的是支持在适用于VMware vSphere服务器的ONTAP工具与其他实体(如受管存储系统、服务器和其他组件)之间进行通信所需的端口和协议。</block>
   <block id="d40dfcfdaecc4e8015535acd5de00398" category="section-title">OTV需要入站和出站端口</block>
   <block id="834b74ce890c61455ad330759d44eff2" category="paragraph">请注意下表、其中列出了ONTAP工具正常运行所需的入站和出站端口。请务必确保仅为远程计算机的连接打开表中提到的端口、而为远程计算机的连接应阻止所有其他端口。这将有助于确保系统的安全性和安全性。</block>
@@ -5078,7 +5074,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="10046bc1eb8463e6ca6ae51bd3b7a574" category="inline-image-macro">Derby、宽度=468、高度=136</block>
   <block id="36434da35edb72a1f85cbbcc1ff2b197" category="paragraph"><block ref="36434da35edb72a1f85cbbcc1ff2b197" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f21dd7ffc271f1301878c3078a59692d" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》、登录横幅。</block>
-  <block id="8bea3b588d20824cc56c9e5629943f1a" category="doc">登录横幅</block>
   <block id="67f78f0bab8fe81a2b6971543c716d3d" category="paragraph">用户在登录提示符中输入用户名后、将显示以下登录横幅。请注意、默认情况下、SSH处于禁用状态、从VM控制台启用SSH后、它仅允许一次性登录。</block>
   <block id="ae20daf991a940f9de7033ff0a1af410" category="paragraph">用户通过 SSH 通道完成登录后，将显示以下文本：</block>
   <block id="8f1b6f904292913013b1f6e578d7b074" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、完整性验证。</block>
@@ -5108,7 +5103,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="5f4345a6f62f7a3926b2c3d92f5574f6" category="paragraph">然后，应使用公共密钥验证ISO和tgz产品zip的签名，如下所示：</block>
   <block id="81eeab9506186e2dca8faefa78d54067" category="paragraph">示例</block>
   <block id="c6666237b03fcb86e315a0a06e73b6ef" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、存储管理连接的相互TLS加密。</block>
-  <block id="a1f873acd76a0948013378ff10927a74" category="doc">相互TLS (基于证书的身份验证)</block>
   <block id="53893182b7e17fb2da37935ee3ffda55" category="paragraph">ONTAP 9.7及更高版本支持相互TLS通信。从适用于VMware和vSphere 9.12的ONTAP工具开始、可使用相互TLS与新添加的集群进行通信(具体取决于ONTAP版本)。</block>
   <block id="1be712dee4c47804142318ffb739e46b" category="paragraph">对于先前添加的所有存储系统：在升级期间、所有添加的存储系统都将获得自动信任、并配置基于证书的身份验证机制。</block>
   <block id="d39adf53eaace0fbba30d4e13760a974" category="paragraph">如以下屏幕截图所示、集群设置页面将显示为每个集群配置的相互TLS (基于证书的身份验证)的状态。</block>
@@ -5132,7 +5126,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6a59df9970674c274e20b1d91be2df8a" category="paragraph"><block ref="6a59df9970674c274e20b1d91be2df8a" category="inline-image-macro-rx" type="image"></block></block>
   <block id="75545011d3e6abe8a2cd8cd5bc21c6fd" category="paragraph"><block ref="75545011d3e6abe8a2cd8cd5bc21c6fd" category="inline-image-macro-rx" type="image"></block></block>
   <block id="14a73da2f5fe352620bed1b49a3319ed" category="summary">《适用于VMware vSphere的ONTAP工具的安全增强指南》、《针对DOS攻击的网络安全保护》。</block>
-  <block id="7dc9b3603fa2b925d4d44930e25f1afa" category="doc">每个用户的最大并发请求数(网络安全保护：DOS攻击)</block>
   <block id="8f7e7bd942f453f0550dc4f907e88810" category="paragraph">默认情况下、每个用户的最大并发请求数为48个。ONTAP工具中的root用户可以根据其环境的要求更改此值。*此值不应设置为非常高的值，因为它提供了一种防止拒绝服务(DOS)攻击的机制。*</block>
   <block id="99c1088ea27d16b42c6b45d794f59d3f" category="paragraph">用户可以在*__/opt/NetApp/vscserver/etc/dosfilterParams.json_*文件中更改最大并发会话数和其他受支持的参数。</block>
   <block id="5e7c907630f5a432ac6b39f0b8c04c28" category="paragraph">我们可以通过以下参数配置筛选器：</block>
@@ -5145,7 +5138,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="ca49b2b6b0c4bb4aa0596879eef667f5" category="inline-image-macro">多路径连接</block>
   <block id="de3698c6b3c2722a1b82c99522519f4f" category="paragraph"><block ref="de3698c6b3c2722a1b82c99522519f4f" category="inline-image-macro-rx" type="image"></block></block>
   <block id="9afb15056a8bc8b4402d55eba2274dad" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。</block>
-  <block id="bad9c891abe49e73c2bf4fb95fbe61ba" category="doc">网络时间协议(NTP)配置</block>
   <block id="48edbd8a951efb0ad617f7868b27a6c0" category="paragraph">有时、由于网络时间配置的差异、可能会出现安全问题。请务必确保网络中的所有设备都具有准确的时间设置、以防止出现此类问题。</block>
   <block id="a55d703ea2930e8e72e94ce11c3297ab" category="section-title">*虚拟设备*</block>
   <block id="5a65f4c9ca6d99f573528348d36914fa" category="paragraph">您可以从虚拟设备的维护控制台配置NTP服务器。  用户可以在_System Configuration_=&gt;_Add new NTP Server_选项下添加NTP服务器详细信息</block>
@@ -5154,7 +5146,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="dc3bb5166d38d2aec53765aca7c0d24c" category="paragraph">在Debian上、用户可以访问/etc/ntp.conf文件以获取NTP服务器详细信息。</block>
   <block id="fec65f0c33739368ce5845fadb6cb880" category="paragraph">这些指南适用于设备本身的应用程序和子操作系统。</block>
   <block id="5aaf8fc9424d7872cf500fb7adcb3b97" category="summary">《适用于VMware vSphere的ONTAP工具安全增强指南》、密码策略配置。</block>
-  <block id="ca80b83fb98de16af35b38476df589c3" category="doc">密码策略</block>
   <block id="53477738359cebc12d4e01727ee8b5e7" category="paragraph">首次部署ONTAP工具或升级到9.12或更高版本的用户需要同时遵循管理员和数据库用户的强密码策略。在部署过程中、系统将提示新用户输入其密码。对于升级到9.12或更高版本的brownfield用户、维护控制台中将提供遵循强密码策略的选项。</block>
   <block id="7afd9be20a239f83f98bdbc7f90512ef" category="list-text">用户登录maIT控制台后、系统将根据复杂规则集检查密码、如果发现未遵循此规则、则会要求用户重置相同密码。</block>
   <block id="1e048d74f3d9375186833526a00f4309" category="list-text">密码默认有效期为90天、75天后、用户将开始收到更改密码的通知。</block>
@@ -5188,7 +5179,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="47d29daaa26fbfa9c9a069d4cd023ac1" category="doc">适用于VMware vSphere的ONTAP工具安全强化指南</block>
   <block id="fe0e23a929284a636c245a362ada6472" category="paragraph">适用于VMware vSphere的ONTAP工具的安全强化指南提供了一套全面的说明、用于配置最安全的设置。</block>
   <block id="bc86ce4caa57368f9094a93dd72ffd28" category="paragraph">如果需要Domino模式、则NetApp提供SnapMirror同步(SM-S)。此外、还存在应用程序级选项、例如Oracle DataGuard或SQL Server Always On可用性组。可以选择操作系统级磁盘镜像。有关追加信息和选项、请咨询您的NetApp或合作伙伴客户团队。</block>
-  <block id="ef0892c4d97bdcd9e4bada330c24ee8b" category="paragraph">MetroCluster是ONTAP的一项功能、可通过站点间的RPO = 0同步镜像保护Oracle数据库、并可进行扩展以在一个MetroCluster系统上支持数百个数据库。它也易于使用。使用MetroCluster并不一定会增加或更改运行企业级应用程序和数据库的任何最佳网络竞赛。</block>
   <block id="8059304404c995bd8a349056e7d40e32" category="inline-link">_VMware虚拟化NetApp解决方案，由Broadcom提供_</block>
   <block id="cc5363f91541e771ebd890b2330cb8ba" category="paragraph"><block ref="cc5363f91541e771ebd890b2330cb8ba" category="inline-link-rx"></block></block>
   <block id="c90946faf2ed37e17d936e0b3acde7a7" category="summary">对空闲数据进行加密的需求不断增加、这种需求已超出传统数据的范畴、扩展到所有已存储的数据类型。</block>
@@ -5256,4 +5246,13 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="136d0794411ea29f9fb5130ec2655f35" category="paragraph">*注意：* VVOLs要求使用适用于VMware vSphere的ONTAP工具、该工具可用作适用于ONTAP的VASA Provider。请参见 <block ref="2486a36e844a24e9d1cf22351b1f1514" category="inline-link-macro-rx"></block> 了解有关的最佳实践。</block>
   <block id="8743b08c4d707cd145a4e7acce189480" category="cell">是(数据存储库可能会受到控制)</block>
   <block id="b2891bc898f2a418aa349b623568299e" category="summary">借助Active IQ Unified Manager、可以监控VMware vSphere环境中的NetApp存储和性能问题并对其进行故障排除。</block>
+  <block id="b7ce758ec5c25cb23edfa4ead0d0097e" category="admonition">* NetApp建议*使用旋转驱动器时至少留出15%的可用空间。这包括所有未使用的空间、包括聚合或卷中的可用空间、以及由于使用完全配置而分配但实际数据未使用的任何可用空间。可用空间接近10%时、性能将受到影响。</block>
+  <block id="5a7f49be424e282d22b4c3889f5cd341" category="paragraph">MetroCluster是ONTAP的一项功能、可通过站点间的RPO = 0同步镜像保护Oracle数据库、并可进行扩展以在一个MetroCluster系统上支持数百个数据库。</block>
+  <block id="30160293c6cf2d26d13cbd294af7fb4c" category="paragraph">它也易于使用。使用MetroCluster并不一定会增加或更改运行企业级应用程序和数据库的任何最佳网络竞赛。</block>
+  <block id="c77924ff430fa98df17795d4f5c5885f" category="doc">ONTAP工具HTTPS证书</block>
+  <block id="641cc5f60c71fe9f9a2e15c5cc680ec3" category="summary">适用于VMware vSphere的ONTAP工具、TCP端口和协议的安全增强指南</block>
+  <block id="872cba2a662a784946eb48675276dee2" category="doc">相互TLS (基于证书的身份验证)</block>
+  <block id="5a4857ad48868097d482a4a448f48bd9" category="doc">每个用户的最大并发请求数(网络安全保护/DOS攻击)</block>
+  <block id="0af211d5cda5cc4bb17dd7751e741595" category="doc">网络时间协议(NTP)配置</block>
+  <block id="c1fac7a72cd91bcd345e567f6d6d93a3" category="sidebar">使用MetroCluster进行Oracle故障转移</block>
 </blocks>
