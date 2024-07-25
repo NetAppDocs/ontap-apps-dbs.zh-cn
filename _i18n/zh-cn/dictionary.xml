@@ -2363,7 +2363,6 @@
   <block id="f0d0f0a6174a5a9dde27782042e22ccf" category="paragraph">配置VM后、VASA Provider将继续检查合规性、并在后备卷不再符合策略时在vCenter中向VM管理员发出警报(图2)。</block>
   <block id="941431bc1cecb0ec5e89e78e9a5a96fc" category="section-title">虚拟机存储策略合规性</block>
   <block id="bfd6dec22a6a1724ff1b67f1f289cdfc" category="image-alt">虚拟机存储策略合规性</block>
-  <block id="e08bc5b354c3e8058003a662e0f7cade" category="section-title">NetApp虚拟卷支持</block>
   <block id="9fe1fd556b933358881222d5c3da127c" category="paragraph">在本报告发布时、超规模云环境仅限于传统NFS v3数据存储库、因此、Vvol仅适用于内部ONTAP 系统或提供内部系统全部功能的云连接系统、例如由全球NetApp合作伙伴和服务提供商托管的系统。</block>
   <block id="274bc582ca884fc158ea9ac9f79f9067" category="inline-link">ONTAP 产品文档</block>
   <block id="5ca60fe92dec435059ba5acefa4ce2c9" category="paragraph">_有关ONTAP 的详细信息，请参见<block ref="8a9b15dc18a16e0b1acfa438e27f6aa6" category="inline-link-rx"></block>_</block>
@@ -2375,7 +2374,6 @@
   <block id="3f4dbd6687bd0d55bf69fe5fdd0137c4" category="list-text">*更智能的配置。*存储系统功能可通过VASAAPI公开、使配置工作流可以利用高级功能、而虚拟机管理员无需了解如何管理存储系统。</block>
   <block id="a13fcc9220d042cae454e9ac073636ca" category="list-text">*配置速度更快。*单个数据存储库可支持不同的存储功能、并根据虚拟机策略自动为虚拟机选择相应的存储功能。</block>
   <block id="eb4c052226108afebf26e670208b9a55" category="list-text">*避免出错。*存储和VM策略是提前制定的、并根据需要应用、而无需在每次配置VM时自定义存储。如果存储功能偏离定义的策略、则会发出合规警报。如前文所述、通过使用SCP、初始配置可预测且可重复、而根据SCP制定VM存储策略可确保准确放置。</block>
-  <block id="9c520768a1d84268417335cf19a423b9" category="list-text">*更好的容量管理。*通过使用VASA和ONTAP 工具、可以根据需要查看低至细小聚合级别的存储容量、并在容量开始不足时提供多层警报。</block>
   <block id="f9878e32fdf258284c007eaae38773cd" category="section-title">在现代SAN上进行VM粒度管理</block>
   <block id="7e673a7c12cc256f29bcd7b2028d9d5a" category="paragraph">使用光纤通道和iSCSI的SAN存储系统是VMware支持的第一个ESX存储系统、但它们无法从存储系统管理各个VM文件和磁盘。而是配置LUN、并由VMFS管理各个文件。这样、存储系统就很难直接管理各个VM的存储性能、克隆和保护。利用ONTAP 强大的高性能SAN功能、虚拟卷可以为使用NFS存储的客户带来已有的存储粒度。</block>
   <block id="25a46370807e0eab0dfe3853abfb9b6e" category="paragraph">现在、借助适用于VMware vSphere 9.12及更高版本的vSphere 8和ONTAP 工具、在使用基于网络结构的NVMe的现代光纤通道SAN中、可以使用vvol对基于SCSI的传统协议所使用的相同粒度控制、从而获得更大的规模化性能。借助vSphere 8.0 Update 1、现在可以使用vvol部署完整的端到端NVMe解决方案 、而无需在虚拟机管理程序存储堆栈中进行任何I/O转换。</block>
@@ -5255,4 +5253,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="5a4857ad48868097d482a4a448f48bd9" category="doc">每个用户的最大并发请求数(网络安全保护/DOS攻击)</block>
   <block id="0af211d5cda5cc4bb17dd7751e741595" category="doc">网络时间协议(NTP)配置</block>
   <block id="c1fac7a72cd91bcd345e567f6d6d93a3" category="sidebar">使用MetroCluster进行Oracle故障转移</block>
+  <block id="273eb98a312e607888044e87e0210015" category="section-title">NetApp虚拟卷支持</block>
+  <block id="551e3b0a48f99995daac658b17a1de62" category="list-text">*更好的容量管理*通过使用VASA和ONTAP工具、可以根据需要查看存储容量、使其降至各个聚合级别、并在容量开始不足时提供多层警报。</block>
 </blocks>
