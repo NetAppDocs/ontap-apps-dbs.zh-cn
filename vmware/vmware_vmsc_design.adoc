@@ -38,7 +38,8 @@ summary: 《VMSC设计和实施准则》。
 
 创建vSphere HA集群是一个多步骤过程、有关详细信息、请参见 https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-vcenter-esxi-management/GUID-F7818000-26E3-4E2A-93D2-FCDCE7114508.html["如何在docs.vmware.com上的vSphere Client中创建和配置集群"]。简而言之、您必须先创建一个空集群、然后使用vCenter添加主机并指定集群的vSphere HA和其他设置。
 
-*注：*本文档中的任何内容均不可取代 https://core.vmware.com/resource/vmware-vsphere-metro-storage-cluster-recommended-practices["VMware vSphere Metro Storage Cluster 建议的实践"]
+
+NOTE: 本文档中的任何内容均不可取代 https://core.vmware.com/resource/vmware-vsphere-metro-storage-cluster-recommended-practices["VMware vSphere Metro Storage Cluster 建议的实践"]
 
 要配置HA集群、请完成以下步骤：
 
@@ -155,7 +156,10 @@ image::../media/vmsc_3_7.png[自动生成的计算机问题描述的屏幕截图
 * NetApp强烈建议使用规范“*应在组中的主机上运行”，而不是规范“必须在组中的主机上运行”。如果站点A主机发生故障、则需要通过vSphere HA在站点B的主机上重新启动站点A的VM、但后一种规范不允许HA重新启动站点B上的VM、因为这是一条硬规则。前一种规范是一种软规则、在发生HA时会违反该规范、从而实现可用性而非性能。
 
 
-*注意：*您可以创建基于事件的警报，当虚拟机违反VM-主机关联性规则时触发该警报。在vSphere Client中、为虚拟机添加新警报、然后选择"VM is violating VM-Host Affinity Rule "作为事件触发器。有关创建和编辑警报的详细信息、请参见 http://pubs.vmware.com/vsphere-51/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-51-monitoring-performance-guide.pdf["vSphere监控和性能"] 文档。
+*[注释]
+
+* 您可以创建基于事件的警报、当虚拟机违反VM-主机关联性规则时触发该警报。在vSphere Client中、为虚拟机添加新警报、然后选择"VM is violating VM-Host Affinity Rule "作为事件触发器。有关创建和编辑警报的详细信息、请参阅 http://pubs.vmware.com/vsphere-51/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-51-monitoring-performance-guide.pdf["vSphere监控和性能"]文档。
+
 
 
 

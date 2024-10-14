@@ -10,7 +10,7 @@ summary: 如何配置Hyper-V存储实时迁移
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

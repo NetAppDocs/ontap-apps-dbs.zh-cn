@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-arch-storage.html 
+keywords: epic,cache,iris 
+summary: 存储需求史诗般 
+---
+= 存储需求史诗般
+:allow-uri-read: 
+
+
+[role="lead"]
+通常为生产数据库提供专用存储资源、而镜像数据库实例则与其他Epic软件相关组件(例如Clarity报告工具)共享二级存储资源。
+
+其他软件存储环境(例如用于应用程序和系统文件的软件存储环境)也由二级存储资源提供。
+
+除了规模估算注意事项之外、Epic还具有以下其他存储布局规则和主要注意事项：
+
+* 自2020年以来、所有运营数据库(ODB)工作负载都必须位于全闪存阵列上。
+* EPIC建议每个存储池都位于单独的物理硬件上、包括pool1、Pool2、pool3、NA1和NA4.2。
+
+
+
+NOTE: 集群中的节点可视为存储池。使用ONTAP 9™4或更高版本和AQoS，您可以使用策略创建受保护的池。
+
+* 新Epic 3-2-1备份建议。
++
+.. 位于远程站点的副本(灾难恢复)
+.. 其中一个副本必须位于与主副本不同的存储平台上
+.. 数据的副本
+
+
+
+
+
+NOTE: 使用NetApp SnapMirror备份NetApp的客户不符合3-2-1建议。原因是ONTAP to ONTAP不满足上述第二个要求。您可以将SnapMirror直接从ONTAP使用到内部对象存储(例如通过StorageGRID)或云、以满足Epic要求。
+
+有关存储要求的详细信息、请参见Galaxy中提供的以下Epic指南：
+
+* SAN 注意事项
+* 存储产品和技术状态(燕麦)
+* 《硬件配置指南》
+

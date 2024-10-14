@@ -87,9 +87,13 @@ NetApp强烈建议使用日志记录挂载选项、以便在Solaris主机崩溃�
 
 === mvector
 
-Solaris 11对其处理大型I/O操作的方式进行了更改、这可能会导致SAN存储阵列出现严重的性能问题。NetApp错误报告“Solaris 11 ZFS性能回归”详细介绍了该问题。"解决方案将更改名为的操作系统参数 `zfs_mvector_max_size`。
+Solaris 11对其处理大型I/O操作的方式进行了更改、这可能会导致SAN存储阵列出现严重的性能问题。此问题已记录在NetApp跟踪错误报告“Solaris 11 ZFS性能回归”中。
 
-以root用户身份运行以下命令：
+这不是ONTAP错误。这是Solaris缺陷、根据Solaris缺陷7199305和7082975进行跟踪。
+
+您可以咨询Oracle支持部门、了解您的Solaris 11版本是否受到影响、也可以更改为较小的值来测试解决方法 `zfs_mvector_max_size`。
+
+为此、您可以以root用户身份运行以下命令：
 
 ....
 [root@host1 ~]# echo "zfs_mvector_max_size/W 0t131072" |mdb -kw

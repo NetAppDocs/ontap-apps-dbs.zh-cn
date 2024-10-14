@@ -10,7 +10,7 @@ summary: 了解如何部署Microsoft Windows MicroServer
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dr-smas-fail-snapmirror.html 
+keywords: Oracle, SnapMirror active sync, SMBC, failover 
+summary: Oracle和SnapMirror主动同步故障转移 
+---
+= SnapMirror active sync—丢失SnapMirror连接
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+如果SnapMirror活动同步复制链路无法完成写入IO、因为集群无法将更改复制到相反站点。
+
+
+
+== 站点 A
+
+在站点A上、复制链路发生故障会导致写入IO处理暂停大约15秒、因为ONTAP会在确定复制链路确实无法运行之前尝试复制写入。15秒后、站点A上的ONTAP集群将恢复读写IO处理。SAN路径不会更改、LUN将保持联机状态。
+
+
+
+== 站点 B
+
+由于站点B不是SnapMirror主动同步首选站点、因此其LUN路径将在大约15秒后变得不可用。
+
+复制链路在时间戳15：19：44处断开。当200秒超时(由Oracle RAC参数disktimeout控制)接近时、Oracle RAC发出的第一条警告会在100秒后到达。
+
+....
+2024-09-10 15:21:24.702 [ONMD(2792)]CRS-1615: No I/O has completed after 50% of the maximum interval. If this persists, voting file /dev/mapper/grid2 will be considered not functional in 99340 milliseconds.
+2024-09-10 15:22:14.706 [ONMD(2792)]CRS-1614: No I/O has completed after 75% of the maximum interval. If this persists, voting file /dev/mapper/grid2 will be considered not functional in 49330 milliseconds.
+2024-09-10 15:22:44.708 [ONMD(2792)]CRS-1613: No I/O has completed after 90% of the maximum interval. If this persists, voting file /dev/mapper/grid2 will be considered not functional in 19330 milliseconds.
+2024-09-10 15:23:04.710 [ONMD(2792)]CRS-1604: CSSD voting file is offline: /dev/mapper/grid2; details at (:CSSNM00058:) in /gridbase/diag/crs/jfs13/crs/trace/onmd.trc.
+2024-09-10 15:23:04.710 [ONMD(2792)]CRS-1606: The number of voting files available, 0, is less than the minimum number of voting files required, 1, resulting in CSSD termination to ensure data integrity; details at (:CSSNM00018:) in /gridbase/diag/crs/jfs13/crs/trace/onmd.trc
+2024-09-10 15:23:04.716 [ONMD(2792)]CRS-1699: The CSS daemon is terminating due to a fatal error from thread: clssnmvDiskPingMonitorThread; Details at (:CSSSC00012:) in /gridbase/diag/crs/jfs13/crs/trace/onmd.trc
+2024-09-10 15:23:04.731 [OCSSD(2794)]CRS-1652: Starting clean up of CRSD resources.
+....
+达到200秒表决磁盘超时时间后、此Oracle RAC节点将从集群中退出并重新启动。

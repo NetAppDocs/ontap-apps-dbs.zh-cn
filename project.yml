@@ -12,6 +12,7 @@ sidebar:
   entries:
   - title: 企业级应用程序
     url: "/index.html"
+  - section: epic
   - section: Hyper-V
   - section: mssql
   - section: mysql

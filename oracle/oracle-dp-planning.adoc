@@ -52,7 +52,7 @@ summary: 针对Oracle数据库的数据保护规划
 
 == 复制和灾难恢复架构
 
-本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括 link:../metrocluster/overview.html["MetroCluster"] 和 link:../smbc/overview.html["SnapMirror活动同步"]
+本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括link:oracle-dr-mcc-failover.html["MetroCluster"]和link:oracle-dr-smas-overview.html["SnapMirror活动同步"]
 
 灾难恢复RPO受可用网络带宽和所保护数据的总大小限制。创建初始基线传输后、更新仅基于更改后的数据、尽管存在例外情况、但更改后的数据在总数据占用空间中所占的百分比通常很低。
 

@@ -10,7 +10,7 @@ summary: 本附录介绍如何在集群环境之外部署Hyper-V副本。
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-performance.html 
+keywords: epic,cache,iris,QoS 
+summary: 卓越的性能管理 
+---
+= 卓越的性能管理
+:allow-uri-read: 
+
+
+[role="lead"]
+大多数全闪存阵列均可提供Epic工作负载所需的性能。NetApp的独特优势在于它能够设置楼层性能策略、并保证每个应用程序的性能始终如一。
+
+
+
+== 服务质量(QoS)
+
+NetApp建议使用QoS。QoS的优势在于能够整合所有Epic工作负载。所有协议和存储池可以驻留在较少的硬件上。您无需分离存储池。
+
+* NetApp建议将集群中的所有工作负载分配给一个QoS策略、以便更好地管理集群上的性能余量。
+* NetApp建议在HA对之间均衡平衡所有工作负载。
+* 执行任何I/O测试时、请勿使用QoS策略；否则、Genio测试将失败。在分配任何QoS策略之前、对不同的生产工作负载进行2-4周的分析。
+

@@ -1,0 +1,18 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dr-smas-arch-overview.html 
+keywords: oracle, active sync, mcc, MCC-IP 
+summary: 具有SnapMirror活动同步的Oracle单实例 
+---
+= 具有SnapMirror活动同步的Oracle
+:allow-uri-read: 
+
+
+[role="lead"]
+使用SnapMirror主动同步不一定会增加或更改数据库操作的任何最佳实践。
+
+最佳架构取决于业务需求。例如、如果目标是使RPO=0防止数据丢失、但RTO较宽松、则使用Oracle单实例数据库并使用SM-AS复制LUN可能足以满足Oracle许可标准的要求、而且成本更低。远程站点故障不会中断操作、丢失主站点将导致运行正常的站点上的LUN处于联机状态并可供使用。
+
+如果要对RTO进行更严格的配置、则可以通过脚本或PacMaker或Ansv可 等工具实现基本的主动-被动自动化、从而缩短故障转移时间。例如、可以对VMware HA进行配置、使其检测主站点上的VM故障、并激活远程站点上的VM。
+
+最后、为了实现极快的故障转移、可以跨站点部署Oracle RAC。RTO基本上为零、因为数据库将始终处于联机状态、并可在两个站点上使用。

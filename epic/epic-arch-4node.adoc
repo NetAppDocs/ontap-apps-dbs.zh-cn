@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-arch-4node.html 
+keywords: epic,cache,iris 
+summary: 经典的四节点架构 
+---
+= 经典的四节点架构
+:allow-uri-read: 
+
+
+[role="lead"]
+下图显示了四节点架构的存储布局：生产环境中的HA对和灾难恢复环境中的HA对。控制器大小和磁盘数量取决于后一个规模估算映像。
+
+NetApp通过接受SLM建议的AQoS策略来保证最低楼层性能。EPIC支持将ONTAP上的存储池整合到显著减少的硬件上。有关详细信息、请参见Epic每季度spats文档。基本上、pool1、Pool2和NAS1 (在Epic硬件配置指南中列出)都可以在一个HA对上运行、并且工作负载均匀分布在两个控制器上。在灾难恢复中、Epic Pool 3和NAS 3也会在HA对中的两个控制器之间拆分。
+
+从Epic Production、Epic Report或Epic Disaster Recovery克隆测试完整副本环境(例如、SUB、REL和PYX)。有关Epic备份和刷新的信息、请参见"数据管理"一节。
+
+
+
+== 四节点架构
+
+image:epic-4node.png["EPIC 4节点架构"]
+
+
+
+== 四节点工作负载放置
+
+image:epic-4node-design.png["EPIC 4节点放置"]

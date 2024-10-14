@@ -1,0 +1,43 @@
+= Replication
+:allow-uri-read: 
+
+
+通过SnapMirror主动同步(以前称为SnapMirror业务连续性或SM-bc)、各个SQL Server数据库和应用程序可以在发生中断时继续提供服务、并且无需任何手动干预即可实现透明的存储故障转移。
+
+
+
+== Replication
+
+SnapMirror活动同步(SM-AS)基于SnapMirror同步。两者都可以实现RRPO = 0的数据同步复制、但SM-AS通过为SAN数据提供近乎为零的RTO可用性、进一步推动了解决方案的发展。这可以通过自动化来实现、该自动化可管理SAN路径以保持数据可用。站点、控制器和通信故障均由ONTAP自动处理。
+
+
+
+== 架构
+
+SnapMirror主动同步提供位于两个不同站点上的LUN。在正常操作下、不存在"源"或"目标"。方向是双向的。指向给定LUN路径的所有读取IO将由本地控制器使用其本地数据副本进行处理。所有写入操作都将复制到远程配对节点、并在本地写入、然后才会得到确认。
+
+image:smas-overview.png["SnapMirror活动同步概述"]
+
+从逻辑上讲、此行为类似于一组LUN。可以通过两个不同集群上的SAN路径将IO定向到这些逻辑LUN、但数据始终相同。IO行为对称、这对于许多主动-主动应用程序配置至关重要。
+
+image:smas-logical.png["SnapMirror主动同步逻辑设计"]
+
+
+
+== 路径管理
+
+SnapMirror同步网络拓扑有两种方法：统一和非统一。在选择统一访问和非统一访问时、主要考虑因素是您是否可以或必须跨站点扩展SAN。在这两种情况下、均可使用SnapMirror主动同步。
+
+
+
+== 存储硬件
+
+与其他存储灾难恢复解决方案不同、SnapMirror主动同步可提供非对称平台灵活性。每个站点的硬件不必相同。通过此功能、您可以调整用于支持SnapMirror活动同步的硬件的大小。如果需要支持完整的生产工作负载、远程存储系统可以与主站点完全相同；但是、如果灾难导致I/O减少、则与远程站点上较小的系统相比、可能会更经济高效。
+
+
+
+== ONTAP调解器
+
+ONTAP调解器是从NetApp支持站点下载的软件应用程序、通常部署在虚拟机上。
+
+有关规划和配置步骤，请参阅link:https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/["有关SnapMirror active sync的ONTAP文档"]。

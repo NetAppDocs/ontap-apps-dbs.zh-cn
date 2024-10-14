@@ -10,7 +10,7 @@ summary: 本附录介绍如何在NetApp存储上部署高可用性Hyper-V集群�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

@@ -1,0 +1,58 @@
+---
+section: epic
+title: Epic
+entries:
+- title: 概述
+  url: "/epic/epic-overview.html"
+- title: ONTAP上的经典
+  entries:
+  - title: 概述
+    url: "/epic/epic-ontap-overview.html"
+  - title: 可用性
+    url: "/epic/epic-ontap-availability.html"
+  - title: 整合
+    url: "/epic/epic-ontap-consolidation.html"
+  - title: 效率
+    url: "/epic/epic-ontap-efficiency.html"
+  - title: 性能
+    url: "/epic/epic-ontap-performance.html"
+  - title: 扩展
+    url: "/epic/epic-ontap-scalability.html"
+  - title: 快照和克隆
+    url: "/epic/epic-ontap-snapshots.html"
+  - title: 安全性
+    url: "/epic/epic-ontap-security.html"
+- title: 经典架构和设计
+  entries:
+  - title: 概述
+    url: "/epic/epic-arch-overview.html"
+  - title: 规模估算
+    url: "/epic/epic-arch-sizing.html"
+  - title: 存储要求
+    url: "/epic/epic-arch-storage.html"
+  - title: 四节点架构
+    url: "/epic/epic-arch-4node.html"
+  - title: 六节点架构
+    url: "/epic/epic-arch-6node.html"
+  - title: 八节点架构
+    url: "/epic/epic-arch-8node.html"
+- title: 配置和最佳实践
+  entries:
+  - title: Host Utilities
+    url: "/epic/epic-config-huk.html"
+  - title: LUN和卷配置
+    url: "/epic/epic-config-lunvol.html"
+  - title: 文件服务
+    url: "/epic/epic-config-files.html"
+  - title: 性能
+    url: "/epic/epic-config-performance.html"
+  - title: 协议
+    url: "/epic/epic-config-protocols.html"
+  - title: 存储效率
+    url: "/epic/epic-config-efficiency.html"
+  - title: 一致性组
+    url: "/epic/epic-config-cgs.html"
+  - title: 存储规模估算
+    url: "/epic/epic-config-sizing.html"
+- title: 从何处查找追加信息
+  url: "/epic/epic-additional-info.html"

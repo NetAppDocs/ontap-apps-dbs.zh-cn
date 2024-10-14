@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-luns.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—LUN 
+---
+= ONTAP上的EPIC部署示例—LUN
+:allow-uri-read: 
+
+
+[role="lead"]
+>>>描述性主句或段落的占位符
+
+创建 LUN
+
+创建LUN： https://docs.netapp.com/us-en/ontap-cli-9141//lun-create.html[]
+
+向CG添加卷
+
+要创建或修改一致性组、请执行以下操作： https://docs.netapp.com/us-en/ontap/smbc/smbc_admin_add_and_remove_volumes_in_consistency_groups.html[]
+
+映射LUN
+
+要映射LUN： https://docs.netapp.com/us-en/ontap-cli-9141//lun-mapping-create.html[]
+
+根据ONTAP的版本、卷上预留百分比的默认设置可以为100%。此配置应设置为0。

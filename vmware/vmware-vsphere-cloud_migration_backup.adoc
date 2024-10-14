@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: vmware/vmware-vsphere-cloud_migration_backup.html 
 keywords: Data protection, Space reclamation, VM and datastore cloning, Storage efficiency, thin provisioning, QoS, SIOC, Storage Distributed Resource Scheduler, DRS, Active IQ Unified Manager, Encryption 
-summary: ONTAP软件广泛支持混合云。 
+summary: ONTAP广泛支持混合云。 
 ---
 = 云迁移和备份
 :hardbreaks:

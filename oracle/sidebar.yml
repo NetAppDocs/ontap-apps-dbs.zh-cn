@@ -158,16 +158,48 @@ entries:
       url: "/oracle/oracle-dr-mcc-rac.html"
   - title: SnapMirror活动同步
     entries:
-    - title: 架构
-      url: "/oracle/oracle-dr-smbc-architecture.html"
-    - title: 故障转移
-      url: "/oracle/oracle-dr-smbc-failover.html"
-    - title: 采用SnapMirror活动同步的Oracle SI
-      url: "/oracle/oracle-dr-smbc-si.html"
-    - title: 具有SnapMirror活动同步的Oracle RAC
-      url: "/oracle/oracle-dr-smbc-rac.html"
+    - title: 概述
+      url: "/oracle/oracle-dr-smas-overview.html"
+    - title: ONTAP 调解器
+      url: "/oracle/oracle-dr-smas-mediator.html"
+    - title: 首选站点
+      url: "/oracle/oracle-dr-smas-preferred-site.html"
+    - title: 网络拓扑
+      entries:
+      - title: 统一访问
+        url: "/oracle/oracle-dr-smas-uniform.html"
+      - title: 非一致访问
+        url: "/oracle/oracle-dr-smas-nonuniform.html"
+    - title: Oracle配置
+      entries:
+      - title: 概述
+        url: "/oracle/oracle-dr-smas-arch-overview.html"
+      - title: Oracle单个实例
+        url: "/oracle/oracle-dr-smas-arch-si.html"
+      - title: Oracle RAC
+        url: "/oracle/oracle-dr-smas-arch-rac.html"
+      - title: Oracle RAC和Tieburkers
+        url: "/oracle/oracle-dr-smas-arch-tiebreaker.html"
     - title: 故障情形
-      url: "/oracle/oracle-dr-smbc-failure-scenarios.html"
+      entries:
+      - title: 概述
+        url: "/oracle/oracle-dr-smas-fail-overview.html"
+      - title: 架构示例
+        url: "/oracle/oracle-dr-smas-fail-sample.html"
+      - title: RAC互连故障
+        url: "/oracle/oracle-dr-smas-fail-interconnect.html"
+      - title: SnapMirror通信失败
+        url: "/oracle/oracle-dr-smas-fail-snapmirror.html"
+      - title: 网络互连总故障
+        url: "/oracle/oracle-dr-smas-fail-repl.html"
+      - title: 站点故障
+        url: "/oracle/oracle-dr-smas-fail-site.html"
+      - title: 调解器故障
+        url: "/oracle/oracle-dr-smas-fail-mediator.html"
+      - title: 出现故障后恢复服务
+        url: "/oracle/oracle-dr-smas-fail-restore.html"
+      - title: 手动故障转移
+        url: "/oracle/oracle-dr-smas-fail-manual.html"
 - title: Oracle数据库迁移
   entries:
   - title: 概述

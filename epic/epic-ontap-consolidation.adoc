@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-consolidation.html 
+keywords: epic,cache,iris 
+summary: ONTAP整合的史诗般的体验 
+---
+= ONTAP整合的史诗般的体验
+:allow-uri-read: 
+
+
+[role="lead"]
+医疗保健行业面临的主要挑战之一是、单组环境的效率低下。
+
+多个群体创建了多个点的解决方案、阻碍了进展。统一的数据管理战略有助于提高效率、加快转型步伐。患者病历的数据化、Ransan发生 器和生成性AI等颠覆性技术都推动了整合需求。
+
+借助ONTAP、您可以整合文件/块/对象以及在内部和云中运行的第0/1/2/3层工作负载、所有这些工作负载均在ONTAP上运行。

@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-volumes.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—卷 
+---
+= ONTAP上的EPIC部署示例—卷
+:allow-uri-read: 
+
+
+[role="lead"]
+要创建卷、请参见 https://docs.netapp.com/us-en/ontap-cli-9141//volume-create.html[]
+
+
+NOTE: 从NVE.7开始、如果您具有ONTAP 9许可证以及板载或外部密钥管理、则聚合和卷加密默认处于启用状态。要启用卷级重复数据删除、请将add -加密 故障设置为volume creation/修改 命令(如果您拥有NVE许可证)。
+
+
+
+== 自动删除快照
+
+要自动删除快照、请执行以下操作： https://docs.netapp.com/us-en/ontap-cli-9141//volume-snapshot-autodelete-modify.html[]

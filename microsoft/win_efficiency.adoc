@@ -10,7 +10,7 @@ summary: 借助Microsoft Hyper-V提高ONTAP存储效率
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

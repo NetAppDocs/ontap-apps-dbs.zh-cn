@@ -10,7 +10,7 @@ summary: Microsoft Windows和Hyper-V与ONTAP的虚拟化概述
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -19,7 +19,7 @@ Microsoft Windows Server是一款企业级操作系统(OS)、涵盖网络连接�
 
 NOTE: *本文档替代以前发布的技术报告_TR-4568：《适用于Windows Server_*的NetApp部署准则和存储最佳实践》
 
-.NetApp ONTAP (R)管理软件可在NetApp存储控制器上运行。它提供多种格式。
+.ONTAP在NetApp存储控制器上运行。它提供多种格式。
 * 支持文件、对象和块协议的统一架构。这样、存储控制器便可同时用作NAS和SAN设备以及对象存储
 * 一种全SAN阵列(ASA)、仅侧重于块协议、并通过为连接的主机添加对称主动-主动多路径来优化I/O恢复时间(I/O Resume Times、IORT)
 * 软件定义的统一架构

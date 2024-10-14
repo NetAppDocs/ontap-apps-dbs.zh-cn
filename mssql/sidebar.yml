@@ -29,6 +29,34 @@ entries:
 - title: 数据保护
   url: "/mssql/mssql-data-protection.html"
 - title: 灾难恢复
-  url: "/mssql/mssql-disaster-recovery.html"
+  entries:
+  - title: 概述
+    url: "/mssql/mssql-disaster-recovery.html"
+  - title: SnapMirror
+    url: "/mssql/mssql-dr-snapmirror.html"
+  - title: MetroCluster
+    entries:
+    - title: MetroCluster架构
+      url: "/mssql/mssql-dr-mcc-overview.html"
+    - title: SQL Server与MetroCluster
+      url: "/mssql/mssql-dr-mcc-sql.html"
+  - title: SnapMirror活动同步
+    entries:
+    - title: 概述
+      url: "/mssql/mssql-dr-smas-overview.html"
+    - title: ONTAP 调解器
+      url: "/mssql/mssql-dr-smas-mediator.html"
+    - title: 首选站点
+      url: "/mssql/mssql-dr-smas-preferred-site.html"
+    - title: 网络拓扑
+      entries:
+      - title: 统一访问
+        url: "/mssql/mssql-dr-smas-uniform.html"
+      - title: 非一致访问
+        url: "/mssql/mssql-dr-smas-nonuniform.html"
+    - title: 使用SM-AS的SQL Server
+      url: "/mssql/mssql-dr-smas-sql.html"
+    - title: 故障情形
+      url: "/mssql/mssql-dr-smas-failure-scenarios.html"
 - title: 数据安全性
   url: "/mssql/mssql-data-security.html"

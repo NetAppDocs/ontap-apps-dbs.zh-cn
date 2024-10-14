@@ -18,8 +18,6 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP FlexGroup卷的
 
 ONTAP 9.8以及适用于VMware vSphere 9.8的ONTAP工具和适用于VMware 4.4版本的SnapCenter插件增加了对vSphere中FlexGroup卷支持的数据存储库的支持。FlexGroup卷可以简化大型数据存储库的创建过程、并自动在ONTAP集群中创建必要的分布式成分卷、以最大程度地提高ONTAP系统的性能。
 
-有关FlexGroup卷的详细信息、请参见 link:../nas-containers.html["FlexCache和FlexGroup卷技术报告"]。
-
 如果您需要一个具有完整ONTAP集群功能的可扩展vSphere数据存储库、或者您的克隆工作负载非常大、可以从新的FlexGroup克隆机制中受益、请将FlexGroup卷与vSphere结合使用。
 
 

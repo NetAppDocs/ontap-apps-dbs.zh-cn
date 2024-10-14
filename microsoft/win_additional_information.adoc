@@ -10,7 +10,7 @@ summary: 适用于Microsoft Windows和Hyper-V的其他资源
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

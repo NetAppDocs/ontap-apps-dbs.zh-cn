@@ -1,0 +1,29 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-snapshots.html 
+keywords: epic,cache,iris 
+summary: 史诗般的快照和克隆 
+---
+= 史诗般的存储效率配置
+:allow-uri-read: 
+
+
+[role="lead"]
+快照是卷的只读时间点副本。
+
+快照会对活动文件系统中的所有块进行逻辑锁定。NetApp ONTAP Snapshot副本近乎即时、不会使用任何额外存储。
+
+写入、其中文件布局(WAFL)是一个只写文件系统；它不会执行额外的IO、例如在覆盖之前复制受Snapshot保护的块中的数据。不会移动任何数据；因此、快照不会对存储容量或性能产生任何影响。快照可在扩充备份解决方案的同时节省大量存储空间。
+
+
+
+== FlexClone
+
+NetApp ONTAP FlexClone卷是现有卷的克隆或现有卷的快照。在其他方面、它与任何其他卷一样是ONTAP卷、它本身可以进行克隆、使用快照进行保护、并使用QoS策略进行配置。
+
+与快照一样、FlexClone卷在创建时不需要任何额外空间。只有对克隆进行更改才需要额外容量。
+
+EPIC需要10到30个生产数据库副本来满足各种操作要求、例如流式备份、完整性检查和暂存升级环境。随着升级频率的提高、对基于FlexClone卷构建的解决方案的需求也随之增加。
+
+
+NOTE: 在该解决方案中使用了NetApp和本机NetApp工具、提供了一个完全自动化的Epic备份解决方案和Epic更新解决方案。

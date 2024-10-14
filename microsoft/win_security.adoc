@@ -10,7 +10,7 @@ summary: 采用Hyper-V的ONTAP存储安全性
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

@@ -146,7 +146,7 @@ vserver1  800DT$HuVWBn /vol/new_lvm/LUN8 2
 vserver1  800DT$HuVWBo /vol/new_lvm/LUN9 2
 20 entries were displayed.
 ....
-如果需要脱机进程、请将重新发现或重新启动服务延迟到 `lun import show` 命令表示所有迁移均已成功完成。然后、您可以按照中所述完成迁移过程 link:../migration/migration_options.html#foreign-lun-import-fli["外部LUN导入—完成"]。
+如果需要脱机进程、请延迟重新发现或重新启动服务、直到命令指示所有迁移均已成功完成为止 `lun import show`。然后，您可以按中所述完成迁移过程link:oracle-migration-fli-completion.html["外部LUN导入—完成"]。
 
 如果需要联机迁移、请继续在新主目录中重新发现LUN并启动服务。
 

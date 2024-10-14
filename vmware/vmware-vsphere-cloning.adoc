@@ -24,7 +24,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 image:vsphere_ontap_image5.png["ONTAP克隆"]
 
-可以通过多种机制将克隆卸载到运行 ONTAP 软件的系统，通常是在 VM ， VVOL 或数据存储库级别。其中包括：
+克隆可以通过多种机制卸载到运行ONTAP的系统、通常是在虚拟机、VVOL或 数据存储库级别。其中包括：
 
 * 使用 NetApp vSphere APIs for Storage Awareness （ VASA ） Provider 的 VVOL 。  ONTAP克隆用于支持由vCenter管理的VVol快照、这些快照可节省空间、并且创建和删除这些快照时的I/O影响极小。  此外，还可以使用 vCenter 克隆 VM ，这些 VM 也会卸载到 ONTAP ，无论是在单个数据存储库 / 卷中还是在数据存储库 / 卷之间。
 * 使用 vSphere API —阵列集成（ VAAI ）进行 vSphere 克隆和迁移。在 SAN 和 NAS 环境中， VM 克隆操作均可卸载到 ONTAP （ NetApp 提供了一个 ESXi 插件，用于为 NFS 启用 VAAI ）。  vSphere 仅会卸载 NAS 数据存储库中冷（已关闭） VM 上的操作，而热 VM （克隆和存储 vMotion ）上的操作也会卸载到 SAN 上。ONTAP 会根据源，目标和已安装的产品许可证使用最高效的方法。VMware Horizon View 也使用此功能。

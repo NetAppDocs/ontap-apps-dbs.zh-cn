@@ -28,4 +28,4 @@ image:vsphere_ontap_image4.png["SnapCenter部署"]
 
 要增强灾难恢复功能，请考虑将适用于 ONTAP 的 NetApp SRA 与 VMware Site Recovery Manager 结合使用。除了支持将数据存储库复制到灾难恢复站点之外，它还可以通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。通过 SRA 中内置的自动化功能，还可以轻松地从灾难中恢复并在中断解决后重新保护生产。
 
-最后，要获得最高级别的数据保护，请考虑使用 NetApp MetroCluster 的 VMware vSphere 城域存储集群（ VMSC ）配置。VMSC 是一款经过 VMware 认证的解决方案，它将同步复制与基于阵列的集群相结合，可提供与高可用性集群相同的优势，但分布在不同的站点上以防止站点灾难。NetApp MetroCluster 可为同步复制提供经济高效的配置，可从任何单个存储组件故障中透明恢复，并在发生站点灾难时提供单命令恢复。中详细介绍了 VMSC http://www.netapp.com/us/media/tr-4128.pdf["TR-4128"^]。
+最后、要获得最高级别的数据保护、请考虑使用NetApp MetroCluster的VMware vSphere Metro Storage Cluster (VMSC)配置。VMSC是一款经过VMware认证的解决方案、它将同步复制与基于阵列的集群相结合、可提供与高可用性集群相同的优势、但会分布在不同的站点上、以防止站点灾难。NetApp MetroCluster为同步复制提供了经济高效的配置，可以从任何单个存储组件故障中透明地进行恢复，并在发生站点灾难时进行单命令恢复。中详细介绍了VMSC。 https://www.netapp.com/pdf.html?item=/media/19773-tr-4128.pdf["TR-4128"^]

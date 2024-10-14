@@ -10,7 +10,7 @@ summary: 了解如何使用Windows Server故障转移集群部署和配置Hyper-
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

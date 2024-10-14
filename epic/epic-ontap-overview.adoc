@@ -1,0 +1,22 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-overview.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC概述 
+---
+= ONTAP上的经典
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP让EPIC变得更轻松。
+
+ONTAP是一款数据管理平台、支持您整合Epic工作负载、同时满足您的所有性能、数据保护和数据管理要求。
+
+只有在NetApp上、您才能在一个高可用性数据管理平台上标准化SAN、NAS和对象的所有医疗保健工作负载。ONTAP是全球部署最广泛的存储软件平台、拥有近30年的持续创新经验。借助本机ONTAP数据管理工具和应用程序集成、您可以应对所有Epic挑战。无需购买大量第三方工具来填补解决方案中的空白。
+
+许多存储供应商都提供传统、可靠且快速的块存储。它们运行良好、但通常部署在孤岛中以运行单个工作负载、例如生产、报告、Clarity、VDI、VMware和NAS。每个孤岛都有不同的硬件和不同的管理工具、它们通常由不同的IT组进行管理。这种传统方法增加了当今医疗保健领域最大的问题—复杂性。
+
+NetApp让数据管理变得更加轻松高效。ONTAP利用创新和技术、通过任何协议和集成数据保护、在一个平台上为每个工作负载提供一致且有保障的SLA、而不是浪费资金解决超大孤岛的问题。这些功能和工具还扩展到您选择的云、如下图所示。
+
+image:epic-consolidation.png["借助ONTAP实现医疗保健行业的扩展和精简性"]

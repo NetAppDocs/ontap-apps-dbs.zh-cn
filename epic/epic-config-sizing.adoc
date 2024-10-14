@@ -1,0 +1,17 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-sizing.html 
+keywords: epic,cache,iris 
+summary: Epic的存储规模估算 
+---
+= Epic的存储规模估算
+:allow-uri-read: 
+
+
+[role="lead"]
+您应与我们的Epic联盟团队合作、确认任何Epic设计。您可以通过epic@NetApp．com联系该团队。每次部署都需要满足客户的要求、同时遵循Epic和NetApp建议的最佳实践。
+
+有关如何使用NetApp规模估算工具根据Epic软件环境存储需求确定正确的RAID组大小和RAID组数量的信息、请参见(需要NetApp登录)。link:https://fieldportal.netapp.com/content/192412?assetComponentId=192510["TR-3930i ：《 NetApp Epic 规模估算准则》"^]
+
+
+NOTE: 需要访问NetApp Field Portal。

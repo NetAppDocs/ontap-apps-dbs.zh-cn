@@ -20,7 +20,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 == ONTAP QoS策略支持
 
-运行ONTAP软件的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps为单位)和/或每秒I/O数(IOPS)。
+运行ONTAP的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps和/或每秒I/O数(IOPS)为单位)。
 
 此外，还支持基于 IOPS 的最低服务级别，以便为 ONTAP 9.2 中的 SAN 对象和 ONTAP 9.3 中的 NAS 对象提供稳定一致的性能。
 
@@ -51,7 +51,8 @@ ONTAP QoS策略可应用于整个数据存储库或其中的各个VMDK文件。�
 *同一主机(ESXi -01)正在使用vm2.vmdk、并且位于同一个卷上。
 *如果vm1.vmdk受到节流、则vm2.vmdk也会显示为已节流、因为它与vm1.vmdk共享同一个IO队列。
 
-*注意：*这不适用于Svol。
+
+NOTE: 这不适用于此类卷。
 
 从vSphere 6.5开始、您可以利用具有存储I/O控制(SIIOC) v2的基于存储策略的管理(Storage Policy-Based Management、SPBM)来管理非Vvol数据存储库的文件粒度限制。
 
@@ -83,13 +84,14 @@ link:https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-resource-management/G
 
 在为VVOV容器创建存储功能配置文件时、请在性能功能下指定一个最大和/或最小IOPS值、然后使用虚拟机的存储策略引用此SCP。在创建虚拟机时使用此策略或将此策略应用于现有虚拟机。
 
-*注意：* VVOLs要求使用适用于VMware vSphere的ONTAP工具、该工具可用作适用于ONTAP的VASA Provider。请参见 link:/vmware/vmware-vvols-overview.html["采用ONTAP的VMware vSphere虚拟卷(Vvol)"] 了解有关的最佳实践。
+
+NOTE: vvol需要使用适用于VMware vSphere的ONTAP工具、该工具可用作适用于ONTAP的VASA Provider。请参见link:/vmware/vmware-vvols-overview.html["采用ONTAP的VMware vSphere虚拟卷(Vvol)"]、了解有关此类卷的最佳实践。
 
 
 
 == ONTAP QoS 和 VMware SIOC
 
-ONTAP QoS 和 VMware vSphere 存储 I/O 控制（ SIOC ）是 vSphere 和存储管理员可以结合使用的补充技术，用于管理运行 ONTAP 软件的系统上托管的 vSphere VM 的性能。每个工具都有自己的优势，如下表所示。由于 VMware vCenter 和 ONTAP 的作用域不同，因此某些对象可以由一个系统查看和管理，而不能由另一个系统查看和管理。
+ONTAP服务质量(QoS)和VMware vSphere存储I/O控制(SIO)是两项相辅相成的技术、vSphere和存储管理员可以结合使用这些技术来管理运行ONTAP的系统上托管的vSphere VM的性能。每个工具都有自己的优势，如下表所示。由于 VMware vCenter 和 ONTAP 的作用域不同，因此某些对象可以由一个系统查看和管理，而不能由另一个系统查看和管理。
 
 |===
 | 属性 | ONTAP QoS | VMware SIIOC 

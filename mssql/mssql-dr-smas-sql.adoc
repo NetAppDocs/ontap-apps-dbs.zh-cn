@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-dr-smas-sql.html 
+keywords: MSSQL,SQL Server, SnapMirror active sync, ONTAP, SMBC, SMas, SnapMirror Business Continuity 
+summary: Microsoft SQL Server和SnapMirror活动同步 
+---
+= 具有SnapMirror活动同步的Microsoft SQL Server
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+可以将SQL Server配置为以多种方式与SnapMirror活动配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。
+
+
+
+== SQL Server的独立实例
+
+文件布局和服务器配置的最佳实践与文档中建议的相同link:mssql-storage-considerations.html["基于ONTAP的SQL Server"]。
+
+使用独立设置时、SQL Server只能在一个站点上运行。可能link:mssql-dr-smas-uniform.html["统一"]会使用访问权限。
+
+image:smas-onehost.png["具有统一访问的单个主机"]
+
+使用统一访问时、任一站点的存储故障都不会中断数据库操作。当然、如果包含数据库服务器的站点发生完全故障、则会导致中断。
+
+某些客户可以为在远程站点上运行的操作系统配置预先配置的SQL Server设置、并使用与生产实例相同的构建版本进行更新。故障转移需要激活备用站点上的独立SQL Server实例、发现LUN并启动数据库。由于不需要从存储端执行任何操作、因此可以使用Windows PowerShell cmdlet自动完成整个过程。
+
+link:mssql-dr-smas-nonuniform.html["非一致性"]也可以使用访问、但如果数据库服务器所在的存储系统因数据库没有可用的存储路径而出现故障、则会导致数据库中断。在某些情况下、这种情况仍可接受。SnapMirror主动同步仍可提供RPO = 0的数据保护、并且在站点发生故障时、运行正常的副本将处于活动状态、并可使用与上述统一访问相同的过程恢复操作。
+
+使用虚拟化主机可以更轻松地配置简单的自动化故障转移过程。例如、如果SQL Server数据文件与启动VMDK一起同步复制到二级存储、则在发生灾难时、可以在备用站点上激活整个环境。管理员可以在正常运行的站点上手动激活主机、也可以通过VMware HA等服务自动执行此过程。
+
+
+
+== SQL Server故障转移集群实例
+
+SQL Server故障转移实例也可以托管在作为子操作系统运行在物理服务器或虚拟服务器上的Windows故障转移集群上。这种多主机架构可提供SQL Server实例和存储故障恢复能力。在需要在保持增强性能的同时实现强大故障转移流程的高需求环境中、此类部署非常有用。在故障转移集群设置中、当主机或主存储受到影响时、SQL服务将故障转移到二级主机、同时、二级存储将可用于提供IO。无需自动化脚本或管理员干预。

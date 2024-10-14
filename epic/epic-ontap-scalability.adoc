@@ -1,0 +1,22 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-scalability.html 
+keywords: epic,cache,iris 
+summary: ONTAP可扩展性的史诗般的体验 
+---
+= ONTAP可扩展性的史诗般的体验
+:allow-uri-read: 
+
+
+[role="lead"]
+Epic硬件配置指南在3年内每年增长~20%。但是、环境也可能意外增长。
+
+对于NAS、SAN和对象集群、NetApp可以将性能和容量无缝扩展到多达12个节点。因此、您可以随着业务增长无干扰地进行纵向和横向扩展。
+
+EPIC的可扩展性更出色。它支持拥有多个Epic实例的大型客户整合为一个实例。该link:https://www.netapp.com/media/27905-nva-1159-design.pdf["NetApp经验证的架构在现代SAN上的Epic"^]文档表明、Epic可以在一个HA上无缝地将整合工作负载扩展到720、000次IOPS、并在一个集群中横向扩展到400、000次以上的IOPS。您可以通过升级控制器或向现有集群添加磁盘来无干扰地进行纵向扩展。
+
+NAS、SAN和对象数据还可以在集群中的节点之间无故障移动。集群中的每个HA对都可以是ONTAP FAS和AFF系统类型和大小的任意组合。您可以在一个集群之间平衡工作负载、从而最大程度地提高存储投资。
+
+此外、ONTAP还可以选择使用StorageGRID或云上的对象存储作为备份目标和/或自动冷存储层目标。通过此功能、您可以将昂贵的全闪存磁盘、分层快照和冷数据自动释放到对象中。
+
+因此、Epic可以利用ONTAP、多协议、StorageGRID和您选择的云、在NetApp产品组合中更好地运行。这些产品提供灾难恢复、归档、分析、分层等选项。

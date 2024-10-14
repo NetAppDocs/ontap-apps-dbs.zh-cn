@@ -14,7 +14,7 @@ summary: 使用FLI迁移Oracle—规划
 
 
 [role="lead"]
-NetApp中介绍了使用FLI迁移SAN资源的过程 http://www.netapp.com/us/media/tr-4380.pdf["TR-4380：《使用外部LUN导入进行SAN迁移》"^]。
+NetApp中介绍了使用FLI迁移SAN资源的过程 https://docs.netapp.com/us-en/ontap-fli/index.html["ONTAP 外部 LUN 导入文档"^]。
 
 从数据库和主机的角度来看、不需要执行任何特殊步骤。更新FC分区并使LUN在ONTAP上可用后、LVM应能够从LUN中读取LVM元数据。此外、卷组已准备就绪、无需执行其他配置步骤。在极少数情况下、环境可能会包含使用先前存储阵列的引用进行硬编码的配置文件。例如、包含的Linux系统 `/etc/multipath.conf` 必须更新引用给定设备的WWN的规则、以反映FLI所做的更改。
 

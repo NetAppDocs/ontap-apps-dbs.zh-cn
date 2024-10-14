@@ -10,7 +10,7 @@ summary: 使用SnapCenter和T-SQL命令保护ONTAP上的Microsoft SQL Server数�
 
 
 [role="lead"]
-根据业务需求规划数据库备份。通过将ONTAP的NetApp Snapshot技术与Microsoft SQL Server API相结合、无论用户数据库大小如何、您都可以快速创建应用程序一致的备份。为了满足更高级或横向扩展的数据管理要求、NetApp提供了SnapCenter。
+数据库备份策略应基于已确定的业务要求、而不是理论能力。通过将ONTAP的Snapshot技术与Microsoft SQL Server API相结合、无论用户数据库大小如何、您都可以快速创建应用程序一致的备份。为了满足更高级或横向扩展的数据管理要求、NetApp提供了SnapCenter。
 
 
 
@@ -22,7 +22,7 @@ SQL Server实例可以是独立设置、故障转移集群实例、也可以始�
 
 
 TIP: * NetApp建议*使用SnapCenter创建Snapshot副本。下文所述的T-SQL方法也有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。无需预配置。
-...
+
 SQL Server还要求操作系统和存储之间进行协调、以确保创建快照时Snapshot中存在正确的数据。在大多数情况下、执行此操作的唯一安全方法是使用SnapCenter或T-SQL。如果未进行这种额外协调、则创建的快照可能无法可靠地恢复。
 
 有关适用于SnapCenter的SQL Server插件的详细信息、请参见 link:https://www.netapp.com/pdf.html?item=/media/12400-tr4714.pdf["TR-4714：《使用NetApp SnapCenter的SQL Server最佳实践指南》"^]。

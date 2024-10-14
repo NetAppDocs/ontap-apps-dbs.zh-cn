@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-arch-sizing.html 
+keywords: epic,cache,iris 
+summary: 规模估算 
+---
+= 规模估算
+:allow-uri-read: 
+
+
+[role="lead"]
+估算Epic存储环境规模时、一个重要的架构注意事项是ODB数据库大小。
+
+您可以使用下图选择一个小型-中型-大型Epic存储架构。这些设计包括运行《硬件配置指南》中列出的所有工作负载。规模估算树基于100多份硬件配置指南中的数据、大多数情况下应是准确的估计值。
+
+需要注意的是、这只是一个起点。您应与我们的Epic联盟团队合作、确认任何Epic设计。您可以通过epic@NetApp．com联系该团队。每次部署都需要满足客户的要求、同时遵循Epic和NetApp建议的最佳实践。
+
+* 小型Epic架构、Epic数据库小于10 TB
+* 中型Epic架构、Epic数据库大小从10 TB到50 TB不等
+* 大型Epic架构、其中Epic数据库容量大于50 TB
+
+
+image:epic-sizing.png["经典的规模估算指导"]

@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-protocols.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC—协议 
+---
+= ONTAP上的EPIC—协议
+:allow-uri-read: 
+
+
+[role="lead"]
+FCP是提供LUN的首选协议。
+
+[TIP]
+====
+* NetApp建议*单个启动程序分区：每个分区一个启动程序、并使用全球通用端口名称(WWPN)在存储上配置所有必需的目标端口。如果一个分区中存在多个启动程序、则可能会导致间歇性HBA串扰、从而导致明显中断。
+
+====
+创建LUN后、将LUN映射到包含主机WWPN的启动程序组(igrop)以启用访问。
+
+此外、NetApp还支持使用NVMe/FC (如果您的AIX和RHEL操作系统版本可以)、并可提高性能。FCP和NVMe/FC可以同时位于同一个网络结构中。

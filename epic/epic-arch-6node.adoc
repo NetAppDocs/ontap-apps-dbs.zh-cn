@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-arch-6node.html 
+keywords: epic,cache,iris 
+summary: 经典的六节点架构 
+---
+= 经典的六节点架构
+:allow-uri-read: 
+
+
+[role="lead"]
+客户可能希望从六节点设计入手、也可能希望随着需求的增长从四节点无缝横向扩展到六节点。通过横向扩展、您可以无干扰地在节点之间移动工作负载、并在集群中重新平衡。
+
+此架构可在集群上实现最佳性能和容量平衡。Epic Production、Epic Report和Epic Test均在第一个HA对上运行。第二个HA对用于Clarity、Hyperspace、VMware、NA1和其余Epic工作负载。灾难恢复与上一节中的四节点架构相同。
+
+
+
+== 六节点架构
+
+image:epic-6node.png["EPIC 6节点架构"]
+
+
+
+== 六节点工作负载放置
+
+image:epic-6node-design.png["EPIC 6节点放置"]

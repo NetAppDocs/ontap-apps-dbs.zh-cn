@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-dr-smas-fail-sample.html 
+keywords: Oracle, SnapMirror active sync, SMBC, failover 
+summary: Oracle和SnapMirror主动同步故障转移 
+---
+= 采用SnapMirror主动同步的Oracle示例架构
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+本节中显示的详细故障示例基于下面所示的架构。
+
+
+NOTE: 这只是SnapMirror主动同步上的Oracle数据库的众多选项之一。之所以选择此设计、是因为它展示了一些更复杂的情形。
+
+在此设计中，假设站点A设置在link:oracle-dr-smas-preferred-site.html["首选站点"]。
+
+image:smas-fail-example.png["基于SM-AS设计的示例Oracle"]

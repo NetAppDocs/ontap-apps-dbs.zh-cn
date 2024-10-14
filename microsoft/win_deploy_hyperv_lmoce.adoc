@@ -10,7 +10,7 @@ summary: 本附录介绍了如何在集群模式环境之外使用Hyper-V实时�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]

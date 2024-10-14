@@ -42,4 +42,4 @@ Oracle的直接NFS的主要价值是绕过主机NFS客户端、直接在NFS服�
 只有在以下情况下才更改挂载选项：(a)使用DNFS；(b)问题是由于文件可见性滞后而导致的。如果未使用DNFS、则在单实例数据库上使用Oracle RAC挂载选项会导致性能下降。
 
 
-NOTE: 请参见有关的注释 `nosharecache` 在中 link:../host-configuration/linux.html#linux-direct-nfs["Linux NFS挂载选项"] 适用于可能会产生异常结果的Linux专用DNFS问题描述。
+NOTE: 有关可能会产生异常结果的Linux特定DNFS问题、请参见中的link:oracle-host-config-linux.html#linux-direct-nfs["Linux NFS挂载选项"]注释 `nosharecache`。

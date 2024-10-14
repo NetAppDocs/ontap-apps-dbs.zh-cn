@@ -14,7 +14,7 @@ summary: 此页面介绍了使用ONTAP和NFS连接的数据存储库实施VMware
 
 
 [role="lead"]
-NetApp ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持VMware vSphere从许多ESXi主机并发访问NFS连接的数据存储库、远远超出了对VMFS文件系统施加的限制。将NFS与vSphere结合使用可提供一些易用性和存储效率可见性优势、如中所述 link:vmware-vsphere-datastores-top.html["数据存储库"] 部分。
+ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持VMware vSphere从许多ESXi主机并发访问NFS连接的数据存储库、远远超出了对VMFS文件系统施加的限制。将NFS与vSphere结合使用可提供一些易用性和存储效率可见性优势、如一节中所述link:vmware-vsphere-datastores-top.html["数据存储库"]。
 
 将 ONTAP NFS 与 vSphere 结合使用时，建议采用以下最佳实践：
 

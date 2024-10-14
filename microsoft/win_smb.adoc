@@ -10,7 +10,7 @@ summary: 使用SMB3的适用于Hyper-V的ONTAP NAS存储
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -61,7 +61,7 @@ cluster::> system services ntp server create â€“server $domainControllerIP
 
 . 创建启用了NAS协议CIFS的新SVM。可以使用以下任一方法创建新的SVM：
 +
-** NetApp ONTAP上的命令行界面命令
+** ONTAP上的命令行界面命令
 ** System Manager
 ** NetApp PowerShell工具包
 
@@ -84,14 +84,14 @@ cluster::> system services ntp server create â€“server $domainControllerIP
 
 === 主机集成
 
-NAS协议CIFS本机集成到ONTAP中。因此、Windows Server不需要任何其他客户端软件即可访问NetApp ONTAP上的数据。NetApp存储控制器在网络上显示为本机文件服务器、并支持Microsoft Active Directory身份验证。
+NAS协议CIFS本机集成到ONTAP中。因此、Windows Server不需要任何其他客户端软件即可访问ONTAP上的数据。NetApp存储控制器在网络上显示为本机文件服务器、并支持Microsoft Active Directory身份验证。
 
 要检测先前使用Windows Server创建的CIFS共享、请完成以下步骤：
 
 . 以管理员组成员的身份登录到Windows Server。
 . 转至run.exe并键入为访问此共享而创建的CIFS共享的完整路径。
 . 要将共享永久映射到Windows Server、请右键单击此PC、单击映射网络驱动器、然后提供CIFS共享的路径。
-. 某些CIFS管理任务可以使用Microsoft管理控制台(MMC)来执行。在执行这些任务之前、您必须使用MMC菜单命令将MMC连接到NetApp ONTAP存储。
+. 某些CIFS管理任务可以使用Microsoft管理控制台(MMC)来执行。在执行这些任务之前、您必须使用MMC菜单命令将MMC连接到ONTAP存储。
 +
 .. 要在Windows Server中打开MMC、请单击Server Manager的Tools部分中的Computer Management。
 .. 单击更多操作并连接到另一台计算机、此时将打开选择计算机对话框。
@@ -108,7 +108,7 @@ NAS协议CIFS本机集成到ONTAP中。因此、Windows Server不需要任何其
 * 为了确认在将卷从一个节点移至另一个节点时或在某个节点出现故障时不会出现停机、NetApp建议您在文件共享上启用持续可用性选项。
 * 在为基于SMB的Hyper-V环境配置VM时、NetApp建议您在存储系统上启用副本卸载。这样可以缩短VM的配置时间。
 * 如果存储集群托管多个SMB工作负载、例如SQL Server、Hyper-V和CIFS服务器、则NetApp建议将不同的SMB工作负载托管在不同聚合上的不同SVM上。这种配置非常有用、因为其中每个工作负载都需要具有唯一的存储网络和卷布局。
-* NetApp建议使用10 GB网络(如果有)连接Hyper-V主机和NetApp ONTAP存储。如果使用1 GB网络连接、NetApp建议创建一个由多个1 GB端口组成的接口组。
+* NetApp建议使用10 GB网络(如果有)连接Hyper-V主机和ONTAP存储。如果使用1 GB网络连接、NetApp建议创建一个由多个1 GB端口组成的接口组。
 * 在将VM从一个SMB 3.0共享迁移到另一个共享时、NetApp建议在存储系统上启用CIFS副本卸载功能、以便加快迁移速度。
 
 

@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-cgs.html 
+keywords: epic,cache,iris 
+summary: 存储快照配置 
+---
+= 史诗般的存储效率配置
+:allow-uri-read: 
+
+
+[role="lead"]
+如果应用程序的存储分布在多个卷上、并且其中的一个或多个LUN的数量适合工作负载、则需要同时备份这些内容、以确保一致的数据保护需要使用CGS。
+
+一致性组(简称CGS)可提供此功能以及更多功能。它们可以在夜间使用、以便使用策略创建按需快照或计划内一致的快照。您可以使用它来还原、克隆甚至复制数据。
+
+有关GS的更多信息、请参见link:https://docs.netapp.com/us-en/ontap/consistency-groups/["一致性组概述"^]
+
+按照本文档前面几节所述配置卷和LUN后、可以将其配置为一组CGS。建议的最佳实践是按照下图所示进行设置：
+
+image:epic-cg-layout.png["EPIC一致性组布局"]
+
+
+
+== 一致性组快照
+
+应在与为生产数据库提供存储的卷关联的每个子CG上设置每晚CG快照计划。这样就会在每晚为这些GS创建一组全新的一致备份。然后、可以使用这些副本克隆生产数据库、以便在开发和测试等非生产环境中使用。NetApp为Epic开发了基于CG的专有自动化Ans得 工作流、用于自动备份生产数据库、同时还可以自动执行刷新和测试环境。
+
+CG快照可用于支持Epic生产数据库的还原操作。
+
+对于SAN卷、在用于CGS的每个卷上禁用默认快照策略。这些快照通常由所使用的备份应用程序或NetApp的Epic Ans得 自动化服务进行管理。
+
+对于SAN卷、在每个卷上禁用默认快照策略。这些快照通常由备份应用程序或Epic Ans得 自动化管理。[NS2]
+
+WebBLOB和VMware数据集应仅配置为卷、而不与CGS关联。您可以使用SnapMirror在与生产系统不同的存储系统上维护快照。
+
+完成后、配置将如下所示：
+
+image:epic-cg-snapshots.png["使用CG快照实现EPIC"]

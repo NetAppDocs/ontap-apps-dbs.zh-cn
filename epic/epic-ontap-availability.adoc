@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-availability.html 
+keywords: epic,cache,iris 
+summary: ONTAP可用性的史诗般的体验 
+---
+= ONTAP可用性的史诗般的体验
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP的核心是无中断运行、它可以帮助您避免代价高昂的业务运营中断。
+
+NetApp根据生产数据提供99.999999%以上的可用性、这些数据通过NetApp Active IQ称为主存储。集群中的每个HA对都没有单点故障。ONTAP的历史可追溯到1992年、是全球部署最广泛的数据管理软件、在提供可靠存储方面有着非凡的历史。现在、借助Active IQ主动监控和自动解决97%的问题、可用性得到提高、支持案例明显减少。
+
+Epic 建议使用 HA 存储系统来缓解硬件组件故障。此建议从基本硬件(如冗余电源)扩展到网络(如多路径网络)。
+
+当您需要在集群中升级存储、纵向扩展、横向扩展或重新平衡工作负载时、对患者护理没有任何影响。您可能会移动数据、但您不需要再次通过数据迁移或叉车式升级中断患者护理。迁移到下一代技术、适应未来需求、避免受制于硬件。NetApp甚至提供100%书面可用性担保。
+
+有关NetApp可靠性、可用性、可维护性和安全性功能的详细信息、请参见link:https://www.netapp.com/media/67355-wp-7354.pdf["NetApp ONTAP可靠性、可用性、可维护性和安全性"^]白皮书。

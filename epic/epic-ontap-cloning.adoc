@@ -1,0 +1,63 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-cloning.html 
+keywords: epic,cache,iris 
+summary: 史诗般的数据保护 
+---
+= 经典克隆
+:allow-uri-read: 
+
+
+[role="lead"]
+EPIC认识到、与基于文件的传统备份相比、基于存储节点的NetApp Snapshot技术对生产工作负载没有任何性能影响。如果将Snapshot备份用作生产数据库的恢复源、则在实施备份方法时必须考虑数据库一致性。
+
+快照是卷的时间点只读备份副本。NetApp FlexClone®创建快照并使其可立即读取和写入。FlexClone卷具有巨大的价值、可创建应用程序一致的只读快照、并根据生产数据创建可写FlexClone卷。此本机功能对存储节省量、操作时间和自动化功能有着显著影响。
+
+在刷新过程中、将使用FlexClone卷。
+
+
+
+== 数据管理
+
+作为该解决方案的一部分、NetApp通过使用本机ONTAP工具提供完全自动化的备份和测试更新解决方案。此解决方案旨在专门为大型Epic数据库管理员(Database Administrator、Database Administrator、数据库管理员)社区简化Epic数据管理：
+
+* EPIC镜像用于将数据复制到灾难恢复和报告(以绿色表示)。
+* 从Report到Clarity的每日数据转储。
+* NetApp自动备份(以黄色表示)。
+* NetApp自动刷新SUP、REP和其他测试(以蓝色表示)。
+* 测试环境适用于完整副本环境、而不适用于较小的强制转换副本。
+
+
+有关详细信息、请联系适用于Epic应用程序的NetApp服务。
+
+如果应用程序的存储分布在多个卷上、并且其中的一个或多个LUN的数量适合工作负载、则需要同时备份这些内容、以确保一致的数据保护需要使用CGS。
+
+一致性组(简称CGS)可提供此功能以及更多功能。它们可以在夜间使用、以便使用策略创建按需快照或计划内一致的快照。您可以使用它来还原、克隆甚至复制数据。
+
+有关GS的更多信息、请参见link:https://docs.netapp.com/us-en/ontap/consistency-groups/["有关一致性组的NetApp文档"^]
+
+
+
+== 为Epic配置一致性组
+
+按照本文档前面几节所述配置卷和LUN后、可以将其配置为一组CGS。建议的最佳实践是按照下图所示进行设置：
+
+image:epic-cg-layout.png["经典和一致性组"]
+
+
+
+== 一致性组快照
+
+应在与为生产数据库提供存储的卷关联的每个子CG上设置每晚CG快照计划。这样就会在每晚为这些GS创建一组全新的一致备份。然后、可以使用这些副本克隆生产数据库、以便在开发和测试等非生产环境中使用。NetApp为Epic开发了基于CG的专有自动化Ans得 工作流、用于自动备份生产数据库、同时还可以自动执行刷新和测试环境。
+
+CG快照可用于支持Epic生产数据库的还原操作。
+
+对于SAN卷、在用于CGS的每个卷上禁用默认快照策略。这些快照通常由所使用的备份应用程序或NetApp的Epic Ans得 自动化服务进行管理。
+
+对于SAN卷、在每个卷上禁用默认快照策略。这些快照通常由备份应用程序或Epic Ans得 自动化管理。[NS2]
+
+WebBLOB和VMare数据集应仅配置为卷、而不与CGS关联。您可以使用SnapMirror或SnapVault技术在独立于生产环境的存储系统上维护其Snapshot副本。
+
+完成后、配置将如下所示：
+
+image:epic-cg-snapshots.png["EPIC CG快照"]

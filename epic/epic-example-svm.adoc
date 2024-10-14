@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-svm.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—SVM 
+---
+= ONTAP上的EPIC部署示例—SVM
+:allow-uri-read: 
+
+
+[role="lead"]
+NetApp可对存储进行虚拟化、用户访问由SVM提供。
+
+对于Epic、有一个FCP SVM和一个SMB SVM。根据您希望如何管理存储以及可能的多租户、您可以使用更多SVM。
+
+要设置SVM、请单击link:https://docs.netapp.com/us-en/ontap/networking/create_svms.html["此处"^]

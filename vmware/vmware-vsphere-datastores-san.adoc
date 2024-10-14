@@ -14,7 +14,7 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方�
 
 
 [role="lead"]
-NetApp ONTAP使用iSCSI、光纤通道协议(FCP、简称FC)和基于网络结构的NVMe (NVMe-oF)为VMware vSphere提供企业级块存储。以下是在vSphere和ONTAP中为VM存储实施块协议的最佳实践。
+ONTAP使用iSCSI、光纤通道协议(FCP、简称FC)和基于网络结构的NVMe (NVMe-oF)为VMware vSphere提供企业级块存储。以下是在vSphere和ONTAP中为VM存储实施块协议的最佳实践。
 
 在 vSphere 中，可以通过三种方式使用块存储 LUN ：
 
@@ -31,7 +31,7 @@ NMP和ONTAP都支持通过非对称逻辑单元访问(ANAA)来协商优化和非
 
 ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi不会发现任何超出这些限制的LUN或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。
 
-SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关 SLM 的详细信息，请查看的第 5.9 节 http://www.netapp.com/us/media/tr-4080.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
+SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关SLM的详细信息，请查看的第5.9节 https://www.netapp.com/pdf.html?item=/media/10680-tr4080pdf.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
 
 * 默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。
 * 对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM `lun mapping remove-reporting-nodes` 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。

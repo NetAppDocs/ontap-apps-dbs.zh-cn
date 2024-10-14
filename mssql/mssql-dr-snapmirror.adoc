@@ -1,0 +1,22 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-dr-snapmirror.html 
+keywords: MSSQL,SQL Server, disaster recovery, snapmirror 
+summary: 使用ONTAP进行Microsoft SQL Server灾难恢复 
+---
+= 使用SnapMirror进行Microsoft SQL Server灾难恢复
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+下面是有关适用于SQL Server的SnapMirror的建议：
+
+* 如果使用SMB、则目标SVM必须是源SVM所属的同一Active Directory域的成员、以便在灾难恢复期间不会破坏NAS文件中存储的访问控制列表(ACL)。
+* 使用与源卷名称相同的目标卷名称并不是必需的、但这样可以简化将目标卷挂载到目标的过程、使其易于管理。如果使用SMB、则必须使目标NAS命名空间与源命名空间的路径和目录结构完全相同。
+* 为保持一致、请勿从控制器计划SnapMirror更新。而是应启用SnapCenter中的SnapMirror更新、以便在完整备份或日志备份完成后更新SnapMirror。
+* 将包含SQL Server数据的卷分布在集群中的不同节点上、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。
+* 如果对快速数据恢复的需求较高、则使用同步复制；如果需要异步解决方案、则可以灵活地执行RPO。
+
+
+有关SnapMirror的详细信息、请参见 link:https://www.netapp.com/us/media/tr-4015.pdf["TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》"^]。

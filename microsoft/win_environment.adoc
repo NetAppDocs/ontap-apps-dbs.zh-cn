@@ -10,13 +10,13 @@ summary: 了解NetApp存储和Windows Server环境
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../media
+:imagesdir: ../media/
 
 
 [role="lead"]
 如中所述 link:win_overview.html["概述"]NetApp存储控制器提供了一个真正统一的架构，支持文件、块和对象协议。其中包括SMB/CCIFS、NFS、NVMe/TCP、NVMe/FC、iSCSI、 FC (FCP)和S3、并创建统一的客户端和主机访问。同一个存储控制器可同时以SAN LUN和文件服务的形式提供块存储服务、如NFS和SMB/CCIFS。ONTAP还可作为全SAN阵列(ASA)使用、它可通过iSCSI和FCP的对称主动-主动多路径功能来优化主机访问、而统一的ONTAP系统则使用非对称主动-主动多路径功能。在这两种模式下、ONTAP都使用ANA进行基于网络结构的NVMe (NVMe-oF)多路径管理。
 
-在Windows Server环境中、运行ONTAP软件的NetApp存储控制器可以支持以下工作负载：
+在Windows Server环境中、运行ONTAP的NetApp存储控制器可以支持以下工作负载：
 
 * 在持续可用的SMB 3.0共享上托管的VM
 * 托管在iSCSI或FC上运行的集群共享卷(CSV) LUN上的VM
@@ -77,7 +77,7 @@ image:win_image2.png["ONTAP Storage Virtual Machine、宽度=572、高度=443"]
 
 == NetApp PowerShell工具包
 
-NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端自动化并支持NetApp ONTAP的存储管理。ONTAP模块包含2、000多个cmdlet、可帮助管理FAS、NetApp全闪存FAS (AFF)、商用硬件和云资源。
+NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端自动化并支持ONTAP的存储管理。ONTAP模块包含2、000多个cmdlet、可帮助管理FAS、NetApp全闪存FAS (AFF)、商用硬件和云资源。
 
 
 

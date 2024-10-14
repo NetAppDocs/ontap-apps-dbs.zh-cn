@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-huk.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC—主机实用程序 
+---
+= ONTAP上的EPIC—主机实用程序
+:allow-uri-read: 
+
+
+[role="lead"]
+NetApp主机实用程序是适用于各种操作系统的软件包、其中包含管理实用程序、例如 `sanlun`命令行界面二进制文件、多路径驱动程序以及正常SAN操作所需的其他重要文件。
+
+[TIP]
+====
+NetApp建议*在连接到存储系统并访问NetApp存储系统的主机上安装NetApp主机实用程序。有关详细信息、请参见link:https://imt.netapp.com/matrix/["互操作性表工具"^]和link:https://docs.netapp.com/us-en/ontap-sanhost/["SAN主机"^]文档。
+
+====
+
+NOTE: 对于AIX、在发现LUN之前安装Host Utilities尤为重要。这样可确保LUN多路径行为配置正确。如果在未使用Host Utilities的情况下执行发现、则需要使用命令从系统中取消配置LUN、然后通过或重新启动重新发现 `cfgmgr`LUN `rmdev -dl`。

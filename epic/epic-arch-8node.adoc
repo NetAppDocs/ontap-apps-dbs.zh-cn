@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-arch-8node.html 
+keywords: epic,cache,iris 
+summary: 经典的八节点架构 
+---
+= 经典的八节点架构
+:allow-uri-read: 
+
+
+[role="lead"]
+下图显示了横向扩展的八节点架构。同样、您也可以从四节点开始、扩展到六节点、然后继续扩展到八节点及更多节点。此架构可在生产环境中的六个节点之间实现最佳性能和容量平衡。
+
+在此设计中、测试环境将从Report克隆、而不是从生产环境克隆。这样可以将测试环境和完整性检查负载从生产环境中分流出来。
+
+
+
+== 八节点架构
+
+image:epic-8node.png["EPIC 4节点架构"]
+
+
+
+== 八节点工作负载放置
+
+image:epic-8node-design.png["EPIC 8节点放置"]

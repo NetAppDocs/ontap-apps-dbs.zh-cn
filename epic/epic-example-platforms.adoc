@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-platforms.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—协议 
+---
+= ONTAP上的EPIC部署示例—平台
+:allow-uri-read: 
+
+
+[role="lead"]
+对于Epic odb数据库、日志和应用程序工作负载、Epic建议将服务器存储作为FCP LUN提供。
+
+此外、NetApp还支持使用NVMe/FC (如果您的AIX和RHEL操作系统版本可以)、并可提高性能。FCP和NVMe/FC可以同时位于同一个网络结构中。
+
+NetApp客户已在Azure云中成功运行所有Epic工作负载。AWS还可以运行Epic工作负载。借助NetApp Cloud Volumes ONTAP和NetApp Cloud Volumes服务、NetApp可提供在云中有效运行Epic所需的企业级功能和性能。NetApp云选项可通过iSCSI提供块、并通过NFS或SMB提供文件。

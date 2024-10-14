@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-ontap-performance.html 
+keywords: epic,cache,iris 
+summary: ONTAP性能卓越 
+---
+= ONTAP性能卓越
+:allow-uri-read: 
+
+
+[role="lead"]
+ONTAP于2009年推出了闪存技术、自2010年以来便支持SSD。凭借在闪存存储方面的长期经验、NetApp可以调整ONTAP功能、以优化SSD性能并增强闪存介质持久性、同时保留ONTAP丰富的功能。
+
+自2020年以来、所有Epic odb工作负载都必须位于全闪存存储上。EPIC工作负载通常以每TB存储大约1、000-2、000次IOPS (8k块、75%/C5%读写比率和100%随机)的速度运行。EPIC对延迟非常敏感、高延迟对最终用户体验以及运行报告、备份、完整性检查和环境刷新时间等操作任务具有明显影响。
+
+* 纯闪存阵列的限制因素不是驱动器、而是控制器上的利用率。
+* ONTAP采用双主动架构。为提高性能、HA对中的两个节点都会写入驱动器。
+* 这样就可以最大限度地提高CPU利用率、这是NetApp发布行业最佳Epic性能的一个最重要因素。
+* NetApp RAID DP、高级磁盘分区(ADP)和WAFL技术可满足所有Epic要求。所有工作负载都会在所有磁盘之间分布IO。无瓶颈。
+* ONTAP经过写入优化；写入一旦写入镜像NVRAM、就会得到确认、然后再以实时内存速度写入磁盘。
+* 借助WAFL、NVRAM和模块化架构、NetApp可以利用软件实现实时效率、加密和性能创新。此外、NetApp还可以在不影响性能的情况下引入新特性和功能。
+* 以往、每个新版本的ONTAP都会将性能和效率提高30-50%。当您及时了解ONTAP时、性能将达到最佳。
+
+
+
+
+== NVMe
+
+当性能至关重要时、NetApp还支持下一代FC SAN协议NVMe/FC。
+
+如下图所示、我们的Genio测试使用NVMe/FC协议实现的IOPS比使用FC协议实现的IOPS要多得多。NVMe/FC连接解决方案在超过45秒写入周期阈值之前实现了超过70万次IOPS。通过将SCSI命令替换为NVMe、还可以显著降低主机上的利用率。
+
+image:epic-genio.png["经典Genio图"]

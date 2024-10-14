@@ -1,0 +1,15 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-aggregates.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—聚合 
+---
+= ONTAP上的EPIC部署示例—聚合
+:allow-uri-read: 
+
+
+[role="lead"]
+有关配置聚合的最新文档，请单击link:https://docs.netapp.com/us-en/ontap/disks-aggregates/manage-local-tiers-overview-concept.html["此处"^]。
+
+
+NOTE: 默认设置可优化性能和容量。每个节点会创建一个大型聚合。

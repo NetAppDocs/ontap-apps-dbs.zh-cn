@@ -12,20 +12,26 @@ summary: 使用ONTAP进行Microsoft SQL Server灾难恢复
 [role="lead"]
 企业数据库和应用程序基础架构通常需要进行复制、以防止发生自然灾难或意外业务中断、同时最大限度地减少停机时间。
 
-SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用ONTAP复制技术。ONTAP复制选项(包括MetroCluster和SnapMirror)可以更好地扩展、对性能的影响微乎其微、保护非SQL数据、并且通常可提供完整基础架构复制和灾难恢复解决方案。
+SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用ONTAP复制技术。有三个基本选项。
 
 
 
-== SnapMirror异步
+== SnapMirror
 
-SnapMirror技术提供了一个快速灵活的异步企业解决方案、用于通过LAN和广域网复制数据。在创建初始镜像后、SnapMirror技术仅会将更改后的数据块传输到目标、从而显著降低网络带宽要求。
-
-下面是有关适用于SQL Server的SnapMirror的建议：
-
-* 如果使用CIFS、则目标SVM必须是源SVM所属的同一Active Directory域的成员、以便在灾难恢复期间不会破坏NAS文件中存储的访问控制列表(ACL)。
-* 使用与源卷名称相同的目标卷名称并不是必需的、但这样可以简化将目标卷挂载到目标的过程、使其易于管理。如果使用CIFS、则必须使目标NAS命名空间与源命名空间的路径和目录结构完全相同。
-* 为保持一致、请勿从控制器计划SnapMirror更新。而是应启用SnapCenter中的SnapMirror更新、以便在完整备份或日志备份完成后更新SnapMirror。
-* 将包含SQL Server数据的卷分布在集群中的不同节点上、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。
+SnapMirror技术为通过LAN和广域网复制数据提供了快速灵活的企业解决方案。SnapMirror技术仅在创建初始镜像后将更改后的数据块传输到目标、从而显著降低网络带宽要求。它可以配置为同步或异步模式。
 
 
-有关SnapMirror的详细信息、请参见 link:https://www.netapp.com/us/media/tr-4015.pdf["TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》"^]。
+
+== NetApp MetroCluster
+
+MetroCluster配置有助于为应用程序、数据库和虚拟化平台提供高可用性、零数据丢失的存储解决方案。该解决方案将基于阵列的集群与同步复制相结合、为整个存储和主机环境提供额外的保护层。
+
+
+
+== SnapMirror active sync (原SnapMirror业务连续性)
+
+SnapMirror主动同步基于SnapMirror同步、它能够将多个LUN复制到副本存储、同时保持写入顺序一致性。使用MetroCluster时、各个站点的ONTAP控制器(包括网络配置)应完全相同。使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。
+
+MetroCluster与SnapMirror主动同步的主要区别在于粒度和可扩展性。如果您只需要选择要同步复制的特定工作负载、或者两个站点都应具有可用于读/写操作的LUN、则SnapMirror主动同步是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SnapMirror主动同步目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。
+
+有关SnapMirror的详细信息，请参见link:https://www.netapp.com/pdf.html?item=/media/17229-tr4015pdf.pdf["TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》"^]。

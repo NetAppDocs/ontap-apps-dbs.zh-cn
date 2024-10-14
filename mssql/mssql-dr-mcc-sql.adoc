@@ -1,0 +1,29 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-dr-mcc-sql.html 
+keywords: MSSQL,SQL Server, MetroCluster 
+summary: 采用NetApp MetroCluster的Microsoft SQL Server 
+---
+= 采用MetroCluster的Microsoft SQL Server
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+保护零RPO SQL Server数据库的一个选项是MetroCluster。MetroCluster是一种简单的高性能RPO = 0复制技术、支持您在站点间轻松复制整个基础架构。
+
+SQL Server可在一个MetroCluster系统上扩展到多达数千个数据库。可能存在SQL Server独立实例或故障转移集群实例、MetroCluster系统不一定会添加或更改数据库管理的任何最佳实践。
+
+本文档不会对MetroCluster进行完整说明、但其原则非常简单。MetroCluster可提供具有快速故障转移功能的RPO = 0复制解决方案。在此基础之上构建的内容取决于您的要求。
+
+例如、站点突然丢失后的基本快速灾难恢复过程可以使用以下基本步骤：
+
+* 强制执行MetroCluster切换
+* 发现FC/iSCSI LUN (仅限SAN)
+* 挂载文件系统
+* 启动SQL服务
+
+
+此方法的主要要求是在远程站点上运行操作系统。它必须预配置SQL Server设置、并应使用等效的内部版本进行更新。SQL Server系统数据库也可以镜像到远程站点、并在发生灾难时进行挂载。
+
+如果在切换之前灾难恢复站点未使用托管虚拟化数据库的卷、文件系统和数据存储库、则无需在关联的卷上设置 `dr-force- nvfail`。

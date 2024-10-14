@@ -1,0 +1,64 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-lunvol.html 
+keywords: epic,cache,iris 
+summary: EPIC LUN和卷配置 
+---
+= EPIC LUN和卷配置
+:allow-uri-read: 
+
+
+[role="lead"]
+Epic数据库存储布局建议文档提供了有关每个数据库的LUN大小和数量的指导。
+
+请务必阅读本文档、了解Epic DBa和Epic支持、并确定LUN数量和LUN大小、因为它们可能需要调整。这些存储建议对于HBA队列深度、存储性能、易操作性和易扩展性非常重要。
+
+要考虑服务器操作系统队列深度、请为一个数据库至少使用八个LUN (每个卷一个LUN)。将LUN数量增加8的倍数。对于大型环境、可能需要更多的LUN；使用相同数量的卷(总共八个、每个节点四个)、并以八的倍数添加LUN。EPIC建议保持LUN < 8 TB且LUN数量< 32。通过这种方法、您可以轻松扩展Epic环境。
+
+为了最大限度地提高Epic odb或Clarity等工作负载的性能、每个布局也最适合NetApp存储。通过使用八个卷、写入IO会在控制器之间均匀分布、从而最大程度地提高CPU利用率。对于复制和备份、最好将卷数限制为八个、以简化操作。
+
+
+
+== 扩展选项
+
+如果服务器需要更多存储、最简单的选择是增加包含卷的LUN的大小。第二种方法是、一次以八的倍数向卷组添加LUN (每个现有卷一个)。只添加一个或两个LUN可能会创建热点并影响性能。
+
+
+
+== 卷和8-LUN布局
+
+image:epic-8lun.png["EPIC 8-LUN布局"]
+
+
+
+== 卷和16个LUN布局
+
+image:epic-16lun.png["EPIC 16 LUN布局"]
+
+
+
+== 卷和24个LUN布局
+
+image:epic-24lun.png["EPIC 24 LUN布局"]
+
+
+
+== 卷和32 LUN布局
+
+image:epic-32lun.png["EPIC 32-LUN布局"]
+
+
+
+== 最佳实践
+
+* 在8个卷中使用8个、16个、24个或32个LUN。
+* 在HA对中平衡工作负载、以最大限度地提高性能和效率。
+* 按照预期增长3年的大小创建LUN、以避免达到LUN扩展限制的10倍。
+* 使用精简配置的卷和LUN。
+* 至少使用八个数据库LUN、两个日志LUN和两个应用程序LUN。此配置可最大限度地提高存储性能和操作系统队列深度。如果出于容量或其他原因需要、可以使用更多。
+* 如果确实需要向卷组添加LUN、请一次添加八个LUN。
+* 要同时备份的卷组和LUN组需要一致性组(一致性组、CGS)。
+* 请勿在Genio或任何I/O性能期间使用QoS。
+* 完成Genio或Clarity测试后、NetApp建议删除存储并重新配置、然后再加载生产数据。
+* 请务必 `-space-allocation`在LUN上设置已启用。否则、ONTAP将看不到LUN上任何已删除的数据、并可能导致容量问题。有关详细信息、请参见Epic存储配置快速参考指南。
+

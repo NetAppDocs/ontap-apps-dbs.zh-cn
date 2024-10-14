@@ -1,0 +1,16 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-protocol.html 
+keywords: epic,cache,iris 
+summary: ONTAP上的EPIC部署示例—FCP协议 
+---
+= ONTAP上的EPIC部署示例—FCP协议
+:allow-uri-read: 
+
+
+[role="lead"]
+创建SVM后、您需要向其添加协议。
+
+要创建FCP数据生命link:https://docs.netapp.com/us-en/ontap/san-admin/configure-svm-fc-task.html["此处"^]周期，请单击。
+
+启动程序组用于允许服务器访问LUN。要创建iGroup，请单击link:https://docs.netapp.com/us-en/ontap/san-admin/manage-san-initiators-task.html#view-manage-san-igroups["此处"^]。

@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-config-files.html 
+keywords: epic,cache,iris 
+summary: EPIC和文件协议 
+---
+= EPIC和文件协议
+:allow-uri-read: 
+
+
+[role="lead"]
+支持在同一个全闪存阵列上组合使用NAS和SAN。
+
+[TIP]
+====
+* NetApp建议*对NAS共享使用FlexGroup卷、例如WebBLOB (如果可用)。
+
+====
+WebBLOB包含高达95%的冷数据。您可以选择释放全闪存阵列上的空间、并使用ONTAP的功能将备份和冷数据分层到内部或云中的对象存储link:https://docs.netapp.com/us-en/ontap/fabricpool/index.html["FabricPool"^]。所有这些都可以在不影响性能的情况下完成。FabricPool是ONTAP的一项随附功能。客户可以生成冷数据(或非活动数据)报告、以查看启用FabricPool可以获得多少优势。您可以将数据的使用期限设置为通过策略分层。EPIC的客户通过此功能节省了大量成本。

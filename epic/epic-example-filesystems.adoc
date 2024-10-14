@@ -1,0 +1,27 @@
+---
+sidebar: sidebar 
+permalink: epic/epic-example-filesystems.html 
+keywords: epic,cache,iris 
+summary: ONTAP部署示例中的EPIC—文件系统 
+---
+= ONTAP部署示例中的EPIC—文件系统
+:allow-uri-read: 
+
+
+[role="lead"]
+有关挂载LUN、创建卷组和逻辑卷以及配置文件系统的信息、请参见Epic存储配置快速参考指南。使用以下示例命令为RHEL设置Epic生产服务器。
+
+
+
+== 文件系统和挂载选项
+
+创建和映射LUN并完成分区后、请使用以下过程将存储连接到服务器。
+
+
+NOTE: 在此示例中、我们为数据库使用了8个1024Gb LUN、为日志使用了2个1024Gb LUN、为应用程序安装使用了2个1024Gb LUN。
+
+
+
+== 异步I/O
+
+Epic SAN注意事项白皮书和存储配置快速参考文档提供了有关如何配置主机和连接到存储的详细信息。本节介绍如何设置Red Hat Enterprise Linux主机。AIX详细信息可在参考文档中找到。

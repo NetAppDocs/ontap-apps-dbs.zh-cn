@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-dr-smas-overview.html 
+keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
+summary: Microsoft SQL Server和SnapMirror活动同步 
+---
+= SQL Server和SnapMirror活动同步
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+通过SnapMirror主动同步、各个SQL Server数据库和应用程序可以在存储和网络中断期间继续运行、并可实现透明的存储故障转移、而无需任何手动干预。
+
+从ONTAP 9 15.1开始、除了现有的非对称配置之外、SnapMirror主动同步还支持对称主动/主动架构。对称主动/主动功能提供同步双向复制、以实现业务连续性和灾难恢复。它可以跨多个故障域同时对数据进行读写访问、从而帮助您保护关键SAN工作负载的数据访问、从而确保无中断运行、并在发生灾难或系统故障时最大限度地减少停机时间。
+
+SQL Server主机使用光纤通道(Fibre Channel、FC)或iSCSI LUN访问存储。在托管已复制数据副本的每个集群之间进行复制。由于此功能是存储级别复制、因此在独立主机或故障转移集群实例上运行的SQL Server实例可以对任一集群执行读/写操作。有关规划和配置步骤，请参阅link:https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/["有关SnapMirror active sync的ONTAP文档"]。
+
+
+
+== SnapMirror主动与对称主动/主动的架构
+
+image:mssql-smas-architecture.png["错误：缺少图形映像"]
+
+**同步复制**
+
+在正常操作下、每个副本始终是一个RPO = 0的同步副本、但有一个例外。如果无法复制数据、则ONTAP将不再需要复制数据并恢复在一个站点上提供IO、而另一个站点上的LUN将脱机。
+
+**存储硬件**
+
+与其他存储灾难恢复解决方案不同、SnapMirror主动同步可提供非对称平台灵活性。每个站点的硬件不必相同。通过此功能、您可以调整用于支持SnapMirror活动同步的硬件的大小。如果需要支持完整的生产工作负载、远程存储系统可以与主站点完全相同；但是、如果灾难导致I/O减少、则与远程站点上较小的系统相比、可能会更经济高效。
+
+** ONTAP调解器**
+
+ONTAP调解器是从NetApp支持下载的软件应用程序、通常部署在小型虚拟机上。ONTAP调解器不是Tieb破碎 机。它是参与SnapMirror活动同步复制的两个集群的备用通信通道。ONTAP根据通过直接连接和调解器从合作伙伴处收到的响应来推动自动化操作。
