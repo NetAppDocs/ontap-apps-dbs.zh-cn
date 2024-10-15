@@ -5140,7 +5140,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9fad44ede04fb95c16ea64be5e51836c" category="paragraph">在许多情况下、通过站点间链路访问存储的应用程序所产生的额外延迟开销是不可接受的。这意味着统一网络可用性的提高微乎其微、因为如果站点上丢失存储、则无论如何都需要关闭故障站点上的服务。</block>
   <block id="15da96ce40136a3259e04ae0dc25fc95" category="paragraph">为了简单起见、这些图中未显示通过本地集群的冗余路径。ONTAP存储系统本身就是HA、因此控制器故障不应导致站点故障。它只会导致受影响站点上使用的本地路径发生更改。</block>
   <block id="bb12626aefb7c36f9b13694d35dadd5d" category="paragraph">SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道主机所在的位置。将LUN映射到给定主机时、您可以指示它们是否接近给定存储系统。</block>
-  <block id="dbd84b1ad340aea47672fb898893f86a" category="paragraph">对于AFF系统、路径如下所示。</block>
   <block id="4590bab77464ba1a9c8ee6b8095eef60" category="inline-image-macro">SnapMirror主动同步AFF统一网络</block>
   <block id="988f5836c7a60d1374a4804da23d51e4" category="paragraph"><block ref="988f5836c7a60d1374a4804da23d51e4" category="inline-image-macro-rx" type="image"></block></block>
   <block id="2b2fdfa824f1319cc47992b1277faa78" category="paragraph">在正常操作下、所有IO均为本地IO。读取和写入操作由本地存储阵列提供。当然、在确认写入IO之前、本地控制器也需要将其复制到远程系统、但所有读取IO都将在本地进行处理、并且不会通过遍历站点间的SAN链路而产生额外延迟。</block>
@@ -5602,7 +5601,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6fda40460e9cbbefd704b9c01ea2c18c" category="summary">Microsoft SQL Server和SM-AS首选站点</block>
   <block id="ac420a2d1b21182a80148191683bc9f7" category="paragraph">SnapMirror主动同步行为是对称的、但有一个重要例外-首选站点配置。</block>
   <block id="309d61d5c343d8fd53c2c585c64587b6" category="doc">具有SnapMirror活动同步的Microsoft SQL Server</block>
-  <block id="05862d500fc3267b33f0cc75e23b6200" category="paragraph">可以将SQL Server配置为以多种方式与SnapMirror活动配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。</block>
   <block id="3ccf31c781c6df95109107d66199a8f6" category="section-title">SQL Server的独立实例</block>
   <block id="bd53ef250bf6f7a012cc7ed01c62f8cd" category="inline-link-macro">基于ONTAP的SQL Server</block>
   <block id="d0d5aa4f66a3624a91ad4b11bbc2250f" category="paragraph">文件布局和服务器配置的最佳实践与文档中建议的相同<block ref="c89905de54b32eb552c83786b7590df9" category="inline-link-macro-rx"></block>。</block>
@@ -5870,4 +5868,12 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="29a8ec19326654cdf89bb8516725720a" category="sidebar">调解器故障</block>
   <block id="38ea1deaf691187fc38ab915566310c5" category="sidebar">出现故障后恢复服务</block>
   <block id="9132b772b1437e64c8acac2be79a7a0f" category="sidebar">手动故障转移</block>
+  <block id="05b66cacce7105ad4a548ef5054997f0" category="doc">邻近设置</block>
+  <block id="eccafd14420b568fff639755b251d1bd" category="paragraph">接近是指每个集群的配置、表示特定主机WWN或iSCSI启动程序ID属于本地主机。这是配置LUN访问的第二个可选步骤。</block>
+  <block id="d99ea4fad7d0a9010283969d9ddf89aa" category="paragraph">第一步是常规的igrop配置。每个LUN都必须映射到一个igrop、该igrop包含需要访问该LUN的主机的wwn/iSCSI ID。此选项用于控制哪个主机对LUN具有_access_访问权限。</block>
+  <block id="bba32ce1a7b85dd9ba50c49b1a53fe4c" category="paragraph">第二个可选步骤是配置主机邻近性。这不控制访问、而是控制_priority_。</block>
+  <block id="98271aec6138a28e374c8f3724a535b6" category="paragraph">例如、可以将站点A的主机配置为访问受SnapMirror活动同步保护的LUN、并且由于SAN跨站点扩展、因此可以使用站点A上的存储或站点B上的存储为该LUN提供路径</block>
+  <block id="81959299f52ddb567fd902f3e1ae5311" category="paragraph">如果没有邻近设置、则该主机将平等使用这两个存储系统、因为这两个存储系统都会公布主动/优化路径。如果站点之间的SAN延迟和/或带宽有限、则可能无法实现这一点、您可能希望确保在正常操作期间、每个主机优先使用指向本地存储系统的路径。这可通过将主机的wwn/iSCSI ID作为近端主机添加到本地集群来配置。可通过命令行界面或SystemManager完成此操作。</block>
+  <block id="f08670cf73640d447fb34d01b0f6418f" category="paragraph">对于AFF系统、配置主机邻近性后、路径将如下所示。</block>
+  <block id="85a2564342597a065a3926228b7e9fcd" category="paragraph">可以将SQL Server配置为以多种方式与SnapMirror活动同步配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。</block>
 </blocks>

@@ -10,7 +10,7 @@ summary: Microsoft SQL Server和SnapMirror活动同步
 
 
 [role="lead"]
-可以将SQL Server配置为以多种方式与SnapMirror活动配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。
+可以将SQL Server配置为以多种方式与SnapMirror活动同步配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。
 
 
 
