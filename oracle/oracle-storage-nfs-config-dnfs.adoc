@@ -33,7 +33,110 @@ Oracle的直接NFS的主要价值是绕过主机NFS客户端、直接在NFS服�
 
 
 
-=== 直接NFS和主机文件系统访问
+=== 启用DNFS
+
+Oracle DNFS可以与NFSv3结合使用、除了启用DNFS库之外、无需进行任何配置(有关所需的特定命令、请参见Oracle文档)、但如果DNFS无法建立连接、则可以静默还原到内核NFS客户端。如果发生这种情况、可能会严重影响性能。
+
+如果要在多个接口之间使用DNFS多路复用、使用NFSv4.X或使用加密、则必须配置oranfstab文件。语法极为严格。文件中的小错误可能会导致启动挂起或绕过oranfstab文件。
+
+要确保DNFS按预期运行、唯一的方法是查询v$dnfs表。
+
+下面是一个示例oranfstab文件、该文件位于/等 位置这是可以放置oranfstab文件的多个位置之一。
+
+....
+[root@jfs11 trace]# cat /etc/oranfstab
+server: NFSv3test
+path: jfs_svmdr-nfs1
+path: jfs_svmdr-nfs2
+export: /dbf mount: /oradata
+export: /logs mount: /logs
+nfs_version: NFSv3
+....
+第一步是检查指定文件系统的DNFS是否正常运行：
+
+....
+SQL> select dirname,nfsversion from v$dnfs_servers;
+
+DIRNAME
+------------------------------------
+NFSVERSION
+----------------
+/logs
+NFSv3.0
+
+/dbf
+NFSv3.0
+....
+此输出表示DNFS正在与这两个文件系统结合使用、但它不表示oranfstab正常运行。如果出现错误、DNFS可能已自动发现主机的NFS文件系统、您仍可能会看到此命令的相同输出。
+
+可以按如下所示检查多路径：
+
+....
+SQL> select svrname,path,ch_id from v$dnfs_channels;
+
+SVRNAME
+------------------------------------
+PATH
+------------------------------------
+     CH_ID
+----------
+NFSv3test
+jfs_svmdr-nfs1
+         0
+
+NFSv3test
+jfs_svmdr-nfs2
+         1
+
+SVRNAME
+------------------------------------
+PATH
+------------------------------------
+     CH_ID
+----------
+
+NFSv3test
+jfs_svmdr-nfs1
+         0
+
+NFSv3test
+jfs_svmdr-nfs2
+
+[output truncated]
+
+SVRNAME
+------------------------------------
+PATH
+------------------------------------
+     CH_ID
+----------
+NFSv3test
+jfs_svmdr-nfs2
+         1
+
+NFSv3test
+jfs_svmdr-nfs1
+         0
+
+SVRNAME
+------------------------------------
+PATH
+------------------------------------
+     CH_ID
+----------
+
+NFSv3test
+jfs_svmdr-nfs2
+         1
+
+
+66 rows selected.
+....
+这些是DNFS正在使用的连接。对于每个SVRNAME条目、可以看到两个路径和通道。这意味着多路径正在工作、这意味着已识别并处理oranfstab文件。
+
+
+
+== 直接NFS和主机文件系统访问
 
 对于依赖主机上挂载的可见文件系统的应用程序或用户活动、使用DNFS有时可能会出现发生原因问题、因为DNFS客户端会从主机操作系统带外访问文件系统。DNFS客户端可以在不了解操作系统的情况下创建、删除和修改文件。
 

@@ -1664,9 +1664,6 @@
   <block id="09b6f386094bd895d3c9694f28bfdf65" category="paragraph">如果您突然关闭并重新启动NFSv4服务器。恢复后、尝试恢复IO的客户端将收到一个响应、该响应本质上说："我丢失了租用/锁定信息。是否要重新注册您的锁？" 这是宽限期的开始。在ONTAP上、默认为45秒：</block>
   <block id="e4f8aa90af36d76254e2f02e56232aed" category="paragraph">因此、在重新启动后、控制器将暂停IO、而所有客户端都将回收其租约和锁定。宽限期结束后、服务器将恢复IO操作。</block>
   <block id="bb2b26fdcb4e947cda6f8e38724ecfc9" category="section-title">租赁超时与宽限期</block>
-  <block id="563494d7f0f6ebcb6698cac7f9705aaa" category="paragraph">宽限期和租赁期是连接的。如上所述、默认租约超时为30秒、这意味着NFSv4客户端必须至少每30秒向服务器签入一次、否则它们将失去租约、进而失去锁定。有一个宽限期、允许NFS服务器重建租用/锁定数据、默认为45秒。ONTAP要求宽限期比租赁期长15秒。这样可以确保设计为至少每30秒续订一次租约的NFS客户端环境能够在重新启动后与服务器签入。45秒的宽限期可确保所有希望至少每30秒续订一次租约的客户都有机会续订租约。</block>
-  <block id="5e6b60906bbbb9a41b140c0749591489" category="paragraph">如果不接受30秒的超时时间、您可以选择延长租赁期限。如果要将租约超时时间增加到60秒、以承受60秒网络中断、则必须将宽限期至少增加到75秒。ONTAP要求该期限比租赁期高15秒。这意味着、在控制器故障转移期间、IO暂停时间将更长。</block>
-  <block id="4611c7c931fc15a6feba513fe72e22de" category="paragraph">这通常不会是问题。通常、用户每年只更新ONTAP控制器一次或两次、并且很少会因硬件故障而发生计划外故障转移。此外、如果您的网络可能会发生60秒的网络中断、并且您需要将租赁超时时间设置为60秒、则可能不会反对偶尔发生的存储系统故障转移、从而导致75秒的暂停。您已确认您的网络经常暂停60秒以上。</block>
   <block id="c4fb6f7d31d205bc07dbff47d0ae4bb3" category="summary">Oracle Direct NFS</block>
   <block id="f58bdad9659176e411f064fdb414233f" category="doc">Oracle (Oracle)</block>
   <block id="1bd6ec1185ba67395dc6f9cd2b458ec8" category="paragraph">Oracle数据库可以通过两种方式使用NFS。</block>
@@ -1889,7 +1886,6 @@
   <block id="322e1f85910dfc206274f8bd58a54a9d" category="list-text">给定站点上的每组驱动器都会自动配置为一个或多个完全冗余的RAID-DP或RAID-TEC组、而与镜像的使用无关。这样可以提供持续的数据保护、即使在站点丢失后也是如此。</block>
   <block id="dee2dfce5ab0c47301b3c12970a57aa6" category="paragraph">上图显示了一个示例SyncMirror配置。在控制器上创建了一个包含24个驱动器的聚合、其中12个驱动器来自站点A上分配的磁盘架、12个驱动器来自站点B上分配的磁盘架这些驱动器被分组为两个镜像RAID组。RAID组0在站点A上包含一个6驱动器丛、该丛镜像到站点B上的6驱动器丛同样、RAID组1在站点A上包含一个6驱动器丛、该丛镜像到站点B上的6驱动器丛</block>
   <block id="4fbc0abe91c0c1381d0a742f58b4e537" category="paragraph">SyncMirror通常用于为MetroCluster系统提供远程镜像、每个站点有一个数据副本。有时、它会用于在单个系统中提供额外的冗余级别。尤其是、它可以提供磁盘架级冗余。驱动器架已包含双电源和控制器、总体比金属板稍多、但在某些情况下、可能需要额外保护。例如、一家NetApp客户为汽车测试期间使用的移动实时分析平台部署了SyncMirror。该系统分为两个物理机架、由独立UPS系统的独立电源供电。</block>
-  <block id="95a3cc99b05998d49d8e035b994815bc" category="paragraph">=校验和</block>
   <block id="0cac56685de94a3ef0e1fd2bfca0c112" category="paragraph">对于习惯于使用Oracle RMAN流式备份并迁移到基于快照的备份的数据库用户来说、校验和主题特别重要。RMAN的一项功能是、它会在备份操作期间执行完整性检查。尽管此功能具有一定的价值、但其主要优势是用于未在现代存储阵列上使用的数据库。将物理驱动器用于Oracle数据库时、几乎可以肯定、随着驱动器老化、最终会发生损坏、而在真正的存储阵列中、基于阵列的校验和可以解决这一问题。</block>
   <block id="58d7088c13cf2013ef373d85e3c27de7" category="paragraph">对于真正的存储阵列、数据完整性可通过在多个级别使用校验和来保护。如果基于IP的网络中的数据损坏、则传输控制协议(TCP)层会拒绝数据包数据并请求重新传输。FC协议包括校验和、封装的SCSI数据也是如此。将ONTAP置于阵列上后、它将具有RAID和校验和保护功能。可能会发生损坏、但与大多数企业阵列一样、系统会检测到并更正此问题。通常、整个驱动器发生故障、提示重建RAID、数据库完整性不受影响。ONTAP检测校验和错误的频率较低、这意味着驱动器上的数据已损坏。然后、驱动器将出现故障、并开始RAID重建。同样、数据完整性也不受影响。</block>
   <block id="8b7b33533c2b36c157a0a482bdd52a8e" category="paragraph">Oracle数据文件和重做日志架构还旨在提供尽可能高级别的数据完整性、即使在极端情况下也是如此。在最基本的层面上、Oracle块包括对几乎每个I/O进行校验和和和基本逻辑检查如果Oracle未崩溃或使表空间脱机、则数据完好无损。数据完整性检查的程度可以调整、Oracle也可以配置为确认写入。因此、几乎所有崩溃和故障情形都可以恢复、在极少数情况下发生不可恢复的情况时、系统会立即检测到损坏。</block>
@@ -3930,7 +3926,6 @@
   <block id="0c5284e14535835121effc8afb702b28" category="summary">使用ONTAP进行Oracle数据库灾难恢复</block>
   <block id="2ba21d57ee7f1d78a405b9e80c6aaf6b" category="paragraph">对于大多数客户而言、灾难恢复不仅需要拥有远程数据副本、还需要能够快速利用这些数据。NetApp提供了两种技术来满足这一需求—MetroCluster和SnapMirror主动同步</block>
   <block id="107bcc34799abe752a088be24869419c" category="paragraph">SnapMirror活动同步基于SnapMirror同步。通过MetroCluster、每个ONTAP控制器都负责将其驱动器数据复制到远程位置。使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。</block>
-  <block id="d8f57e6104c0329961c4d91e154c4f27" category="paragraph">虽然SnapMirror主动同步和MetroCluster在内部的工作方式截然不同、但对于主机来说、结果却非常相似。主要区别在于粒度。如果您只需要选择要同步复制的工作负载、则SnapMirror活动同步是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SnapMirror主动同步目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。</block>
   <block id="50ae143b75fc238e91c09c750cf211c1" category="summary">Oracle数据库参数—filesystemio_options</block>
   <block id="23c61da1d42f69597a6ab97e333a560f" category="doc">Oracle数据库参数：filesystemio_options</block>
   <block id="cf451e0aed3c944d3f1c761387762e56" category="summary">使用Linux的Oracle数据库</block>
@@ -5553,12 +5548,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="97e73fdb42ddecb63ed519a484ff3c9b" category="paragraph">SQL Server还要求操作系统和存储之间进行协调、以确保创建快照时Snapshot中存在正确的数据。在大多数情况下、执行此操作的唯一安全方法是使用SnapCenter或T-SQL。如果未进行这种额外协调、则创建的快照可能无法可靠地恢复。</block>
   <block id="9d831cc4c73b8a2915ce6d8928d55915" category="paragraph">SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用ONTAP复制技术。有三个基本选项。</block>
   <block id="dd432f8769e4d3db8acf8bf9df94680a" category="paragraph">SnapMirror技术为通过LAN和广域网复制数据提供了快速灵活的企业解决方案。SnapMirror技术仅在创建初始镜像后将更改后的数据块传输到目标、从而显著降低网络带宽要求。它可以配置为同步或异步模式。</block>
-  <block id="164fe74cfbca9ef543331e42b891cf2c" category="section-title">NetApp MetroCluster</block>
-  <block id="919724e89015426f80bc09648382f128" category="paragraph">MetroCluster配置有助于为应用程序、数据库和虚拟化平台提供高可用性、零数据丢失的存储解决方案。该解决方案将基于阵列的集群与同步复制相结合、为整个存储和主机环境提供额外的保护层。</block>
-  <block id="6d2c492dffc0bf60de97e63a6009479e" category="section-title">SnapMirror active sync (原SnapMirror业务连续性)</block>
-  <block id="123164a12a3f4d85ba9b3ada5527d5bd" category="paragraph">SnapMirror主动同步基于SnapMirror同步、它能够将多个LUN复制到副本存储、同时保持写入顺序一致性。使用MetroCluster时、各个站点的ONTAP控制器(包括网络配置)应完全相同。使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。</block>
-  <block id="b98b6a092261c39c119882f3184a9389" category="paragraph">MetroCluster与SnapMirror主动同步的主要区别在于粒度和可扩展性。如果您只需要选择要同步复制的特定工作负载、或者两个站点都应具有可用于读/写操作的LUN、则SnapMirror主动同步是更好的选择。如果您需要复制整个环境甚至数据中心、MetroCluster是一个更好的选择。此外、SnapMirror主动同步目前仅支持SAN、而MetroCluster支持多协议、包括SAN、NFS和SMB。</block>
-  <block id="ad92b482f7ca3e4927337deb7a2139be" category="paragraph">有关SnapMirror的详细信息，请参见<block ref="7b9bb0f7fafd9178d92ab3dea0b9cbc5" category="inline-link-macro-rx"></block>。</block>
   <block id="fce5f84d02dbd5c9e3cfedf18e809644" category="summary">Microsoft SQL Server和NetApp MetroCluster</block>
   <block id="6d65b4d9884a5fae6940ac158045781c" category="doc">MetroCluster概述和架构</block>
   <block id="41900c1c2eb669e401e4abee9091b40b" category="paragraph">在MetroCluster环境中部署Microsoft SQL Server需要对MetroCluster系统的物理设计进行一些说明。</block>
@@ -5876,4 +5865,34 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="81959299f52ddb567fd902f3e1ae5311" category="paragraph">如果没有邻近设置、则该主机将平等使用这两个存储系统、因为这两个存储系统都会公布主动/优化路径。如果站点之间的SAN延迟和/或带宽有限、则可能无法实现这一点、您可能希望确保在正常操作期间、每个主机优先使用指向本地存储系统的路径。这可通过将主机的wwn/iSCSI ID作为近端主机添加到本地集群来配置。可通过命令行界面或SystemManager完成此操作。</block>
   <block id="f08670cf73640d447fb34d01b0f6418f" category="paragraph">对于AFF系统、配置主机邻近性后、路径将如下所示。</block>
   <block id="85a2564342597a065a3926228b7e9fcd" category="paragraph">可以将SQL Server配置为以多种方式与SnapMirror活动同步配合使用。正确答案取决于可用的网络连接、RPO要求和可用性要求。</block>
+  <block id="d60999416cfb11e4fa51f3dbe7386d64" category="paragraph">SM-AS和MetroCluster在整体功能上相似、但在实施RPO = 0复制的方式及其管理方式上存在重要差异。SnapMirror异步和同步也可用作灾难恢复计划的一部分、但它们不是作为HA回配技术而设计的。</block>
+  <block id="e122442a5a5728cd45ffc4ddd170a36f" category="list-text">MetroCluster配置更像是一个集成集群、其中的节点分布在各个站点之间。SM-AS的行为类似于两个其他方面独立的集群、它们合作提供选定的RPO = 0同步复制的LUN。</block>
+  <block id="dbbbd9519f58f000ae618fd3a3f2f38c" category="list-text">在任何给定时间、只能从一个特定站点访问MetroCluster配置中的数据。另一个数据副本位于另一个站点上、但数据是被动的。如果没有存储系统故障转移、则无法访问它。</block>
+  <block id="72d2ba33caf4a678d0b02c7a4a562662" category="list-text">MetroCluster和SM-AS执行镜像在不同级别进行。MetroCluster镜像在RAID层执行。使用SyncMirror以镜像格式存储低级别的数据。在LUN、卷和协议层、镜像的使用实际上是不可见的。</block>
+  <block id="33613d29368b0b312d33bd204505f12b" category="list-text">相反、SM-AS镜像发生在协议层。这两个集群总体上是独立的集群。两个数据副本同步后、这两个集群只需镜像写入即可。在一个集群上进行写入时、该写入会复制到另一个集群。只有在两个站点上的写入均已完成时、才会向主机确认写入。除了此协议拆分行为之外、这两个集群在其他方面都是正常的ONTAP集群。</block>
+  <block id="c6ce2d48c3feb0ac105233b1d47d6785" category="list-text">MetroCluster的主要角色是大规模复制。您可以复制RPO为0且RTO接近零的整个阵列。这样可以简化故障转移过程、因为故障转移只需执行一项"操作"、而且在容量和IOPS方面扩展得非常好。</block>
+  <block id="22c8f7d4250a7117dcec5e795cf01979" category="list-text">SM-AS的一个关键用例是粒度复制。有时、您不希望将所有数据作为一个单元进行复制、或者您需要能够有选择地对某些工作负载进行故障转移。</block>
+  <block id="466f5e6d5af96a45aba533d742d1f30e" category="list-text">SM-AS的另一个主要用例是主动-主动操作、您希望在位于两个不同位置的两个不同集群上提供完全可用的数据副本、这些集群具有相同的性能特征、如果需要、也不需要在站点间延伸SAN。您的应用程序可以同时在两个站点上运行、这样可以减少故障转移操作期间的整体恢复时间。</block>
+  <block id="3ab2196c18fe1cd72bf252059597387b" category="section-title">NetApp MetroCluster和SnapMirror活动同步</block>
+  <block id="95da439be4f858e05c58cde4b5946324" category="paragraph">对于许多客户来说、灾难恢复不仅需要拥有远程数据副本、还需要能够快速利用这些数据。NetApp提供了两种技术来满足这一需求—MetroCluster和SnapMirror主动同步</block>
+  <block id="3e6b18011054436086bb6cf813b0cb23" category="section-title">SM-AS和MCC比较</block>
+  <block id="4ab72a69aa303ab33d610a6f6e594e68" category="section-title">校验和</block>
+  <block id="0a4a3e3ef29b5fc4ea4e557f166532b4" category="paragraph">SnapMirror活动同步(SM-AS)基于SnapMirror同步。通过MetroCluster、每个ONTAP控制器都负责将其驱动器数据复制到远程位置。使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。</block>
+  <block id="2f589372957b08ce09879b8a2ab6e58c" category="section-title">启用DNFS</block>
+  <block id="1a89d30b5bb0e2de334e029001a92f8a" category="paragraph">Oracle DNFS可以与NFSv3结合使用、除了启用DNFS库之外、无需进行任何配置(有关所需的特定命令、请参见Oracle文档)、但如果DNFS无法建立连接、则可以静默还原到内核NFS客户端。如果发生这种情况、可能会严重影响性能。</block>
+  <block id="9cb0e5a02b9facf3c0e654f08ceceda4" category="paragraph">如果要在多个接口之间使用DNFS多路复用、使用NFSv4.X或使用加密、则必须配置oranfstab文件。语法极为严格。文件中的小错误可能会导致启动挂起或绕过oranfstab文件。</block>
+  <block id="3c04631b254b4b0e971a2c82517f50cb" category="paragraph">要确保DNFS按预期运行、唯一的方法是查询v$dnfs表。</block>
+  <block id="21986e459426718105f7dc1a16e88bd0" category="paragraph">下面是一个示例oranfstab文件、该文件位于/等 位置这是可以放置oranfstab文件的多个位置之一。</block>
+  <block id="1d4338d2de6e933a6941c8605def3a39" category="paragraph">第一步是检查指定文件系统的DNFS是否正常运行：</block>
+  <block id="75bc8bd82bedf61e91351f8667b97e13" category="paragraph">此输出表示DNFS正在与这两个文件系统结合使用、但它不表示oranfstab正常运行。如果出现错误、DNFS可能已自动发现主机的NFS文件系统、您仍可能会看到此命令的相同输出。</block>
+  <block id="f4327e73856b2069e10b045605d3fbe9" category="paragraph">可以按如下所示检查多路径：</block>
+  <block id="99dc2d8bc11eb27fb0b920ca969e43e1" category="paragraph">这些是DNFS正在使用的连接。对于每个SVRNAME条目、可以看到两个路径和通道。这意味着多路径正在工作、这意味着已识别并处理oranfstab文件。</block>
+  <block id="d99de907aa06fa04c7b19ffceff68307" category="admonition">以下各节是ONTAP 9 15.1.的最新版本、但租用和锁定行为以及调整选项可能会因版本而有所不同。如果需要调整NFSv4租赁/锁定超时、请咨询NetApp支持部门以了解最新信息。</block>
+  <block id="4bf95f1ea9ecf4f42a7b323970405bb4" category="paragraph">此宽限期用于控制网络接口更改期间的租约回收，但有另一个宽限期用于控制存储故障转移期间的回收<block ref="d75aeb1a8759ea7475fe0ddcd2058ca1" prefix=" " category="inline-code"></block>。这是一个节点级选项。</block>
+  <block id="0ba7c8a7759adb519c715ac93fdee2a6" category="paragraph">例如，如果您经常需要执行LIF故障转移，并且需要缩短宽限期，则可以更改<block ref="b1280b7c6d986647dff33b87ce276327" prefix=" " category="inline-code"></block>。如果要在控制器故障转移期间缩短IO恢复时间，则需要更改<block ref="d75aeb1a8759ea7475fe0ddcd2058ca1" prefix=" " category="inline-code"></block>。</block>
+  <block id="3f3edac1c3ed7bfad53f9d42b9a0c5a7" category="paragraph">只有在充分了解风险和后果后、才应谨慎更改这些值。使用NFSv4.X执行故障转移和迁移操作所涉及的IO暂停无法完全避免。锁定、租用和宽限期是NFS RFC的一部分。对于许多客户来说、NFSv3更受欢迎、因为故障转移速度更快。</block>
+  <block id="167503c08e9285f5c4a4a61a0123897b" category="paragraph">宽限期和租赁期是连接的。如上所述、默认租约超时为30秒、这意味着NFSv4客户端必须至少每30秒向服务器签入一次、否则它们将失去租约、进而失去锁定。有一个宽限期、允许NFS服务器重建租用/锁定数据、默认为45秒。宽限期必须长于租赁期。这样可以确保设计为至少每30秒续订一次租约的NFS客户端环境能够在重新启动后与服务器签入。45秒的宽限期可确保所有希望至少每30秒续订一次租约的客户都有机会续订租约。</block>
+  <block id="6be050126f2df5ae7cd944ce446241c2" category="paragraph">如果不接受30秒的超时时间、您可以选择延长租赁期限。</block>
+  <block id="38d530634a8d32e8775a37109fc08542" category="paragraph">如果要将租约超时时间增加到60秒、以承受60秒网络中断、则还必须延长宽限期。这意味着、在控制器故障转移期间、IO暂停时间将更长。</block>
+  <block id="ac76821692fdb2dae1d98babe804fb8f" category="paragraph">这通常不会是问题。通常、用户每年只更新ONTAP控制器一次或两次、并且很少会因硬件故障而发生计划外故障转移。此外、如果您的网络可能会发生60秒的网络中断、并且您需要将租赁超时时间设置为60秒、则可能不会反对偶尔发生的存储系统故障转移、从而导致61秒的暂停。您已确认您的网络经常暂停60秒以上。</block>
 </blocks>
