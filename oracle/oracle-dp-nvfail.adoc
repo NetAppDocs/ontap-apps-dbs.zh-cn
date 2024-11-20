@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-nvfail.html 
 keywords: oracle, metrocluster, nvfail 
 summary: 配置NVFAIL以保护Oracle数据库 
+searchtitle: Oracle数据库和NVFAIL 
 ---
-= Oracle数据库和NVFAIL
+= NVFAIL
 :allow-uri-read: 
 
 

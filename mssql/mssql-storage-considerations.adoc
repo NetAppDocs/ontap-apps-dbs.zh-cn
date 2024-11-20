@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-storage-considerations.html 
 keywords: MSSQL,SQL Server, volumes, LUN, SnapCenter 
 summary: Microsoft SQL Server存储注意事项 
+searchtitle: Microsoft SQL Server存储注意事项 
 ---
-= Microsoft SQL Server存储注意事项
+= 概述
 :allow-uri-read: 
 :imagesdir: ../media/
 

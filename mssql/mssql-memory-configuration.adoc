@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-memory-configuration.html 
 keywords: MSSQL,SQL Server, memory 
 summary: Microsoft SQL Server内存配置 
+searchtitle: Microsoft SQL Server内存配置 
 ---
-= Microsoft SQL Server内存配置
+= 内存配置
 :allow-uri-read: 
 :imagesdir: ../media/
 

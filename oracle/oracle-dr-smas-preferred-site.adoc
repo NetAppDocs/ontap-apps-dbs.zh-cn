@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-preferred-site.html 
 keywords: Oracle,SM-as,active sync,preferred 
 summary: Oracle和SM-AS首选站点 
+searchtitle: Oracle和SnapMirror主动同步首选站点 
 ---
-= Oracle和SM-AS首选站点
+= SnapMirror主动同步首选站点
 :allow-uri-read: 
 :imagesdir: ../media/
 

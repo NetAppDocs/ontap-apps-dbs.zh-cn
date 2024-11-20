@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: postgres/postgres-san-filesystems.html 
 keywords: PostgreSQL,database,postgres 
 summary: 基于ONTAP使用SAN的PostgreSQL数据库 
+searchtitle: 使用SAN文件系统的PostgreSQL 
 ---
-= 使用SAN文件系统的PostgreSQL
+= SAN
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

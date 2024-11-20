@@ -9,7 +9,7 @@ entries:
   entries:
   - title: 文件结构
     url: "/mysql/mysql-file-structure.html"
-  - title: 配置概述
+  - title: 配置参数
     url: "/mysql/mysql-configuration.html"
   - title: InnoDB_log_file_size
     url: "/mysql/mysql-innodb_log_file_size.html"
@@ -41,7 +41,7 @@ entries:
 - title: 存储配置
   pdf-filename: MySQL的存储配置
   entries:
-  - title: 基于NFS的MySQL
+  - title: NFS
     url: "/mysql/mysql-mysql-over-nfs.html"
-  - title: 基于SAN的MySQL
+  - title: SAN
     url: "/mysql/mysql-mysql-over-san.html"

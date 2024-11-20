@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-fli-planning.html 
 keywords: migration, oracle, fli 
 summary: 使用FLI迁移Oracle—规划 
+searchtitle: 使用FLI迁移Oracle—规划 
 ---
-= 使用FLI迁移Oracle—规划
+= 规划
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

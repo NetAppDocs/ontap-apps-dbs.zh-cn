@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-log-directory.html 
 keywords: MSSQL,SQL Server, volumes, LUN, SnapCenter 
 summary: Microsoft SQL Server日志目录 
+searchtitle: Microsoft SQL Server日志目录 
 ---
-= Microsoft SQL Server日志目录
+= 日志目录
 :allow-uri-read: 
 :imagesdir: ../media/
 

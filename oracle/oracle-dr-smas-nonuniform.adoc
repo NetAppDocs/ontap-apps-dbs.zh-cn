@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-nonuniform.html 
 keywords: Oracle,SM-as,active sync,nonuniform 
 summary: Oracle和SM-AS非一致性访问 
+searchtitle: Oracle和SM-AS非一致性访问 
 ---
-= Oracle和SM-AS非一致性访问
+= 非一致访问
 :allow-uri-read: 
 :imagesdir: ../media/
 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-storage-nfs-config-dnfs.html 
 keywords: oracle, database, ontap, nfs, ADR, dNFS 
 summary: Oracle Direct NFS 
+searchtitle: Oracle Direct NFS 
 ---
-= Oracle (Oracle)
+= Oracle Direct NFS (DNFS)
 :allow-uri-read: 
 
 
@@ -38,6 +39,8 @@ Oracle的直接NFS的主要价值是绕过主机NFS客户端、直接在NFS服�
 Oracle DNFS可以与NFSv3结合使用、除了启用DNFS库之外、无需进行任何配置(有关所需的特定命令、请参见Oracle文档)、但如果DNFS无法建立连接、则可以静默还原到内核NFS客户端。如果发生这种情况、可能会严重影响性能。
 
 如果要在多个接口之间使用DNFS多路复用、使用NFSv4.X或使用加密、则必须配置oranfstab文件。语法极为严格。文件中的小错误可能会导致启动挂起或绕过oranfstab文件。
+
+在编写本报告时、DNFS多路径不能与最新版本的Oracle数据库中的NFSv4.1结合使用。将NFSv4.1指定为协议的oranfstab文件只能对给定导出使用一个路径语句。原因是ONTAP不支持客户端ID中继。我们将来可能会提供用于解决此限制的Oracle数据库修补程序。
 
 要确保DNFS按预期运行、唯一的方法是查询v$dnfs表。
 

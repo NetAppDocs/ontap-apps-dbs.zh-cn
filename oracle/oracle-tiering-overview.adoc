@@ -2,9 +2,10 @@
 permalink: oracle/oracle-tiering-overview.html 
 sidebar: sidebar 
 keywords: tiering, fabricpool 
-summary: Oracle数据库FabricPool层管理 
+summary: Oracle数据库FabricPool层概述 
+searchtitle: Oracle数据库FabricPool层概述 
 ---
-= Oracle数据库FabricPool层概述
+= 概述
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

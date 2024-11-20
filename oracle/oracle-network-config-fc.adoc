@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-network-config-fc.html 
 keywords: SAN, zoning 
 summary: 适用于Oracle数据库的FC网络配置 
+searchtitle: 适用于Oracle数据库的FC SAN配置 
 ---
-= 适用于Oracle数据库的FC配置
+= FC SAN配置
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

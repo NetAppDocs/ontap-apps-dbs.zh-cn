@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-virtualization-introduction.html 
 keywords: oracle, database, ontap, virtualization, esx, hyper-v, KVM 
 summary: Oracle数据库虚拟化简介 
+searchtitle: Oracle数据库虚拟化 
 ---
-= Oracle数据库虚拟化
+= 虚拟化
 :allow-uri-read: 
 
 

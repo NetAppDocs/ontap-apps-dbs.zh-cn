@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-tiering-logs.html 
 keywords: tiering, fabricpool 
 summary: Oracle归档日志层 
+searchtitle: Oracle数据库归档日志层 
 ---
-= Oracle数据库归档日志层
+= 归档日志层
 :allow-uri-read: 
 :nofooter: 
 :icons: font

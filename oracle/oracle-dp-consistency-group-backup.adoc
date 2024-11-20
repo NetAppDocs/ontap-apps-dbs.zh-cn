@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-consistency-group-backup.html 
 keywords: oracle, data, protection, consistency, group, backup, volume, archive, log, redo, controlfiles 
 summary: 基于ONTAP的Oracle数据库的一致性组备份 
+searchtitle: Oracle数据库一致性组备份 
 ---
-= Oracle数据库一致性组备份
+= 一致性组备份
 :allow-uri-read: 
 
 

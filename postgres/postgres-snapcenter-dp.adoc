@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: postgres/postgres-snapcenter-dp.html 
 keywords: PostgreSQL,database,postgres 
 summary: PostgreSQL数据保护软件 
+searchtitle: PostgreSQL数据保护软件 
 ---
-= PostgreSQL数据保护软件
+= 数据保护软件
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

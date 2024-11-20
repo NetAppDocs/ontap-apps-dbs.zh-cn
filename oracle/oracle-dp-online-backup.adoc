@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-online-backup.html 
 keywords: oracle, data protection, hot backup 
 summary: 基于Oracle数据库快照的备份和恢复 
+searchtitle: Oracle数据库联机备份 
 ---
-= Oracle数据库联机备份
+= 联机备份
 :allow-uri-read: 
 
 

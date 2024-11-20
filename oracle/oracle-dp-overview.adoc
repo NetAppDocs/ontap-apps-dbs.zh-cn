@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-overview.html 
 keywords: oracle, database, ontap 
 summary: Oracle数据保护概述 
+searchtitle: 借助ONTAP实现Oracle数据保护 
 ---
-= 借助ONTAP实现Oracle数据保护
+= 利用ONTAP实现数据保护
 :allow-uri-read: 
 
 

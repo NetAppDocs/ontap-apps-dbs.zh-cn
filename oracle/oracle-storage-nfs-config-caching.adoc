@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-storage-nfs-config-caching.html 
 keywords: NFS 
 summary: Oracle数据库的NFS缓存 
+searchtitle: Oracle数据库的NFS缓存 
 ---
-= Oracle数据库的NFS缓存
+= NFS缓存
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

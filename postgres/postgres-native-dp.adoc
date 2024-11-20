@@ -2,9 +2,10 @@
 sidebar: sidebar 
 permalink: postgres/postgres-native-dp.html 
 keywords: PostgreSQL,database,postgres 
-summary: PostgreSQL数据管理P 
+summary: PostgreSQL数据保护 
+searchtitle: PostgreSQL本机数据保护 
 ---
-= PostgreSQL数据保护
+= 本机Ddta保护
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

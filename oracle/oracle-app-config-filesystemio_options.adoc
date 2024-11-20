@@ -3,8 +3,9 @@ permalink: oracle/oracle-app-config-filesystemio_options.html
 sidebar: sidebar 
 keywords: oracle, database, ontap, filesystemio_options, filesystemio, async, directio 
 summary: Oracle数据库参数—filesystemio_options 
+searchtitle: Oracle数据库参数—filesystemio_options 
 ---
-= Oracle数据库参数：filesystemio_options
+= filesystemio_options
 :allow-uri-read: 
 
 

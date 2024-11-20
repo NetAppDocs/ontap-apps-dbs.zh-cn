@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mysql/mysql-slot-tables.html 
 keywords: MySQL,MariaDB,TR-4722 
 summary: MySQL和NFSv3插槽表 
+searchtitle: MySQL和NFSv3插槽表 
 ---
-= MySQL和NFSv3插槽表
+= NFSv3插槽表
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

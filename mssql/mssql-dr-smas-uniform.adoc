@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-smas-uniform.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
 summary: Microsoft SQL Server和SM-AS统一访问 
+searchtitle: Microsoft SQL Server和SM-AS统一访问 
 ---
-= Microsoft SQL Server和SM-AS统一访问
+= 统一访问
 :allow-uri-read: 
 :imagesdir: ../media/
 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-network-config-lifs.html 
 keywords: LIF, multipath, multipathing 
 summary: Oracle数据库的逻辑接口设计 
+searchtitle: Oracle数据库的逻辑接口设计 
 ---
-= Oracle数据库的逻辑接口设计
+= 逻辑接口
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-arch-overview.html 
 keywords: oracle, active sync, mcc, MCC-IP 
 summary: 具有SnapMirror活动同步的Oracle单实例 
+searchtitle: 具有SnapMirror活动同步的Oracle 
 ---
-= 具有SnapMirror活动同步的Oracle
+= 概述
 :allow-uri-read: 
 
 

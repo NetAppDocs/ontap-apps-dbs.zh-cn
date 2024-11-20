@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-smas-nonuniform.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
 summary: Microsoft SQL Server和SM-AS非一致访问 
+searchtitle: Microsoft SQL Server和SM-AS非一致访问 
 ---
-= Microsoft SQL Server和SM-AS非一致访问
+= 非一致访问
 :allow-uri-read: 
 :imagesdir: ../media/
 

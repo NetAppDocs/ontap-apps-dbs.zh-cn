@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-procedures-overview.html 
 keywords: migration, oracle 
 summary: Oracle迁移过程 
+searchtitle: Oracle迁移过程概述 
 ---
-= Oracle迁移过程概述
+= 概述
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

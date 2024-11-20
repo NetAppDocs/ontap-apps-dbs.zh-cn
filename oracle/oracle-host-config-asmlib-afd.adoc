@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-host-config-asmlib-afd.html 
 keywords: oracle, database, ontap, asmlib, block size, oracleasm, multipath, afd 
 summary: 使用Linux和ASMlib/ASM筛选器驱动程序的Oracle数据库 
+searchtitle: '使用ASMLi/AFD的Oracle数据库(ASM筛选器驱动程序)' 
 ---
-= 使用ASMLi/AFD的Oracle数据库(ASM筛选器驱动程序)
+= ASMLib/AFD (ASM筛选器驱动程序)
 :allow-uri-read: 
 
 

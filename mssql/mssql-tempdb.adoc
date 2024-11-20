@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mssql/mssql-tempdb.html 
 keywords: MSSQL,SQL Server, tempdb, ONTAP 
 summary: 在ONTAP上放置Microsoft SQL Server tempdb 
+searchtitle: Microsoft SQL Server tempdb文件 
 ---
-= Microsoft SQL Server tempdb文件
+= tempdb文件
 :allow-uri-read: 
 :imagesdir: ../media/
 

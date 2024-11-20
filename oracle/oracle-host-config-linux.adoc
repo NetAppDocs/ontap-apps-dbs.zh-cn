@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-host-config-linux.html 
 keywords: oracle, database, ontap, linux, nfs, xfs, ext4, slot tables 
 summary: 使用Linux的Oracle数据库 
+searchtitle: 使用Linux的Oracle数据库 
 ---
-= 使用Linux的Oracle数据库
+= Linux
 :allow-uri-read: 
 
 

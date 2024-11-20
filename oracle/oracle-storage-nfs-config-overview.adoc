@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-storage-nfs-config-overview.html 
 keywords: NFS 
 summary: 适用于Oracle数据库的NFS配置 
+searchtitle: 适用于Oracle数据库的NFS配置 
 ---
-= 适用于Oracle数据库的NFS配置
+= 概述
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

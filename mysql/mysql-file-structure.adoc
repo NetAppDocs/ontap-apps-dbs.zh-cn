@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mysql/mysql-file-structure.html 
 keywords: MySQL,MariaDB 
 summary: MySQL文件结构 
+searchtitle: MySQL和InnoDB文件结构 
 ---
-= MySQL和InnoDB
+= 文件结构
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-sample-scripts.html 
 keywords: oracle, Scripts 
 summary: 用于自动执行Oracle迁移操作的示例脚本 
+searchtitle: Oracle迁移操作步骤示例脚本 
 ---
-= Oracle迁移操作步骤示例脚本
+= 示例脚本
 :allow-uri-read: 
 
 

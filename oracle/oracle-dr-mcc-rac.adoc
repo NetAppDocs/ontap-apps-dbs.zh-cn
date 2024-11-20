@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-mcc-rac.html 
 keywords: oracle, metrocluster, extended rac, RAC 
 summary: 采用MetroCluster的Oracle扩展RAC 
+searchtitle: 基于MetroCluster的Oracle扩展RAC 
 ---
-= 基于MetroCluster的扩展Oracle RAC
+= Oracle Extended RAC
 :allow-uri-read: 
 
 

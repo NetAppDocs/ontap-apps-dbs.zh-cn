@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-snapshots.html 
 keywords: oracle, database, ontap, snapshots 
 summary: 基于ONTAP的Oracle数据库和快照的角色 
+searchtitle: Oracle数据库和基于快照的备份 
 ---
-= Oracle数据库和基于快照的备份
+= 基于Snapshot的备份
 :allow-uri-read: 
 
 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: postgres/postgres-db-config.html 
 keywords: PostgreSQL,database,postgres 
 summary: 使用ONTAP的PostgreSQL数据库配置 
+searchtitle: 使用ONTAP的PostgreSQL数据库配置 
 ---
-= 使用ONTAP的PostgreSQL数据库配置
+= 设置
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

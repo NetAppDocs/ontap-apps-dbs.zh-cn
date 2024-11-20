@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-fail-mediator.html 
 keywords: Oracle, SnapMirror active sync, SMBC, failover 
 summary: Oracle和SnapMirror活动同步-调解器失败 
+searchtitle: Oracle和SnapMirror活动同步-调解器失败 
 ---
-= Oracle和SnapMirror活动同步-调解器失败
+= 调解器故障
 :allow-uri-read: 
 :imagesdir: ../media/
 

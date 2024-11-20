@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-fail-manual.html 
 keywords: Oracle, SnapMirror active sync, SMBC, failover 
 summary: Oracle和SnapMirror活动同步—手动故障转移 
+searchtitle: Oracle和SnapMirror活动同步—手动故障转移 
 ---
-= Oracle和SnapMirror活动同步—手动故障转移
+= 手动故障转移
 :allow-uri-read: 
 :imagesdir: ../media/
 

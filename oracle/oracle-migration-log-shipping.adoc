@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-log-shipping.html 
 keywords: migration, oracle, log shipping 
 summary: 通过日志传送实现Oracle迁移 
+searchtitle: 通过日志传送实现Oracle数据库迁移 
 ---
-= 通过日志传送实现Oracle数据库迁移
+= 日志传送
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

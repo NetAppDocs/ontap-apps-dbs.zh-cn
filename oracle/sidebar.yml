@@ -142,7 +142,7 @@ entries:
     url: "/oracle/oracle-dr-overview.html"
   - title: MetroCluster
     entries:
-    - title: 使用MetroCluster进行Oracle故障转移
+    - title: 使用MetroCluster进行Oracle灾难恢复
       url: "/oracle/oracle-dr-mcc-failover.html"
     - title: 物理架构
       url: "/oracle/oracle-dr-mcc-physical.html"

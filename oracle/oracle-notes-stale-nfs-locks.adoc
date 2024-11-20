@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-notes-stale-nfs-locks.html 
 keywords: oracle, database, ontap, stale, nfs, locks 
 summary: Oracle数据库和过时的NFSv3锁定 
+searchtitle: Oracle数据库和过时的NFSv3锁定 
 ---
-= 过时的NFSv3锁定和Oracle数据库
+= NFSv3锁定陈旧
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: mysql/mysql-configuration.html 
 keywords: MySQL,MariaDB 
 summary: MySQL配置参数 
+searchtitle: MySQL配置参数 
 ---
-= MySQL配置参数
+= 配置参数
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/

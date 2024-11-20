@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-ontap-config-qos.html 
 keywords: qos, bandwidth, minimum, guaranteed 
 summary: 使用ONTAP QoS进行Oracle数据库性能管理 
+searchtitle: 使用ONTAP QoS进行Oracle数据库性能管理 
 ---
-= 使用ONTAP QoS进行Oracle数据库性能管理
+= 利用ONTAP QoS进行性能管理
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

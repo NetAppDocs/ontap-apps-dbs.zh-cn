@@ -2,9 +2,10 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-smas-fail-site.html 
 keywords: Oracle, SnapMirror active sync, SMBC, failover 
-summary: Oracle和SnapMirror活动同步—连接完全断开 
+summary: Oracle和SnapMirror活动同步—站点故障 
+searchtitle: Oracle和SnapMirror活动同步—站点故障 
 ---
-= Oracle和SnapMirror活动同步—连接完全断开
+= 站点故障
 :allow-uri-read: 
 :imagesdir: ../media/
 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-planning.html 
 keywords: data protection, DR, snapshots, CG 
 summary: 针对Oracle数据库的数据保护规划 
+searchtitle: 针对Oracle数据库的数据保护规划 
 ---
-= 针对Oracle数据库的数据保护规划
+= 数据保护规划
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

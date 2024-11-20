@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dp-backup-tools.html 
 keywords: ontap, data protection 
 summary: Oracle数据库管理和自动化工具 
+searchtitle: Oracle数据库管理和自动化工具 
 ---
-= Oracle数据库管理和自动化工具
+= 数据库管理和自动化工具
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

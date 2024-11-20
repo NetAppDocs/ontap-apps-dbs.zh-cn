@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-tiering-whole-file.html 
 keywords: tiering, fabricpool 
 summary: Oracle数据库完整文件FabricPool层 
+searchtitle: Oracle数据库完整文件FabricPool层 
 ---
-= Oracle数据库完整文件FabricPool层
+= 完整文件层
 :allow-uri-read: 
 
 

@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-mcc-si.html 
 keywords: oracle, metrocluster, mcc, MCC-IP 
 summary: 基于MetroCluster的Oracle单个实例 
+searchtitle: 基于MetroCluster的Oracle单实例 
 ---
-= 基于MetroCluster的Oracle单实例
+= Oracle单实例
 :allow-uri-read: 
 
 

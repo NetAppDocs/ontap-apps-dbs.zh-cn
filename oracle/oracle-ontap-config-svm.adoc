@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-ontap-config-svm.html 
 keywords: svm 
 summary: 为Oracle数据库配置SVM 
+searchtitle: Oracle数据库和Storage Virtual Machine 
 ---
-= Oracle数据库和Storage Virtual Machine
+= Storage Virtual Machine
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

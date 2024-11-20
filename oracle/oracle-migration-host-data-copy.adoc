@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-host-data-copy.html 
 keywords: migration, oracle, data copy, lvm, rebalance, asm 
 summary: 使用主机端存储堆栈迁移Oracle 
+searchtitle: Oracle数据库主机数据复制 
 ---
-= Oracle数据库主机数据复制
+= 主机数据复制
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

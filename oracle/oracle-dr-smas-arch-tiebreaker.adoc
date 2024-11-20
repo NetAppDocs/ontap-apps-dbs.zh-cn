@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-arch-tiebreaker.html 
 keywords: oracle, active sync, mcc, MCC-IP 
 summary: Oracle SnapMirror活动同步 
+searchtitle: Oracle和SnapMirror活动同步—RAC Tieb破碎 机 
 ---
-= Oracle和SnapMirror活动同步—RAC Tieb破碎 机
+= RAC Tieb破碎 机
 :allow-uri-read: 
 
 

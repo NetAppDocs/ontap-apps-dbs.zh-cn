@@ -4,7 +4,7 @@ permalink: mssql/mssql-dr-mcc-sql.html
 keywords: MSSQL,SQL Server, MetroCluster 
 summary: 采用NetApp MetroCluster的Microsoft SQL Server 
 ---
-= 采用MetroCluster的Microsoft SQL Server
+= SQL Server与MetroCluster
 :allow-uri-read: 
 :imagesdir: ../media/
 

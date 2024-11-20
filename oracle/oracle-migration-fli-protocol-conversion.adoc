@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-fli-protocol-conversion.html 
 keywords: migration, oracle, FLI 
 summary: 使用FLI迁移Oracle—协议转换 
+searchtitle: 使用FLI迁移Oracle—协议转换 
 ---
-= 使用FLI迁移Oracle—协议转换
+= 协议转换
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

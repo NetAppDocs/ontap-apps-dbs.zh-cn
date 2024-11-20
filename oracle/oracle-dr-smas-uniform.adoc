@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-dr-smas-uniform.html 
 keywords: Oracle,SM-as,active sync,uniform 
 summary: Oracle和SM-AS统一访问 
+searchtitle: Oracle和SM-AS统一访问 
 ---
-= Oracle和SM-AS统一访问
+= 统一访问
 :allow-uri-read: 
 :imagesdir: ../media/
 

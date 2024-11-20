@@ -2,9 +2,10 @@
 sidebar: sidebar 
 permalink: oracle/oracle-dr-mcc-failover.html 
 keywords: Metrocluster, mcc, MCC-IP 
-summary: 使用MetroCluster进行Oracle数据库故障转移 
+summary: 使用MetroCluster进行Oracle数据库灾难恢复 
+searchtitle: 使用MetroCluster进行Oracle数据库灾难恢复 
 ---
-= 使用MetroCluster进行Oracle数据库故障转移
+= 借助MetroCluster实现灾难恢复
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

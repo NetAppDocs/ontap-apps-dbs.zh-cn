@@ -3,8 +3,9 @@ sidebar: sidebar
 permalink: oracle/oracle-migration-datafile-move.html 
 keywords: migration, oracle, move datafile 
 summary: 迁移单个Oracle数据文件 
+searchtitle: Oracle数据文件迁移 
 ---
-= Oracle数据文件迁移
+= 数据文件迁移
 :allow-uri-read: 
 
 
