@@ -5272,25 +5272,12 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="e7a8be60cff2fec7b8ed793c4d2dddfe" category="summary">EPIC LUN和卷配置</block>
   <block id="acdbb325faec5e3e2d86b3dbbaf90c54" category="paragraph">Epic数据库存储布局建议文档提供了有关每个数据库的LUN大小和数量的指导。</block>
   <block id="a620ecf0a73eb209a145eb913a29bc5a" category="paragraph">请务必阅读本文档、了解Epic DBa和Epic支持、并确定LUN数量和LUN大小、因为它们可能需要调整。这些存储建议对于HBA队列深度、存储性能、易操作性和易扩展性非常重要。</block>
-  <block id="4442aab15395384af6aee974a5a581bc" category="paragraph">要考虑服务器操作系统队列深度、请为一个数据库至少使用八个LUN (每个卷一个LUN)。将LUN数量增加8的倍数。对于大型环境、可能需要更多的LUN；使用相同数量的卷(总共八个、每个节点四个)、并以八的倍数添加LUN。EPIC建议保持LUN &lt; 8 TB且LUN数量&lt; 32。通过这种方法、您可以轻松扩展Epic环境。</block>
   <block id="21ebeea1f14a138dfebb1b9599a4c3dd" category="paragraph">为了最大限度地提高Epic odb或Clarity等工作负载的性能、每个布局也最适合NetApp存储。通过使用八个卷、写入IO会在控制器之间均匀分布、从而最大程度地提高CPU利用率。对于复制和备份、最好将卷数限制为八个、以简化操作。</block>
   <block id="90adf331b7868c7af46ad6e035e93844" category="section-title">扩展选项</block>
-  <block id="68b3c97d7d89bcf19218f4db828d1f62" category="paragraph">如果服务器需要更多存储、最简单的选择是增加包含卷的LUN的大小。第二种方法是、一次以八的倍数向卷组添加LUN (每个现有卷一个)。只添加一个或两个LUN可能会创建热点并影响性能。</block>
   <block id="b323bb297a66afc2eea7b89dd4019798" category="section-title">卷和8-LUN布局</block>
   <block id="66d125e77a6185ef5cf43b2a6bffea80" category="inline-image-macro">EPIC 8-LUN布局</block>
   <block id="99a54ac1eaa5bd57b4c4c29d6a63f1ac" category="paragraph"><block ref="99a54ac1eaa5bd57b4c4c29d6a63f1ac" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="671393f63bb9ef1dfab4931884d7598d" category="section-title">卷和16个LUN布局</block>
-  <block id="0c02643253fbb18be382d4c1ad110e4f" category="inline-image-macro">EPIC 16 LUN布局</block>
-  <block id="3a69aefd67fab9412b92fa902b37d20e" category="paragraph"><block ref="3a69aefd67fab9412b92fa902b37d20e" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="f7b18cfcf87c0f98b439b4c7b3c92c97" category="section-title">卷和24个LUN布局</block>
-  <block id="6fc8903e912275e630ffd2c72a17adcb" category="inline-image-macro">EPIC 24 LUN布局</block>
-  <block id="c07e1713e37928ebf0d4e02dbd302844" category="paragraph"><block ref="c07e1713e37928ebf0d4e02dbd302844" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="b7e595df4f29c46e9a8f1aa1c32fd1bf" category="section-title">卷和32 LUN布局</block>
-  <block id="7ae005614524eafc3188227a0e2095bb" category="inline-image-macro">EPIC 32-LUN布局</block>
-  <block id="45c0c385be9c9d903ed267e0455dc156" category="paragraph"><block ref="45c0c385be9c9d903ed267e0455dc156" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="3d120048605480bd8cf2a834fe477bb8" category="list-text">在8个卷中使用8个、16个、24个或32个LUN。</block>
   <block id="bad4d79343f04d8b64999875ad328086" category="list-text">在HA对中平衡工作负载、以最大限度地提高性能和效率。</block>
-  <block id="cd4b8ea65e0732fcfa8614a31fb02e8f" category="list-text">按照预期增长3年的大小创建LUN、以避免达到LUN扩展限制的10倍。</block>
   <block id="26b591a32a8a235db7f742995589a455" category="list-text">使用精简配置的卷和LUN。</block>
   <block id="9fb0aaeb125238e83485971ae6b7e2fc" category="list-text">至少使用八个数据库LUN、两个日志LUN和两个应用程序LUN。此配置可最大限度地提高存储性能和操作系统队列深度。如果出于容量或其他原因需要、可以使用更多。</block>
   <block id="ba5e00554d1ba1b8ca0fc2eaeda44672" category="list-text">如果确实需要向卷组添加LUN、请一次添加八个LUN。</block>
@@ -5927,4 +5914,14 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="03095e209912bbf8e40f883c88befe49" category="searchtitle">PostgreSQL本机数据保护</block>
   <block id="300e5ea4a0c7d02b8a4efeba5a1f6faf" category="doc">本机Ddta保护</block>
   <block id="1c3ee6977dcad0709502549dd7b111f3" category="sidebar">使用MetroCluster进行Oracle灾难恢复</block>
+  <block id="662637dadb14be675de52ed993629bcd" category="paragraph">要考虑服务器操作系统队列深度、请为一个数据库至少使用八个LUN (每个卷一个LUN)。按ONTAP集群中的节点数增加LUN数量。例如、如果使用4节点(2个HA对)集群、请添加4个LUN。对于较大的环境、可能需要更多的LUN；使用相同数量的卷(总共八个、分布在存储节点上)、并在集群节点和卷之间添加LUN (以两的倍数)。通过这种方法、您可以轻松扩展Epic环境。</block>
+  <block id="f73f987e4ea887ccfd1bf297bad46e22" category="paragraph">*示例1：2节点ONTAP集群*</block>
+  <block id="f08ea6531fe21723a28ec9f89ea3e451" category="paragraph">2个节点、1个HA对、8个卷、每个节点4个卷、8个LUN、每个卷一个LUN、再添加2个LUN、其中一个位于volume01中的node01上、一个位于volume02中的node02上。</block>
+  <block id="fd52d4fb0b6e3cfb46cae3e012d26c20" category="paragraph">*示例2：4节点ONTAP集群*</block>
+  <block id="489d5412107ca7c901de568b7c7dcce3" category="paragraph">4个节点、2个HA对、8个卷、每个节点2个卷、8个LUN、每个卷1个LUN、再添加4个LUN、其中1个位于volume01的node01上、1个位于volume02的node02上、1个位于volume03的node03上、1个位于volume04的node04上。</block>
+  <block id="2feec0f4e37d9566d4cf292116430adb" category="paragraph">如果服务器需要更多存储、最简单的选择是增加包含卷的LUN的大小。第二种方法是、一次以两的倍数向卷组添加LUN (每个节点的每个卷一个)。</block>
+  <block id="c338b7a4eb0c6f0bb88b444f6c195b01" category="admonition">如果在大型环境中需要4个以上的节点或8个以上的LUN、请咨询Epic联盟团队以确认LUN设计。您可以通过epic@NetApp．com联系该团队。</block>
+  <block id="e9afc81d3b8e2990f966bb247fa75a6b" category="list-text">首先在8个卷中使用8个LUN、一次在集群的所有节点上添加2个LUN。</block>
+  <block id="eb75aeb3b4b2b9734ba3e52f5483f0b2" category="inline-link-macro">ONTAP文档</block>
+  <block id="c5432110ad66f4e2e624118b88a48126" category="list-text">按照预期增长3年的大小创建LUN。(有关最大LUN大小、请参见<block ref="2a57767dbf71d600f009b2fefab6360d" category="inline-link-macro-rx"></block>。)</block>
 </blocks>
