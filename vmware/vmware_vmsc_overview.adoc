@@ -66,4 +66,4 @@ SnapMirror主动同步也可以通过两种不同的方式进行部署。
 
 image::../media/vmsc_1_2.png[带有MCC的VMSC示意图,624,485]
 
-请参见 https://docs.netapp.com/us-en/ontap/smbc/index.html["NetApp文档"] 有关SnapMirror活动同步的特定设计和部署信息、请参见。
+有关对称或非对称设计和部署优势的详细信息，请参见 https://docs.netapp.com/us-en/ontap/smbc/index.html["SnapMirror主动同步文档"]。
