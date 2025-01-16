@@ -586,7 +586,6 @@
   <block id="29d04e616d2293c4c7538dd6226feac5" category="section-title">使用SQL Server Management Studio配置最大工作线程数。</block>
   <block id="44dbc82801d84781083ed9e23b63be00" category="list-text">对于&lt;或=最多8个核心：tempdb数据文件=核心数</block>
   <block id="6203fcdbdad10bb603fd00edd2f0fcf5" category="list-text">对于超过8个核心：8个tempdb数据文件</block>
-  <block id="b9f341e4fb0e6b384aa7ec0b5c33f964" category="paragraph">以下示例脚本通过创建八个tempdb文件并将tempdb移动到挂载点来修改tempdb<block ref="ae6fbe62f3ddc46fa9a9885244d23675" prefix=" " category="inline-code"></block> 适用于SQL Server 2012及更高版本。</block>
   <block id="0424163d6b24f29436021dfd7072863b" category="paragraph">从SQL Server 2016开始、安装期间会自动检测操作系统可见的CPU核心数、SQL Server会根据该数量计算和配置获得最佳性能所需的tempdb文件数。</block>
   <block id="3b5b2ca12603a36517ce602ffe47361c" category="list-text">NetApp SnapCenter作为备份软件、其中包括：</block>
   <block id="36a92a010308100e1efc10d9eb98c369" category="list-text">适用于 Microsoft Windows 的 SnapCenter 插件</block>
@@ -605,7 +604,6 @@
   <block id="17fce39141e6fa457c789ce2c3239b0c" category="section-title">卷设计注意事项</block>
   <block id="d1c9fdbcdbb8521971decf35c6d1c0c8" category="paragraph">在创建数据库卷设计之前、请务必了解SQL Server I/O模式和特征如何根据工作负载以及备份和恢复要求而有所不同。请参见以下适用于灵活卷的NetApp建议：</block>
   <block id="674343739e297abb52c536a453ebaad0" category="list-text">使用NTFS挂载点而不是驱动器盘符、以超过Windows中26个驱动器盘符的限制。使用卷挂载点时、一般建议为卷标签指定与挂载点相同的名称。</block>
-  <block id="d5fe4f7f1c47df1ec78c926d21498f73" category="list-text">适当时、配置卷自动调整策略以帮助防止出现空间不足情况。17采用ONTAP的Microsoft SQL Server最佳实践指南©2022 NetApp、Inc. 保留所有权利。</block>
   <block id="4176288dbc134524f79476ba4e57e3aa" category="list-text">tempdb是一个系统数据库、SQL Server会使用它作为临时工作空间、尤其是用于I/O密集型DBCC CHECKDB操作。因此、请将此数据库放在具有一组单独磁盘轴的专用卷上。在卷数量是一项挑战的大型环境中、您可以在仔细规划后将tempdb整合到较少的卷中、并将其与其他系统数据库存储在同一个卷中。tempdb的数据保护不是高优先级、因为每次重新启动SQL Server时都会重新创建此数据库。</block>
   <block id="b703a2ceaabee81dd9dfcfb3a4b738ee" category="list-text">确保用户数据库文件和用于存储日志备份的日志目录位于不同的卷上、以防止保留策略在SnapVault技术中使用快照时覆盖这些快照。</block>
   <block id="ae72f885471636cbfd0dbe902ddf24e1" category="list-text">如果使用DiskManager或其他工具创建LUN、请确保在格式化LUN时将分区的分配单元大小设置为64K。</block>
@@ -3939,7 +3937,6 @@
   <block id="60654048dbcae98cde53dc0449c8e47b" category="summary">Microsoft SQL Server存储注意事项</block>
   <block id="71cc52562b241f23c0f5c74c589fc56c" category="paragraph">聚合是NetApp存储配置的最低级别存储容器。互联网上存在一些旧文档、建议将IO分隔到不同的底层驱动器组上。不建议在ONTAP中使用此选项。NetApp已使用数据文件和事务日志文件分开的共享和专用聚合执行了各种I/O工作负载特征化测试。测试表明、一个具有更多RAID组和驱动器的大型聚合可以优化和提高存储性能、并使管理员更易于管理、原因有两个：</block>
   <block id="994dbcbb2492daba25572c539cc12968" category="list-text">一个大型聚合可使所有驱动器的I/O功能对所有文件可用。</block>
-  <block id="8e6ab064c04f3cf4f6cfb70d8db3132c" category="list-text">避免在主机之间共享卷。例如、虽然可以在一个卷中创建2个LUN并将每个LUN共享到不同的主机、但应避免这种情况、因为它会使管理复杂化。</block>
   <block id="900188651b4134e36897865047c3fb5b" category="list-text">将卷中的Snapshot预留值设置为零、以便于从操作角度进行监控。</block>
   <block id="27d9533edb3ad60370502d101cd38d2b" category="list-text">禁用快照计划和保留策略。请改用SnapCenter来协调SQL Server数据卷的Snapshot副本。</block>
   <block id="a09a2d9023a555d2d5a72621bf3395b3" category="list-text">将SQL Server系统数据库放在一个专用卷上。</block>
@@ -5583,10 +5580,8 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="64999620676d7bc615f88fabe256272f" category="list-text">如果在SMB共享上安装SQL Server、请确保在SMB卷上启用Unicode以创建文件夹。</block>
   <block id="b0874893f6e3e7030833ec488dc9da90" category="list-text">将用户数据文件<block ref="937f38432beb92fdba3d47780720bdf7" prefix="(" category="inline-code"></block>()放在不同的卷上，因为它们是随机读/写工作负载。通常、创建事务日志备份的频率比创建数据库备份的频率更高。因此，请将事务日志文件<block ref="cb15b9539ae0d984ff8740c68b52561c" prefix="(" category="inline-code"></block>()放在与数据文件不同的卷或VMDK上，以便可以为每个卷或VMDK创建独立的备份计划。这种分离还会将日志文件的顺序写入I/O与数据文件的随机读/写I/O隔离开来、并显著提高SQL Server性能。</block>
   <block id="f7f1cb17ab4960f1a8e4c28a7fbccb0d" category="list-text">不要在同一LUN上混合使用数据库文件和非数据库文件、例如与全文搜索相关的文件。</block>
-  <block id="42f55cb17aa10ac3e6774a14ecdda568" category="list-text">将数据库二级文件(作为文件组的一部分)放在不同的卷上可提高SQL Server数据库的性能。只有当数据库的文件不与任何其他文件共享其LUN<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>时、此隔离才有效<block ref="772b0ad30c2d9d895a7319f2110cc750" prefix=" " category="inline-code"></block>。</block>
   <block id="58ccb3e2006ffa82c78944061df94b30" category="paragraph">ONTAP存储效率已进行优化、可存储和管理SQL Server数据、所用存储空间量最低、不会对性能产生任何影响。</block>
   <block id="f250d23ef016c3e48436a679c5dab1df" category="list-text">请勿在包含SQL Server数据文件的任何卷上启用重复数据删除、除非已知该卷包含同一数据的多个副本、例如、将数据库从备份还原到单个卷。</block>
-  <block id="1bf0b8f469689ae42fe419468737011f" category="paragraph">tempdb数据库的利用率可能很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、tempdb数据文件放置对于减少分配争用也至关重要</block>
   <block id="6f80e9146e2184b9ec3c46b6d7dd903f" category="paragraph">如果SQL Server必须向特殊系统页面写入数据以分配新对象、则全局分配映射(GAM)、共享全局分配映射(SGAM)或页面可用空间(PFS)页面可能会发生页面争用。闩锁将这些页面锁定在内存中。在繁忙的SQL Server实例上、可能需要很长时间才能在tempdb中的系统页面上获得锁定。这会导致查询运行时间变慢、并称为闩锁争用。请参见以下创建tempdb数据文件的最佳实践：</block>
   <block id="255bd5c00b8de4b2f998369f766b2b5e" category="paragraph">本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括<block ref="06d0604733fc7f7e3f9befaa1239278d" category="inline-link-macro-rx"></block>和<block ref="87f167af2516b222ddeec7405581e8b8" category="inline-link-macro-rx"></block></block>
   <block id="ad8d77efdce72d372a83929b50a127d1" category="paragraph">崩溃状态一致的数据集备份是指在一个时间点捕获整个数据集结构。如果数据集存储在单个卷中、则此过程非常简单；可以随时创建Snapshot。如果数据集跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</block>
@@ -5837,9 +5832,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6be050126f2df5ae7cd944ce446241c2" category="paragraph">如果不接受30秒的超时时间、您可以选择延长租赁期限。</block>
   <block id="38d530634a8d32e8775a37109fc08542" category="paragraph">如果要将租约超时时间增加到60秒、以承受60秒网络中断、则还必须延长宽限期。这意味着、在控制器故障转移期间、IO暂停时间将更长。</block>
   <block id="ac76821692fdb2dae1d98babe804fb8f" category="paragraph">这通常不会是问题。通常、用户每年只更新ONTAP控制器一次或两次、并且很少会因硬件故障而发生计划外故障转移。此外、如果您的网络可能会发生60秒的网络中断、并且您需要将租赁超时时间设置为60秒、则可能不会反对偶尔发生的存储系统故障转移、从而导致61秒的暂停。您已确认您的网络经常暂停60秒以上。</block>
-  <block id="66bb028b9d7030985c1ce3bb4f5a27e9" category="searchtitle">= Microsoft SQL Server CPU配置</block>
   <block id="73f7848a74f8a1b6c78ac0dfbca44874" category="searchtitle">使用NetApp管理软件实现Microsoft SQL Server数据保护</block>
-  <block id="fa67fb4719e92db117cccfc693cf2a40" category="searchtitle">Microsoft SQL Server tempdb文件</block>
   <block id="3a80e1e29c96d0837b12aef65785a41a" category="doc">配置参数</block>
   <block id="4bb9f72180425717a416a5037a100cca" category="searchtitle">MySQL和InnoDB文件结构</block>
   <block id="9a41c04f55c43c1bfac6d1e3fb0992de" category="doc">NFSv3插槽表</block>
@@ -5930,4 +5923,11 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="7b9dbbe3099a486a2a81a7e43267d3af" category="paragraph">^4^这些设备具有自己的IP地址以供管理、但这些地址不会在ESXi存储网络环境中使用。</block>
   <block id="76538e55d69b12bb4a71177e6f12d7af" category="inline-link">SnapMirror主动同步文档</block>
   <block id="07bd30b0e378d86a9efeda3dff8dd07c" category="paragraph">有关对称或非对称设计和部署优势的详细信息，请参见<block ref="8b3398c42964cdf57fc4298373a78cfc" category="inline-link-rx"></block>。</block>
+  <block id="d4b27e1b61577e2e3dfeebd3b8129da5" category="list-text">避免在主机之间共享卷。例如、虽然可以在一个卷中创建2个LUN并将每个LUN共享到不同的主机、但应避免这种情况、因为它会使管理复杂化。如果在同一主机上运行多个SQL Server实例、则除非某个节点上的卷接近限制、否则请避免卷共享、而是为每个主机上的每个实例创建一个单独的卷、以简化数据管理。</block>
+  <block id="e3ea9105e22caf8aa06aee0279a968bb" category="list-text">适当时、配置卷自动调整策略以帮助防止出现空间不足情况。</block>
+  <block id="72a9733bd5929d30a93ea680e0c3fad1" category="list-text">将数据库二级文件(作为文件组的一部分)放在不同的卷上可提高SQL Server数据库的性能。只有当数据库的文件不与任何其他文件共享其LUN<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>时、此隔离才有效<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>。</block>
+  <block id="5962130d833e0408cf58a87e342bc1f9" category="searchtitle">Microsoft SQL Server tempdb文件</block>
+  <block id="82d9655a27436534991360ea4c0dc680" category="paragraph">tempdb数据库的利用率可能很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、tempdb数据文件放置对于减少分配争用也至关重要。tempdb应放置在单独的磁盘上、不应与用户数据文件共享。</block>
+  <block id="5c4a7832da0e9f8799089fdc985bb9b3" category="list-text">应创建大小相等的tempdb数据文件</block>
+  <block id="20453a1c8627ad0bc536be210636fa41" category="paragraph">以下示例脚本通过创建八个大小相等的tempdb文件并将tempdb移动到SQL Server 2012及更高版本的挂载点来修改tempdb<block ref="ae6fbe62f3ddc46fa9a9885244d23675" prefix=" " category="inline-code"></block>。</block>
 </blocks>

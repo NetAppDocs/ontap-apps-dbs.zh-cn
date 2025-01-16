@@ -11,15 +11,16 @@ searchtitle: Microsoft SQL Server tempdb文件
 
 
 [role="lead"]
-tempdb数据库的利用率可能很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、tempdb数据文件放置对于减少分配争用也至关重要
+tempdb数据库的利用率可能很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、tempdb数据文件放置对于减少分配争用也至关重要。tempdb应放置在单独的磁盘上、不应与用户数据文件共享。
 
 如果SQL Server必须向特殊系统页面写入数据以分配新对象、则全局分配映射(GAM)、共享全局分配映射(SGAM)或页面可用空间(PFS)页面可能会发生页面争用。闩锁将这些页面锁定在内存中。在繁忙的SQL Server实例上、可能需要很长时间才能在tempdb中的系统页面上获得锁定。这会导致查询运行时间变慢、并称为闩锁争用。请参见以下创建tempdb数据文件的最佳实践：
 
 * 对于<或=最多8个核心：tempdb数据文件=核心数
 * 对于超过8个核心：8个tempdb数据文件
+* 应创建大小相等的tempdb数据文件
 
 
-以下示例脚本通过创建八个tempdb文件并将tempdb移动到挂载点来修改tempdb `C:\MSSQL\tempdb` 适用于SQL Server 2012及更高版本。
+以下示例脚本通过创建八个大小相等的tempdb文件并将tempdb移动到SQL Server 2012及更高版本的挂载点来修改tempdb `C:\MSSQL\tempdb`。
 
 ....
 use master
