@@ -14,11 +14,36 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方�
 
 
 [role="lead"]
-NetApp 是 VMware 在开发 vSphere 虚拟卷（ VVOL ）方面的早期设计合作伙伴，为 VVOL 和 VMware vSphere 存储感知 API （ VASA ）提供架构输入和早期支持。这种方法不仅可以为VMFS实现VM粒度存储管理、还支持通过基于存储策略的管理(Storage Policy Based Management、SPBM)实现存储配置自动化。
+NetApp于2012年首次宣布、是VMware的早期设计合作伙伴、负责开发VMware vSphere APIS for Storage AWAREIVAWARE(VASA)、这是企业级存储阵列基于存储策略的管理(Storage Policy Based Management、SPBM)的基础。这种方法为VMFS和NFS存储提供了有限的VM粒度存储管理。
 
-SPBM 提供了一个框架，可用作虚拟化环境可用存储服务与通过策略配置的存储元素之间的抽象层。通过这种方法，存储架构师可以设计具有不同功能的存储池， VM 管理员可以轻松地使用这些功能。然后，管理员可以将虚拟机工作负载要求与配置的存储池进行匹配，从而可以在每个 VM 或虚拟磁盘级别精细控制各种设置。
+ As a technology design partner, NetApp provided architectural input and in 2015 announced support for vVols. This new technology now enabled the automation of VM-granular and truly array-native storage provisioning through SPBM.
 
-ONTAP 在 VVOL 规模方面处于存储行业的领先地位，在一个集群中支持数十万个 VVOL ，而企业级阵列和小型闪存阵列供应商支持的每个阵列仅支持数千个 VVOL 。NetApp 还在推动 VM 粒度管理的发展，即将推出支持 VVOL 3.0 的功能。
+
+== 虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)
+
+vvol是一种革命性的存储架构、支持VM粒度存储管理、不仅可以按VM (包括VM元数据)管理存储、还可以按VMDK管理存储。vvol是软件定义的数据中心(SDDC)战略的一个关键组件、该战略构成了VMware Cloud Foundation (VCF)的基础、可为虚拟化环境提供更高效、可扩展的存储架构。
+
+通过Vvol、VM可以按每个VM使用存储、因为每个VM存储对象都是NetApp ONTAP中的一个唯一实体。对于不再需要卷管理的ASA R2系统、这意味着每个VM存储对象都是阵列上的一个唯一存储单元(SU)、可以独立控制。这样、便可创建可应用于单个VM或VMDK (从而实现独立SUS)的存储策略、从而对性能、可用性和数据保护等存储服务进行精细控制。
+
+
+
+== 基于存储策略的管理(Storage Policy Based Management、SPBM)
+
+SPBM 提供了一个框架，可用作虚拟化环境可用存储服务与通过策略配置的存储元素之间的抽象层。通过这种方法、存储架构师可以设计具有不同功能的存储池。VM管理员可以轻松使用这些池。然后、管理员可以将虚拟机工作负载要求与所配置的存储池进行匹配。此方法可简化存储管理、并可更高效地利用存储资源。
+
+SPBM是虚拟卷的一个关键组件、可提供一个基于策略的框架来管理存储服务。策略由vSphere管理员使用供应商的VASA Provider (VP)提供的规则和功能来创建。可以为性能、可用性和数据保护等不同存储服务创建策略。可以将策略分配给单个VM或VMDK、从而对存储服务进行精细控制。
+
+
+
+== NetApp ONTAP和虚拟卷
+
+NetApp ONTAP在虚拟卷扩展领域居于存储行业领先地位，可在一个集群中支持数十万个虚拟卷*。相比之下、企业级阵列供应商和小型闪存阵列供应商支持的每个阵列只能支持数千个的卷。ONTAP为VMware vSphere环境提供了一个可扩展的高效存储解决方案、可通过一组丰富的存储服务(包括重复数据删除、数据压缩、精简配置和数据保护)来支持vvol。SPBM支持与VMware vSphere环境无缝集成。
+
+我们之前提到、VM管理员可以将容量用作存储池。这可以通过使用存储容器来实现、这些存储容器在vSphere中表示为逻辑数据存储库。
+
+存储容器由存储管理员创建、用于对可由VM管理员使用的存储资源进行分组。根据您使用的ONTAP系统类型、创建存储容器的方式可能有所不同。对于传统ONTAP 9集群、系统会为容器分配一个或多个后备FlexVol、这些FlexVol共同构成存储池。对于ASA R2系统、整个集群都是存储池。
 
 
 NOTE: 有关 VMware vSphere 虚拟卷， SPBM 和 ONTAP 的详细信息，请参见 link:vmware-vvols-overview.html["TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷"^]。
+
+ \* Depending on platform and protocol

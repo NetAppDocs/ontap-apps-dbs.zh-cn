@@ -26,7 +26,7 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方�
 
 FCP、NVMe/FC、NVMe/TCP和iSCSI是块协议、它们使用vSphere虚拟机文件系统(VMFS)将VM存储在ONTAP FlexVol volume中包含的ONTAP LUN或NVMe命名空间中。NFS 是一种文件协议，无需使用 VMFS 即可将虚拟机放置到数据存储库（即 ONTAP 卷）中。SMB (CIFS)、iSCSI、NVMe/TCP或NFS也可以从子操作系统直接使用到ONTAP。
 
-下表介绍了ONTAP支持vSphere的传统数据存储库功能。此信息不适用于VVOL数据存储库、但它通常适用于使用受支持的ONTAP 版本的适用场景 vSphere 6.x及更高版本。您还可以参考link:https://www.vmware.com/support/pubs/["VMware配置最大值"^]特定vSphere版本、以确认特定限制。
+下表介绍了ONTAP支持vSphere的传统数据存储库功能。此信息不适用于VVOL数据存储库、但它通常适用于使用受支持的ONTAP 版本的适用场景 vSphere 6.x及更高版本。您还可以参考了解link:https://configmax.broadcom.com/guest?vmwareproduct=vSphere&release=vSphere%208.0&categories=2-0["VMware配置最大值工具"^]特定vSphere版本、以确认特定限制。
 
 |===
 | 功能 / 功能 | FC | iSCSI | NVMe-oF | NFS 
@@ -129,9 +129,9 @@ FCP、NVMe/FC、NVMe/TCP和iSCSI是块协议、它们使用vSphere虚拟机文�
 
 | NDMP 粒度 | 数据存储库 | 数据存储库 | 数据存储库 | 数据存储库或虚拟机 
 |===
-^1^* NetApp建议*对Microsoft集群使用子系统内iSCSI、而不是在VMFS数据存储库中使用启用了多写入程序的VMDK。这种方法完全受Microsoft和VMware的支持、可通过ONTAP (SnapMirror到内部或云中的ONTAP系统)提供极大的灵活性、易于配置和自动化、并可通过SnapCenter进行保护。vSphere 7增加了一个新的集群模式VMDK选项。这与启用了多写入程序的VMDK不同、它需要一个通过FC协议提供的数据存储库、该协议已启用集群模式VMDK支持。其他限制适用。有关配置准则、请参见VMware https://docs.vmware.com/en/VMware-vSphere/7.0/vsphere-esxi-vcenter-server-70-setup-wsfc.pdf["Windows Server 故障转移集群设置"^]文档。
+^1^* NetApp建议*对Microsoft集群使用子系统内iSCSI、而不是在VMFS数据存储库中使用启用了多写入程序的VMDK。这种方法完全受Microsoft和VMware的支持、可通过ONTAP (SnapMirror到内部或云中的ONTAP系统)提供极大的灵活性、易于配置和自动化、并可通过SnapCenter进行保护。vSphere 7增加了一个新的集群模式VMDK选项。这与启用了多写入程序的VMDK不同、它需要一个通过FC协议提供的数据存储库、该协议已启用集群模式VMDK支持。其他限制适用。有关配置准则、请参见VMwarelink:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/setup-for-windows-server-failover-clustering.html["Windows Server 故障转移集群设置"^]文档。
 
-^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM不支持基于阵列的复制。
+^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM目前不支持对NFS v4.1执行基于阵列的复制。适用于VMware vSphere Storage Replication Adapter (SRA)的ONTAP工具目前不支持使用NVMe-oF进行基于阵列的复制。
 
 
 

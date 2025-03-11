@@ -18,9 +18,9 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 使用快照快速创建虚拟机或数据存储库的副本而不影响性能、然后使用SnapMirror将其发送到二级系统、以实现长期异地数据保护。这种方法只存储更改后的信息，从而最大限度地减少存储空间和网络带宽。
 
-使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。  VMware 快照仅为 http://pubs.vmware.com/vsphere-65/index.jsp?topic=%2Fcom.vmware.vsphere.vm_admin.doc%2FGUID-53F65726-A23B-4CF0-A7D5-48E584B88613.html["建议"^] 因性能和其他影响而短期使用。
+使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。由于性能和其他影响、建议仅在短期内使用VMware快照。link:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/snapshot-limitations.html["Snapshot限制"^]有关详细信息、请参见。
 
-这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。借助 vSphere ，您可以使用它们来保护 SQL Server 或 Oracle 数据库，其中的数据存储在 RDM LUN 上，直接连接到子操作系统的 iSCSI LUN 或 VMFS 或 NFS 数据存储库上的 VMDK 文件上。通过这些插件，可以指定不同类型的数据库备份，支持联机或脱机备份，以及保护数据库文件和日志文件。除了备份和恢复之外，这些插件还支持出于开发或测试目的克隆数据库。
+这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。借助 vSphere ，您可以使用它们来保护 SQL Server 或 Oracle 数据库，其中的数据存储在 RDM LUN 上，直接连接到子操作系统的 iSCSI LUN 或 VMFS 或 NFS 数据存储库上的 VMDK 文件上。这些插件允许指定不同类型的数据库备份、支持联机或脱机备份、并保护数据库文件和日志文件。除了备份和恢复之外、这些插件还支持出于开发或测试目的克隆数据库。
 
 下图显示了 SnapCenter 部署的一个示例。
 

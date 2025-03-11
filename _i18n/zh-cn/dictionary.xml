@@ -35,28 +35,6 @@
   <block id="bf7dcf6467a8a03b05b2d37d31d6eccd" category="inline-link-macro">ONTAP 9.3通知</block>
   <block id="0328352fdfda84af6968462d1a67d3a6" category="inline-link-macro">ONTAP 9.2通知</block>
   <block id="83904100c7d6fe0102e8b2b5bd8ec4bb" category="inline-link-macro">ONTAP 9.1通知</block>
-  <block id="5672f5979be77bb31dd559817c9e1e76" category="paragraph"><block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block>
-<block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block>
-<block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block>
-<block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block>
-<block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block>
-<block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block>
-<block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block>
-<block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block>
-<block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block>
-<block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block>
-<block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block>
-<block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block>
-<block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block>
-<block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block>
-<block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
-  <block id="07ee2fe6f236deffba69a7cf80a680fd" category="section-title">MCC IP的ONTAP调解器</block>
-  <block id="f089ab2b9f25f609795bdd46ae636f18" category="inline-link-macro">9.9.1关于MCC IP的ONTAP调解器的通知</block>
-  <block id="239794a299abe62705440f2dab3114cb" category="inline-link-macro">9.8关于MCC IP的ONTAP调解器的通知</block>
-  <block id="51fcca20d278d2d03192c01120f17442" category="inline-link-macro">9.7关于MCC IP的ONTAP调解器的通知</block>
-  <block id="3ba2aeb22339424d5f5b15dafd2c3eca" category="paragraph"><block ref="c8696a7854fcd089ea112145e4968b10" category="inline-link-macro-rx"></block>
-<block ref="4d19e06382f392d0f1a50df789d77c13" category="inline-link-macro-rx"></block>
-<block ref="fe4ac88b6b3f1cb9f1dc6d5d4b5086ee" category="inline-link-macro-rx"></block></block>
   <block id="9e476387322a5c250893cf9c5c4ce78c" category="doc">策略</block>
   <block id="b9e18a3460bc17eb9ea65b03f0167453" category="paragraph">这在数据库中很常见。已知包含非活动块的数据库也是FabricPool层的候选数据库。例如、供应链管理数据库可能包含历史信息、这些信息在需要时必须可用、但在正常操作期间不会访问。可以使用FabricPool有选择地重新定位非活动块。</block>
   <block id="95e955bbbe5dd9520a6bf45b0d8a9d4c" category="paragraph">例如、使用的FabricPool卷上运行的数据文件<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 90天期限将在性能层上保留前90天访问的任何块。但是、任何在90天内未访问的内容都会重新定位到容量层。在其他情况下、正常应用程序活动会将正确的块保留在正确的层上。例如、如果数据库通常用于定期处理前60天的数据、则要低得多<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 可以设置期限、因为应用程序的自然活动可确保不会过早重新定位块。</block>
@@ -2140,131 +2118,52 @@
   <block id="1de37c09602b46db5de57a946efe2768" category="paragraph"><block ref="1de37c09602b46db5de57a946efe2768" category="inline-link-macro-rx"></block></block>
   <block id="93b94e62ad8cb02a1d1a7b0944a5445d" category="summary">本文档讨论适用于 VMware vSphere 的 ONTAP 工具的产品安全性。</block>
   <block id="57a033c33a8be6110be46b2914cc4989" category="doc">将ONTAP 与虚拟卷结合使用</block>
-  <block id="69556d50c944e0a07ade0bea62f078a3" category="paragraph">要将VVOLS与ONTAP 结合使用、关键在于适用于VMware vSphere虚拟设备的ONTAP 工具附带的VASA Provider软件。</block>
-  <block id="5e484430124a3d64541b75bbf3c8f529" category="paragraph">ONTAP 工具还包括vCenter UI扩展、REST API服务器、适用于VMware Site Recovery Manager的存储复制适配器、监控和主机配置工具以及一系列可帮助您更好地管理VMware环境的报告。</block>
   <block id="21247c4392dc3c243f693dbf5b762553" category="section-title">产品和文档</block>
-  <block id="bf03408d75f93f6e28c07c3c2300b98a" category="section-title">使用iSCSI或FCP时、可使用ONTAP 工具VASA Provider架构</block>
   <block id="94ef809dc16e728151bda996f8b4f8aa" category="inline-image-macro">ONTAP 工具VASA Provider架构,240</block>
   <block id="d78de3410d86d345a548abdf67aff375" category="paragraph"><block ref="d78de3410d86d345a548abdf67aff375" category="inline-image-macro-rx" type="image"></block></block>
   <block id="5e5421e75636200787a4449a2cdaa1f1" category="section-title">产品安装</block>
-  <block id="3ef3033a2b9a744a1e4e7e93fa01f909" category="paragraph">对于全新安装、请将虚拟设备部署到vSphere环境中。当前版本的ONTAP 工具会自动将自身注册到vCenter中、并默认启用VASA Provider。除了ESXi主机和vCenter Server信息之外、您还需要设备的IP地址配置详细信息。如前文所述、VASA Provider要求您已在计划用于VVO尔 的任何ONTAP 集群上安装ONTAP FlexClone许可证。此设备具有一个内置的监视程序来确保可用性、作为最佳实践、应配置VMware高可用性功能和可选的容错功能。有关更多详细信息、请参见第4.1节。请勿将ONTAP 工具设备或vCenter Server设备(VCSAS)安装或移动到VVOl存储中、因为这样可能会阻止设备重新启动。</block>
-  <block id="6a5c862f634c8967f7246f42eb9de6e1" category="paragraph">可以使用可从NetApp 支持站点 (NSS)下载的升级ISO文件原位升级ONTAP 工具。按照《部署和设置指南》说明升级设备。</block>
-  <block id="3c07c9b4b562a16890d9fee571f0441e" category="inline-link">适用于VMware vSphere的ONTAP 工具规模估算指南</block>
-  <block id="e4e51979718d88ce483f9477be981a76" category="paragraph">要估算虚拟设备的规模并了解配置限制、请参阅以下知识库文章：<block ref="a75738ed95b0811ed0edd1b8ef0d9568" category="inline-link-rx"></block></block>
   <block id="72333dadacbc964761fb14f718f6d411" category="section-title">产品文档</block>
   <block id="e0644c46fdc2ced2c094f7db15e15a8a" category="paragraph">以下文档可帮助您部署ONTAP 工具。</block>
-  <block id="09e308ed60d47b80b6cd16eb233f1bb9" category="inline-link">有关完整的文档库和amp；#44；请访问docs.netapp.com链接</block>
-  <block id="7f21741a70426baea3ee41488da86af4" category="paragraph"><block ref="56b49132b20e341764c8aa067751e8a5" category="inline-link-rx"></block></block>
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="section-title">入门</block>
   <block id="7d0ee6fed10d3d4e5c9ee496729ab519" category="inline-link">发行说明</block>
-  <block id="2645deadffb8af180b8a35da3d034ad8" category="list-text"><block ref="2645deadffb8af180b8a35da3d034ad8" category="inline-link-rx"></block></block>
-  <block id="b1555cd6358e57b76c72e343dbe31846" category="inline-link">了解适用于VMware vSphere的ONTAP 工具</block>
-  <block id="a0aaeda90fe2ef02fba791bc7c35645c" category="list-text"><block ref="a0aaeda90fe2ef02fba791bc7c35645c" category="inline-link-rx"></block></block>
-  <block id="e695b432b77d6bddfcb785c76f5e5442" category="inline-link">ONTAP 工具快速入门</block>
-  <block id="324b0410f22fb210bbf88e1ee7e97428" category="list-text"><block ref="324b0410f22fb210bbf88e1ee7e97428" category="inline-link-rx"></block></block>
   <block id="3d7fe3e43f9f24fffe5ed0d546d12f13" category="inline-link">部署 ONTAP 工具</block>
-  <block id="354336d78d1f0a156dcd5221d341dfd0" category="list-text"><block ref="354336d78d1f0a156dcd5221d341dfd0" category="inline-link-rx"></block></block>
   <block id="a2fa58344be7fbd9a2be0320a8df0f77" category="inline-link">升级 ONTAP 工具</block>
-  <block id="33a77e1014f1325d6ba19639a6c95d48" category="list-text"><block ref="33a77e1014f1325d6ba19639a6c95d48" category="inline-link-rx"></block></block>
   <block id="21e2a89d708329706ec6ed3fc989a1f6" category="section-title">使用 ONTAP 工具</block>
-  <block id="91a9cfdbaaa44e0a9ad72e92533f763f" category="inline-link">配置传统数据存储库</block>
-  <block id="f27fe8f858d8a91950e214753b95722c" category="list-text"><block ref="f27fe8f858d8a91950e214753b95722c" category="inline-link-rx"></block></block>
-  <block id="fc7d7e475ac8c3868d7426bb41df9b09" category="inline-link">配置 VVOL 数据存储库</block>
-  <block id="0c2552c3930f472b2d120f30d7aa0415" category="list-text"><block ref="0c2552c3930f472b2d120f30d7aa0415" category="inline-link-rx"></block></block>
   <block id="317bbf73ff27c5f981628c8fb83ebf22" category="inline-link">配置基于角色的访问控制</block>
-  <block id="644ae78061acbb2254be4de3ea454b06" category="list-text"><block ref="644ae78061acbb2254be4de3ea454b06" category="inline-link-rx"></block></block>
-  <block id="48bc2d028cb2a507ef974230ca3ba793" category="inline-link">配置远程诊断</block>
-  <block id="fc0330812838aba14025bd70d41b943d" category="list-text"><block ref="fc0330812838aba14025bd70d41b943d" category="inline-link-rx"></block></block>
   <block id="641e9457539249e880725760f91d5ee2" category="inline-link">配置高可用性</block>
-  <block id="5027a18a60c68e05df84cd699af74497" category="list-text"><block ref="5027a18a60c68e05df84cd699af74497" category="inline-link-rx"></block></block>
   <block id="04edeb5424c826c14a69edb777edf395" category="section-title">保护和管理数据存储库</block>
-  <block id="e17534281670c5ea4e8d55420a63c98f" category="inline-link">保护传统数据存储库</block>
-  <block id="c8ac931d575d89c007212a35c8dde74c" category="list-text"><block ref="8f91d2113ff32de18906bad1cd446b0d" category="inline-link-rx"></block> 使用SRM</block>
-  <block id="bff05cbbc19cad2bd10b9fe25dc34a1b" category="inline-link">保护基于虚拟卷的虚拟机</block>
-  <block id="710b15d782f0c2c0411066b86644a12d" category="list-text"><block ref="7741c74d7508dc983fa4af0dff0bdda1" category="inline-link-rx"></block> 使用SRM</block>
-  <block id="5267febc97a2cc385cc5c73995dc64df" category="inline-link">监控传统数据存储库和虚拟机</block>
-  <block id="bac3b262bb348a54f9986c2b5dbf6024" category="list-text"><block ref="bac3b262bb348a54f9986c2b5dbf6024" category="inline-link-rx"></block></block>
-  <block id="3123ece3c3b36f605758cb0c9a28f904" category="inline-link">监控 VVOL 数据存储库和虚拟机</block>
-  <block id="75c07b623699e1947d011983a7823584" category="list-text"><block ref="75c07b623699e1947d011983a7823584" category="inline-link-rx"></block></block>
-  <block id="73751ced5959ea3089346b01d42dde76" category="paragraph">除了产品文档之外、还有一些可能有用的支持知识库文章。</block>
   <block id="dd5138e8a4207a5b2fde43b411a4b5e1" category="section-title">VASA Provider信息板</block>
-  <block id="6da01a643ea28efe37fa2d6fd06a634b" category="paragraph">VASA Provider包括一个信息板、其中包含各个VVO尔VM的性能和容量信息。此信息直接来自ONTAP 中有关VVOL文件 和LUN的信息、包括前5个虚拟机的延迟、IOPS、吞吐量和正常运行时间以及前5个数据存储库的延迟和IOPS。使用ONTAP 9.7或更高版本时、默认情况下会启用此功能。检索初始数据并将其显示在信息板中可能需要长达30分钟的时间。</block>
-  <block id="9b78e1fecb2bcc40733f2180691c7507" category="section-title">ONTAP 工具的虚拟卷信息板</block>
-  <block id="4adf016da96258b45a1cf762298729b5" category="inline-image-macro">ONTAP 工具、vols信息板、400</block>
-  <block id="73c1e14ddf3f32984f869ac3f122b2ca" category="paragraph"><block ref="73c1e14ddf3f32984f869ac3f122b2ca" category="inline-image-macro-rx" type="image"></block></block>
   <block id="cd47dd01745339787e4c7300389401f2" category="section-title">最佳实践</block>
   <block id="9ae938622297e9d4b14dd0006a8f0bf4" category="paragraph">*限制*</block>
   <block id="b4f52a4fd0b07c9d904b95fc98a1cd45" category="inline-link">配置最大值</block>
-  <block id="bc8259e306c73b2969e7ac6297000e64" category="paragraph">一般来说、ONTAP 支持VMware定义的vvol限制(请参见已发布的<block ref="a6efdd9b1a19df6105024b4869e0582b" category="inline-link-rx"></block>）。下表汇总了ONTAP 在大小和数量方面的特定限制。请始终检查<block ref="bb9c67b5a4c15a85b5e6aa6c9afd0285" category="inline-link-rx"></block> 更新了有关LUN和文件数量和大小的限制。</block>
-  <block id="9b7ad553354519b31ec860eef39e5f6b" category="paragraph">* ONTAP 虚拟卷限制*</block>
   <block id="130b78bfd6c9b050a912fec77e285e3f" category="cell">容量 / 功能</block>
-  <block id="6231ad61105cd983d3f0042762d3233d" category="cell">SAN (SCSI或NVMe-oF)</block>
-  <block id="75d4e7871261a858356a58d682ab71de" category="cell">最大卷大小</block>
-  <block id="9cfd7100738cee4daf7acd5e01d31e14" category="cell">62 TiB*</block>
-  <block id="9a728251ad1e90577975ae9395374772" category="cell">每个FlexVol 卷的最大虚拟卷数</block>
-  <block id="021bbc7ee20b71134d53e20206bd6feb" category="cell">1024</block>
-  <block id="46ba990c143630f55072434a6ea958c0" category="cell">20亿</block>
-  <block id="cdbcf58620f0b4b0bbf3291386a99407" category="cell">每个ONTAP 节点的最大虚拟卷数</block>
-  <block id="342264031889898ec1a553b4dd58d98c" category="cell">最多12 288个**</block>
-  <block id="659e5faa0bdb08327ba0719230e95be2" category="cell">500亿</block>
-  <block id="43b49f27d93c6f55f54a68e8983d5479" category="cell">每个ONTAP 对的最大虚拟卷数</block>
-  <block id="3941694d19c2d1fc406f055ab62cb9eb" category="cell">最多24 576个**</block>
-  <block id="d6b3e65f296fd23975dd6f1a915c4b22" category="cell">每个ONTAP 集群的最大虚拟卷数</block>
-  <block id="2702ff8627a3990fc940d6f53463925e" category="cell">最多98、304个**</block>
-  <block id="4f0c25d6c688cf50460d11fecaa97fa8" category="cell">无特定集群限制</block>
-  <block id="855ecc47bb0d239e1fdf6fee84e24c75" category="cell">最大QoS对象数(共享策略组和单个虚拟卷服务级别)</block>
-  <block id="26890bd9dcb27c05f1ab5bcc859501b8" category="cell">12、000到ONTAP 9.3；40、000到ONTAP 9.4及更高版本</block>
-  <block id="0e38f856cb713ce9eea79fa1c6b7dc32" category="list-text">大小限制取决于运行ONTAP 9.12.1P2及更高版本的ASA 系统或AFF 和FAS 系统。</block>
-  <block id="d27c43bb3cdcbfa3852bb91192ffb849" category="list-text">SAN VMvol (NVMe命名库或LUN)的数量因平台而异。请始终检查<block ref="bb9c67b5a4c15a85b5e6aa6c9afd0285" category="inline-link-rx"></block> 更新了有关LUN和文件数量和大小的限制。</block>
   <block id="72e0ee397942f7233122887584f94b8b" category="paragraph">在vSphere中使用ONTAP vvol非常简单、并且遵循已发布的vSphere方法(请参见适用于您的ESXi版本的VMware文档中的在vSphere存储下使用虚拟卷)。以下是与ONTAP 结合使用时需要考虑的一些其他实践。</block>
   <block id="83583580d98b69cb8317f9b285f3c8df" category="cell">*使用适用于VMware vSphere的UI扩展或REST API的ONTAP 工具来配置vvol数据存储库*和协议端点*</block>
-  <block id="9507d4f97aceb8d05fc962dd53f082af" category="cell">虽然可以使用常规vSphere界面创建vvol数据存储库、但使用ONTAP工具将根据需要自动创建协议端点、并根据您定义的存储功能配置文件根据ONTAP最佳实践创建FlexVol卷。只需右键单击主机/集群/数据中心、然后选择_ ONTAP tools_和_配置数据存储库_。您只需在向导中选择所需的卷选项即可。</block>
   <block id="e8d5f9dc0bff953a9e59755813c7e8bf" category="cell">*切勿将ONTAP 工具设备或vCenter Server设备(VCSA)存储在其所管理的VVOLs数据存储库中。*</block>
   <block id="c6ac0465bff03857ee851d98f6bd782b" category="cell">如果您需要重新启动设备、因为它们在重新启动期间无法重新绑定自己的虚拟卷、这可能会导致出现"鸡肉和鸡蛋的情况"。您可以将其存储在由其他ONTAP 工具和vCenter部署管理的Vvol数据存储库中。</block>
   <block id="ab8d352870fb5334773c7177d3d5dcd1" category="cell">*避免在不同ONTAP 版本之间执行虚拟卷操作。*</block>
   <block id="8b2bcef781b7e1f6d64739147d50aae7" category="cell">VASA Provider的各个版本中支持的存储功能(例如QoS、特性等)发生了变化、其中一些功能取决于ONTAP 版本。在ONTAP 集群中使用不同版本或在具有不同版本的集群之间移动虚拟卷可能会导致意外行为或合规性警报。</block>
-  <block id="b2da0eca57c759eff034e6fe26f153e6" category="cell">*对光纤通道网络结构进行分区、然后再对其使用NVMe/FC或FCP来创建卷。*</block>
   <block id="cd7bf0e1e61341c1aa3fa23401af8a27" category="inline-image-macro">具有四个节点的单个启动程序分区、400</block>
   <block id="51591d05b7e084ba8e5ae7f63172177e" category="inline-link">_TR-4080：《现代SAN ONTAP 9_最佳实践》</block>
   <block id="c1723e6a0e1d3dd28232b33e0cb6e61d" category="inline-link">_TR-4684使用NVMe-oF实施和配置现代SAN</block>
   <block id="9a36c8f0464a7ffce114044f1859c7ff" category="cell">*根据需要规划您的后备FlexVol。*</block>
-  <block id="03d2e894fa9a05efefa4e8d6b2008a19" category="cell">最好向您的ONTAP 数据存储库添加多个后备卷、以便在集群中分布工作负载、支持不同的策略选项或增加允许的LUN或文件数量。但是、如果需要最大的存储效率、请将所有备份卷放在一个聚合上。或者、如果需要最大的克隆性能、则可以考虑使用一个FlexVol 卷、并将模板或内容库保留在同一个卷中。VASA Provider会将许多VVOLs存储操作(包括迁移、克隆和快照)卸载到ONTAP。如果在一个FlexVol 卷中执行此操作、则会使用节省空间的文件克隆、并且这些克隆几乎可以即时使用。在FlexVol 卷之间执行此操作时、这些副本可以快速可用并使用实时重复数据删除和数据压缩、但只有在使用后台重复数据删除和数据压缩的卷上运行后台作业后、才能最大程度地恢复存储效率。根据源和目标、某些效率可能会降级。</block>
-  <block id="80b15469535d95a1690f308427545c7e" category="cell">*保持存储功能配置文件(SCP)简单。*</block>
-  <block id="33e2905cb722c14575a9bff81ba78b39" category="cell">通过将功能设置为任何、避免指定不需要的功能。这样可以最大程度地减少选择或创建FlexVol 卷时出现的问题。例如、在VASA Provider 7.1及更早版本中、如果将数据压缩保留在默认SCP设置为No、则会尝试禁用数据压缩、即使在AFF 系统上也是如此。</block>
-  <block id="5a6d5fdddf6fbd82f1952b532b03c9ef" category="cell">*使用默认的SCP作为示例模板来创建您自己的模板。*</block>
   <block id="ee3cbda1c3c4a14ae024478c7ada6d11" category="cell">*遵循所有协议最佳实践。*</block>
   <block id="6a2c1ac1da51eca0c1a65afffab8dfab" category="inline-image-macro">使用基于NFS v3、500的vvol进行网络配置</block>
   <block id="918febfed3d070cf1250909e5cdcf31d" category="paragraph">本文档介绍了适用于VMware vSphere虚拟卷(vvol)的ONTAP 功能、包括最新的产品信息和用例以及最佳实践和其他可简化部署和减少错误的信息。</block>
   <block id="d30f04665be7a6d9663004b1b5e61a9a" category="paragraph">最佳实践是指南和兼容性列表等其他文档的补充。它们是根据 NetApp 工程师和客户的实验室测试和丰富的现场经验开发的。它们可能不是唯一有效或受支持的实践、但通常是最简单的解决方案、可满足大多数客户的需求。</block>
-  <block id="b010d2e253827dbb44b7ba4e1332e24e" category="admonition">本文档已进行更新、加入了vSphere 8.0 Update 1中的新vvol功能、这些功能在ONTAP 工具9.12版本中受支持。</block>
   <block id="cc713c330b9c4e00d3ed7233bc54a889" category="section-title">虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)概述</block>
-  <block id="64f0863a7fb5f52a7ac6a911e1ad6862" category="paragraph">NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN和文件、现在在vSphere 8中、NVMe namespaces.NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。</block>
   <block id="cbf0aa9daeb855e4eace1a3bdc474ce2" category="paragraph">需要注意以下几个组件：</block>
-  <block id="e2f6b83160ea0712fbc59dd84410c4b2" category="cell">*VASA Provider*</block>
   <block id="919601826e1d58bccaaab76d787871d2" category="cell">这是一个软件组件、用于处理VMware vSphere与存储系统之间的通信。对于ONTAP 、VASA Provider在一种称为适用于VMware vSphere的ONTAP 工具(简称ONTAP 工具)的设备中运行。ONTAP 工具还包括一个vCenter插件、一个适用于VMware Site Recovery Manager的存储复制适配器(Storage Replication Adapter、SRA)以及用于构建您自己的自动化的REST API服务器。配置ONTAP 工具并将其注册到vCenter后、几乎不再需要直接与ONTAP 系统交互、因为几乎所有存储需求都可以直接在vCenter UI中进行管理、或者通过REST API自动化进行管理。</block>
-  <block id="05ad8543ff165c6b8cd0cc5e976d3245" category="cell">*协议端点(PE)*</block>
   <block id="3b2cd9018385f55c53c9a8b756df8bb5" category="cell">协议端点是ESXi主机和VMware数据存储库之间的I/O代理。ONTAP VASA Provider会自动创建这些LUN、可以是VVOL数据存储库的每个FlexVol卷一个协议端点LUN (大小为4 MB)、也可以是托管此数据存储库中的FlexVol卷的存储节点上的每个NFS接口(NFS挂载点、LIF)一个。ESXi主机直接装载这些协议端点、而不是装载单个VVOLLUN和虚拟磁盘文件。协议端点由VASA Provider自动创建、挂载、卸载和删除、因此无需对这些端点进行管理、同时也无需管理任何必要的接口组或导出策略。</block>
-  <block id="d3f051e8316cfd36651af1e65be24a75" category="cell">*虚拟协议端点(VPE)*</block>
   <block id="71afca0aa1a505ea2ac3ce5a1a681549" category="paragraph">vSphere 8中的新增功能是、在将基于网络结构的NVMe (NVMe-oF)与vvol结合使用时、协议端点的概念在ONTAP 中不再适用。相反、ESXi主机会在第一个虚拟机启动后自动为每个ANA组建立虚拟PE。ONTAP 会自动为数据存储库使用的每个FlexVol 卷创建ANA组。</block>
   <block id="8202498953d2ebcf9968c37a7e47f4f6" category="paragraph">使用NVMe-oF for VVOLs的另一个优势是、VASA Provider不需要任何绑定请求。相反、ESXi主机会根据VPE在内部处理VVOl绑定功能。这样可以减少VVOV绑定风暴影响服务的机会。</block>
   <block id="70532c0374111d897ef1176b34b6396c" category="inline-link">NVMe和虚拟卷</block>
   <block id="50ec55042a7f4e8c2c66219ac096cfb3" category="inline-link">vmware.com</block>
   <block id="113c9d4e642d1ba4cc469267fb7fd0de" category="paragraph">有关详细信息，请参见<block ref="f8d477cd77073d731aafe4f52026608a" category="inline-link-rx"></block> 开启<block ref="1f1565cca975c4a703345d21e7f273b8" category="inline-link-rx"></block></block>
-  <block id="61def0b14af00df4eb90bcd79d858a8b" category="cell">*虚拟卷数据存储库*</block>
-  <block id="b945cda41d7a84e7152e09343a17cbe6" category="cell">虚拟卷数据存储库是由VASA Provider创建和维护的VVOl容器的逻辑数据存储库表示形式。容器表示从由VASA Provider管理的存储系统配置的存储容量池。ONTAP 工具支持将多个FlexVol 卷(称为后备卷)分配给一个数据存储库、这些FlexVol数据存储库可以跨越ONTAP 集群中的多个节点、从而将具有不同功能的闪存和混合系统组合在一起。管理员可以使用配置向导或REST API创建新的FlexVol 卷、或者选择预创建的FlexVol 卷作为后备存储(如果有)。</block>
-  <block id="c25d2cc7c6540f6ac98af67455eecc39" category="cell">*虚拟卷(Vvol)*</block>
   <block id="9664cdf7951789389813facac649fec1" category="cell">虚拟卷是指存储在虚拟卷数据存储库中的实际虚拟机文件和磁盘。术语VVOL(单个)是指单个特定文件、LUN或命名空间。ONTAP 会根据数据存储库使用的协议创建NVMe命名空间、LUN或文件。Vvol有几种不同的类型；最常见的类型是配置(元数据文件)、数据(虚拟磁盘或VMDK)和交换(在启动VM时创建)。受VMware VM加密保护的Vvol的类型为其他。不应将VMware VM加密与ONTAP 卷或聚合加密相混淆。</block>
   <block id="937251054fa0c1a7b946f8928cc857b9" category="section-title">基于策略的管理</block>
-  <block id="34d2b7d8b570ede7a638d070656b7b81" category="paragraph">通过VMware vSphere APIS for Storage AWARMIVAIVIAPI(VASA)、VM管理员可以轻松地使用配置VM所需的任何存储功能、而无需与其存储团队进行交互。在使用VASA之前、VM管理员可以定义VM存储策略、但必须与其存储管理员一起确定适当的数据存储库、通常使用文档或命名约定。通过使用VASA、具有适当权限的vCenter管理员可以定义一系列存储功能、然后vCenter用户可以使用这些功能来配置VM。通过在VM存储策略和数据存储库存储功能配置文件之间进行映射、vCenter可以显示兼容数据存储库列表以供选择、并支持Aria (以前称为vReise) Automation或Tanzu Kubernetes Grid等其他技术自动从分配的策略中选择存储。这种方法称为基于存储策略的管理。虽然存储功能配置文件和策略也可用于传统数据存储库、但我们在此重点关注的是虚拟卷数据存储库。</block>
-  <block id="631bdc7de6608fd57c3fa0b397c3c26f" category="paragraph">有两个要素：</block>
-  <block id="a156a7f38a3727ce705b5466eb11e0bf" category="cell">*存储功能配置文件(SCP)*</block>
-  <block id="43a258e66ca875fa9c5d3e35e06ba2b7" category="cell">存储功能配置文件(SCP)是一种存储模板形式、通过该模板、vCenter管理员可以定义所需的存储功能、而无需实际了解如何在ONTAP 中管理这些功能。通过采用模板模式方法、管理员可以轻松地以一致且可预测的方式提供存储服务。SCP中介绍的功能包括性能、协议、存储效率和其他功能。具体功能因版本而异。它们是使用vCenter UI中的适用于VMware vSphere的ONTAP 工具菜单创建的。您还可以使用REST API创建SCP。它们可以通过选择各个功能手动创建、也可以从现有(传统)数据存储库中自动生成。</block>
-  <block id="8f50a0757d99fe5dd0df8d19478d4921" category="cell">*VM存储策略*</block>
-  <block id="f99c5cf9298b040025bd3dfe966cb86e" category="cell">VM存储策略在vCenter中的策略和配置文件下创建。对于虚拟卷、请使用NetApp虚拟卷存储类型提供程序中的规则创建一个规则集。ONTAP 工具提供了一种简化的方法、您只需选择SCP、而无需强制指定各个规则。</block>
-  <block id="5dda8b04866334dc92ee08001b15701a" category="paragraph">如上所述、使用策略有助于简化配置卷的任务。只需选择一个适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol 卷中(图1)。</block>
   <block id="2ce0d6ec59cca7e0b6e0bdc389301e63" category="section-title">使用存储策略部署虚拟机</block>
   <block id="e0795f8b847058e171dec5a519757ece" category="image-alt">使用存储策略部署虚拟机</block>
-  <block id="f0d0f0a6174a5a9dde27782042e22ccf" category="paragraph">配置VM后、VASA Provider将继续检查合规性、并在后备卷不再符合策略时在vCenter中向VM管理员发出警报(图2)。</block>
   <block id="941431bc1cecb0ec5e89e78e9a5a96fc" category="section-title">虚拟机存储策略合规性</block>
   <block id="bfd6dec22a6a1724ff1b67f1f289cdfc" category="image-alt">虚拟机存储策略合规性</block>
   <block id="9fe1fd556b933358881222d5c3da127c" category="paragraph">在本报告发布时、超规模云环境仅限于传统NFS v3数据存储库、因此、Vvol仅适用于内部ONTAP 系统或提供内部系统全部功能的云连接系统、例如由全球NetApp合作伙伴和服务提供商托管的系统。</block>
@@ -2375,91 +2274,12 @@
   <block id="3152add163cd8aaf116a259d85ebf8fb" category="section-title">升级Unified Appliance无法挂载ISO</block>
   <block id="ffaa56a3f5a1157f2eb3955773bb41da" category="paragraph">由于vCenter中的错误、用于将Unified Appliance从一个版本升级到下一个版本的ISO可能无法挂载。如果ISO能够连接到vCenter中的设备、请按照本知识库中的过程进行操作<block ref="9839383ed04f777c0132b57ad0cb14ac" category="inline-link-rx"></block> 以解决此问题。</block>
   <block id="cacba1b456347ce8f32c7f5ed0d81e64" category="doc">部署Virtual Storage</block>
-  <block id="2a5f3dc8d46246216b293c9e41979269" category="paragraph">对于对传统数据存储库使用ONTAP 的现有vSphere环境、可能不需要执行前两个步骤。您可能已经在使用ONTAP工具来管理、自动化和报告VMFS或基于NFS的传统存储。下一节将更详细地介绍这些步骤。</block>
-  <block id="841db3655338a0c3dc36cf2761bfdafd" category="list-text">创建Storage Virtual Machine (SVM)及其协议配置。您将选择NVMe/FC、NFSv3、NFSv4.1、iSCSI、FCP、 或这些选项的组合。您可以使用ONTAP系统管理器向导或集群Shell命令行。</block>
-  <block id="10818a8ad4f650a48d78d728278d4cb3" category="list-text">对于每个交换机/网络结构连接、每个节点至少需要一个LIF。作为最佳实践、为每个节点创建两个或更多基于FCP、iSCSI或NVMe的协议。</block>
-  <block id="612705dd95888cdc6345d01c93c84c39" category="list-text">此时可以创建卷、但使用_ProVision数据存储库_向导创建卷会更简单。此规则的唯一例外情况是、您计划将vvol复制与VMware Site Recovery Manager结合使用。对于具有现有SnapMirror关系的已有FlexVol 卷、设置起来更容易。请注意、不要在要用于虚拟卷的任何卷上启用QoS、因为这是要由SPBM和ONTAP 工具管理的。</block>
-  <block id="16421df834af873175559b678c2b3cd9" category="list-text">使用从NetApp 支持站点 下载的OVA部署适用于VMware vSphere的ONTAP 工具。</block>
-  <block id="8bdb69b5934ff84bbaafd84585965a90" category="list-text">为您的环境配置ONTAP 工具。</block>
-  <block id="dd07accb290c9c1e3900692630a70767" category="list-text">将ONTAP 集群添加到_Storage Systems_下的ONTAP 工具中</block>
-  <block id="869ce78032d85111f09ceb58bdb59a36" category="list-text">如果ONTAP 数据LIF与VMkernel适配器位于不同子网上、则必须将VMkernel适配器子网添加到ONTAP 工具的设置菜单中的选定子网列表中。默认情况下、ONTAP 工具仅允许本地子网访问、从而确保存储流量的安全。</block>
-  <block id="5a6d084090f063797fc6b863d2817d98" category="list-text">ONTAP工具附带了多个预定义策略、您可以使用这些策略、也可以查看这些策略 <block ref="434866eb159632a70c4db034544336ef" category="inline-xref-macro-rx"></block> 有关创建SCP的指导。</block>
-  <block id="ef51190e4c839596248fc4173ed12a3c" category="list-text">使用vCenter中的_ ONTAP tools_菜单启动_配置数据存储库_向导。</block>
-  <block id="66edaf6f622057aeadab950977c1f3e8" category="list-text">请提供有意义的名称并选择所需协议。您也可以提供数据存储库的问题描述。</block>
-  <block id="d22d6de0c8f11375907a1c10d8d0f251" category="list-text">选择一个或多个要由此卷数据存储库支持的SCP。此操作将筛选出无法与配置文件匹配的所有ONTAP 系统。从显示的列表中、选择所需的集群和SVM。</block>
-  <block id="6a016a18a0c20e3b805cd9b8e713fb3e" category="list-text">使用向导为每个指定的FlexVol 创建新的SCP卷、或者通过选择相应的单选按钮使用现有卷。</block>
-  <block id="2527effe721902a77755b8d628fdad93" category="list-text">在vCenter UI的_policies and Profiles _菜单中、为要在数据存储库中使用的每个SCP创建VM策略。</block>
-  <block id="642dadaf5095b4c11730dca0ffcb0d27" category="list-text">选择"NetApp.Clustered.Data.ONTAP VP.VVol"存储规则集。"NetApp.Clustered.Data.ONTAP .VP.VASE10"存储规则集用于为非VVOLs数据存储库提供SPBM支持</block>
-  <block id="c9565e0957e6e02cf12aef618bd30c3f" category="list-text">在创建VM存储策略时、您需要按名称指定存储功能配置文件。在此步骤中、您还可以使用复制选项卡配置SnapMirror策略匹配、并使用标记选项卡配置基于标记的匹配。请注意、必须已创建标记、才能进行选择。</block>
-  <block id="af70f7acdeed8e2a702372f9bc85d960" category="list-text">创建VM、在Select storage下选择VM存储策略和兼容数据存储库。</block>
   <block id="3db9849d9f30bfc6e05c4e0b36d28848" category="section-title">将VM从传统数据存储库迁移到Vvol</block>
-  <block id="7be42b7840cc093ce6d05a247df8e63d" category="paragraph">将VM从传统数据存储库迁移到Vvol数据存储库就像在传统数据存储库之间移动VM一样简单。只需选择虚拟机、然后从操作列表中选择迁移、并选择迁移类型_change storage only"。对于SAN VMFS到Vvol的迁移、迁移副本操作将随vSphere 6.0及更高版本卸载、但不会从NAS VMDK卸载到Vvol。</block>
   <block id="58f2a764a13ec89d3c5ead5343e75637" category="section-title">使用策略管理VM</block>
-  <block id="4b746813f1085683be4f71c8affea233" category="paragraph">要通过基于策略的管理自动配置存储、我们需要：</block>
-  <block id="10b68fb9cbee818a044f91644423640c" category="list-text">使用存储功能配置文件(Storage Capability Profiles、ONTAP)定义存储(Storage Node和FlexVol 卷)的功能。</block>
-  <block id="2e415dc7a6f21b4fd03f963858c9f680" category="list-text">创建映射到定义的SRP的VM存储策略。</block>
-  <block id="67c819108c4ef294ac28a51197046dfc" category="paragraph">从VASA Provider 7.2开始、NetApp简化了这些功能和映射、并在更高版本中不断进行改进。本节重点介绍这一新方法。早期版本支持更多功能、并允许将这些功能单独映射到存储策略、但不再支持此方法。</block>
-  <block id="0bd86c4955ab0bdce52b49644ce9396d" category="section-title">按ONTAP 工具版本列出的存储功能配置文件功能</block>
-  <block id="4a6af8a6e216dcc53a63f04143c13222" category="cell">*SCP功能*</block>
-  <block id="048424cc97a54b673c837ee7d4c19de0" category="cell">*功能值*</block>
-  <block id="098e77f7c5d9e0c2ad5454817edf0767" category="cell">*支持的版本*</block>
-  <block id="28f44037af103f0c930309365629f8ef" category="cell">* 注释 *</block>
-  <block id="d031377688b064b729a0cc60fb7fbbff" category="cell">* 数据压缩 *</block>
-  <block id="cc6aee5037bdc5b051433a266ec7d4a3" category="cell">是、否、任何</block>
-  <block id="7778bddb1c205e9f74d08bd30be0aca3" category="cell">对于7.2及更高版本的AFF 为必填项。</block>
-  <block id="221baf8ad30299306e725e4fb395bf34" category="cell">* 重复数据删除 *</block>
-  <block id="6868f879256c802b106616a006671848" category="cell">M andatory for AFF in 7.2及更高版本。</block>
-  <block id="504897d4a6b59afadffd3cf9e5d3ea85" category="cell">* 加密 *</block>
-  <block id="95fddd53c531d6efe15e3ac7ace1d9eb" category="cell">7.2及更高版本</block>
-  <block id="b3870ec121aeafa2e7ca8cb3894c0e3a" category="cell">选择/创建加密的FlexVol 卷。需要ONTAP 许可证。</block>
-  <block id="e2dcc78cf70dac34550234c95443ac37" category="cell">* 最大 IOPS*</block>
-  <block id="b78a981cc40fc4e66208bf5ee6d1a1eb" category="cell">&lt;number&gt;</block>
-  <block id="130b32bc15d3fbe6d2e80ecda94135cc" category="cell">7.1及更高版本、但存在差异</block>
-  <block id="c0f84018aff4ff4a1cf4012a8b82e509" category="cell">在7.2及更高版本的QoS策略组下列出。请参见 <block ref="8fdd8868d80d04eecf1b4189862f536c" category="inline-xref-macro-rx"></block> 有关详细信息 ...</block>
-  <block id="993c56850c1da5de36e798b0c5a72513" category="cell">*个人设置*</block>
-  <block id="8485fa08bf8c556b7b2275349d11eb05" category="cell">A FF、FAS</block>
-  <block id="c0acd03e8ba6b951b8c6dff3e95b9560" category="cell">FAS 还包括其他非AF系统、例如ONTAP Select。AFF 包括ASA。</block>
-  <block id="dce365633ffb688b7532470dfaf4e118" category="cell">*协议*</block>
-  <block id="7cff0b96b4a6467ea880f49dd365a81f" category="cell">NFS、NFS 4.1、iSCSI、FCP、NVMe/FC、 任何</block>
-  <block id="be18de5e88c84ba55eeb5bc42cca4c0d" category="cell">7.1及更早版本、9.10及更高版本</block>
-  <block id="cfca0bc0c0b481555ba52be1f4e21da6" category="cell">7.2-9.8实际上是"任意"。从9.10开始、NFS 4.1和NVMe/FC已添加到原始列表中。</block>
-  <block id="3dd301ae5682df79e8687ead5b6a3ddf" category="cell">*空间预留(精简配置)*</block>
-  <block id="03868a080fbf4cdbc006da45e13cfad7" category="cell">精简、厚、(任意)</block>
-  <block id="0a74dc1caf6ce891d5cbd3878cae2221" category="cell">所有、但存在差异</block>
-  <block id="4b370bcc260aa96e343bbb24d3af2cc5" category="cell">在7.1及更早版本中称为精简配置、该配置也允许使用任何值。在7.2中称为空间预留。所有版本均默认为精简。</block>
-  <block id="40e2e283d064264dd51846580adb367d" category="cell">* 分层策略 *</block>
-  <block id="06b815f81a7e7aceb1489e3888fb9534" category="cell">任意、无、快照、自动</block>
-  <block id="00917abc35f0d57db6562a886997c4e8" category="cell">用于FabricPool -需要使用AFF或ASA以及ONTAP 9.4或更高版本。除非使用NetApp StorageGRID 等内部部署S3解决方案 、否则建议仅使用Snapshot。</block>
-  <block id="ffb0d092d584c15937dfacd5be3c684a" category="section-title">正在创建存储功能配置文件</block>
-  <block id="ad0b6bb809400347fc4806f18385015c" category="paragraph">NetApp VASA Provider附带了多个预定义的SCP。可以使用vCenter UI手动创建新的SCP、也可以使用REST API通过自动化方式创建新的SCP。通过在新配置文件中指定功能、克隆现有配置文件或从现有传统数据存储库自动生成配置文件。可使用ONTAP 工具下的菜单来完成此操作。使用_Storage Capability Profiles _创建或克隆配置文件、使用_Storage Mapping_自动生成配置文件。</block>
-  <block id="62351556db3b0f6f13da226ca3e2df24" category="section-title">ONTAP 工具9.10及更高版本的存储功能</block>
-  <block id="14b49e2a6b56b1177a77be03a29dfc83" category="inline-image-macro">"Storage Capabilities for ONTAP tools 9.10及更高版本"、300</block>
-  <block id="2a53cbcd07a15d9f13f0cc630c7cc44d" category="paragraph"><block ref="2a53cbcd07a15d9f13f0cc630c7cc44d" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="12bb128f53dfaac0a251798e4b4e6954" category="paragraph"><block ref="12bb128f53dfaac0a251798e4b4e6954" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="4e6d46028a015a7f3860fc8fdf214b3c" category="paragraph"><block ref="4e6d46028a015a7f3860fc8fdf214b3c" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="64ca5ade59a3a7351134cf0db3a8e06a" category="paragraph"><block ref="64ca5ade59a3a7351134cf0db3a8e06a" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="2c8f597441425c22b4ae09f872f8bcc4" category="paragraph"><block ref="2c8f597441425c22b4ae09f872f8bcc4" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="fd59d4e26c472ef1e14cadb688283604" category="paragraph"><block ref="fd59d4e26c472ef1e14cadb688283604" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="049b6d7b78dd8ffebadb5a0be2261637" category="paragraph">*正在创建Svols存储库*
-创建必要的FlexVol 后、可以使用它们创建此数据存储库(也可以是此数据存储库的Snapshot卷)。右键单击要创建ONTAP 数据存储库的主机、集群或数据中心、然后选择_VMware tools_&gt;_ProVision DataData存储 库_。选择要由数据存储库支持的一个或多个FlexVol 、然后从现有FlexVol 卷中进行选择和/或为此数据存储库配置新的SCP卷。最后、为数据存储库指定默认SCP、此SCP将用于策略未指定SCP的虚拟机以及交换Vvol (这些虚拟机不需要高性能存储)。</block>
   <block id="a4332a81dbc3a9888be608dea640cd3d" category="section-title">正在创建VM存储策略</block>
-  <block id="b4f6f65777757af7630fae901718e51e" category="paragraph">早期版本与此类似、但如中所述 <block ref="68072d20e775e4558feadbec7ba8f768" category="inline-xref-macro-rx"></block>，您的选择将有所不同。</block>
-  <block id="52896487a6472798e1d6cbc9a95ec51e" category="section-title">使用ONTAP工具创建VM存储策略VASA Provider 9.10.</block>
-  <block id="c0c5e719ad5439106e5a00588402f206" category="inline-image-macro">"使用ONTAP 工具VASA Provider 9.10"、300创建VM存储策略</block>
-  <block id="378e30f2a60dc28c4afc9ae4f11a39e1" category="paragraph"><block ref="378e30f2a60dc28c4afc9ae4f11a39e1" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="95ac22478e141fde0d2878c71530a13a" category="section-title">使用ONTAP 工具9.10及更高版本进行性能管理</block>
-  <block id="c153012a9aa13e8ed8ce3f3e471a70b4" category="list-text">ONTAP 工具9.10使用自己的平衡放置算法将新的VVOV放置在VVOLS数据存储库中最佳的FlexVol 卷中。放置基于指定的SCP和匹配的FlexVol 卷。这样可以确保数据存储库和后备存储满足指定的性能要求。</block>
   <block id="e65bde48b0a84fcc60d957de90c3a128" category="list-text">更改性能功能(如最小和最大IOPS)需要注意特定配置。</block>
-  <block id="c43f1c590aab42b849ee038e863a567d" category="list-text">可以在SCP中指定*最小和最大IOPs*，并在VM策略中使用。</block>
-  <block id="404e0fefd61512a9f144586382a62641" category="list-text">在SCP中更改IOPS不会更改Vvol上的QoS、除非编辑了VM策略、然后将其重新应用于使用它的VM (请参见 <block ref="2358041c73953300d39d98366deee80d" category="inline-xref-macro-rx"></block>）。或者、使用所需的IOPS创建一个新的SCP、并将策略更改为使用它(然后重新应用于VM)。通常、建议只为不同的服务层定义单独的SCP和VM存储策略、只需更改VM上的VM存储策略即可。</block>
-  <block id="0e05d638b7a9c7a5c32e6c22679eeb82" category="list-text">AFF 和FAS 个性化设置具有不同的IOPS设置。最小值和最大值在AFF 上均可用。但是、非Af系统只能使用最大IOPS设置。</block>
-  <block id="97659fa3c3a5aaf088f6020a38faf086" category="list-text">在某些情况下、可能需要在策略更改(手动或由VASA Provider和ONTAP 自动迁移)后迁移VVOR：</block>
-  <block id="81c975fc79a19102fa04ad9c49f7538b" category="list-text">某些更改不需要迁移(例如、更改最大IOPS、可如上所述立即应用于虚拟机)。</block>
-  <block id="a426b56f86a12c200f3484efb990e81f" category="list-text">如果存储VVOR的当前FlexVol 卷不支持此策略更改(例如、此平台不支持所请求的加密或分层策略)、则您需要在vCenter中手动迁移此虚拟机。</block>
   <block id="7de504873f20af5c8ce6dadd2f79b29a" category="list-text">ONTAP 工具使用当前支持的ONTAP 版本创建单个非共享QoS策略。因此、每个单独的VMDK都将收到自己分配的IOPS。</block>
   <block id="63a33ddbd2c3ccd2daac06020248049f" category="section-title">正在重新应用虚拟机存储策略</block>
-  <block id="d0f5986c3378364e5cb0eda0e98fd0fd" category="inline-image-macro">"重新应用虚拟机存储策略"、300</block>
-  <block id="2a8c2026166e178134c7e19c2f4a2c15" category="paragraph"><block ref="2a8c2026166e178134c7e19c2f4a2c15" category="inline-image-macro-rx" type="image"></block></block>
   <block id="50b6e1c7f2e81842d993d8ce88acc979" category="summary">ONTAP 支持用于虚拟化的所有主要存储协议，例如 iSCSI ，光纤通道（ FC ），以太网光纤通道（ FCoE ）或适用于 SAN 环境的非易失性光纤通道快速内存（ NVMe/FC ），以及 NFS （ v3 和 v4.1 ）和 SMB 或 S3 （用于子系统连接）。客户可以自由选择最适合其环境的协议，并可以根据需要在一个系统上组合协议。</block>
   <block id="ee8cc65cae83009c275cd4748f4c58ae" category="doc">适用于 ONTAP 的虚拟化工具</block>
   <block id="0894f8dfb7dd501a78dc2416b7b90c2a" category="paragraph">NetApp 提供了多种独立软件工具，可与 ONTAP 和 vSphere 结合使用来管理虚拟化环境。</block>
@@ -2487,14 +2307,8 @@
   <block id="15ef75dd3d20b8278c16cd01a708e13e" category="list-text">定期备份 VASA Provider 虚拟机。至少每小时为包含VASA Provider的传统数据存储库创建一次快照。有关保护和恢复 VASA Provider 的详细信息，请参见此部分<block ref="9d642870dca1748c69f7aa0b6fb95a89" category="inline-link-rx"></block>。</block>
   <block id="2d2d2e356f9ab117b7d2a58d42cc5988" category="paragraph">下图显示了 VVOL 组件。</block>
   <block id="d3ba101543fc97ba1dd9272c87bf65da" category="doc">虚拟卷（ VVOL ）和基于存储策略的管理（ SPBM ）</block>
-  <block id="a42f13867ea459821488608dc4d1b7c4" category="paragraph">NetApp 是 VMware 在开发 vSphere 虚拟卷（ VVOL ）方面的早期设计合作伙伴，为 VVOL 和 VMware vSphere 存储感知 API （ VASA ）提供架构输入和早期支持。这种方法不仅可以为VMFS实现VM粒度存储管理、还支持通过基于存储策略的管理(Storage Policy Based Management、SPBM)实现存储配置自动化。</block>
-  <block id="ce09fc365ce48a9d89c0fdb5222c3909" category="paragraph">SPBM 提供了一个框架，可用作虚拟化环境可用存储服务与通过策略配置的存储元素之间的抽象层。通过这种方法，存储架构师可以设计具有不同功能的存储池， VM 管理员可以轻松地使用这些功能。然后，管理员可以将虚拟机工作负载要求与配置的存储池进行匹配，从而可以在每个 VM 或虚拟磁盘级别精细控制各种设置。</block>
-  <block id="2902acda09b9786460c2dd928a2d8f1a" category="paragraph">ONTAP 在 VVOL 规模方面处于存储行业的领先地位，在一个集群中支持数十万个 VVOL ，而企业级阵列和小型闪存阵列供应商支持的每个阵列仅支持数千个 VVOL 。NetApp 还在推动 VM 粒度管理的发展，即将推出支持 VVOL 3.0 的功能。</block>
   <block id="fda9c21a4aefd4a1f42ad0b195e6ef0a" category="inline-link">TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷</block>
   <block id="61823c0f572643e0ce2e4edcb74cae51" category="paragraph">使用快照快速创建虚拟机或数据存储库的副本而不影响性能、然后使用SnapMirror将其发送到二级系统、以实现长期异地数据保护。这种方法只存储更改后的信息，从而最大限度地减少存储空间和网络带宽。</block>
-  <block id="0aef2da721f0ab14676f8d6ffb9e7e8c" category="inline-link">建议</block>
-  <block id="022e604112aa3d1870f0da5e7806f48b" category="paragraph">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。  VMware 快照仅为<block ref="75f5ad475d959e2ecb55267e1a9a54f1" category="inline-link-rx"></block> 因性能和其他影响而短期使用。</block>
-  <block id="26aae91a7d92b32a60b1fbc86c29ee81" category="paragraph">这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。借助 vSphere ，您可以使用它们来保护 SQL Server 或 Oracle 数据库，其中的数据存储在 RDM LUN 上，直接连接到子操作系统的 iSCSI LUN 或 VMFS 或 NFS 数据存储库上的 VMDK 文件上。通过这些插件，可以指定不同类型的数据库备份，支持联机或脱机备份，以及保护数据库文件和日志文件。除了备份和恢复之外，这些插件还支持出于开发或测试目的克隆数据库。</block>
   <block id="1556ba0bf6ea4783cda0ff40e96f0265" category="paragraph">下图显示了 SnapCenter 部署的一个示例。</block>
   <block id="6c1bef29e8dc34a00e17b06c221d5efe" category="paragraph">要增强灾难恢复功能，请考虑将适用于 ONTAP 的 NetApp SRA 与 VMware Site Recovery Manager 结合使用。除了支持将数据存储库复制到灾难恢复站点之外，它还可以通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。通过 SRA 中内置的自动化功能，还可以轻松地从灾难中恢复并在中断解决后重新保护生产。</block>
   <block id="650062685b0df8284f1b87f62fa3f9f3" category="inline-link">TR-4128</block>
@@ -2533,7 +2347,6 @@
   <block id="59b1aceaef0203fdc32e11df232b16e6" category="cell">保留默认值(1)</block>
   <block id="bafd7322c6e97d25b6299b5d6fe8920b" category="cell">否</block>
   <block id="1b50110aedae4d8d2043a4eb9beb20af" category="cell">VMFS3.EnableBlockDelete</block>
-  <block id="5d1b81f1885499e392018ebd7124ad37" category="inline-link-macro">VMware知识库2007427</block>
   <block id="316084648bbafe451240702bd19c6ee9" category="cell">VMFS3.EnableVMFS6Unmap</block>
   <block id="befd90cd01403237f6fdf296822efbee" category="inline-link-macro">VMware vSphere API：阵列集成(VAAI)</block>
   <block id="e385d2442208cc1e23ca841b1f217380" category="cell">保留默认值(1)
@@ -2599,18 +2412,11 @@
   <block id="514aa7792a71ab4ab677eb2385131aae" category="cell">LUN 空间分配</block>
   <block id="dbe1e98b00264bd496095ed5c95f9350" category="section-title">多路径性能设置</block>
   <block id="de9f44b08eec22d6b405acff2c925d56" category="paragraph">虽然当前未使用可用的ONTAP工具进行配置、但NetApp建议使用以下配置选项：</block>
-  <block id="840731ae1cb9e4b23e19f645ab018b6f" category="inline-link">2069356</block>
-  <block id="5073fc9da327263a7db04fd449991e6a" category="list-text">在高性能环境中或使用单个 LUN 数据存储库测试性能时，请考虑将轮循（ VMW_PSP_RR ）路径选择策略（ PSP ）的负载平衡设置从默认 IOPS 设置 1000 更改为 1 。请参见 VMware 知识库<block ref="f3f4762788a6845119bdb5b9c9179bda" category="inline-link-rx"></block> 了解更多信息。</block>
-  <block id="1ea3eb55b985cf75e100607ee8bd935d" category="inline-link">路径选择插件和策略</block>
   <block id="01d954fb2edbf283d121f0651b04de83" category="section-title">其他文档</block>
   <block id="40db5019ed68654f4eb2cf21ec5021db" category="inline-link">将VMware vSphere 7.x与ONTAP结合使用</block>
   <block id="30d85838b9488ee908d075559c8978cd" category="inline-link">将VMware vSphere 8.x与ONTAP结合使用</block>
   <block id="000c9205416c1ea85f6841a7ca379c17" category="inline-link">对于NVMe-oF、有关详细信息、请参见适用于采用ONTAP的ESXi 7.x的NVMe-oF主机配置</block>
   <block id="5a27e6dbe6279e323aec51d205b2b455" category="inline-link">对于NVMe-oF、有关详细信息、请参见适用于采用ONTAP的ESXi 8.x的NVMe-oF主机配置</block>
-  <block id="842acd8b4932f6c9329df8e0fefe8b9b" category="paragraph">对于vSphere 7中的FCP和iSCSI、有关详细信息、请参见<block ref="f3eae508de4d3c1748a9c65337197b21" category="inline-link-rx"></block>
-对于采用vSphere 8的FCP和iSCSI、有关详细信息、请参见<block ref="3f8db75ee0177b85df9cdf31ddb51abe" category="inline-link-rx"></block>
-对于采用vSphere 7的NVMe-oF、有关详细信息、请参见<block ref="6c040a6e611e78bb9d0ad92946e613ea" category="inline-link-rx"></block>
-对于采用vSphere 8的NVMe-oF、有关详细信息、请参见<block ref="030788e4c7bbe3137759b534ea62d7d9" category="inline-link-rx"></block></block>
   <block id="99a66df20e19a8e18fae37a7f714750a" category="doc">虚拟机和数据存储库克隆</block>
   <block id="fe12a277656562082ad50b980c227a84" category="paragraph">在 vSphere 中，您可以克隆虚拟机，虚拟磁盘， VVol 或数据存储库。克隆后，通常可以通过自动化过程进一步自定义对象。vSphere 既支持完整副本克隆，也支持链接克隆，在这些克隆中，它可以独立于原始对象跟踪更改。</block>
   <block id="883a97a36ab0c59ec785b03161a1cc32" category="paragraph">链接克隆非常有助于节省空间，但它们会增加 vSphere 为虚拟机处理的 I/O 量，从而影响该虚拟机的性能，甚至整个主机的性能。因此、NetApp客户经常使用基于存储系统的克隆来充分利用这两种环境：高效利用存储和提高性能。</block>
@@ -2661,10 +2467,7 @@
   <block id="29cdd488736a6111699f7348320bbed7" category="paragraph">在 vSphere 中，可以通过三种方式使用块存储 LUN ：</block>
   <block id="8982d243303f9d1a8c2470b7d55278e6" category="list-text">使用 VMFS 数据存储库</block>
   <block id="9a0098c8c1be287e8d1da1aaf3bd2e59" category="list-text">使用原始设备映射（ RDM ）</block>
-  <block id="93e209176746ac6f25c618631a02643b" category="list-text">作为 LUN ，由软件启动程序从 VM 子操作系统访问和控制</block>
-  <block id="c25dc676ca39a05ee6067ac9a50dbce0" category="paragraph">VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据存储库。可以为 VMFS 数据存储库配置 LUN ，这些 LUN 可通过 NVMe/FC 协议访问的 FC ， iSCSI ， FCoE 或 NVMe 命名空间进行访问。VMFS 允许集群中的每个 ESX 服务器同时访问传统 LUN 。ONTAP 最大 LUN 大小通常为 16 TB ；因此，使用四个 16 TB LUN （所有 SAN 阵列系统均支持最大 VMFS LUN 大小为 64 TB ）来创建最大 64 TB 的 VMFS 5 数据存储库（请参见本节中的第一个表）。由于 ONTAP LUN 架构不具有较小的单个队列深度，因此 ONTAP 中的 VMFS 数据存储库可以以相对简单的方式扩展到比传统阵列架构更大的程度。</block>
   <block id="43f67f108e50dab0978a343603cbfec9" category="paragraph">vSphere 内置了对存储设备的多条路径的支持，称为原生多路径（ NMP ）。NMP 可以检测受支持存储系统的存储类型，并自动配置 NMP 堆栈以支持正在使用的存储系统的功能。</block>
-  <block id="b284ee628d89c3e804c4def2a90f0520" category="paragraph">ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi 无法识别超出这些限制的任何 LUN 或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。</block>
   <block id="8466b1e5abb4751e931c5feb1af4e469" category="inline-link">TR-4080</block>
   <block id="4157f0c23fc104508f492dc846f187f3" category="list-text">默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。</block>
   <block id="597f1433ad810b3b86c7ae0f8f95afa8" category="list-text">对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM<block ref="886fd385b633a0746a8a08f8f00c67cd" prefix=" " category="inline-code"></block> 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。</block>
@@ -2679,30 +2482,20 @@
   <block id="636da39a2033c6179a718983c5ce1222" category="inline-link">《 ONTAP NVMe/FC 主机配置指南》</block>
   <block id="81ef6507a13da5635951bc5b533deb59" category="inline-link">TR-4684.</block>
   <block id="15483b0826bb9a4b11d1c89af2029c5c" category="list-text">有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分<block ref="6b4ed262d14e47ef641cd57b65c32c38" category="inline-link-rx"></block> 和<block ref="7a29b2f31035a451d5b068728d2b79a7" category="inline-link-rx"></block>下图显示了从 vSphere 主机到 ONTAP LUN 的多路径连接。</block>
-  <block id="f2a693e1f056b96566c4551fcab418f2" category="paragraph">通过 vSphere ，客户可以使用企业级 NFS 阵列为 ESXi 集群中的所有节点提供对数据存储库的并发访问。如数据存储库一节所述，在将 NFS 与 vSphere 结合使用时，可以获得一些易用性和存储效率可见性优势。</block>
   <block id="743fa5a7bc7d4ba215b096e34779d298" category="paragraph">将 ONTAP NFS 与 vSphere 结合使用时，建议采用以下最佳实践：</block>
-  <block id="c05061b6d3055b83136fa96cb38f0f9a" category="list-text">为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。</block>
-  <block id="7b997b3be9c993d49799dd9d71d8c3f6" category="list-text">自 VMware Infrastructure 3 以来， VMware 一直支持 NFSv3 。vSphere 6.0 增加了对 NFSv4.1 的支持，该支持可实现 Kerberos 安全性等一些高级功能。如果 NFSv3 使用客户端锁定，则 NFSv4.1 使用服务器端锁定。虽然 ONTAP 卷可以通过这两种协议导出，但 ESXi 只能通过一种协议挂载。此单协议挂载并不会阻止其他 ESXi 主机通过不同版本挂载同一数据存储库。请务必指定挂载时要使用的协议版本，以便所有主机都使用相同的版本，从而使用相同的锁定模式。请勿在主机之间混用 NFS 版本。如果可能，请使用主机配置文件检查合规性。</block>
   <block id="ae4c5baa79e370d8f601cc7082f8123e" category="list-text">由于 NFSv3 和 NFSv4.1 之间不会自动转换数据存储库，因此请创建一个新的 NFSv4.1 数据存储库，并使用 Storage vMotion 将 VM 迁移到新数据存储库。</block>
   <block id="8065bff4940ae8d7161f926b0df47ac4" category="inline-link">NetApp 互操作性表工具</block>
-  <block id="24aaa4a688e881fa13d31656a85d40a9" category="list-text">NFS 导出策略用于控制 vSphere 主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值<block ref="ea72d12ecaa06afdb0c8a3b15e485e95" prefix=" " category="inline-code"></block> 和<block ref="df809a941c1287d18c08bb5927b639dc" prefix=" " category="inline-code"></block> ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：</block>
-  <block id="69abbd5c7cd9c1b3828b9aa5a894ff47" category="list-text">客户端匹配规范： 192.168.42.21</block>
   <block id="bd6cc42f9cd65cca72cbd56d2f4bf43d" category="list-text">RO 访问规则： sys</block>
-  <block id="581c470a5099548fc9865a4bab8761f8" category="list-text">RW访问规则：sys</block>
   <block id="0bbc71e6a4ea49af70dd616d3807e524" category="list-text">匿名UID</block>
-  <block id="59d5d8c898df18115bd4ced36c6bc0de" category="list-text">超级用户： sys</block>
   <block id="6670a317619282ec228a9ef492af0a76" category="list-text">NFS 数据存储库卷是从 SVM 的根卷接合的；因此， ESXi 也必须有权访问根卷，才能导航和挂载数据存储库卷。根卷以及嵌套了数据存储库卷接合的任何其他卷的导出策略必须包含一条或多条适用于ESXi服务器的规则、以便为其授予只读访问权限。下面是根卷的示例策略、该策略也使用VAAI插件：</block>
   <block id="8c93fb3ff528165613797962f5a0ed9c" category="list-text">访问协议：NFS (包括nfs3和nfs4)</block>
   <block id="80e6a4f964e826c69c1c62bd5ea67590" category="list-text">RW访问规则：从不(根卷的最佳安全性)</block>
   <block id="f96625174b4a06d13267f9b0a5a96d59" category="list-text">超级用户：sys (使用VAAI的根卷也需要此功能)</block>
   <block id="4c571520a8128d1692fc709ffbfb2b1e" category="list-text">使用适用于 VMware vSphere 的 ONTAP 工具（最重要的最佳实践）：</block>
-  <block id="b8d278c6184cb65727ca5ae729db92d7" category="list-text">使用适用于 VMware vSphere 的 ONTAP 工具配置数据存储库，因为它可以自动简化导出策略的管理。</block>
   <block id="23aa7b9aeed3fba2a1ec43e630313af7" category="list-text">使用此插件为VMware集群创建数据存储库时、请选择集群、而不是单个ESX服务器。选择此选项会将数据存储库自动挂载到集群中的所有主机。</block>
-  <block id="e4e62770daaf9887c7868fbc8e248a4b" category="list-text">使用插件挂载功能将现有数据存储库应用于新服务器。</block>
   <block id="928562eb576ed6ae31cb1a149d3e751a" category="list-text">如果不对 VMware vSphere 使用 ONTAP 工具，请对所有服务器或需要额外访问控制的每个服务器集群使用一个导出策略。</block>
   <block id="7bccab0fa4c0864835c645c9fde7ebf6" category="list-text">虽然 ONTAP 提供了一个灵活的卷命名空间结构，可以使用接合在树中排列卷，但这种方法对于 vSphere 来说毫无价值。无论存储的命名空间层次结构如何，它都会在数据存储库的根目录下为每个 VM 创建一个目录。因此，最佳实践是，只需将 vSphere 卷的接合路径挂载到 SVM 的根卷，即适用于 VMware vSphere 的 ONTAP 工具如何配置数据存储库。如果没有嵌套的接合路径，也意味着任何卷都不依赖于根卷以外的任何卷，即使有意使某个卷脱机或销毁该卷，也不会影响指向其他卷的路径。</block>
   <block id="ea6fc1288f1d3b21238d29ff28cb867a" category="list-text">对于 NFS 数据存储库上的 NTFS 分区，块大小为 4k 是可以的。下图显示了从 vSphere 主机到 ONTAP NFS 数据存储库的连接。</block>
-  <block id="16c864cb4f3b00c59e1124932e49f342" category="paragraph"><block ref="16c864cb4f3b00c59e1124932e49f342" category="inline-image-macro-rx" type="image"></block></block>
   <block id="e54433644e830ed1503561b778e9ded4" category="paragraph">下表列出了 NFS 版本和支持的功能。</block>
   <block id="9fb9dac7513c7ef8452aade8a52ad40d" category="cell">vSphere 功能</block>
   <block id="5b12ee0369243579651edca43ff65c85" category="cell">NFSv3</block>
@@ -2787,7 +2580,6 @@
   <block id="e4e1c13bb0b14f6cb7608cbecea948ef" category="list-text">iSCSI</block>
   <block id="f7d773fd2896401c143676940bc001fc" category="list-text">NFS v3</block>
   <block id="0b99b245267ef194ca3b9f6e694b0983" category="list-text">NFS v4.1</block>
-  <block id="2b19cb432f68f1ba3dc7b0f175a14778" category="inline-link">VMware配置最大值</block>
   <block id="9da73946f1bc3be4a41898d06c9d2e8b" category="cell">功能 / 功能</block>
   <block id="6151632541dcd80356c6c76b34d69d0c" category="cell">NVMe-oF</block>
   <block id="520d0db389f362bf79ef56ca0af3dcab" category="cell">格式。</block>
@@ -3359,11 +3151,8 @@
   <block id="58b5cd2a94730c2e044c14891f1e0e87" category="paragraph">有关更多最佳实践、请参见以下文档：</block>
   <block id="fc9e4d789d968936f8ff5ae5a99847e0" category="paragraph"><block ref="fc9e4d789d968936f8ff5ae5a99847e0" category="inline-link-rx"></block></block>
   <block id="d748a2834a7220eef4ec4775a51632f9" category="paragraph"><block ref="d748a2834a7220eef4ec4775a51632f9" category="inline-link-rx"></block></block>
-  <block id="4047245d73abc6e3ae8bf58ec063e52e" category="paragraph">随附的SRP适用于大多数通用用途、但您的要求可能有所不同。</block>
   <block id="80dad10df0d1a031764e7c648c46aa23" category="paragraph">*请考虑使用最大IOPS来控制未知或测试VM。*</block>
   <block id="93e4f73afe8b787b33161ec273ca087f" category="paragraph">最大IOPS首次在VASA Provider 7.1中推出、可用于将未知工作负载的IOPS限制为特定VVOR、以避免对其他更关键的工作负载产生影响。有关性能管理的详细信息、请参见表4。</block>
-  <block id="bdbd10905a1446f944699405bca52654" category="paragraph">*确保您具有足够的数据Lifs。*
-每个HA对的每个节点至少创建两个生命周期。根据您的工作负载、可能需要更多资源。</block>
   <block id="4e0d7e0587bf99c9b7a64a84fd42f6bd" category="paragraph">请参见NetApp和VMware针对您选择的协议提供的其他最佳实践指南。一般而言，除了上述情况外，没有任何其他变化。</block>
   <block id="97f87e9ab1d660463c63beb8745fd9e5" category="paragraph">*使用基于NFS v3*的Vvol的网络配置示例</block>
   <block id="c80b3cc8b5013bd4039769fb0f783e60" category="paragraph"><block ref="c80b3cc8b5013bd4039769fb0f783e60" category="inline-image-macro-rx" type="image"></block></block>
@@ -3392,8 +3181,6 @@
   <block id="525e71fb331412cd820122c3d51d453c" category="paragraph">这样、数据库管理器便可在删除数据后回收存储阵列上的空间。ONTAP会截获零并取消分配LUN中的空间。回收过程速度极快、因为存储系统中不会写入任何数据。</block>
   <block id="be17af715060572d2df93d7ffe4ce6dd" category="paragraph">ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储库。尽管在使用 VSC 为 vSphere 配置数据存储库时会应用许多 ONTAP 最佳实践（在一节中列出） <block ref="2e24324ebf41be836715e1e0dd648f4f" category="inline-link-macro-rx"></block>），下面是需要考虑的其他一些准则：</block>
   <block id="141c3dc68be34b8f11c2a120b36a1eb8" category="list-text">在某些情况下，您甚至可能不需要数据存储库。为了获得最佳性能和易管理性，请避免对数据库和某些应用程序等高 I/O 应用程序使用数据存储库。而是考虑由子系统拥有的文件系统，例如由子系统管理或使用 RDM 管理的 NFS 或 iSCSI 文件系统。有关具体的应用指南，请参见适用于您的应用程序的 NetApp 技术报告。例如： <block ref="cfa0393f870bc70fd8973ae18376facc" category="inline-link-macro-rx"></block> 包含一个有关虚拟化的章节，其中包含有用的详细信息。</block>
-  <block id="3cd9527ff0ddb17e00c08bdb4cd1a776" category="paragraph">在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用"NetApp.Clustered.Data.ONTAP .VP.VVol"存储类型和"proFileName"规则通过使用此策略将特定SCP应用于VM。有关使用ONTAP工具VASA Provider的示例、请参见链接：vmware-vvols-ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。"NetApp.Clustered.Data.ONTAP .VP.VASA10"存储的规则适用于非基于VVO尔 的数据存储库。</block>
-  <block id="36ad91be49fdde7d3fadeba0fb782510" category="paragraph">创建存储策略后、即可在配置新VM时使用该策略、如中所示 <block ref="d202b3fe265f968d81802fcec9f3c381" category="inline-link-macro-rx"></block>。有关在VASA Provider 7.2中使用性能管理功能的准则、请参见 <block ref="8fdd8868d80d04eecf1b4189862f536c" category="inline-xref-macro-rx"></block>。</block>
   <block id="14bdf3569ec0024259b2b02c5a668eae" category="paragraph">时间<block ref="7ccc31934ae8244d8263d3c09bcee186" prefix=" " category="inline-code"></block> 处于启用状态(默认值)时、InnoDB会将所有数据存储两次：首先存储到双写入缓冲区、然后存储到实际数据文件。</block>
   <block id="394ad91b4701dbd32675896bed204755" category="sidebar">PostgreSQL的主机配置</block>
   <block id="9852487272d9b2aa9026d0fddc0616fc" category="sidebar">PostgreSQL的存储配置</block>
@@ -3447,7 +3234,6 @@
   <block id="e890d04cd745ac382688bbb307655e81" category="paragraph">有关多管理员验证(MAV)的详细信息、请单击 <block ref="88f84d4fec0424d978600980bf11baf0" category="inline-link-macro-rx"></block></block>
   <block id="b39c0496b44447232912303246b46aaa" category="paragraph">如果预期顺序IO较多、则可以按下一节所述增加NFS传输大小。</block>
   <block id="959e8f746f4ff03f6225b95cf646e65f" category="admonition">本文档将取代先前发布的技术报告_TR-4590：《采用ONTAP的Microsoft SQL Server最佳实践指南》</block>
-  <block id="15d2f797f7375b32cb5e92538291f2af" category="list-text"><block ref="15d2f797f7375b32cb5e92538291f2af" category="inline-link-rx"></block></block>
   <block id="36d72286c0ef70108b2f7791b73fdc6d" category="list-text">之前的指南建议创建LIF以定位数据。也就是说，始终使用物理拥有卷的节点上的 LIF 挂载数据存储库。在现代版本的 ONTAP 9 中，不再需要此功能。如果给定了集群范围的凭据、则ONTAP工具仍会尽可能选择在数据本地的各个LUN之间进行负载平衡、但这并不是高可用性或高性能的要求。</block>
   <block id="aa131b86ebd9f719bab1aba612ae3c3f" category="list-text">如果恢复计划中的数据存储库数量和保护组数量达到最低、则SRM的性能最佳。因此、您应考虑在受SRM保护的环境中优化虚拟机密度、在这种环境中、应使用最重要的是RTO。</block>
   <block id="afab42482b97a8b43c62320c373ded74" category="list-text">使用Distributed Resource Scheduler (DRS)帮助平衡受保护和恢复ESXi集群上的负载。请记住、如果您计划故障恢复、则在运行重新保护时、先前受保护的集群将成为新的恢复集群。DRS将有助于平衡两个方向的放置。</block>
@@ -3578,12 +3364,8 @@
   <block id="d400b2cf908bc5f979847146ff8ac816" category="paragraph">NetApp建议实施"应该"规则、而不是"必须"规则、因为如果发生故障、vSphere HA会违反这些规则。使用"必须"规则可能会导致服务中断。</block>
   <block id="e9503bc9ad84f6517ddc938c85541dd5" category="paragraph">服务的可用性应始终高于性能。如果完整数据中心发生故障、则"必须"规则必须从VM主机关联性组中选择主机、并且当数据中心不可用时、虚拟机不会重新启动。</block>
   <block id="b3c45603f3738ac1e1f8e1e87569c00c" category="section-title">使用NetApp MetroCluster实施VMware存储DRS</block>
-  <block id="b273633ed947791e90b7b83ad1bb2021" category="paragraph">通过VMware Storage DRS功能、可以将数据存储库聚合到一个单元中、并在超过存储I/O控制阈值时平衡虚拟机磁盘。</block>
   <block id="4669dbcf4d42583b3fae1c79fa228078" category="paragraph">默认情况下、启用了存储DRS的DRS集群会启用存储I/O控制。通过存储I/O控制、管理员可以控制在I/O拥塞期间分配给虚拟机的存储I/O量、这样、在分配I/O资源时、更重要的虚拟机就可以优先于不太重要的虚拟机。</block>
   <block id="f06483bf36a941eebbb2f78a89b6bf68" category="paragraph">存储DRS使用Storage vMotion将虚拟机迁移到数据存储库集群中的不同数据存储库。在NetApp MetroCluster环境中、需要在该站点的数据存储库中控制虚拟机迁移。例如、在站点A的主机上运行的虚拟机A最好在站点A的SVM数据存储库中进行迁移否则、虚拟机将继续运行、但性能会下降、因为虚拟磁盘读/写操作将通过站点间链路从站点B进行。</block>
-  <block id="e607d8c3dc392e521065e5494d8c85c6" category="paragraph">NetApp建议创建与存储站点关联性相关的数据存储库集群；也就是说、与站点A具有站点关联性的数据存储库不应与与与站点B具有站点关联性的数据存储库的数据存储库集群混用</block>
-  <block id="63fe88e257ae2d072b6920d6dbcf0818" category="paragraph">每当使用Storage vMotion新配置或迁移虚拟机时、NetApp建议相应地手动更新特定于这些虚拟机的所有VMware DRS规则。这样可以确定主机和数据存储库在站点级别的虚拟机关联性、从而降低网络和存储开销。</block>
-  <block id="4adcd8d9323839ff088dc4f8f0bdcce2" category="paragraph">为VM创建Vvol存储需要执行几个步骤。</block>
   <block id="2438f6a80b933cf058ad052d26ac0703" category="paragraph">通过克隆存储对象，您可以快速创建副本以供将来使用，例如配置其他 VM ，备份 / 恢复操作等。</block>
   <block id="1a795345e422d7dbcca8fe38671a9371" category="summary">《VMSC设计和实施准则》。</block>
   <block id="b73deaadc37ea1c7a13ad17af6730c42" category="doc">《VMSC设计和实施准则》</block>
@@ -3591,12 +3373,8 @@
   <block id="556669df5b5073ab3d2ddcf638e942d9" category="section-title">NetApp存储配置</block>
   <block id="7f4d4fbe08a8a895671d05c4a82b0c85" category="inline-link">MetroCluster 文档</block>
   <block id="002eb41870df47521a2b59424d251f60" category="inline-link">SnapMirror 业务连续性概述</block>
-  <block id="008c17a2bb74d3d9706c0f2c88499240" category="paragraph">有关NetApp MetroCluster (称为MCC配置)的设置说明、请参见<block ref="2c736bccede87dae47dcf61108f083c4" category="inline-link-rx"></block>。有关SnapMirror活动同步的说明、请参见<block ref="14203840309dd1b6e13f73373477bb9d" category="inline-link-rx"></block>。</block>
   <block id="447566f62201eb825a1f6fb7a570873f" category="paragraph">配置MetroCluster后、对其进行管理就像管理传统ONTAP环境一样。您可以使用命令行界面(CLI)、System Manager或Ans得 等各种工具设置Storage Virtual Machine (SVM)。配置SVM后、在集群上创建要用于正常操作的逻辑接口(Logical Interface、Li)、卷和逻辑单元号(Logical Unit Number、LUN)。这些对象将自动通过集群对等网络复制到另一个集群。</block>
   <block id="b5486be95ed9ae2e4681a39cf8fe8041" category="inline-link">一致性组概述</block>
-  <block id="5440d8600dfca322be65444d14c4566f" category="paragraph">如果不使用MetroCluster、则可以使用SnapMirror主动同步、它可以在不同故障域的多个ONTAP集群之间提供数据存储库粒度保护和主动-主动访问。SnapMirror主动同步使用一致性组来确保一个或多个数据存储库之间的写入顺序一致性、您可以根据应用程序和数据存储库要求创建多个一致性组。对于需要在多个数据存储库之间同步数据的应用程序、一致性组尤其有用。SnapMirror主动同步还支持原始设备映射(Raw Device Mapping、RDM)以及子系统连接的存储(具有子系统内iSCSI启动程序)。有关一致性组的详细信息、请参见<block ref="8bba9b5b97dba092834d7a48a07f102d" category="inline-link-rx"></block>。</block>
-  <block id="f9ac6f5e1bf01f1df914b714d5e6cb02" category="paragraph">与MetroCluster相比、使用SnapMirror活动同步管理VMSC配置有一些不同。首先、这是一种仅SAN配置、任何NFS数据存储库都无法通过SnapMirror主动同步进行保护。其次、您必须将两个LUN副本映射到ESXi主机、以使其能够访问这两个故障域中复制的数据存储库。</block>
-  <block id="c972b11c861e42787c05a2ee24828e3a" category="section-title">VMware vSphere HA</block>
   <block id="57166da54d8751e1ed084f00b3f169e3" category="section-title">创建vSphere HA集群</block>
   <block id="829006223e7bdcfd478d2261f1d5ac40" category="inline-link">如何在docs.vmware.com上的vSphere Client中创建和配置集群</block>
   <block id="2bbae4763835d2e2dd123c1b4b0ae73d" category="paragraph">创建vSphere HA集群是一个多步骤过程、有关详细信息、请参见<block ref="dd51ccd863dd3c9fbca770681f8e68a9" category="inline-link-rx"></block>。简而言之、您必须先创建一个空集群、然后使用vCenter添加主机并指定集群的vSphere HA和其他设置。</block>
@@ -3643,7 +3421,6 @@
   <block id="64809e5386c9dc53f894f772f27d1b44" category="list-text">在数据存储库检测信号部分中、选择使用指定列表中的数据存储库并根据需要自动完成。</block>
   <block id="fc66ba7317ceb4220dc88aa267db085d" category="list-text">从两个站点中选择要vCenter使用的数据存储库、然后按OK。</block>
   <block id="1d2b14769d080b9214d9e407dfc92a64" category="section-title">配置高级选项</block>
-  <block id="a22b9827e1a78c5fb9c939a78c116a05" category="paragraph">*主机故障检测*</block>
   <block id="a9316d69e5abcfaffc56fc8f5e645412" category="paragraph">如果HA集群中的主机与网络或集群中的其他主机断开连接、则会发生隔离事件。默认情况下、vSphere HA将使用其管理网络的默认网关作为默认隔离地址。但是、您可以为要执行ping操作的主机指定其他隔离地址、以确定是否应触发隔离响应。添加两个可执行ping操作的隔离IP、每个站点一个。请勿使用网关IP。使用的vSphere HA高级设置为"as.isolationaddress"。为此、您可以使用ONTAP或调解器IP地址。</block>
   <block id="102d7879ceca393c309ef492c958e19d" category="inline-link">core.vmware.com</block>
   <block id="27e2292ff6db48ed2e6d50b256eae43e" category="paragraph">请参见<block ref="43057df4f3a6b5f2fffe8b7c5a490646" category="inline-link-rx"></block> 有关详细信息__.__</block>
@@ -3676,15 +3453,9 @@
   <block id="77328c16c697ce1d6c036c3f950e7542" category="list-text">选择VM组(例如、sitea_vm)。</block>
   <block id="b36943ce975d4c5c6e9481a4ca396270" category="list-text">选择主机组(例如、sitea_hosts)。</block>
   <block id="32fbcb32cfae9a0656233943c28f7c94" category="list-text">重复上述步骤、为站点B添加另一个VM\Host规则</block>
-  <block id="ff0ded925b170243e5154c9a687bb925" category="section-title">适用于NetApp MetroCluster的VMware vSphere存储DRS</block>
-  <block id="b0cb5ad168b84040eff8132c70e41fdb" category="section-title">创建数据存储库集群</block>
   <block id="488f70e76f3c9ddf155b693e31c5a1e1" category="paragraph">要为每个站点配置数据存储库集群、请完成以下步骤：</block>
   <block id="1dfbc2b980c0b56a5d9889c6d9a25460" category="list-text">使用vSphere Web Client、浏览到"Storage"(存储)下HA集群所在的数据中心。</block>
   <block id="dfc332b252ad3de167b6a336d7e70d46" category="list-text">右键单击数据中心对象、然后选择"Storage"(存储)&gt;"New Datastore Cluster"(新建数据存储库集群)。</block>
-  <block id="7ce7f4ad7022187801efdf33d1fab92d" category="list-text">选择"Turn on Storage DRs"(打开存储DRS)选项、然后单击"Next"(下一步)。</block>
-  <block id="6196801f8f77bab7132531adbb268512" category="list-text">将所有选项设置为无自动化(手动模式)、然后单击下一步。</block>
-  <block id="cfcdd0a8a765af314fb460ad445fb375" category="list-text">NetApp建议在手动模式下配置存储DRS、以便管理员能够决定和控制何时需要进行迁移。</block>
-  <block id="51a3bc726f294f3376fcaa12ccdf8b3b" category="list-text">验证是否已选中为SDRS建议启用I/O指标复选框；指标设置可以保留默认值。</block>
   <block id="829b62dbd6a4923b66591b2bff38ed5b" category="list-text">选择HA集群、然后单击"Next"(下一步)。</block>
   <block id="30fe6cfa0a4c5fb23fccfe149cefc006" category="list-text">选择属于站点A的数据存储库、然后单击下一步。</block>
   <block id="4ea461b22638db4c94aa076d62a2065f" category="list-text">查看选项、然后单击完成。</block>
@@ -3701,7 +3472,6 @@
   <block id="e02f3e9258a23204655bd512ec53911d" category="paragraph">请参见<block ref="c06ae090600e7aa086edfa28514435e7" category="inline-link-rx"></block> 配置vCenter HA。</block>
   <block id="bdd88c75f085534f6e2cdc7726cf1dd6" category="paragraph">您还应参考<block ref="3a8301f60ad04eb873ae8dea15ee0495" category="inline-link-rx"></block>。</block>
   <block id="38910d3dab2318849fd5f1a1dfbe0152" category="inline-link">《VMware存储兼容性指南》</block>
-  <block id="eab65c9bc6c74eff9aee0d7f0c44276d" category="paragraph">vSphere Metro Storage Cluster (VMSC)是一种经过认证的配置、可保护虚拟机(VM)和容器免受故障的影响。这可以通过使用延伸型存储概念以及分布在不同故障域(例如机架、建筑物、园区甚至城市)中的ESXi主机集群来实现。NetApp MetroCluster和SnapMirror主动同步存储技术用于分别为主机集群提供RPO = 0或接近RPO = 0的保护。VMSC配置旨在确保数据始终可用、即使完整的物理或逻辑"站点"发生故障也是如此。在成功完成VMSC认证过程后、属于VMSC配置的存储设备必须经过认证。可在中找到所有受支持的存储设备<block ref="293ceee3268d7991d7fe245e02c1c5c9" category="inline-link-rx"></block>。</block>
   <block id="838b66b875df1b432ac420a98cba3db6" category="paragraph">如果您需要有关vSphere Metro Storage Cluster设计准则的详细信息、请参阅以下文档：</block>
   <block id="07aaf2aebfd07b8763284018d1ebbf57" category="inline-link">NetApp MetroCluster支持VMware vSphere</block>
   <block id="a4a5fd5b00daf98bd381d80257378acd" category="list-text"><block ref="a4a5fd5b00daf98bd381d80257378acd" category="inline-link-rx"></block></block>
@@ -3716,7 +3486,6 @@
   <block id="ad9122c6d75ebaa024669fde1c0bdfb8" category="paragraph">请参见<block ref="d8a206747dbcec13122724b2aee18957" category="inline-link-rx"></block> 了解MetroCluster的特定设计和部署信息。</block>
   <block id="b47354fcd7d17ab4fbb3283f71677efe" category="paragraph">SnapMirror主动同步也可以通过两种不同的方式进行部署。</block>
   <block id="314084a577b998d8089dff72c98c58b0" category="list-text">非对称</block>
-  <block id="40e2e641bad11918585c3dd4f76c2716" category="list-text">对称(ONTAP 9.14.1中的私有预览)</block>
   <block id="bca8b52c503406abc3e9e50c5352d0a2" category="paragraph">本文档介绍了VMware行业领先的灾难恢复(Disaster Recovery、DR)软件ONTAP 解决方案for VMware Site Recovery Manager (SRM)、其中包括可简化部署、降低风险和简化日常管理的最新产品信息和最佳实践。</block>
   <block id="4f46fffb0ac7017fd2b42c10d6aa03fc" category="paragraph">备份虚拟机并快速恢复虚拟机是 ONTAP for vSphere 的一项强大优势，使用适用于 VMware vSphere 的 SnapCenter 插件在 vCenter 中轻松管理此功能。</block>
   <block id="b69cd5a82aaf0c524a71d46ec6fdd29c" category="cell">NFS v4.1会话中继需要ONTAP 9.14.1及更高版本</block>
@@ -3805,7 +3574,6 @@
   <block id="59f9d8d1b212a8ff6bd3476975e17620" category="paragraph">VMware架构需要仔细规划其架构、以确保此方法不会遇到数据存储库和/或LUN路径最大值。此外、对于每个数据库、不需要一组唯一的VMFS数据存储库。主要需求是确保每个主机都有一组从虚拟化LUN到存储系统本身上后端LUN的干净的4到8 IO路径。在极少数情况下、即使数据存储库数量更多、也可能有利于满足真正的极致性能需求、但所有数据库中通常有95%的数据库需要使用4到8个LUN。在典型的OS/ONTAP /网络配置下、包含8个LUN的单个ONTAP卷最多可支持250、000次随机Oracle块IOPS。</block>
   <block id="7564f732469e12963d8b416572cf4efb" category="section-title">什么是vSphere Metro Storage Cluster？</block>
   <block id="830d984ea50f71fa76636d0524167a3a" category="doc">vSphere数据存储库和协议功能概述</block>
-  <block id="1d1d9d816e63b6c7d3057732579e8889" category="list-text">如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 而不是<block ref="61a52f7a75745796f63ec9e3ea2547b4" prefix=" " category="inline-code"></block> 创建或修改导出策略规则时。VAAI副本卸载功能要求使用NFSv4协议才能运行、即使数据协议为NFS3也是如此。将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 包括NFS3和NFSv4版本。</block>
   <block id="cc0f7f705e4495c607aea288505e31bf" category="sidebar">VMSC概述</block>
   <block id="de9a829f775bc333b77fdacbc333f7a1" category="sidebar">vSphere HA解决方案</block>
   <block id="70b29c8dabeb7a16884003c35e163f96" category="sidebar">VMSC设计</block>
@@ -4590,54 +4358,20 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0e768c8183bcbfc87718f59d9dfd61eb" category="inline-link-macro">数据存储库</block>
   <block id="e6a172fa04a2b585ad34762a7e8991da" category="list-text">请参见中的 NFS v4.1 互操作性表注释 <block ref="6a9c495bd8eb9d28b9471f77a4372a63" category="inline-link-macro-rx"></block> 支持所需的特定 ESXi 修补程序级别。</block>
   <block id="622b235a9123d972c612737c81eb55a1" category="inline-link-macro">NetApp和VMware的NFSv3 nConnect功能</block>
-  <block id="6185cefe4b2be85244dfd9d4fce6f2e4" category="list-text">从vSphere 8.0U2开始、VMware支持使用NFSv3进行nconnect。有关nconnect的详细信息、请参见 <block ref="390300af711b584cff3623a0769fdf9b" category="inline-link-macro-rx"></block></block>
   <block id="d94a770977f68948a4930f4a2edbabb9" category="image-alt">新建集群</block>
   <block id="f5c7047b98efcb8c7eef2db6ef31faf4" category="image-alt">启用主机监控选项</block>
   <block id="239aaf78fcb42b02d3709057d2a7978a" category="image-alt">VM监控</block>
   <block id="a7765f8868404f7c3cb890ce051f7de4" category="image-alt">准入控制</block>
-  <block id="807dfd0ff3fd0db4a48087c18683dc6b" category="image-alt">特别提要建议</block>
   <block id="e5bd6e5564d38885fef18a28e48861b4" category="image-alt">HA集群</block>
   <block id="8e00c91ecf143f76c94e3aa1668fc92b" category="inline-image-macro">ONTAP克隆</block>
   <block id="9c7295440be885852a164f5880627146" category="paragraph"><block ref="9c7295440be885852a164f5880627146" category="inline-image-macro-rx" type="image"></block></block>
   <block id="1eed6756a7834e04fb7716ee8d830425" category="inline-link-macro"><block ref="1eed6756a7834e04fb7716ee8d830425" category="inline-link-rx"></block></block>
   <block id="0e4a75553a081fffff029a37e55f5d71" category="inline-link-macro"><block ref="0e4a75553a081fffff029a37e55f5d71" category="inline-link-rx"></block></block>
-  <block id="2e633a7cd484b8152bb61b1eee51006b" category="paragraph">FlexClone许可证(随ONTAP One提供)和ONTAP工具设备是在ONTAP中使用ONTAP所需的唯一附加产品。最新版本的ONTAP 工具作为一个在ESXi上运行的统一设备提供、可提供以前三个不同设备和服务器的功能。对于vvol、请务必将ONTAP 工具vCenter UI扩展或REST API与提供特定vvol功能的VASA Provider结合使用、作为用于vSphere中ONTAP 功能的常规管理工具和用户界面。传统数据存储库会附带SRA组件、但VMware Site Recovery Manager不会对VVO尔 使用SRA、而是在SRM 8.3及更高版本中实施新服务、从而利用VASA Provider进行VVO尔 复制。</block>
   <block id="32fd58743bd2ce579949a47db1b95ca8" category="summary">与SRA和传统数据存储库相比、使用VASA进行VVOs复制可提供独特的功能。</block>
-  <block id="daf6970022e96957e3a4ea5b6a599a27" category="list-text">虽然ONTAP 工具和SRA支持集群级别和SVM级别的凭据、但VASA Provider仅支持存储系统的集群级别凭据。这是因为许多用于创建卷的API仅在集群级别可用。因此、如果您计划使用ONTAP、则必须使用集群范围的凭据添加此集群。</block>
   <block id="570bfadf5783125790b6c87f55842fb2" category="inline-image-macro">SnapCenter部署</block>
   <block id="71ca4878111d253f9883f471e5de9594" category="paragraph"><block ref="71ca4878111d253f9883f471e5de9594" category="inline-image-macro-rx" type="image"></block></block>
   <block id="bd90e11d4c9fc73f37adda8029276215" category="summary">此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方案的最佳实践。</block>
-  <block id="4cc4b32d72a64364862dd657b7eee15e" category="paragraph">NMP和ONTAP都支持通过非对称逻辑单元访问(ANAA)来协商优化和非优化路径。在 ONTAP 中，经过 ALUA 优化的路径遵循直接数据路径，并使用托管所访问 LUN 的节点上的目标端口。默认情况下，在 vSphere 和 ONTAP 中均已启用 ALUA 。NMP会将ONTAP集群识别为ALOA、并使用ALOA存储阵列类型插件 <block ref="d4f7bd3bf4872a2f8cd0cbe400fb23d0" prefix="(" category="inline-code"></block>)、然后选择循环路径选择插件 <block ref="4646bb781f9a95f64c182af129e43c7c" prefix="(" category="inline-code"></block>）。</block>
-  <block id="b05dc829eda4798f22045fd6851afaaf" category="list-text">对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM<block ref="886fd385b633a0746a8a08f8f00c67cd" prefix=" " category="inline-code"></block> 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。</block>
-  <block id="5983b6c329fc9e16157db158f01b3bb1" category="list-text">对于 iSCSI 网络，如果存在多个虚拟交换机，请在采用 NIC 绑定的不同网络子网上使用多个 VMkernel 网络接口。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 并提高吞吐量。下图提供了多路径连接的示例。在ONTAP中、使用单模式接口组与不同交换机建立多条链路、或者使用LACP与多模式接口组建立连接、以实现高可用性和链路聚合优势。</block>
-  <block id="f0634c16da2019d5a4bad40e20aea8a7" category="list-text">有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分<block ref="6b4ed262d14e47ef641cd57b65c32c38" category="inline-link-rx"></block> 和<block ref="7a29b2f31035a451d5b068728d2b79a7" category="inline-link-rx"></block>。下图显示了从vSphere主机到ONTAP LUN的多路径连接。</block>
   <block id="ab906277df9ce070b1e11724f8ccf589" category="list-text">为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。</block>
-  <block id="522483df083cc02904b0eec18cef8e4e" category="list-text">当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 for NFS v3新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。您可以通过了解有关nconnect功能及其如何提高性能的更多信息 <block ref="390300af711b584cff3623a0769fdf9b" category="inline-link-macro-rx"></block>。</block>
-  <block id="b01b10b0c784ff1a4d4f05add231b52a" category="paragraph">值得注意的是、NFSv3和NFSv4.1使用不同的锁定机制。NFSv3使用客户端锁定、而NFSv4.1使用服务器端锁定。虽然ONTAP卷可以通过这两种协议导出、但ESXi只能通过一种协议挂载数据存储库。但是、这并不意味着其他ESXi主机不能通过其他版本挂载同一数据存储库。为了避免出现任何问题、请务必指定挂载时要使用的协议版本、以确保所有主机使用相同版本、从而使用相同的锁定模式。请务必避免在主机之间混用NFS版本。如果可能、请使用主机配置文件检查合规性。
-**由于NFSv3和NFSv4.1之间不会自动转换数据存储库，因此请创建一个新的NFSv4.1数据存储库并使用Storage vMotion将VM迁移到新数据存储库。
-**请参阅中的NFS v4.1互操作性表说明 <block ref="6a9c495bd8eb9d28b9471f77a4372a63" category="inline-link-macro-rx"></block> 支持所需的特定 ESXi 修补程序级别。
-* NFS导出策略用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于 NFSv3 ， ESXi 使用 sys （ UNIX ）安全模式，并需要根挂载选项来执行 VM 。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、的导出策略规则具有不同的值<block ref="ea72d12ecaa06afdb0c8a3b15e485e95" prefix=" " category="inline-code"></block> 和<block ref="df809a941c1287d18c08bb5927b639dc" prefix=" " category="inline-code"></block> ONTAP 工具是否存在发生原因 SVM发现问题。下面是一个策略示例：
-**访问协议：nfs3.
-**客户端匹配规范：192.168.42.21
-** RO访问规则：sys.
-** RW访问规则：sys.
-**匿名UID
-**超级用户：sys
-*如果使用适用于VMware VAAI的NetApp NFS插件、则此协议应设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 创建或修改导出策略规则时。要使VAAI副本卸载正常工作、需要使用NFSv4协议、并将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block> 自动包括NFSv3和NFSv4版本。
-* NFS数据存储库卷从SVM的根卷接合；因此、ESXi还必须有权访问根卷以导航和挂载数据存储库卷。根卷以及嵌套了数据存储库卷接合的任何其他卷的导出策略必须包含一条或多条适用于ESXi服务器的规则、以便为其授予只读访问权限。下面是根卷的示例策略、该策略也使用VAAI插件：
-**访问协议：NFS (包括nfs3和nfs4)
-**客户端匹配规范：192.168.42.21
-** RO访问规则：sys.
-** RW Access Rule：Never (根卷的最佳安全性)
-**匿名UID
-**超级用户：sys (使用VAAI的根卷也需要此功能)
-*使用适用于VMware vSphere的ONTAP工具(最重要的最佳实践)：
-**使用适用于VMware vSphere的ONTAP工具配置数据存储库，因为这样可以简化导出策略的自动管理。
-**使用此插件为VMware集群创建数据存储库时，请选择此集群，而不是单个ESX服务器。选择此选项会将数据存储库自动挂载到集群中的所有主机。
-**使用插件挂载功能将现有数据存储库应用于新服务器。
-**如果不使用适用于VMware vSphere的ONTAP工具，请对所有服务器或需要额外访问控制的每个服务器群集使用一个导出策略。
-*虽然ONTAP提供了一种灵活的卷命名空间结构、可通过接合将卷排列在树中、但此方法对于vSphere没有任何价值。无论存储的命名空间层次结构如何，它都会在数据存储库的根目录下为每个 VM 创建一个目录。因此，最佳实践是，只需将 vSphere 卷的接合路径挂载到 SVM 的根卷，即适用于 VMware vSphere 的 ONTAP 工具如何配置数据存储库。如果没有嵌套的接合路径，也意味着任何卷都不依赖于根卷以外的任何卷，即使有意使某个卷脱机或销毁该卷，也不会影响指向其他卷的路径。
-*对于NFS数据存储库上的NTFS分区、块大小为4k即可。下图显示了从 vSphere 主机到 ONTAP NFS 数据存储库的连接。</block>
   <block id="8dc90de75c19a4114217f443b0ca2866" category="inline-image-macro">从vSphere主机连接到ONTAP NFS数据存储库</block>
   <block id="36b9a8da16a1d2fad06b788e662b7c4a" category="paragraph"><block ref="36b9a8da16a1d2fad06b788e662b7c4a" category="inline-image-macro-rx" type="image"></block></block>
   <block id="bb6d2d52dfe07f9662232c444256aece" category="paragraph">使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会导致数据流有两条独立的路径。丢失路径、端口或控制器不会阻止使用另一个路径。</block>
@@ -4676,10 +4410,8 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8692ff2ea8c35b5c4c7cea90481e416c" category="summary">本文档对建议的存储和网络设置进行了分类和列举。</block>
   <block id="ff6fdc6e7749c69219fc26d54c625bd5" category="paragraph">NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提供了有关多路径和HBA超时设置的特定指导、以便根据NetApp和VMware内部测试在ONTAP中正常运行。</block>
   <block id="bc25cf0638b9454338db449fa254150f" category="paragraph">可以使用适用于VMware vSphere的ONTAP工具轻松设置这些值：从摘要信息板中、单击主机系统portlet中的编辑设置、或者在vCenter中右键单击主机、然后导航到ONTAP工具&gt;设置建议值。</block>
-  <block id="8b31cb1f15553175f0c1621a39bdbb79" category="paragraph">下面是目前在9.8-9.13版本中建议的主机设置。</block>
   <block id="baee97fad9d55c529dc7a7eb07fd1ba4" category="cell">vSphere 6.0或更高版本、请设置为256
 所有其他NFS配置均设置为64。</block>
-  <block id="f52dc930699add83bc126704edf5400b" category="list-text">在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟在路径连接不等的环境中使用它可能会受益、例如、一条路径上的网络跃点比另一条路径多、或者使用NetApp全SAN阵列系统。请参见<block ref="f5ecc69f2970e2e9c8638ad278ec38f7" category="inline-link-rx"></block> 有关详细信息 ...</block>
   <block id="b3fd5cebc3e5891cccea8f8df97003e0" category="paragraph">以下各节概述了ONTAP和VMware SRM的部署最佳实践。</block>
   <block id="c89f9fd1a8019dc4d7a2559a982d3aa8" category="inline-link-macro">S3配置概述</block>
   <block id="f14de37f621abb28f0bf089cae467a29" category="paragraph">最初、这种统一方法指的是在一个存储系统上同时支持NAS和SAN协议、而ONTAP凭借其在NAS中的原有优势、仍然是SAN的领先平台。ONTAP现在还提供S3对象协议支持。虽然S3不用于数据存储库、但您可以将其用于子系统内应用程序。您可以在中了解有关ONTAP中S3协议支持的更多信息 <block ref="9a0a48164e4b196191c2134bda6f342d" category="inline-link-macro-rx"></block>。</block>
@@ -4699,7 +4431,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="1bbd09497cd931a02f8dc0ee3cfcf19d" category="sidebar">在集群环境之外部署Hyper-V副本</block>
   <block id="832a116d7f9184d8880a539553a0cb52" category="sidebar">在集群环境中部署Hyper-V副本</block>
   <block id="1a85c0d242c43eb56cc500e60d323331" category="paragraph">VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据存储库。可以为VMFS数据存储库配置使用FC、iSCSI、FCoE访问的LUN、或者配置使用NVMe/FC或NVMe/TCP协议访问的NVMe命名区。VMFS允许集群中的每个ESX服务器同时访问存储。从ONTAP 9.12.1P2 (以及ASA系统中的更早版本)开始、最大LUN大小通常为128 TB；因此、可以使用一个LUN来创建大小上限为64 TB的VMFS 5或6数据存储库。</block>
-  <block id="5d7771be7242d0b5e76913e2ea5d3dad" category="paragraph">ESXi 6 最多支持 256 个 LUN 以及 1 ， 024 个 LUN 的总路径。ESXi不会发现任何超出这些限制的LUN或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。</block>
   <block id="8983ee0717807e5385f3c8b2c70a177c" category="list-text">TR-4597 ：适用于 ONTAP 的 VMware vSphere
 <block ref="0bff808225ac084b8184e7670c17aa52" category="inline-link-macro-rx"></block></block>
   <block id="1f7ff87198d4a8563ac0d42354d47052" category="list-text">TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷
@@ -4907,8 +4638,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="351b695725caafd647abb749c50a7e6f" category="list-text">*_ipWhitlist_*：不受速率限制的IP地址的逗号分隔列表。(可以是vCenter、ESXi和SRA IP)</block>
   <block id="058e1fe7e6afcd3bcff86482a583976b" category="list-text">*_maxRequestsPerSec_*：每秒从连接发出的最大请求数。</block>
   <block id="1c1496a21f967d57b50fe5ebb0e62125" category="paragraph">*_dosfilterParams file_:*中的默认值</block>
-  <block id="ca49b2b6b0c4bb4aa0596879eef667f5" category="inline-image-macro">多路径连接</block>
-  <block id="de3698c6b3c2722a1b82c99522519f4f" category="paragraph"><block ref="de3698c6b3c2722a1b82c99522519f4f" category="inline-image-macro-rx" type="image"></block></block>
   <block id="9afb15056a8bc8b4402d55eba2274dad" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。</block>
   <block id="48edbd8a951efb0ad617f7868b27a6c0" category="paragraph">有时、由于网络时间配置的差异、可能会出现安全问题。请务必确保网络中的所有设备都具有准确的时间设置、以防止出现此类问题。</block>
   <block id="a55d703ea2930e8e72e94ce11c3297ab" category="section-title">*虚拟设备*</block>
@@ -4983,8 +4712,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="dadb2f85467c159b9d8387744cdd0ce6" category="list-text"><block ref="dadb2f85467c159b9d8387744cdd0ce6" category="inline-link-macro-rx"></block></block>
   <block id="e6288bb2b93ca74537fbff66317f01d9" category="inline-link-macro">什么是Google Cloud NetApp卷？</block>
   <block id="e19aa8cca2f701dba5fc123376bebdb5" category="list-text"><block ref="e19aa8cca2f701dba5fc123376bebdb5" category="inline-link-macro-rx"></block></block>
-  <block id="fe0d13586251492122aca2ce92a53779" category="cell">保留默认值(0)、但可以根据需要进行更改。
-有关详细信息，请参见 <block ref="b982e0cf7a2ddd8de49cd5a4b5cefbd7" category="inline-link-macro-rx"></block></block>
   <block id="b44c4aa4ed40a2c01a89549bc8746cbd" category="cell">对于大多数vSphere 6.X版本、设置为512 MB。
 对于6.5U3、6.7U3和7.0或更高版本、设置为默认值(1024MB)。</block>
   <block id="f3c4f211a4831f8f7c223705b0fccd5d" category="paragraph">在控制服务级别、管理未知工作负载或在部署之前测试应用程序以确保它们不会影响生产环境中的其他工作负载时、吞吐量限制非常有用。它们还可用于在确定抢占资源的工作负载后对其进行限制。</block>
@@ -5733,7 +5460,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0452707f6213531bbf4f41e5f16cdead" category="paragraph">克隆可以通过多种机制卸载到运行ONTAP的系统、通常是在虚拟机、VVOL或 数据存储库级别。其中包括：</block>
   <block id="a4ec3dfc79c8493b1e9fcaee6b06b5a8" category="summary">ONTAP广泛支持混合云。</block>
   <block id="14f3c0fa1399e57b5998b528cc5f3515" category="paragraph">ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持VMware vSphere从许多ESXi主机并发访问NFS连接的数据存储库、远远超出了对VMFS文件系统施加的限制。将NFS与vSphere结合使用可提供一些易用性和存储效率可见性优势、如一节中所述<block ref="72b655a9973dbed02099f5e63762d591" category="inline-link-macro-rx"></block>。</block>
-  <block id="98d3ef3a1c0f94d4ecc34aef4673ce8b" category="paragraph">ONTAP使用iSCSI、光纤通道协议(FCP、简称FC)和基于网络结构的NVMe (NVMe-oF)为VMware vSphere提供企业级块存储。以下是在vSphere和ONTAP中为VM存储实施块协议的最佳实践。</block>
   <block id="8fabf36e54be557b0b3c16cc181ccef7" category="paragraph">SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关SLM的详细信息，请查看的第5.9节<block ref="a2bae1e6a9d1ce7703c1f95bb6ec1d6e" category="inline-link-rx"></block>。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。</block>
   <block id="0783a52eeafbf6085600efe3ac209a9c" category="paragraph">运行ONTAP的系统支持所有主要存储协议、因此客户可以根据现有和计划内的网络基础架构以及员工技能选择最适合其环境的协议。NetApp 测试通常表明，以相似的线路速度运行的协议之间差别不大，因此，与原始协议性能相比，最好重点关注您的网络基础架构和员工能力。</block>
   <block id="ef7f5a0b4e0866202a92874cc85a2fd2" category="list-text">需要更仔细迁移的虚拟机包括使用连接存储的数据库和应用程序。一般情况下、请考虑使用应用程序的工具来管理迁移。对于 Oracle ，请考虑使用 RMAN 或 ASM 等 Oracle 工具迁移数据库文件。有关详细信息、请参见<block ref="74eec9db95a0d18126c677c2dcc1d6f1" category="inline-link-rx"></block> 。同样，对于 SQL Server ，请考虑使用 SQL Server Management Studio 或 NetApp 工具，例如适用于 SQL Server 的 SnapManager 或 SnapCenter 。</block>
@@ -5744,7 +5470,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="49dd4c85a332616209949697018e3112" category="paragraph">运行ONTAP的系统可通过空闲加密轻松保护任何数据。NetApp 存储加密（ NetApp Storage Encryption ， NSE ）使用带有 ONTAP 的自加密磁盘驱动器来保护 SAN 和 NAS 数据。NetApp 还提供 NetApp 卷加密和 NetApp 聚合加密，这是一种基于软件的简单方法，用于对任何磁盘驱动器上的卷进行加密。这种软件加密不需要特殊的磁盘驱动器或外部密钥管理器、ONTAP客户可以免费使用。您可以在不中断客户端或应用程序的情况下升级并开始使用它，并且它们已通过 FIPS 140-2 1 级标准（包括板载密钥管理器）的验证。</block>
   <block id="66149c951df015fb5f7aa252fa92bf64" category="paragraph">在运行ONTAP的系统上使用vSphere时、配置网络设置非常简单、与其他网络配置类似。</block>
   <block id="cd03a9a043676fafd38958ae11e85ca8" category="list-text">NetApp 仅建议在 ONTAP 集群中的集群网络端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用它。有关流量控制的更多背景信息、请参见<block ref="3455dc2b3e7cd12a38e508bec690aa67" category="inline-link-rx"></block>。</block>
-  <block id="e2a6c1d09f3da3b6ad069ff3692e7526" category="paragraph">SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意、在8.3之前的版本中创建的LUN会公布所有路径、需要进行修改、以便仅向托管HA对公布路径。有关SLM的详细信息，请查看的第5.9节<block ref="a2bae1e6a9d1ce7703c1f95bb6ec1d6e" category="inline-link-rx"></block>。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。</block>
   <block id="2fd6bc533dedf28bc2b73262be20ec88" category="list-text">*统一存储*运行ONTAP的系统在多个重要方面实现了统一。最初，这种方法既指 NAS 协议，也指 SAN 协议，而 ONTAP 除了在 NAS 中具有最初的优势之外，仍然是 SAN 的领先平台。在 vSphere 环境中，这种方法还可能意味着为虚拟桌面基础架构 (VDI) 和虚拟服务器基础架构（ VSI ）提供一个统一的系统。与传统企业阵列相比、运行ONTAP的系统在VSI方面的成本通常较低、但具有高级存储效率功能、可以在同一系统中处理VDI。ONTAP 还统一了从 SSD 到 SATA 的各种存储介质，并可轻松地将其扩展到云。无需购买一个闪存阵列即可实现高性能、一个SATA阵列可用于归档、而单独的系统则可用于云。ONTAP 将所有这些问题联系在一起。</block>
   <block id="bfcd75cb17a665212ae0889e787a7330" category="paragraph">运行ONTAP的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps和/或每秒I/O数(IOPS)为单位)。</block>
   <block id="5c60617d5730a7a614bfa0383a2affbd" category="admonition">这不适用于此类卷。</block>
@@ -5754,12 +5479,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="4021b205a984157ad20475f3b9a2555c" category="paragraph">Storage Virtual Machine (SVM)是ONTAP中的安全多租户单元。它是一种逻辑构造、允许客户端访问运行ONTAP的系统。SVM 可以通过多个数据访问协议通过逻辑接口（ Logical Interface ， LIF ）同时提供数据。SVM 可通过 CIFS 和 NFS 等 NAS 协议提供文件级数据访问，并通过 iSCSI ， FC/FCoE 和 NVMe 等 SAN 协议提供块级数据访问。SVM可以同时分别为SAN和NAS客户端以及S3提供数据。</block>
   <block id="a6848cf51eef6140971685faf5c7a111" category="paragraph">在 vSphere 环境中，这种方法还可能意味着为虚拟桌面基础架构 (VDI) 和虚拟服务器基础架构（ VSI ）提供一个统一的系统。与传统企业阵列相比、运行ONTAP的系统在VSI方面的成本通常较低、但具有高级存储效率功能、可以在同一系统中处理VDI。ONTAP 还统一了从 SSD 到 SATA 的各种存储介质，并可轻松地将其扩展到云。无需购买一个闪存阵列即可实现高性能、一个SATA阵列可用于归档、而单独的系统则可用于云。ONTAP 将所有这些问题联系在一起。</block>
   <block id="57ee1b10de81b96324fc044045bf301b" category="paragraph">适用于 VMware vSphere 的 ONTAP 工具是一组用于将 ONTAP 存储与 vSphere 结合使用的工具。无论您使用的是 SAN 还是 NAS ， vCenter 插件（以前称为 Virtual Storage Console （ VSC ））均可简化存储管理和效率功能，提高可用性并降低存储成本和运营开销。它使用最佳实践配置数据存储库，并为 NFS 和块存储环境优化 ESXi 主机设置。为了获得所有这些优势、NetApp建议在将vSphere与运行ONTAP的系统结合使用时、最佳做法是使用这些ONTAP工具。它包括服务器设备、vCenter的用户界面扩展、VASA Provider和Storage Replication Adapter。ONTAP 工具中的几乎所有内容都可以通过简单的REST API实现自动化、而大多数现代自动化工具都可以使用这些API。</block>
-  <block id="cc3733ae6ca3afdf9111b89656a361ec" category="admonition">本文档中的任何内容均不可取代<block ref="3a8301f60ad04eb873ae8dea15ee0495" category="inline-link-rx"></block></block>
   <block id="3a5159fa23e450460f03e5a885a6c51c" category="paragraph">*[注释]</block>
-  <block id="551c27ef819331dd5874755df2de0717" category="list-text">您可以创建基于事件的警报、当虚拟机违反VM-主机关联性规则时触发该警报。在vSphere Client中、为虚拟机添加新警报、然后选择"VM is violating VM-Host Affinity Rule "作为事件触发器。有关创建和编辑警报的详细信息、请参阅<block ref="d28eed239632aed40803fe0ed2311ba6" category="inline-link-rx"></block>文档。</block>
-  <block id="cf9d4e4ac552bd9a3e678245cbad762e" category="paragraph">NetApp®MetroCluster和SnapMirror主动同步(以前称为SnapMirror业务连续性或SMBC)均支持VMSC解决方案，如果一个或多个故障域发生完全中断，则可以提供高级业务连续性。不同故障模式的故障恢复能力取决于您选择的配置选项。</block>
-  <block id="c318fda3c53cc76f920bd8b8613c2f2a" category="paragraph">ONTAP架构是一个灵活且可扩展的存储平台、可为数据存储库提供SAN (FCP、iSCSI和NVMe-oF)和NAS (NFS v3和v4.1)服务。NetApp AFF、ASA和FAS存储系统使用ONTAP操作系统为子系统存储访问(如S3和SMB)提供其他协议。</block>
-  <block id="38a3ee6a82a0cd6547497066c8ff59be" category="paragraph">NetApp SnapMirror主动同步可通过FCP和iSCSI SAN协议提供数据存储库粒度保护、从而使您可以有选择地仅保护高优先级工作负载。与主动-备用解决方案NetApp MetroCluster不同、它可以在两个镜像站点上提供对称的主动-主动访问。</block>
   <block id="d235766de3bd77aa4983181862c135d7" category="admonition">在这种情况下、MetroCluster的行为没有变化、所有数据存储库在其各自的站点中仍保持完好。</block>
   <block id="14d627875de76f84985b8a3b27c96633" category="list-text">在此期间、虚拟机I/O操作不会受到影响、但性能会下降、因为数据是通过ISL链路从远程磁盘架访问的。</block>
   <block id="290cbdcb6abb203d45786213f3c43662" category="admonition">在此期间、虚拟机将保持运行状态、并且MetroCluster行为在此情形下不会发生任何变化。所有数据存储库在其各自的站点中仍保持完好。</block>
@@ -5903,14 +5623,11 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="c5432110ad66f4e2e624118b88a48126" category="list-text">按照预期增长3年的大小创建LUN。(有关最大LUN大小、请参见<block ref="2a57767dbf71d600f009b2fefab6360d" category="inline-link-macro-rx"></block>。)</block>
   <block id="4631d10aa7c8cd31e9dcf52425c327ee" category="paragraph">可使用六种协议将VMware vSphere连接到运行ONTAP的系统上的数据存储库：</block>
   <block id="4dc791031dce7528180b933655b6f73e" category="paragraph">FCP、NVMe/FC、NVMe/TCP和iSCSI是块协议、它们使用vSphere虚拟机文件系统(VMFS)将VM存储在ONTAP FlexVol volume中包含的ONTAP LUN或NVMe命名空间中。NFS 是一种文件协议，无需使用 VMFS 即可将虚拟机放置到数据存储库（即 ONTAP 卷）中。SMB (CIFS)、iSCSI、NVMe/TCP或NFS也可以从子操作系统直接使用到ONTAP。</block>
-  <block id="967916c0eb3cb37586d11f3c9a0828bb" category="paragraph">下表介绍了ONTAP支持vSphere的传统数据存储库功能。此信息不适用于VVOL数据存储库、但它通常适用于使用受支持的ONTAP 版本的适用场景 vSphere 6.x及更高版本。您还可以参考<block ref="1367f0506a76ac18eacbdf25f24edbeb" category="inline-link-macro-rx"></block>特定vSphere版本、以确认特定限制。</block>
   <block id="6b8f0029ce30f9b4d5fe0def33875511" category="cell">FC</block>
   <block id="81761811d0f769f1e8ab81834167af5c" category="cell">启用了VMware vStorage APIS for Data Protection (VADP)的备份软件</block>
   <block id="50f09c99cf03d7efc83cfdc33047b54f" category="cell">是^1^</block>
   <block id="bb3e0b0b29c5930728585f775194c32b" category="cell">否^2^</block>
   <block id="b42c555e5ddbb6a4354369bbdd6b4513" category="cell">仅v3 ^2^</block>
-  <block id="1911a7efd32660b2ee5c6769d2050ffe" category="paragraph">^1^* NetApp建议*对Microsoft集群使用子系统内iSCSI、而不是在VMFS数据存储库中使用启用了多写入程序的VMDK。这种方法完全受Microsoft和VMware的支持、可通过ONTAP (SnapMirror到内部或云中的ONTAP系统)提供极大的灵活性、易于配置和自动化、并可通过SnapCenter进行保护。vSphere 7增加了一个新的集群模式VMDK选项。这与启用了多写入程序的VMDK不同、它需要一个通过FC协议提供的数据存储库、该协议已启用集群模式VMDK支持。其他限制适用。有关配置准则、请参见VMware<block ref="b158594c147457b5b6417413cb30f800" category="inline-link-rx"></block>文档。</block>
-  <block id="96fc235c3751a66c90b6518d56724aa1" category="paragraph">^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM不支持基于阵列的复制。</block>
   <block id="5543e0c19ec8cfcca651874f8d3b3ff7" category="list-text">* NetApp建议*对大多数NFS数据存储库使用FlexVol卷。从ONTAP 9.8开始、也支持将FlexGroup卷用作数据存储库、并且通常建议在某些使用情形下使用。通常不建议使用其他ONTAP存储容器、例如qtrees、因为适用于VMware vSphere的ONTAP工具或适用于VMware vSphere的NetApp SnapCenter插件目前均不支持这些存储容器。尽管如此、在一个卷中将数据存储库部署为多个qtrees可能会对高度自动化的环境非常有用、这些环境可以从数据存储库级别的配额或VM文件克隆中受益。</block>
   <block id="c411a2d2bb7111e695dcd16998c5bf03" category="list-text">或者、也可以为VMFS数据存储库配置可通过FC、和iSCSI访问的LUN。VMFS允许集群中的每个ESX服务器同时访问LUN。VMFS 数据存储库的大小最多可达 64 TB ，并且最多可包含 32 个 2 TB LUN （ VMFS 3 ）或一个 64 TB LUN （ VMFS 5 ）。在AFF、ASA和FAS系统上、ONTAP的最大LUN大小为128 TB。NetApp通常建议对每个数据存储库使用一个大型LUN。与 NFS 一样，请考虑使用多个数据存储库（卷），以便在一个 ONTAP 控制器上最大限度地提高性能。</block>
   <block id="cb928308729506b7eff5e7791a0ce0ba" category="list-text">较旧的子操作系统（ OS ）需要与存储系统对齐，以获得最佳性能和存储效率。但是， Microsoft 和 Linux 分销商（例如 Red Hat ）提供的现代供应商支持的操作系统不再需要进行调整，以便在虚拟环境中将文件系统分区与底层存储系统的块对齐。如果您使用的是可能需要对齐的旧操作系统、请使用"VM对齐"搜索NetApp支持知识库文章、或者向NetApp销售人员或合作伙伴联系人申请TR-3747副本。</block>
@@ -5921,8 +5638,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="57749a8572dd2708f63cdf198026e062" category="cell">否^3^</block>
   <block id="03cba371c1878a590431cec079c6f4c2" category="paragraph">^3^ SVM LI连接到具有VLAN、MTU和其他设置的端口、接口组或VLAN接口。但是、这些设置不会在SVM级别进行管理。</block>
   <block id="7b9dbbe3099a486a2a81a7e43267d3af" category="paragraph">^4^这些设备具有自己的IP地址以供管理、但这些地址不会在ESXi存储网络环境中使用。</block>
-  <block id="76538e55d69b12bb4a71177e6f12d7af" category="inline-link">SnapMirror主动同步文档</block>
-  <block id="07bd30b0e378d86a9efeda3dff8dd07c" category="paragraph">有关对称或非对称设计和部署优势的详细信息，请参见<block ref="8b3398c42964cdf57fc4298373a78cfc" category="inline-link-rx"></block>。</block>
   <block id="d4b27e1b61577e2e3dfeebd3b8129da5" category="list-text">避免在主机之间共享卷。例如、虽然可以在一个卷中创建2个LUN并将每个LUN共享到不同的主机、但应避免这种情况、因为它会使管理复杂化。如果在同一主机上运行多个SQL Server实例、则除非某个节点上的卷接近限制、否则请避免卷共享、而是为每个主机上的每个实例创建一个单独的卷、以简化数据管理。</block>
   <block id="e3ea9105e22caf8aa06aee0279a968bb" category="list-text">适当时、配置卷自动调整策略以帮助防止出现空间不足情况。</block>
   <block id="72a9733bd5929d30a93ea680e0c3fad1" category="list-text">将数据库二级文件(作为文件组的一部分)放在不同的卷上可提高SQL Server数据库的性能。只有当数据库的文件不与任何其他文件共享其LUN<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>时、此隔离才有效<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>。</block>
@@ -5930,4 +5645,310 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="82d9655a27436534991360ea4c0dc680" category="paragraph">tempdb数据库的利用率可能很高。除了在ONTAP上以最佳方式放置用户数据库文件之外、tempdb数据文件放置对于减少分配争用也至关重要。tempdb应放置在单独的磁盘上、不应与用户数据文件共享。</block>
   <block id="5c4a7832da0e9f8799089fdc985bb9b3" category="list-text">应创建大小相等的tempdb数据文件</block>
   <block id="20453a1c8627ad0bc536be210636fa41" category="paragraph">以下示例脚本通过创建八个大小相等的tempdb文件并将tempdb移动到SQL Server 2012及更高版本的挂载点来修改tempdb<block ref="ae6fbe62f3ddc46fa9a9885244d23675" prefix=" " category="inline-code"></block>。</block>
+  <block id="3f808654ebfed6aae875b71a402ac91b" category="inline-link-macro">ONTAP 9的通知。16.1.</block>
+  <block id="afb530fcc81b2978f808bd5327a32c87" category="inline-link-macro">9.16.0 9.16.0的通知</block>
+  <block id="d804afb237a517c556722013a1b8ec73" category="inline-link-macro">9.15.1 9.9.1通知</block>
+  <block id="5f016d328522d91c512269e0786e144d" category="inline-link-macro">9.15.0 9.9.1通知</block>
+  <block id="98ea16e049d26c017c083e3896766015" category="inline-link-macro">9.14.1 9.9.1通知</block>
+  <block id="2a0d0e639657d07a66d55606242f8863" category="inline-link-macro">9.14.0 9.9.1通知</block>
+  <block id="d13ca0508189923e4791d61e82518903" category="paragraph"><block ref="ee254fc53b05f67f41ce3314151253c2" category="inline-link-macro-rx"></block> <block ref="83cffbd8d99e434b2f5f3940f69ff8e4" category="inline-link-macro-rx"></block> <block ref="23ce2232a13ec581d8a1f356c5cc2645" category="inline-link-macro-rx"></block> <block ref="4d4f1ffb0dbcd5627ca696d020c34dce" category="inline-link-macro-rx"></block> <block ref="d16c9b11843460f788b4709fb5f6f9c0" category="inline-link-macro-rx"></block> <block ref="5032e7169b10b3f96d6c299a82923a0e" category="inline-link-macro-rx"></block> <block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block> <block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block> <block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block> <block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block> <block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block> <block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block> <block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block> <block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block> <block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block> <block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block> <block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block> <block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block> <block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block> <block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block> <block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
+  <block id="c9e7f99d53af8a795853cdf25af30b41" category="section-title">适用于MetroCluster IP配置的ONTAP调解器</block>
+  <block id="f6cab8e78e70dc1f9720a3ef038776e0" category="inline-link-macro">9.9.1有关适用于MetroCluster IP配置的ONTAP调解器的通知</block>
+  <block id="ebe991cfd03b446bbf8687699ccbd660" category="inline-link-macro">9.8关于MetroCluster IP配置的ONTAP调解器的通知</block>
+  <block id="2db41096b15f25232cba7341c2140448" category="inline-link-macro">9.7关于MetroCluster IP配置的ONTAP调解器的通知</block>
+  <block id="f81cc577527b8b7cad4405edd62a83d4" category="paragraph"><block ref="3e82164cf34143fb60c8ff9df8c41c0a" category="inline-link-macro-rx"></block> <block ref="d53517b81c95b1c10115cf953ff553c1" category="inline-link-macro-rx"></block> <block ref="b1bde49b948d4004f51f0cd5e9a9e990" category="inline-link-macro-rx"></block></block>
+  <block id="89a8982c5b7248833ca5b092a530069e" category="admonition">虽然ONTAP系统允许您将同一集群中的SVM配对以进行SnapMirror复制、但这种情况不会通过SRM的测试和认证。因此、建议在使用SRM时仅使用不同集群中的SVM。</block>
+  <block id="7d90174e2cb3f5e3051541506c8587b4" category="list-text">使用适用于VMware vSphere的ONTAP工具配置数据存储库、因为它可以简化导出策略的自动管理。</block>
+  <block id="4ac7ffa40244bc8345591768f8411745" category="list-text">使用插件挂载功能将现有数据存储库应用于新服务器。</block>
+  <block id="adf5380025d4004543deef73a471bbd5" category="inline-link-macro">NetApp和VMware的NFSv3 nconnect功能</block>
+  <block id="f9f508df0fe89d92476e598965812f69" category="list-text">当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 (适用于NFS v3)和Update 3 (适用于NFS v4.1)新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。有关nconnect功能及其如何提高性能的详细信息，请访问<block ref="8bbf9cc2e5403eec56b8cc2f4bd74d68" category="inline-link-macro-rx"></block>。</block>
+  <block id="81439479f2f4c0fa8c28668334fa82bd" category="list-text">在vSphere 8中、nconnect的最大值为4、默认值为1。可以通过高级设置按主机提高vSphere中的最大值限制、但通常不需要。</block>
+  <block id="b279126f58fd7f43a55f5efc8596bcea" category="list-text">对于需要比单个TCP连接所能提供的性能更高的环境、建议将值设置为4。</block>
+  <block id="9d676095b7ff8ea1b1779bc58fb32a92" category="list-text">请注意、ESXi的NFS连接数限制为256个、每个nconnect连接数均计入此总数。例如、两个nconnect = 4的数据存储库总共会计入八个连接。</block>
+  <block id="efdc45c7bd15d84f5bcb4df0560d6d3a" category="list-text">在生产环境中实施大规模更改之前、必须测试nconnect对环境的性能影响。</block>
+  <block id="d1801a2d87a0325c6c691a74f5d1ffef" category="list-text">值得注意的是、NFSv3和NFSv4.1使用不同的锁定机制。NFSv3使用客户端锁定、而NFSv4.1使用服务器端锁定。虽然ONTAP卷可以通过这两种协议导出、但ESXi只能通过一种协议挂载数据存储库。但是、这并不意味着其他ESXi主机不能通过其他版本挂载同一数据存储库。为了避免出现任何问题、请务必指定挂载时要使用的协议版本、以确保所有主机使用相同版本、从而使用相同的锁定模式。请务必避免在主机之间混用NFS版本。如果可能、请使用主机配置文件检查合规性。</block>
+  <block id="c17658fd7af3bb19a0f047cb1e006186" category="list-text">NFS导出策略规则用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于NFS、ESXi会使用sys (UNIX)安全模式、并需要根挂载选项来执行VM。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、对于和<block ref="df809a941c1287d18c08bb5927b639dc" prefix=" " category="inline-code"></block>使用不同值的导出策略规则<block ref="ea72d12ecaa06afdb0c8a3b15e485e95" prefix=" " category="inline-code"></block>可能会导致ONTAP工具出现SVM发现问题。IP地址应是一个逗号分隔列表、挂载数据存储库的vmkernel端口地址不含空格。下面是一个策略规则示例：</block>
+  <block id="a001b05a0a70d03d708c133c88072a2b" category="list-text">客户端匹配主机名、IP地址、网络组或域列表：192.168.42.21、192.168.42.22</block>
+  <block id="0106a8755025c8789c58f6ca3db3cd93" category="list-text">RO访问规则：任意</block>
+  <block id="1c66db8bac919c3f29211badf0369156" category="list-text">RW Access Rule：any (RW访问规则：任意)</block>
+  <block id="193fc1ecf90841d52215e705d60caa7b" category="list-text">匿名用户映射到的用户ID：6554</block>
+  <block id="f913a13d0c2cb8f8dd45dc1479901025" category="list-text">超级用户安全类型：any</block>
+  <block id="e44d8f7f976db169814f15c0e3c91250" category="list-text">在SETATTR中使用set_id位：true</block>
+  <block id="c154c7fcb68e62b069047ccff2521dc0" category="list-text">允许创建设备：true</block>
+  <block id="71168bd99a960bfb425e723f5750b3fc" category="list-text">如果使用适用于VMware VAAI的NetApp NFS插件、则在创建或修改导出策略规则时、应将此协议设置为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block>。要使VAAI副本卸载正常工作、需要使用NFSv4协议、而将协议指定为<block ref="2521ef5d58fc027d3121662b7d8f9ac2" prefix=" " category="inline-code"></block>会自动包括NFS3和NFSv4版本。即使数据存储库类型创建为NFS v3、也需要执行此操作。</block>
+  <block id="dd68c690edda5e0630944465c5950d11" category="list-text">访问协议：NFS</block>
+  <block id="4d6306be791d29381011bb901e0351d5" category="list-text">客户端匹配规范：192.168.42.21、192.168.42.22</block>
+  <block id="62297138e048f9159339e4709b23cd2f" category="list-text">作为iSCSI连接的LUN或NVMe/TCP连接的命名空间、由软件启动程序从VM子操作系统访问和控制</block>
+  <block id="6bc78ccffdd069cded655f73dc33debc" category="paragraph">ESXi 6增加了对多达256个LUN以及多达1、024个LUN总路径的支持。ESXi不会发现任何超出这些限制的LUN或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。</block>
+  <block id="7eae63bf83e6298ab64a2dd5e2544df9" category="inline-link-macro">VMware配置最大值工具</block>
+  <block id="ee1c3928454779ec08bd2d50271b6621" category="admonition">有关ESXi中支持的最新限制、请参见<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>。</block>
+  <block id="387b349695476180bf90cc1891288318" category="list-text">检查<block ref="1f38ac07598dbb4b06912539aafa4211" category="inline-link-macro-rx"></block>NetApp与VMware合作建议的设置。</block>
+  <block id="9c4a21e654649a6a5201381ce4ba6cbd" category="paragraph">下表介绍了ONTAP支持vSphere的传统数据存储库功能。此信息不适用于VVOL数据存储库、但它通常适用于使用受支持的ONTAP 版本的适用场景 vSphere 6.x及更高版本。您还可以参考了解<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>特定vSphere版本、以确认特定限制。</block>
+  <block id="d325729822747316770c21019ec914ac" category="paragraph">^1^* NetApp建议*对Microsoft集群使用子系统内iSCSI、而不是在VMFS数据存储库中使用启用了多写入程序的VMDK。这种方法完全受Microsoft和VMware的支持、可通过ONTAP (SnapMirror到内部或云中的ONTAP系统)提供极大的灵活性、易于配置和自动化、并可通过SnapCenter进行保护。vSphere 7增加了一个新的集群模式VMDK选项。这与启用了多写入程序的VMDK不同、它需要一个通过FC协议提供的数据存储库、该协议已启用集群模式VMDK支持。其他限制适用。有关配置准则、请参见VMware<block ref="46658ede14d15d79e2a20c75a7b15bb2" category="inline-link-macro-rx"></block>文档。</block>
+  <block id="27071f484b59aa9ce5f5cffcefefd481" category="paragraph">^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM目前不支持对NFS v4.1执行基于阵列的复制。适用于VMware vSphere Storage Replication Adapter (SRA)的ONTAP工具目前不支持使用NVMe-oF进行基于阵列的复制。</block>
+  <block id="f992800e6b8aa5ca675e5d1c9fd9950c" category="summary">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。</block>
+  <block id="0a99e5aa10081a6cc2cd756764a791f5" category="inline-link-macro">Snapshot限制</block>
+  <block id="aa5047ea08cd6ab5089b7e97962beef9" category="paragraph">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。由于性能和其他影响、建议仅在短期内使用VMware快照。<block ref="edb84c63886608dd2a747873a2732130" category="inline-link-macro-rx"></block>有关详细信息、请参见。</block>
+  <block id="029b7a5fa374f35f7d7eb7c6b5c66f41" category="paragraph">这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。借助 vSphere ，您可以使用它们来保护 SQL Server 或 Oracle 数据库，其中的数据存储在 RDM LUN 上，直接连接到子操作系统的 iSCSI LUN 或 VMFS 或 NFS 数据存储库上的 VMDK 文件上。这些插件允许指定不同类型的数据库备份、支持联机或脱机备份、并保护数据库文件和日志文件。除了备份和恢复之外、这些插件还支持出于开发或测试目的克隆数据库。</block>
+  <block id="aa4e326f7359bc14116e671e7002dd80" category="paragraph">ONTAP使用传统iSCSI和光纤通道协议(Fibre Channel Protocol、FCP)以及高效率和高性能的下一代块协议基于网络结构的NVMe (NVMe-oF)为VMware vSphere提供企业级块存储、并支持NVMe/FC和NVMe/TCP。</block>
+  <block id="69ed4612751aa53c36bfb06723b9ac3c" category="inline-link-macro">数据存储库和协议—SAN</block>
+  <block id="6ed827bb740ef6ae13ba33875f09bd4d" category="paragraph">有关在vSphere和ONTAP中为VM存储实施块协议的详细最佳实践、请参见<block ref="851570383af5746336da824a0a2590e1" category="inline-link-macro-rx"></block></block>
+  <block id="080533926d0a5f93ded730459d8fe38e" category="paragraph">通过 vSphere ，客户可以使用企业级 NFS 阵列为 ESXi 集群中的所有节点提供对数据存储库的并发访问。如一节所述<block ref="72b655a9973dbed02099f5e63762d591" category="inline-link-macro-rx"></block>、在vSphere中使用NFS具有一些易用性和存储效率可见性优势。</block>
+  <block id="d9243800afbb4af685507413cda85fb3" category="inline-link-macro">数据存储库和协议—NFS</block>
+  <block id="5b17d236da497a1c9e5d89b42dfc8264" category="paragraph">有关建议的最佳实践、请参见<block ref="75fda850433b3639ed71701079d043be" category="inline-link-macro-rx"></block></block>
+  <block id="d240aead1fe438e9f66d54e3cebb7e47" category="paragraph">下面是当前所有受支持的ONTAP版本的建议主机设置。</block>
+  <block id="11d0e9e8442c67c812829427e008eb11" category="inline-link-macro">VMFS5虚拟机的空间回收</block>
+  <block id="fef769c2e7ba3ba16273c3c81c47ed9e" category="cell">保留默认值(0)、但可以根据需要进行更改。有关详细信息、请参见 <block ref="9b26e5c0136d6a9ffe3ef541d9621427" category="inline-link-macro-rx"></block></block>
+  <block id="c99694bb5336dd37a10341183ec8a950" category="inline-link-macro">VMware 知识库 2069356</block>
+  <block id="e6c0dd75e5461550c4a0e5988151488a" category="list-text">在高性能环境中或使用单个 LUN 数据存储库测试性能时，请考虑将轮循（ VMW_PSP_RR ）路径选择策略（ PSP ）的负载平衡设置从默认 IOPS 设置 1000 更改为 1 。有关详细信息、请参见<block ref="1687988694c35db61b845d7b15620672" category="inline-link-macro-rx"></block>。</block>
+  <block id="2f5a0569065e71943058f8fb26e3e8da" category="inline-link">更改延迟轮循的默认参数</block>
+  <block id="18aa403816c42116dbae93c18dc9ce38" category="list-text">在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟在路径连接不等的环境中使用它可能会受益、例如、一条路径上的网络跃点比另一条路径多、或者使用NetApp全SAN阵列(ASA)系统。有关详细信息、请参见<block ref="d244127cef9364538ba1012ad8871adc" category="inline-link-rx"></block> 。</block>
+  <block id="da151950bd7f77d4d82f31a151e48d86" category="paragraph">对于采用vSphere 7的FCP和iSCSI、有关详细信息、请参见。<block ref="ad69e690a8561a2cf3328cde094252f4" category="inline-link-macro-rx"></block>对于采用vSphere 8的FCP和iSCSI、有关详细信息、请参见<block ref="0b6ab7c7c874850b69a7bdde572cc0ce" category="inline-link-macro-rx"></block>。对于采用vSphere 7的NVMe-oF、有关详细信息、请参见<block ref="72dcc917faa9346f108bcba624c6b54f" category="inline-link-macro-rx"></block>。对于采用vSphere 8的NVMe-oF、有关详细信息、请参见<block ref="6388c35b35c0c848de96298937e342cf" category="inline-link-macro-rx"></block></block>
+  <block id="b565c40b717c5d84ecaff52fbb94903d" category="paragraph">NetApp于2012年首次宣布、是VMware的早期设计合作伙伴、负责开发VMware vSphere APIS for Storage AWAREIVAWARE(VASA)、这是企业级存储阵列基于存储策略的管理(Storage Policy Based Management、SPBM)的基础。这种方法为VMFS和NFS存储提供了有限的VM粒度存储管理。</block>
+  <block id="e01da3b454da14823394d0b9b3fac1d6" category="section-title">虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)</block>
+  <block id="b077cca6e6fd5e690157294fd7f87e08" category="paragraph">vvol是一种革命性的存储架构、支持VM粒度存储管理、不仅可以按VM (包括VM元数据)管理存储、还可以按VMDK管理存储。vvol是软件定义的数据中心(SDDC)战略的一个关键组件、该战略构成了VMware Cloud Foundation (VCF)的基础、可为虚拟化环境提供更高效、可扩展的存储架构。</block>
+  <block id="7dba0dd24357e8a19109bbbf7f689fb2" category="paragraph">通过Vvol、VM可以按每个VM使用存储、因为每个VM存储对象都是NetApp ONTAP中的一个唯一实体。对于不再需要卷管理的ASA R2系统、这意味着每个VM存储对象都是阵列上的一个唯一存储单元(SU)、可以独立控制。这样、便可创建可应用于单个VM或VMDK (从而实现独立SUS)的存储策略、从而对性能、可用性和数据保护等存储服务进行精细控制。</block>
+  <block id="f467f22eb6ec5b3e0694963b3f16ebc2" category="section-title">基于存储策略的管理(Storage Policy Based Management、SPBM)</block>
+  <block id="05ba8cf72b56cd6a89d699c0a922d186" category="paragraph">SPBM 提供了一个框架，可用作虚拟化环境可用存储服务与通过策略配置的存储元素之间的抽象层。通过这种方法、存储架构师可以设计具有不同功能的存储池。VM管理员可以轻松使用这些池。然后、管理员可以将虚拟机工作负载要求与所配置的存储池进行匹配。此方法可简化存储管理、并可更高效地利用存储资源。</block>
+  <block id="4e1ae190f1f93f025754e7944927b697" category="paragraph">SPBM是虚拟卷的一个关键组件、可提供一个基于策略的框架来管理存储服务。策略由vSphere管理员使用供应商的VASA Provider (VP)提供的规则和功能来创建。可以为性能、可用性和数据保护等不同存储服务创建策略。可以将策略分配给单个VM或VMDK、从而对存储服务进行精细控制。</block>
+  <block id="ac0bb89f2c9215fb6f1280fb1d88d213" category="section-title">NetApp ONTAP和虚拟卷</block>
+  <block id="1402ced4d3888a58c5af1059e38ea6b4" category="paragraph">NetApp ONTAP在虚拟卷扩展领域居于存储行业领先地位，可在一个集群中支持数十万个虚拟卷*。相比之下、企业级阵列供应商和小型闪存阵列供应商支持的每个阵列只能支持数千个的卷。ONTAP为VMware vSphere环境提供了一个可扩展的高效存储解决方案、可通过一组丰富的存储服务(包括重复数据删除、数据压缩、精简配置和数据保护)来支持vvol。SPBM支持与VMware vSphere环境无缝集成。</block>
+  <block id="6070863553bff7655694da4be22f793e" category="paragraph">我们之前提到、VM管理员可以将容量用作存储池。这可以通过使用存储容器来实现、这些存储容器在vSphere中表示为逻辑数据存储库。</block>
+  <block id="67fd8c9c20e6ac877f87b28741218bf1" category="paragraph">存储容器由存储管理员创建、用于对可由VM管理员使用的存储资源进行分组。根据您使用的ONTAP系统类型、创建存储容器的方式可能有所不同。对于传统ONTAP 9集群、系统会为容器分配一个或多个后备FlexVol、这些FlexVol共同构成存储池。对于ASA R2系统、整个集群都是存储池。</block>
+  <block id="5db11f8fed5bd72f359ab9469069dffa" category="summary">ONTAP工具10安装检查清单</block>
+  <block id="a5d727df2ce2d168bae39c78df4b9054" category="doc">检查清单</block>
+  <block id="7aed7b3182cbdda9aceb9c8f8b3c2dbe" category="paragraph">使用此安装检查清单可确保成功部署(针对10.3及更高版本进行了更新)。</block>
+  <block id="06c2cea18679d64399783748fa367bdd" category="inline-image-macro">一个</block>
+  <block id="1e90f607d380c9ee51b487edec3975fa" category="list-title"><block ref="58f667aaf05f87159670e12bd9bc076b" category="inline-image-macro-rx" type="image"></block>初步规划</block>
+  <block id="4f04d17639e7b735b12137c9c18a4ab8" category="list-text">开始安装之前、您应检查<block ref="5f4d65abf1f4ea058efeaa8d75e7e1ba" category="inline-link-rx"></block>以确保您的部署已通过认证。</block>
+  <block id="5541521d8d465590f0919510f29154b2" category="inline-link">部署适用于VMware vSphere的ONTAP工具的配置限制</block>
+  <block id="225d03736b7d93585b216af68e8caa12" category="list-text">确定您的环境所需的ONTAP工具配置的大小和类型。有关详细信息、请参见<block ref="de0a48be1b1ae6c0ec73a4762c1d7abf" category="inline-link-rx"></block>。</block>
+  <block id="e5cd295f99866f601e300eb40641d85c" category="list-text">确定要使用多租户SVM还是允许完全集群访问。如果使用多租户SVM、则需要在要使用的每个SVM上具有一个SVM管理LIF。ONTAP工具必须可通过端口443访问此LIF。</block>
+  <block id="c56feb728c490e11ea8eba91afce9419" category="list-text">确定要使用适用于VMware Site Recovery Manager (SRM)的ONTAP工具Storage Replication Adapter (SRA)还是Live Site Recovery (vrr)。如果是、则需要访问SRM/vrr服务器管理界面才能安装SRA。</block>
+  <block id="15ee84770ceab89b9fe30ec618843c01" category="inline-link">在ONTAP中创建集群对等关系</block>
+  <block id="bfbb5bcd0f88a18adcc2741da1b9063a" category="inline-link">在ONTAP中创建集群间SVM对等关系</block>
+  <block id="d8a2601707345eab1d4df3e541d61f3c" category="list-text">如果您要使用由ONTAP工具管理的SnapMirror复制(包括但不限于SnapMirror活动同步)、则ONTAP管理员必须<block ref="f4be9e71a34420e69a7db6d0cf97d232" category="inline-link-rx"></block>先将ONTAP工具与SnapMirror结合使用、<block ref="42356490ef97c026f7c04a9cb9eeee7d" category="inline-link-rx"></block>然后才能使用。</block>
+  <block id="801ab24683a4a8c433c6eb40c48bcd9d" category="inline-link">下载</block>
+  <block id="18f5114f4a595ad26525bf20f301ce19" category="list-text"><block ref="20462cf0cb6f4e0f9c91cc66c831d98e" category="inline-link-rx"></block>ONTAP工具OVA、如果需要、还包括SRA tar.gz文件。</block>
+  <block id="aada29daee1d64ed0fe907043855cb7e" category="inline-image-macro">两个</block>
+  <block id="770c8023395525bc05b5a8fc2e6efa8b" category="list-title"><block ref="54f425ce8d89f4ed6b8a546561af5d60" category="inline-image-macro-rx" type="image"></block>配置IP地址和DNS记录</block>
+  <block id="b63e31bbf24a6eef701dc39672946405" category="list-text">向网络团队请求以下IP信息。前三个IP地址是必需的；节点2和节点3用于横向扩展高可用性(HA)部署。DNS主机记录为必填项、所有地址都应位于同一VLAN上。</block>
+  <block id="08b0c7e27d2f1780fce59893f12e7642" category="list-text">ONTAP工具应用程序地址____________。\____________。\____________。\____________</block>
+  <block id="6bb090d29a0e3de8cc001d02c1e8a7b3" category="list-text">内部服务地址\____________。\____________。\____________。\____________</block>
+  <block id="e32a9122e97bf17560b53c6993301629" category="list-text">节点1的DNS主机名\____________________________________________</block>
+  <block id="1cb7943b8cf41289c8d5ae2c9f9ec310" category="list-text">节点1的IP地址____________。\____________。\____________。\____________</block>
+  <block id="2b5f3d5d41f4d2986a55a91aa934205c" category="list-text">子网掩码____________。\____________。\____________。\____________</block>
+  <block id="ed7c49acbcb0724e63d695ba272bcd1d" category="list-text">默认网关\____________。\____________。\____________。\____________</block>
+  <block id="a637d19158a083f61d5e6d9df66998cb" category="list-text">DNS服务器1____________。\____________。\____________。\____________</block>
+  <block id="b7eed84956833fb9e8cbb126fb30803f" category="list-text">DNS服务器2____________。\____________。\____________。\____________</block>
+  <block id="7f7df9c7f87bea4d47136da35a80f4a9" category="list-text">DNS搜索域\___________________________________________</block>
+  <block id="59cd965988b8905f3416029cd3a1facf" category="list-text">节点2的DNS主机名(可选)___________________________________________</block>
+  <block id="242e264b9e179f0ea25123089a967467" category="list-text">节点2的IP地址(可选)____________。\____________。\____________。\____________</block>
+  <block id="4115e1d934066b360d5cdd8013198fff" category="list-text">节点3的DNS主机名(可选)___________________________________________</block>
+  <block id="8043aaa26cf3f85d9ab4df441ceb6ef3" category="list-text">节点3的IP地址(可选)____________。\____________。\____________。\____________</block>
+  <block id="305c44d3641b44153a7487e28382fffb" category="list-text">为上述所有IP地址创建DNS记录。</block>
+  <block id="ca8a2087e5557e317599344687a57391" category="inline-image-macro">三个</block>
+  <block id="543a0cfd4f6527c92c513911b3079c22" category="list-title"><block ref="05b2444faffd66d76e88602ea7dd353f" category="inline-image-macro-rx" type="image"></block>网络防火墙配置</block>
+  <block id="76841410d8f9a6881e0b96f150e9cedf" category="inline-link">端口要求</block>
+  <block id="1cb44e38b7d534b49fb7ce15d6726cb0" category="list-text">在网络防火墙中打开上述IP地址所需的端口。有关最新更新、请参见<block ref="d75d54fbd8f18143d683ed6f5389e615" category="inline-link-rx"></block>。</block>
+  <block id="981b8fcee42e1e726a67a2b9a98ea6e9" category="inline-image-macro">四个</block>
+  <block id="fe2367acaa1f51e55b545df54a8794d7" category="list-title"><block ref="beadfa85a2fdca06b91edc1131c603e6" category="inline-image-macro-rx" type="image"></block>配置设备服务(可选)</block>
+  <block id="640e990f06389e4b49f54086ba1aba46" category="inline-link">编辑设备设置并启用vasa服务</block>
+  <block id="49b964c1f288e8e75650b3e86683914d" category="list-text">要使用此类卷、您必须先<block ref="c9f7d482e0b51df808dc044e3e43f591" category="inline-link-rx"></block>执行此操作。同时、请查看以下两项。</block>
+  <block id="8ba46a1826b102cd1b8b0fb75a241176" category="inline-link">启用高可用性</block>
+  <block id="acc64c77b8528b3513e0bab18372f0d3" category="list-text">如果您计划在生产环境中使用虚拟卷、请<block ref="b5eaf1d61c4c1246e4e215774dc53776" category="inline-link-rx"></block>使用上面的两个可选IP地址。</block>
+  <block id="fddd8f455515e6a6de8e8d876641e0c5" category="inline-link">启用SRA服务</block>
+  <block id="777b715f4e7db3295048bd9409cb3a0f" category="list-text">如果您计划将ONTAP工具Storage Replication Adapter (SRA)用于VMware站点恢复管理器或实时站点恢复，<block ref="9eb793199b56cb94f5df0c657a62ea9e" category="inline-link-rx"></block></block>
+  <block id="e5d9de39f7ca1ba2637e5640af3ae8aa" category="inline-image-macro">五个</block>
+  <block id="fdf409c5a691a69cd744dfc08ae641b5" category="list-title"><block ref="99e8b2f00e172bfcff96afdce69907bc" category="inline-image-macro-rx" type="image"></block>证书(可选)</block>
+  <block id="e03ec7d1e46f44c47e1547f8c19fdbb5" category="list-text">根据VMware、如果在多个vCenter中使用Vvol、则需要CA签名证书。</block>
+  <block id="777f90dea67a6de19d7e4287d6d65525" category="list-text">VASA服务\____________________________________________</block>
+  <block id="50261e7dc97594e1ef47d1913fadd642" category="list-text">行政事务\____________________________________________</block>
+  <block id="e6fbc0b9673f8c86726688d7607fc8f5" category="inline-image-macro">六个</block>
+  <block id="45109aee8db55f9962ba496902ac47d1" category="list-title"><block ref="ef78558f80439832e0f51cc22cee8b8c" category="inline-image-macro-rx" type="image"></block>存储</block>
+  <block id="96c44f7328270a7b9e72a07f78739ecf" category="list-text">共享存储设备上需要一个数据存储库。或者、您也可以使用与节点1位于同一数据存储库中的内容库、以便使用VAAI快速克隆模板。</block>
+  <block id="656b82abf6edc190097506cd4d1d585b" category="list-text">内容库(仅HA需要)___________________________________________</block>
+  <block id="99325facb7679dc357733bd909532cfc" category="list-text">节点1数据存储库\____________________________________________</block>
+  <block id="f669e2c7e65edea7adca0c4006b6cf36" category="list-text">节点2数据存储库(可选、但建议用于HA)___________________________________________</block>
+  <block id="5ba1096fffa0ecfd4695651916c48133" category="list-text">节点3数据存储库(可选、但建议用于HA)___________________________________________________</block>
+  <block id="12e67aac3e7f9227cc35f8f047d7dc74" category="inline-image-macro">七个</block>
+  <block id="34e299878c510a313972dbf8e915aa70" category="list-title"><block ref="36915574c413876eaa75cbd48f69fd00" category="inline-image-macro-rx" type="image"></block>部署OVA</block>
+  <block id="db5321854b38ff4107ff88c3d3fb2602" category="inline-link">部署OVA</block>
+  <block id="62386ee2b40ea01fd147eb04a3da8b17" category="list-text"><block ref="2b093a8e786abd40836246bfb87e05bd" category="inline-link-rx"></block>使用vSphere Client。</block>
+  <block id="baca0ca6729684fd54206793ae4b5bd5" category="inline-image-macro">八个</block>
+  <block id="3af4c2c51fab2d80844fbb6e10989de8" category="list-title"><block ref="430057c670c01688e904ed2ba129a0b5" category="inline-image-macro-rx" type="image"></block>部署后任务</block>
+  <block id="d40a477cc61e319a78ef1bb36d8ea566" category="list-text">为HA部署中的VM创建反关联性规则。</block>
+  <block id="4695b076293ddedd5434ae5a73b57ae2" category="list-text">如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。</block>
+  <block id="fde3f7a850bbaaac2a3706bf8c7df54c" category="inline-link">配置ONTAP用户角色和权限</block>
+  <block id="881528aac1f478bd0dc0bcfa47b5bb31" category="list-text"><block ref="4ccf4d83bac775854f5f0cfb549c6d86" category="inline-link-rx"></block>使用随附的JSON文件。</block>
+  <block id="064719d8b0308f2a4bc89590c3becdab" category="inline-link">使用管理证书</block>
+  <block id="d59a2f6a46dd460183ac2d0c23cf6f75" category="list-text"><block ref="53fb9f19112a80479a138e84ac0182c6" category="inline-link-rx"></block>在ONTAP工具管理器中安装任何必需的CA签名证书。</block>
+  <block id="6245e46af5a3bdaf57696763c4214c70" category="inline-link">添加vCenter Server实例</block>
+  <block id="427d083edfb4d6df118817492fea1fea" category="list-text"><block ref="9271e724c67dd3dffeb4e3ddaf43b80d" category="inline-link-rx"></block>在ONTAP工具管理器中。</block>
+  <block id="75299228e38c6c56354b3fbc53bd01db" category="inline-link">板载集群</block>
+  <block id="3a4a4867d2582a3fc7b55ad4df5113f7" category="list-text">如果使用多租户SVM、则<block ref="ea2efd531a0984091e8158139d5ccc0c" category="inline-link-rx"></block>在ONTAP工具管理器中将其与vCenter关联。</block>
+  <block id="0583aea4353aeb5998071022ebbb79ae" category="inline-link">板载SVM</block>
+  <block id="8ad9f2408218e1b63c20ae491c20ce60" category="list-text">如果使用多租户SVM、则<block ref="d765a6bb593f5e86f1e69993d841269b" category="inline-link-rx"></block>在ONTAP工具vCenter UI中执行此操作。</block>
+  <block id="d7788ac532a6f39741dcd93fd04481e6" category="list-text">如果*不*使用多租户SVM、则<block ref="ea2efd531a0984091e8158139d5ccc0c" category="inline-link-rx"></block>直接在ONTAP工具vCenter UI中执行。或者、在这种情况下、如果不使用Vvol、则可以直接添加SVM。</block>
+  <block id="4d5a9665c20fe0f045d612f3d7c14c3a" category="inline-link">在VMware Live Site Recovery设备上配置SRA</block>
+  <block id="74d3c40ee5d2741e75390e90d13a881a" category="list-text">如果您为SRM/vSR启用了SRA以保护传统数据存储库，<block ref="ae14a63430307f4358dbb1aa0a6215ef" category="inline-link-rx"></block>请。</block>
+  <block id="56b3d744b9b4be462a3690ae4544597f" category="inline-link">RPO几乎为零</block>
+  <block id="f2866fe05fc7b275f3e2c504b39a3676" category="list-text">为配置本机备份<block ref="f915d15018e6084f8326718037772bc7" category="inline-link-rx"></block>。</block>
+  <block id="c6a161ea3b473fa2cdc98e5283764902" category="list-text">配置定期备份到其他存储介质。</block>
+  <block id="ed0748e15540f55b7e9e13424330165e" category="paragraph">请遵循以下最佳实践为虚拟机创建虚拟卷存储。</block>
+  <block id="e747ebae9f47585b050b0fe47b1807b4" category="paragraph">配置vols数据存储库涉及几个步骤。NetApp的ASA R2系统专为VMware工作负载而设计、可提供与传统ONTAP系统不同的用户体验。使用ASA R2系统时、ONTAP工具10.3或更高版本所需的设置步骤更少、并且包含针对更新后的存储架构优化的UI扩展和REST API支持。</block>
+  <block id="071d555e17e95fc548b89eaa2c3d9abf" category="section-title">准备使用ONTAP工具创建虚拟卷存储库</block>
+  <block id="96a0f754354a16524c8672aacf5ba9a6" category="paragraph">如果您已经在使用ONTAP工具来管理、自动化和报告现有VMFS或基于NFS的传统存储、则可以跳过部署过程的前两个步骤。</block>
+  <block id="6a78342dc1cffdf32c956e733c832cee" category="list-text">创建Storage Virtual Machine (SVM)及其协议配置。请注意、ASA R2系统可能不需要执行此操作、因为它们通常已有一个SVM用于数据服务。您可以选择NVMe/FC (仅限ONTAP工具9.13)、NFSv3、NFSv4.1、iSCSI、FCP或这些选项的组合。使用ONTAP工具10.3时、NVMe/TCP和NVMe/FC也可用于传统VMFS数据存储库。您可以使用ONTAP系统管理器向导或集群Shell命令行。</block>
+  <block id="ed0b328de155f4d64394b3fa01aa3eda" category="inline-link">为SVM分配本地层(聚合)</block>
+  <block id="835f14a0eb02625831ec957a0e6d8a57" category="list-text"><block ref="62ee77b15c683e37c03a082cde78e3a1" category="inline-link-rx"></block>适用于所有非ASA R2系统。</block>
+  <block id="975336c37f4c9eec8db7574a1acdfc20" category="inline-link">配置文件配置概览</block>
+  <block id="a51cd3bd8dc9efabd4808d4faa54cb85" category="inline-link">将物理端口组合在一起以创建接口组</block>
+  <block id="02da2876df386437299938fff21fad98" category="list-text">对于每个交换机/网络结构连接、每个节点至少需要一个LIF。作为最佳实践、为每个节点创建两个或更多基于FCP、iSCSI或NVMe的协议。每个节点一个LIF足以支持基于NFS的卷、但此LIF应受LACP ifgroup保护。有关详细信息、请参见<block ref="f0614b67c9ad440bb8aa968adbd6137a" category="inline-link-rx"></block>和<block ref="a5ffd5460ffa788a3fba4a7f91132efb" category="inline-link-rx"></block>。</block>
+  <block id="1e410bafe9c5869016fc8d733372d354" category="list-text">如果要对租户vCenter使用SVM范围的凭据、则每个SVM至少需要一个管理LIF。</block>
+  <block id="88ad52445ad4b758c30b8d41e4898479" category="inline-link">ONTAP集群和SVM已建立对等关系</block>
+  <block id="9e972a46542b8d916a3d602fa7d61635" category="list-text">如果您计划使用SnapMirror，请确保您的源和目标<block ref="03354afe01dc1f53e5b25fc0bc002ae0" category="inline-link-rx"></block>。</block>
+  <block id="dd441f913b3f6f72bcf4499b88815e03" category="list-text">此时可以创建卷、但最佳做法是、让ONTAP工具中的_ProVision数据存储库_向导来创建卷。此规则的唯一例外情况是、如果您计划将vvol复制与VMware Site Recovery Manager和ONTAP工具9结合使用。对于具有现有SnapMirror关系的已有FlexVol 卷、设置起来更容易。请注意、不要在要用于虚拟卷的任何卷上启用QoS、因为这是要由SPBM和ONTAP 工具管理的。</block>
+  <block id="2a03ee5b0887b8a6bf23fd52456544db" category="inline-link">部署适用于VMware vSphere的ONTAP工具</block>
+  <block id="23f58455f809e6f8a8a2cac1db0e49cf" category="list-text"><block ref="17b63a5e90adbe276a8874700041ac19" category="inline-link-rx"></block>使用从NetApp支持站点下载的OVA。</block>
+  <block id="1bcb0e86c49aae8128bbabb5d9d3d585" category="list-text">ONTAP工具10.0及更高版本支持在每个设备上部署多个vCenter服务器、您不再需要在每个vCenter上部署一个ONTAP工具设备。</block>
+  <block id="951d3fc54a28f9f46798897467d96a5b" category="inline-link">管理证书</block>
+  <block id="6d8aae47de809b9e77fb4f1ee0ed7730" category="list-text">如果您计划将多个ONTAP连接到一个vCenter工具实例、则必须创建并安装CA签名证书。有关步骤、请参见<block ref="32dbc6ca4c4a8bcb0695dd873f46e9e4" category="inline-link-rx"></block>。</block>
+  <block id="31be7f8c3c1f560d4cfdde9947673161" category="list-text">从10.3版开始、ONTAP工具现在可部署为适合大多数非虚拟卷工作负载的单节点小型设备。</block>
+  <block id="485a78e60d40cdf87a9864e840ed44a8" category="inline-link">横向扩展ONTAP工具</block>
+  <block id="a614ddc55c86c92e39a1e167189a59f3" category="list-text">建议的最佳实践是<block ref="ef398e4ee19e56a537bbd5564e5f4512" category="inline-link-rx"></block>、为所有生产工作负载配置10.3到3节点高可用性(HA)配置。出于实验室或测试目的、可以使用单节点部署。</block>
+  <block id="0112f904af205a304a0144318d92a88f" category="inline-link">在不使用vSphere DRS的情况下使用关联规则</block>
+  <block id="7ff088db1b9b2e6077b66b3e834c022c" category="inline-link">创建VM-VM关联性规则</block>
+  <block id="1d7299ee36dd01581c03d394e21875e9" category="inline-link">使用内置配置备份实用程序</block>
+  <block id="aaccfa1f911c7ed3afac8a1c9005cf08" category="list-text">使用生产用的卷时、建议的最佳实践是消除任何单点故障。创建反关联性规则、以防止ONTAP工具VM在同一主机上同时运行。在初始部署后、还建议使用Storage vMotion将ONTAP工具VM放置到不同的数据存储库中。阅读有关或<block ref="33bad2ad715296cb3b9df2aa8e0bbe93" category="inline-link-rx"></block>的更多信息<block ref="9d1413939148e981fa32923e1c0a740d" category="inline-link-rx"></block>。您还应计划频繁备份和/或<block ref="835137bc934138d6c89439748022267d" category="inline-link-rx"></block>。</block>
+  <block id="97075bcba23b351ceb599f8167247f82" category="list-text">为您的环境配置ONTAP工具10.3。</block>
+  <block id="46efd89ca4d682d645c74916f2c8e8f4" category="list-text"><block ref="9271e724c67dd3dffeb4e3ddaf43b80d" category="inline-link-rx"></block>在ONTAP工具管理器UI中。</block>
+  <block id="6eaf552fe4b827d87d969ecf00791fab" category="inline-link">添加ONTAP集群</block>
+  <block id="e4c64ea440c0954a75e29bee53f58731" category="list-text">ONTAP工具10.3支持安全多租户。如果您不需要安全多租户、只需转到vCenter中的ONTAP工具菜单、单击_Storage Backends_并单击_add_按钮即可<block ref="c70dc775815ebe034e3eb8a346ef862b" category="inline-link-rx"></block>。</block>
+  <block id="b7e859c0d3a2db9fa17e5b88bf5ca641" category="list-text">在要将特定Storage Virtual Machine (SVM)委派给特定vCenter的安全多租户环境中、您必须执行以下操作。</block>
+  <block id="2fdde12c870630cac6cf925e7762e8b7" category="list-text">登录到ONTAP工具管理器用户界面</block>
+  <block id="bfae79cf17053457fef781bcd20e0f14" category="inline-link">载入存储集群</block>
+  <block id="b7d3b83b5327fbad54ed641ffe056c7b" category="list-text"><block ref="b7d3b83b5327fbad54ed641ffe056c7b" category="inline-link-rx"></block></block>
+  <block id="a5ff3af9e80b6313b32053dd07f43a23" category="inline-link">将存储后端与vCenter Server实例相关联</block>
+  <block id="b60bfa6652bfe8b1d4f8779e792ac95c" category="list-text"><block ref="b60bfa6652bfe8b1d4f8779e792ac95c" category="inline-link-rx"></block></block>
+  <block id="e3efa7d6ee6a48514d6cd7ff7795498f" category="list-text">向vCenter管理员提供特定的SVM凭据、然后vCenter管理员将此SVM添加为vCenter中ONTAP工具存储后端菜单中的存储后端。</block>
+  <block id="0abec471b6c51c227aee6d0b1708d228" category="list-text">最佳做法是为存储帐户创建RBAC角色。</block>
+  <block id="e235f10d1a7bf30f3198a59ac049dc9c" category="list-text">ONTAP工具包含一个JSON文件、其中包含ONTAP工具存储帐户所需的必要角色权限。您可以将JSON文件上传到ONTAP系统管理器、以简化RBAC角色和用户的创建。</block>
+  <block id="8ca4b3b11e162a34da542a63661edf9a" category="list-text">有关ONTAP RBAC角色的详细信息，请参见<block ref="34ad13b9bdc1ec3d2d017144f37b1766" category="inline-link-rx"></block>。</block>
+  <block id="e4f0d44befb2f792ce908178a949f26d" category="admonition">必须在ONTAP工具管理器UI中启用整个集群的原因是、许多用于虚拟卷的API仅在集群级别可用。</block>
+  <block id="90aa53fd267c0c35741d35381ad7a054" category="section-title">使用ONTAP工具创建虚拟卷存储库</block>
+  <block id="2899926e592e956d9ee50e9ac1a3fcc5" category="paragraph">右键单击要创建ONTAP 数据存储库的主机、集群或数据中心、然后选择_VMware tools_&gt;_ProVision DataData存储 库_。</block>
+  <block id="893534fd72b00ed504664763cdcfc0a5" category="inline-image-macro">Role="thum"配置数据存储库向导"、300</block>
+  <block id="4a68f477edf1ea24da48b805acb7318c" category="paragraph"><block ref="4a68f477edf1ea24da48b805acb7318c" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="20474b1a0c7edf7bd0809f2cb13dfe99" category="list-text">选择"vols"并提供有意义的名称、然后选择所需协议。您也可以提供数据存储库的问题描述。</block>
+  <block id="f4f44261c4e217310cb4f0bb2cc389f5" category="list-text">ONTAP Tools 10.3与ASA R2。</block>
+  <block id="39a5735e417853a21c6d8ed53aa5cb1f" category="paragraph"><block ref="39a5735e417853a21c6d8ed53aa5cb1f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="e332ae811243a2074f58eb5d5efdcc21" category="list-text">选择ASA R2系统SVM、然后单击_n机_。</block>
+  <block id="dac9a06ae28c99c2bc00c2f1ca94c7ed" category="paragraph"><block ref="dac9a06ae28c99c2bc00c2f1ca94c7ed" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2b3dd72cbd7ce4cf79b8fe46700d45d5" category="list-text">单击_Finish _</block>
+  <block id="278f04f3dff2f303eed4edfbc836f534" category="paragraph"><block ref="278f04f3dff2f303eed4edfbc836f534" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="78195be4e07f2cf980cf70b78cfd4a62" category="list-text">就是这么简单！</block>
+  <block id="ca8e7cc39790460719db057ff38e167d" category="list-text">ONTAP Tools 10.3、ONTAP FAS ASA、AFF和ASA R2之前的版本。</block>
+  <block id="7f016940a12444f321c6a4251eb495cf" category="list-text">选择协议</block>
+  <block id="c3646108adeb4be26557fcbb99f62dc2" category="paragraph"><block ref="c3646108adeb4be26557fcbb99f62dc2" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="b0ec44dc6f9561dfdf58606f8e389753" category="list-text">选择SVM并单击_nXT。</block>
+  <block id="444c0ec9fa985ffe1e7a13b90ec73f1b" category="paragraph"><block ref="444c0ec9fa985ffe1e7a13b90ec73f1b" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="75403559d3b552e859c244a233ae00ac" category="list-text">单击_add new volumes _或_use existing volume_并 指定属性。请注意、在ONTAP工具10.3中、您可以请求同时创建多个卷。您也可以手动添加多个卷、以便在ONTAP集群中平衡这些卷。单击_n接_</block>
+  <block id="9a7e72607a6faad27d7fbe6e5f295675" category="paragraph"><block ref="9a7e72607a6faad27d7fbe6e5f295675" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="4e1a38b50f0db11d407ccb112de6a782" category="paragraph"><block ref="4e1a38b50f0db11d407ccb112de6a782" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2037e6ffbfee1dde5dddbbca50cda2de" category="paragraph"><block ref="2037e6ffbfee1dde5dddbbca50cda2de" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="775c4cf447196b1d2af4bc4eb340eab0" category="list-text">您可以在数据存储库的配置选项卡的ONTAP工具菜单中查看已分配的卷。</block>
+  <block id="f16d549f88c459ef96e6cb1cfd5e5ad6" category="paragraph"><block ref="f16d549f88c459ef96e6cb1cfd5e5ad6" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="66ded2ce50d43c22f8e56efe6053a76d" category="list-text">现在、您可以从vCenter UI中的_policies and Profile _菜单创建虚拟机存储策略。</block>
+  <block id="fc7ec2dfcc40e5c7c47dca5758e10523" category="paragraph">将VM从传统数据存储库迁移到Vvol数据存储库就像在传统数据存储库之间移动VM一样简单。只需选择虚拟机、然后从操作列表中选择迁移、并选择迁移类型_change storage only"。出现提示时、选择与您的Vvol数据存储库匹配的VM存储策略。对于SAN VMFS到Vvol的迁移、可以使用vSphere 6.0及更高版本卸载迁移副本操作、但不能从NAS VMDK卸载到Vvol。</block>
+  <block id="26fcc57b7c0de02dc9e8360d6f4b3493" category="paragraph">要通过基于策略的管理自动配置存储、您需要创建映射到所需存储功能的VM存储策略。</block>
+  <block id="8b8944ec0cef6dd0777b2144561987fe" category="admonition">与先前版本一样、ONTAP工具10.0及更高版本不再使用存储功能配置文件。而是直接在VM存储策略本身中定义存储功能。</block>
+  <block id="cdca3b3c5fbefb00afe4df9de69ab75b" category="paragraph">在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用NetApp。集群模式Data。ONTAP。VP.VVO卷"存储类型。有关使用ONTAP工具VASA Provider的示例、请参见链接：vmware-vvols-ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。"NetApp.Clustered.Data.ONTAP .VP.VASA10"存储的规则适用于非基于VVO尔 的数据存储库。</block>
+  <block id="0774b1717ce18129cd8e3ec0094e8640" category="paragraph">创建存储策略后、即可在配置新VM时使用该策略。</block>
+  <block id="473e84e674f60e2fe619202a460efdfb" category="inline-image-macro">Role="thum"使用ONTAP工具创建VM存储策略VASA Provider 9.10"、300</block>
+  <block id="e2f8ccc321215682fc34ae142633f3ff" category="paragraph"><block ref="b8f36bdf242d29fb6768827d6130494d" category="inline-image-macro-rx" type="image"></block> <block ref="e2501bb4f16d0f74914f04323d8e5e58" category="inline-image-macro-rx" type="image"></block> <block ref="166606e94a626af27852e00771133222" category="inline-image-macro-rx" type="image"></block> <block ref="8a14d5d27355a6630c7d65d859977eb8" category="inline-image-macro-rx" type="image"></block> <block ref="50b6bc69b9e417ba7f80bbcc0baaf57d" category="inline-image-macro-rx" type="image"></block> <block ref="8ec6614ba8e8947129dafaaede18ec39" category="inline-image-macro-rx" type="image"></block> <block ref="7bf707d7de5e0a048094c66368c89e52" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="71ea2d7b6b501372ec2ecc7846b5bd74" category="section-title">使用ONTAP工具进行性能管理</block>
+  <block id="4357d652f2cfe6e15b6e8c54aacec10b" category="paragraph">ONTAP工具使用自己的平衡放置算法将新的VVOl放置在VVOl数据存储库中具有统一或经典ASA系统的最佳FlexVol volume中、或者具有ASA R2系统的存储可用性区域(Storage Availability Zone、SAZ)中。放置取决于后备存储与VM存储策略的匹配。这样可以确保数据存储库和后备存储满足指定的性能要求。</block>
+  <block id="97c380438d77f28866d8fca75c697d78" category="list-text">可以在VM策略中指定*最小和最大IOX*。</block>
+  <block id="f980d0e57da48ae0fc9f45625e32cf7d" category="list-text">在策略中更改IOPS不会更改Vvol上的QoS、除非将VM策略重新应用于使用它的VM。或者、您也可以使用所需的IOPS创建一个新策略、并将其应用于目标VM。通常、建议只为不同的服务层定义单独的VM存储策略、然后只需更改VM上的VM存储策略即可。</block>
+  <block id="6c47cd98201c31f6165c0239e8fa84b8" category="list-text">ASA、ASA R2、AFF和FAS个性化设置不同。最小值和最大值均可用于全闪存系统；但是、非AFF系统只能使用最大IOPS设置。</block>
+  <block id="6c2d6091dcb0d9df928f0dc687f86383" category="inline-image-macro">Role="thum""Reapplying VM Storage Policy"、300</block>
+  <block id="8551dcdff381e3430606b1ff98a1e369" category="paragraph"><block ref="8551dcdff381e3430606b1ff98a1e369" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="def8fabb3f167c5ac05ad7f416c77a5c" category="paragraph">将VVOS与NetApp结合使用的关键是适用于VMware vSphere的ONTAP工具、这些工具作为NetApp ONTAP 9系统的VASA (vSphere存储感知API)提供程序界面。</block>
+  <block id="e1688cfcbc1a78418422879cc779caf5" category="paragraph">ONTAP工具还包括vCenter UI扩展、REST API服务、适用于VMware Site Recovery Manager/Live Site Recovery的存储复制适配器、监控和主机配置工具以及一系列可帮助您更好地管理VMware环境的报告。</block>
+  <block id="d943156d32e8da8030f35b3bdc46f06e" category="paragraph">ONTAP One许可证包括在ONTAP系统中使用虚拟卷所需的所有许可。唯一的附加要求是免费的ONTAP工具OVA、它充当VASA Provider。在VVO尔 环境中、VASA Provider软件会将阵列功能转换为策略驱动型属性、这些属性可通过VASA API加以利用、而vSphere管理员无需了解如何在后台管理这些功能。这样、就可以根据策略动态消耗分配的存储容量、从而无需手动创建传统数据存储库并管理其各自的存储消耗率。简而言之、vvol可以消除管理企业级存储的所有复杂性、并将其从vSphere管理员手中抽象出来、以便他们可以专注于虚拟化层。</block>
+  <block id="3122b363be1cca4e9b79843907db549f" category="paragraph">对于将VMware Cloud Foundation与vSAN结合使用的客户、可以将vvol作为补充存储添加到任何管理或工作负载域。vvol可通过基于通用存储策略的管理框架与vSAN无缝集成。</block>
+  <block id="adcd94c2ec3aa54fc9fbaa77544ccc10" category="paragraph">下一代ONTAP工具10版本系列通过可扩展的容器化微服务架构实现了先前功能的现代化、该架构可通过ESXi上的一个简单OVA格式设备进行部署。ONTAP Tools 10将三个以前的设备和产品的所有功能整合到一个部署中。对于vvol管理、您将对ONTAP工具VASA Provider使用直观的vCenter UI扩展或REST API。请注意、SRA组件适用于传统数据存储库；VMware Site Recovery Manager不会对vvol使用SRA。</block>
+  <block id="b87ac5af4acce876c9cb950c7c5a1891" category="section-title">在将iSCSI或FCP与统一系统结合使用时、ONTAP会使用VASA Provider架构</block>
+  <block id="b566b0372bb84d18bc26fdc4c0fbd397" category="paragraph">对于全新安装、请将虚拟设备部署到vSphere环境中。部署后、您可以登录到管理器UI或使用REST API纵向或横向扩展部署、板载vCenter (此操作会将此插件注册到vCenter)、板载存储系统、并将存储系统与vCenter关联起来。只有当您计划对专用SVM使用安全多租户时、才需要在ONTAP工具管理器UI中启用存储系统并将集群与vCenter相关联、否则只需在ONTAP工具vCenter UI扩展中或使用REST API即可将所需的存储集群挂载。</block>
+  <block id="26ffc687a7267f96a389530199971cd1" category="inline-link">适用于VMware vSphere的ONTAP工具文档</block>
+  <block id="e8d49fe128837c5d33383898126449d6" category="paragraph">请参阅<block ref="d7e84668ac8db4130d4662ae6bde9c89" category="inline-link-macro-rx"></block>本文档中的或<block ref="b9c3640cd3dcc39d23d49bf169dd367b" category="inline-link-rx"></block>。</block>
+  <block id="2e2b8d8692ea57a5a089be51e49a3104" category="paragraph">最佳实践是、将ONTAP工具和vCenter设备存储在传统NFS或VMFS数据存储库上、以避免任何相互依赖关系冲突。由于vCenter和ONTAP工具必须在vvol操作期间相互通信、因此请勿将ONTAP工具设备或vCenter Server设备(VCSAS)安装或移动到它们所管理的vvol存储中。如果发生这种情况、重新启动vCenter或ONTAP工具设备可能会导致控制平台访问中断、并且设备无法启动。</block>
+  <block id="d6776ddc59d905e2967855a8949b8ff0" category="inline-link">适用于VMware vSphere 10的ONTAP工具—下载</block>
+  <block id="e085c3225ffce6bb698ac8cf50cc0dc4" category="inline-link">从适用于VMware vSphere 10.x的ONTAP工具升级到10.3</block>
+  <block id="e43b5fd407b2bc9fda1a39851a48f9bb" category="inline-link">从适用于VMware vSphere 9.x的ONTAP工具迁移到10.3</block>
+  <block id="a3a288ec9e5f16d7de8c63fbc6934c97" category="paragraph">可以使用可从NetApp支持站点上下载的升级ISO文件(NSS—需要登录)原位升级ONTAP工具<block ref="b5b3717cb556fa4a89daf005a0a23ea8" category="inline-link-rx"></block>。按照<block ref="f4c1005a920344cdec43558687897506" category="inline-link-rx"></block>指南说明升级设备。也可以从ONTAP工具9.13并排升级到10.3。有关该主题的详细信息、请参见<block ref="f6676f6d529f1f81f9da02084f545f3c" category="inline-link-rx"></block>。</block>
+  <block id="8374c9fea191c7d2f4430555aa250de3" category="paragraph">要估算虚拟设备的规模并了解配置限制、请参见<block ref="d602e3cdd9623c66a90a3f53a55d967f" category="inline-link-rx"></block></block>
+  <block id="eddf7820ea4e2a78603e1bff3aa3bbb6" category="paragraph"><block ref="eddf7820ea4e2a78603e1bff3aa3bbb6" category="inline-link-rx"></block></block>
+  <block id="a4552c6e2a6c6188a04ffaf366c67ea5" category="list-text"><block ref="a4552c6e2a6c6188a04ffaf366c67ea5" category="inline-link-rx"></block></block>
+  <block id="2bd2f3ded095498e9ee97f7cc9074dc0" category="inline-link">适用于VMware vSphere的ONTAP工具概述</block>
+  <block id="0e8f3f9d7644f28839e4eb573b4c2589" category="list-text"><block ref="0e8f3f9d7644f28839e4eb573b4c2589" category="inline-link-rx"></block></block>
+  <block id="b832e56b13b2026b9c4d50d0f3f07904" category="list-text"><block ref="b832e56b13b2026b9c4d50d0f3f07904" category="inline-link-rx"></block></block>
+  <block id="f0bc076dbe95da208c42e642105b0125" category="list-text"><block ref="f0bc076dbe95da208c42e642105b0125" category="inline-link-rx"></block></block>
+  <block id="5245dc6f2a790bb421c841d2dfa17c0d" category="inline-link">配置数据存储库</block>
+  <block id="8faeb8c24af8fea505d7e93e49a7faa9" category="list-text"><block ref="8faeb8c24af8fea505d7e93e49a7faa9" category="inline-link-rx"></block></block>
+  <block id="607bc4263c4e2c484eb0fbbfdc21b438" category="list-text"><block ref="607bc4263c4e2c484eb0fbbfdc21b438" category="inline-link-rx"></block></block>
+  <block id="f5f3c80e03e60f2a58399685adcf6610" category="list-text"><block ref="f5f3c80e03e60f2a58399685adcf6610" category="inline-link-rx"></block></block>
+  <block id="1608a10fc8319b14c6c50a77edab9e7c" category="inline-link">修改 ESXi 主机设置</block>
+  <block id="1f4b95b02061cf146ca813dd68f240b5" category="list-text"><block ref="1f4b95b02061cf146ca813dd68f240b5" category="inline-link-rx"></block></block>
+  <block id="952be4c4311cd0b3b105435f5c484336" category="inline-link">使用ONTAP工具和SnapMirror活动同步配置vSphere Metro Storage Cluster (VMSC)</block>
+  <block id="4e22d6ab0229a29e7c9f041b1f4263a0" category="list-text"><block ref="4e22d6ab0229a29e7c9f041b1f4263a0" category="inline-link-rx"></block></block>
+  <block id="c724784c65896d8b16350f4b0580dfd4" category="inline-link">保护虚拟机</block>
+  <block id="19ffdbf6d480a0097bf46b6fe379b412" category="list-text"><block ref="7970b8a3df0aeb298f96944db6f19225" category="inline-link-rx"></block>使用SRM</block>
+  <block id="cb2b70161843498e22e97eb5f155009c" category="inline-link">监控集群、数据存储库和虚拟机</block>
+  <block id="1f901bed9e91faa77a039d895d167c4b" category="list-text"><block ref="1f901bed9e91faa77a039d895d167c4b" category="inline-link-rx"></block></block>
+  <block id="90d45c9fcbbcfdfcff766c447a16f73a" category="paragraph">VASA Provider包括一个信息板、其中包含各个VVO尔VM的性能和容量信息。此信息直接来自ONTAP中有关VVOL文件 和LUN的信息、包括延迟、IOPS、吞吐量等。如果使用当前所有受支持的ONTAP 9版本、则默认情况下会启用此功能。请注意、初始配置完成后、数据可能需要长达30分钟才能填充信息板。</block>
+  <block id="6861075c55e048882e2c055171a337b2" category="section-title">其他最佳实践</block>
+  <block id="ce76fed6b9276669c61e2b0b85e8e767" category="paragraph">一般来说，ONTAP支持VMware定义的vvol限制(请参见已发布<block ref="a6efdd9b1a19df6105024b4869e0582b" category="inline-link-rx"></block>)。请始终检查<block ref="bb9c67b5a4c15a85b5e6aa6c9afd0285" category="inline-link-rx"></block>、了解有关LUN、卷空间和文件的数量和大小的更新限制。</block>
+  <block id="0441498a23e55973b6e2d5843b427613" category="paragraph">虽然可以使用常规vSphere界面创建vvol数据存储库、但使用ONTAP工具将根据需要自动创建协议端点、并使用ONTAP最佳实践创建FlexVol卷(ASA R2不需要)。只需右键单击主机/集群/数据中心、然后选择_ ONTAP tools_和_配置数据存储库_。您只需在向导中选择所需的卷选项即可。</block>
+  <block id="3729a48b517da427fd2d9807ebc0fed5" category="paragraph">*对光纤通道网络结构进行分区、然后再对其使用FCP来创建卷。*</block>
+  <block id="f156d8db1f2ed380f0199266e583aa1b" category="paragraph">对于非R2系统、可能需要向ASA数据存储库添加多个后备卷、以便在ONTAP集群中分布工作负载、支持不同的策略选项或增加允许的LUN或文件数量。但是、如果需要最大的存储效率、请将所有备份卷放在一个聚合上。或者、如果需要最大的克隆性能、则可以考虑使用一个FlexVol 卷、并将模板或内容库保留在同一个卷中。VASA Provider会将许多VVOLs存储操作(包括迁移、克隆和快照)卸载到ONTAP。如果在一个FlexVol 卷中执行此操作、则会使用节省空间的文件克隆、并且这些克隆几乎可以即时使用。在FlexVol 卷之间执行此操作时、这些副本可以快速可用并使用实时重复数据删除和数据压缩、但只有在使用后台重复数据删除和数据压缩的卷上运行后台作业后、才能最大程度地恢复存储效率。根据源和目标、某些效率可能会降级。</block>
+  <block id="256a688cc49c759f4698b8d5d1dd7b6a" category="paragraph">在ASA R2系统中、卷或聚合的概念从用户那里抽象出来、从而消除了这种复杂性。系统会自动处理动态放置、并根据需要创建协议端点。如果需要进行额外扩展、可以即时自动创建其他协议端点。</block>
+  <block id="66a77b29a2cc0bdf1aa1bf8f6d4dac96" category="paragraph">*确保您具有足够的数据Lifs。*请参阅 <block ref="d7e84668ac8db4130d4662ae6bde9c89" category="inline-link-macro-rx"></block>。</block>
+  <block id="3518579aa5aedcfb4f4b83a6ccbe9cb6" category="admonition">本文档已进行更新、加入了vSphere 8.0 Update 3和ONTAP Tools 10.3版中的新vvol功能。</block>
+  <block id="c79161a37daeef2304a0236280cff223" category="paragraph">NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN、文件、现在使用vSphere 8 - NVMe命名空间时也可以是这些对象。NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。</block>
+  <block id="b2dd36bd4918e00f8b2e15e6d62a4b94" category="section-title">VASA Provider</block>
+  <block id="0a4ba68e118d83e29ea66516a02f1b48" category="section-title">协议端点(PE)</block>
+  <block id="974863a1395a284a680d09e18cf6c9cc" category="section-title">虚拟协议端点(VPE)</block>
+  <block id="8f13bfaaa8ba18765f4525a280f647cf" category="section-title">虚拟卷数据存储库</block>
+  <block id="80c64f568dcf805b418e425957b8c975" category="paragraph">|虚拟卷数据存储库是由VASA Provider创建和维护的VVOl容器的逻辑数据存储库表示形式。容器表示从由VASA Provider管理的存储系统配置的存储容量池。ONTAP 工具支持将多个FlexVol 卷(称为后备卷)分配给一个数据存储库、这些FlexVol数据存储库可以跨越ONTAP 集群中的多个节点、从而将具有不同功能的闪存和混合系统组合在一起。管理员可以使用配置向导或REST API创建新的FlexVol 卷、或者选择预创建的FlexVol 卷作为后备存储(如果有)。</block>
+  <block id="3d947d83ddfd03d217cdfcc09be70c32" category="paragraph">通过VMware vSphere APIS for Storage AWARMIVAIVIAPI(VASA)、VM管理员可以轻松地使用配置VM所需的任何存储功能、而无需与其存储团队进行交互。在使用VASA之前、VM管理员可以定义VM存储策略、但必须与其存储管理员一起确定适当的数据存储库、通常使用文档或命名约定。通过使用VASA、具有适当权限的vCenter管理员可以定义一系列存储功能、然后vCenter用户可以使用这些功能来配置VM。通过在VM存储策略和数据存储库功能之间进行映射、vCenter可以显示兼容数据存储库的列表以供选择、并支持使用其他技术(例如、以前称为vReise)自动化或Tanzu Kubernetes网格)自动从分配的策略中选择存储。这种方法称为基于存储策略的管理。虽然VASA Provider规则和VM存储策略也可用于传统数据存储库、但此处我们重点介绍的是VVO尔 数据存储库。</block>
+  <block id="9f1893d8db5ceaf62726d1a0aa228224" category="section-title">VM 存储策略</block>
+  <block id="0aa8052a92097a4f8ec3114e7249a0e1" category="paragraph">VM存储策略在vCenter中的策略和配置文件下创建。对于虚拟卷、请使用NetApp虚拟卷存储类型提供程序中的规则创建一个规则集。现在、与ONTAP工具9.X相比、ONTAP工具10.X提供了一种更简单的方法、它允许您直接在VM存储策略本身中指定存储属性。</block>
+  <block id="6f8bbed3f609d6b6a41c94fa3692df52" category="paragraph">如上所述、使用策略有助于简化配置卷的任务。只需选择适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol volume中。</block>
+  <block id="2efad47a2579a212fb659be8b8101b3c" category="paragraph">配置VM后、VASA Provider将继续检查合规性、并在后备卷不再符合策略时在vCenter中向VM管理员发出警报。</block>
+  <block id="ede8e2fa9dea87dd87a82bda2b2cf090" category="paragraph">有关NetApp MetroCluster (称为MCC配置)的设置说明，请访问<block ref="2c736bccede87dae47dcf61108f083c4" category="inline-link-rx"></block>。有关SnapMirror活动同步(SMA)的说明，请参见<block ref="14203840309dd1b6e13f73373477bb9d" category="inline-link-rx"></block>。</block>
+  <block id="ea27eb943310e6748735c2b98c65f5fd" category="paragraph">如果不使用MetroCluster、则可以使用SnapMirror主动同步、它可以在不同故障域的多个ONTAP集群之间提供数据存储库粒度保护和主动-主动访问。SMA使用一致性组(一致性组、CGS)确保一个或多个数据存储库之间的写入顺序一致性、您可以根据应用程序和数据存储库要求创建多个CGS。对于需要在多个数据存储库之间同步数据的应用程序、一致性组尤其有用。此外、SMA还支持原始设备映射(Raw Device Mapping、RDM)以及通过子系统内iSCSI启动程序连接到子系统的存储。有关一致性组的详细信息，请访问<block ref="8bba9b5b97dba092834d7a48a07f102d" category="inline-link-rx"></block>。</block>
+  <block id="1bf63b567c68de7fcd78fcc89f42f93c" category="inline-link">使用主机集群保护进行保护</block>
+  <block id="1809bb507d1d8b8c1fbe71452026a52e" category="paragraph">现在、ONTAP工具提供了一种为VMSC配置SnapMirror活动同步的简单方法。您可以使用ONTAP工具vCenter插件在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。此插件提供了一个简单直观的界面、用于在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。有关ONTAP工具vCenter插件的详细信息，请访问<block ref="238135431b1a2d25dda1f29146112b60" category="inline-link-rx"></block>，或者直接跳转到<block ref="50b45f063e0080035a4876db2aa395bd" category="inline-link-rx"></block>。</block>
+  <block id="0ed4664c1cb15021c67bd0d4753c18f0" category="paragraph">与MetroCluster相比、使用SnapMirror活动同步管理VMSC配置有一些不同。首先、SMA是一种仅SAN配置、SnapMirror活动同步无法保护任何NFS数据存储库。其次、您必须将两个LUN副本映射到ESXi主机、以使其能够访问这两个故障域中复制的数据存储库。</block>
+  <block id="b6930b017bd126db888766f9750b206b" category="section-title">VMware vSphere配置</block>
+  <block id="2587ca69fa38fdcf84be76d7302e4e48" category="admonition">本文档中的任何内容均不会取代<block ref="0802e50581eb79c07178f36fed073afc" category="inline-link-rx"></block>。本内容仅供参考、不能替代VMware官方文档。</block>
+  <block id="7fb958c31516ee34a32cd425ce9f6084" category="list-text">您可以创建基于事件的警报、当虚拟机违反VM-主机关联性规则时触发该警报。在vSphere Client中、为虚拟机添加新警报、然后选择"VM is violating VM-Host Affinity Rule "作为事件触发器。有关创建和编辑警报的详细信息、请参阅<block ref="68398319bb6b2bfb9f64390479799795" category="inline-link-macro-rx"></block>文档。</block>
+  <block id="0daafa8f38daf57ac774520f73c6131b" category="section-title">根据需要创建数据存储库集群</block>
+  <block id="5888812a5e670c1dc41279a5d93cc502" category="paragraph">*使用ONTAP存储时、建议禁用存储DRS。</block>
+  <block id="f58d6a99824e61e497bca94714a3efef" category="list-text">通常、不需要或不建议将存储DRS用于ONTAP存储系统。</block>
+  <block id="8525b77695e58a3254731f53ce2b2162" category="list-text">ONTAP提供自己的存储效率功能、例如重复数据删除、数据压缩和数据缩减、这些功能可能会受到存储DRS的影响。</block>
+  <block id="c9a841ce409cdc722c7bdd080f0f88de" category="list-text">如果您使用的是ONTAP快照、则Storage vMotion会在快照中保留VM副本、这可能会提高存储利用率、并可能影响NetApp SnapCenter等跟踪VM及其ONTAP快照的备份应用程序。</block>
+  <block id="e5239709587bb3ebb34629be6c41ac7b" category="paragraph">NetApp®MetroCluster™和SnapMirror主动同步(以前称为SnapMirror业务连续性或SMBC)均支持VMSC解决方案，如果一个或多个故障域发生完全中断，则可以提供高级业务连续性。不同故障模式的故障恢复能力取决于您选择的配置选项。</block>
+  <block id="5c6034b4452ec29d83cf38ddf5f9e2f6" category="paragraph">ONTAP架构是一个灵活且可扩展的存储平台、可为数据存储库提供SAN (FCP、iSCSI和NVMe-oF)和NAS (NFS v3和v4.1)服务。NetApp AFF、ASA和FAS存储系统使用ONTAP操作系统为子系统存储访问提供其他协议、例如S3和SMB/CCIFS。</block>
+  <block id="e495475024bf1186bfbf671683e828e6" category="paragraph">NetApp SnapMirror主动同步可通过FCP和iSCSI SAN协议提供数据存储库粒度保护、从而使您可以有选择地仅保护高优先级工作负载。与主动-备用解决方案NetApp MetroCluster不同、它可以同时对本地和远程站点进行主动-主动访问。从ONTAP 9.15.1开始、SnapMirror主动同步支持对称主动/主动功能、可通过双向同步复制从受保护LUN的两个副本执行读写I/O操作、从而使两个LUN副本均可在本地处理I/O操作。在ONTAP 9.15.1之前的版本中、SnapMirror主动同步仅支持非对称主动/主动配置、在这种配置中、二级站点上的数据会代理到LUN。</block>
+  <block id="f1d3123c01306b368942c0739b049d98" category="paragraph">vSphere Metro Storage Cluster (VMSC)是一种经过认证的配置、可保护虚拟机(VM)和容器免受故障的影响。这可以通过使用延伸型存储概念以及分布在不同故障域(例如机架、建筑物、园区甚至城市)中的ESXi主机集群来实现。NetApp MetroCluster和SnapMirror主动同步存储技术用于分别为主机集群提供RPO = 0或RPO = 0保护。VMSC配置旨在确保数据始终可用、即使完整的物理或逻辑"站点"发生故障也是如此。在成功完成VMSC认证过程后、属于VMSC配置的存储设备必须经过认证。所有受支持的存储设备均可在中找到<block ref="293ceee3268d7991d7fe245e02c1c5c9" category="inline-link-rx"></block>。</block>
+  <block id="1e1566860cb6afbc338f9fba32c4e5e5" category="list-text">对称活动同步(ONTAP 9.15.1)</block>
+  <block id="9354dd74ac44e8083ef676403653cf41" category="image-alt">包含MSA和调解器的VMSC示意图</block>
+  <block id="b9ca5ba97cf75d3dafb51f78e073770a" category="inline-link">NetApp文档</block>
+  <block id="1c71125ba0668792e46d93c17dc6c428" category="paragraph">有关SnapMirror主动同步的特定设计和部署信息、请参见<block ref="9ace5d3ebe2fe57037322de54ac9a869" category="inline-link-rx"></block>。</block>
+  <block id="c50c3de11b39aab15ac6b3b860691105" category="paragraph">通过VMware Storage DRS功能、可以将数据存储库聚合到一个单元中、并在超过存储I/O控制(SIIOC)阈值时平衡虚拟机磁盘。</block>
+  <block id="a6389705a0010980a83767268763aa53" category="sidebar">使用工具的虚拟卷(Virtual Volume、ONTAP) 10.</block>
+  <block id="d858ab232a556e2be473d51d09bc0c3d" category="sidebar">ONTAP工具安装检查清单</block>
 </blocks>

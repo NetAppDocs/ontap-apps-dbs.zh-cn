@@ -42,10 +42,12 @@ entries:
     url: "/vmware/vmware-vsphere-sdrs.html"
   - title: 建议设置
     url: "/vmware/vmware-vsphere-settings.html"
-- title: 使用ONTAP的虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume、Virtual Volume)
+- title: 使用工具的虚拟卷(Virtual Volume、ONTAP) 10.
   entries:
   - title: 概述
     url: "/vmware/vmware-vvols-overview.html"
+  - title: ONTAP工具安装检查清单
+    url: "/vmware/vmware-vvols-checklist.html"
   - title: 将ONTAP 与虚拟卷结合使用
     url: "/vmware/vmware-vvols-ontap.html"
   - title: 部署虚拟卷存储

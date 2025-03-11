@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-vvols-checklist.html 
+keywords: tr-4400, vvols, ontap, virtual volumes, protect 
+summary: ONTAP工具10安装检查清单 
+---
+= 检查清单
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+使用此安装检查清单可确保成功部署(针对10.3及更高版本进行了更新)。
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["一个"]初步规划
+[role="quick-margin-list"]
+* 开始安装之前、您应检查 https://imt.netapp.com/matrix/#search["互操作性表工具"]以确保您的部署已通过认证。
+* 确定您的环境所需的ONTAP工具配置的大小和类型。有关详细信息、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/prerequisites.html["部署适用于VMware vSphere的ONTAP工具的配置限制"]。
+* 确定要使用多租户SVM还是允许完全集群访问。如果使用多租户SVM、则需要在要使用的每个SVM上具有一个SVM管理LIF。ONTAP工具必须可通过端口443访问此LIF。
+* 确定要使用适用于VMware Site Recovery Manager (SRM)的ONTAP工具Storage Replication Adapter (SRA)还是Live Site Recovery (vrr)。如果是、则需要访问SRM/vrr服务器管理界面才能安装SRA。
+* 如果您要使用由ONTAP工具管理的SnapMirror复制(包括但不限于SnapMirror活动同步)、则ONTAP管理员必须 https://docs.netapp.com/us-en/ontap/peering/create-cluster-relationship-93-later-task.html["在ONTAP中创建集群对等关系"]先将ONTAP工具与SnapMirror结合使用、 https://docs.netapp.com/us-en/ontap/peering/create-intercluster-svm-peer-relationship-93-later-task.html["在ONTAP中创建集群间SVM对等关系"]然后才能使用。
+* https://mysupport.netapp.com/site/products/all/details/otv10/downloads-tab["下载"]ONTAP工具OVA、如果需要、还包括SRA tar.gz文件。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]配置IP地址和DNS记录
+[role="quick-margin-list"]
+* 向网络团队请求以下IP信息。前三个IP地址是必需的；节点2和节点3用于横向扩展高可用性(HA)部署。DNS主机记录为必填项、所有地址都应位于同一VLAN上。
+* ONTAP工具应用程序地址____________。\____________。\____________。\____________
+* 内部服务地址\____________。\____________。\____________。\____________
+* 节点1的DNS主机名\____________________________________________
+* 节点1的IP地址____________。\____________。\____________。\____________
+* 子网掩码____________。\____________。\____________。\____________
+* 默认网关\____________。\____________。\____________。\____________
+* DNS服务器1____________。\____________。\____________。\____________
+* DNS服务器2____________。\____________。\____________。\____________
+* DNS搜索域\___________________________________________
+* 节点2的DNS主机名(可选)___________________________________________
+* 节点2的IP地址(可选)____________。\____________。\____________。\____________
+* 节点3的DNS主机名(可选)___________________________________________
+* 节点3的IP地址(可选)____________。\____________。\____________。\____________
+* 为上述所有IP地址创建DNS记录。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["三个"]网络防火墙配置
+[role="quick-margin-list"]
+* 在网络防火墙中打开上述IP地址所需的端口。有关最新更新、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/prerequisites.html#port-requirements["端口要求"]。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["四个"]配置设备服务(可选)
+[role="quick-margin-list"]
+* 要使用此类卷、您必须先 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/enable-services.html["编辑设备设置并启用vasa服务"]执行此操作。同时、请查看以下两项。
+* 如果您计划在生产环境中使用虚拟卷、请 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-appliance-settings.html["启用高可用性"]使用上面的两个可选IP地址。
+* 如果您计划将ONTAP工具Storage Replication Adapter (SRA)用于VMware站点恢复管理器或实时站点恢复， https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-appliance-settings.html["启用SRA服务"]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["五个"]证书(可选)
+[role="quick-margin-list"]
+* 根据VMware、如果在多个vCenter中使用Vvol、则需要CA签名证书。
+* VASA服务\____________________________________________
+* 行政事务\____________________________________________
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["六个"]存储
+[role="quick-margin-list"]
+* 共享存储设备上需要一个数据存储库。或者、您也可以使用与节点1位于同一数据存储库中的内容库、以便使用VAAI快速克隆模板。
+* 内容库(仅HA需要)___________________________________________
+* 节点1数据存储库\____________________________________________
+* 节点2数据存储库(可选、但建议用于HA)___________________________________________
+* 节点3数据存储库(可选、但建议用于HA)___________________________________________________
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-7.png["七个"]部署OVA
+[role="quick-margin-list"]
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["部署OVA"]使用vSphere Client。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-8.png["八个"]部署后任务
+[role="quick-margin-list"]
+* 为HA部署中的VM创建反关联性规则。
+* 如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/configure-user-role-and-privileges.html["配置ONTAP用户角色和权限"]使用随附的JSON文件。
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/certificate-manage.html["使用管理证书"]在ONTAP工具管理器中安装任何必需的CA签名证书。
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-vcenter.html["添加vCenter Server实例"]在ONTAP工具管理器中。
+* 如果使用多租户SVM、则 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载集群"]在ONTAP工具管理器中将其与vCenter关联。
+* 如果使用多租户SVM、则 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载SVM"]在ONTAP工具vCenter UI中执行此操作。
+* 如果*不*使用多租户SVM、则 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载集群"]直接在ONTAP工具vCenter UI中执行。或者、在这种情况下、如果不使用Vvol、则可以直接添加SVM。
+* 如果您为SRM/vSR启用了SRA以保护传统数据存储库， https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/protect/configure-on-srm-appliance.html["在VMware Live Site Recovery设备上配置SRA"]请。
+* 为配置本机备份 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/enable-backup.html["RPO几乎为零"]。
+* 配置定期备份到其他存储介质。
+
