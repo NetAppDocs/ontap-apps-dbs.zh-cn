@@ -2349,8 +2349,6 @@
   <block id="1b50110aedae4d8d2043a4eb9beb20af" category="cell">VMFS3.EnableBlockDelete</block>
   <block id="316084648bbafe451240702bd19c6ee9" category="cell">VMFS3.EnableVMFS6Unmap</block>
   <block id="befd90cd01403237f6fdf296822efbee" category="inline-link-macro">VMware vSphere API：阵列集成(VAAI)</block>
-  <block id="e385d2442208cc1e23ca841b1f217380" category="cell">保留默认值(1)
-有关详细信息，请参见 <block ref="d124e203790e5f214a195f69cd068c6d" category="inline-link-macro-rx"></block></block>
   <block id="571cc1d48c6d1ff3cf7e3a54cb035753" category="cell">*NFS设置*</block>
   <block id="c3b49a515dd0046685e06092642aa139" category="cell">Net.TcpipHeapSize</block>
   <block id="875f6b98e20edfecb56f9013d00987f6" category="cell">vSphere 6.0 或更高版本，设置为 32 。
@@ -3422,8 +3420,6 @@
   <block id="fc66ba7317ceb4220dc88aa267db085d" category="list-text">从两个站点中选择要vCenter使用的数据存储库、然后按OK。</block>
   <block id="1d2b14769d080b9214d9e407dfc92a64" category="section-title">配置高级选项</block>
   <block id="a9316d69e5abcfaffc56fc8f5e645412" category="paragraph">如果HA集群中的主机与网络或集群中的其他主机断开连接、则会发生隔离事件。默认情况下、vSphere HA将使用其管理网络的默认网关作为默认隔离地址。但是、您可以为要执行ping操作的主机指定其他隔离地址、以确定是否应触发隔离响应。添加两个可执行ping操作的隔离IP、每个站点一个。请勿使用网关IP。使用的vSphere HA高级设置为"as.isolationaddress"。为此、您可以使用ONTAP或调解器IP地址。</block>
-  <block id="102d7879ceca393c309ef492c958e19d" category="inline-link">core.vmware.com</block>
-  <block id="27e2292ff6db48ed2e6d50b256eae43e" category="paragraph">请参见<block ref="43057df4f3a6b5f2fffe8b7c5a490646" category="inline-link-rx"></block> 有关详细信息__.__</block>
   <block id="3f44bb4a3b9420d495e400b9afbda2c7" category="paragraph">添加名为ds.heartbeatDsPerHost的高级设置可以增加检测信号数据存储库的数量。使用四个检测信号数据存储库(HB DSS)—每个站点两个。使用“从列表中选择但恭维”选项。这是必需的、因为如果一个站点发生故障、您仍需要两个HB DSS。但是、这些数据不必通过MCC或SnapMirror主动同步进行保护。</block>
   <block id="eaa1dfe3982e06655ce64e240c139b81" category="paragraph">适用于NetApp MetroCluster的VMware DRS关联</block>
   <block id="e32221c52eb3b0bbeb3ca79aad6c90f6" category="paragraph">在本节中、我们将为MetroCluster环境中每个站点\集群的VM和主机创建DRS组。然后、我们配置VM\Host规则、使VM主机与本地存储资源的关联性保持一致。例如、站点A的VM属于VM组sitea_vm、站点A的主机属于主机组sitea_hosts。接下来、在VM\Host规则中、我们说明site_vm应在sitea_hosts中的主机上运行。</block>
@@ -3470,7 +3466,6 @@
   <block id="d3e911c902a6b066f9c31d471d16fb21" category="paragraph">要在两个站点之间创建VMware HA/DRS集群、需要使用vCenter Server Appliance (VCA)来管理ESXi主机。vSphere管理、vMotion®和虚拟机网络通过两个站点之间的冗余网络进行连接。管理HA/DRS集群的vCenter Server可以连接到两个站点上的ESXi主机、并且应使用vCenter HA进行配置。</block>
   <block id="da76be2bc20d4e043d9a2019b817214f" category="inline-link">如何在vSphere Client中创建和配置集群</block>
   <block id="e02f3e9258a23204655bd512ec53911d" category="paragraph">请参见<block ref="c06ae090600e7aa086edfa28514435e7" category="inline-link-rx"></block> 配置vCenter HA。</block>
-  <block id="bdd88c75f085534f6e2cdc7726cf1dd6" category="paragraph">您还应参考<block ref="3a8301f60ad04eb873ae8dea15ee0495" category="inline-link-rx"></block>。</block>
   <block id="38910d3dab2318849fd5f1a1dfbe0152" category="inline-link">《VMware存储兼容性指南》</block>
   <block id="838b66b875df1b432ac420a98cba3db6" category="paragraph">如果您需要有关vSphere Metro Storage Cluster设计准则的详细信息、请参阅以下文档：</block>
   <block id="07aaf2aebfd07b8763284018d1ebbf57" category="inline-link">NetApp MetroCluster支持VMware vSphere</block>
@@ -5732,7 +5727,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="18f5114f4a595ad26525bf20f301ce19" category="list-text"><block ref="20462cf0cb6f4e0f9c91cc66c831d98e" category="inline-link-rx"></block>ONTAP工具OVA、如果需要、还包括SRA tar.gz文件。</block>
   <block id="aada29daee1d64ed0fe907043855cb7e" category="inline-image-macro">两个</block>
   <block id="770c8023395525bc05b5a8fc2e6efa8b" category="list-title"><block ref="54f425ce8d89f4ed6b8a546561af5d60" category="inline-image-macro-rx" type="image"></block>配置IP地址和DNS记录</block>
-  <block id="b63e31bbf24a6eef701dc39672946405" category="list-text">向网络团队请求以下IP信息。前三个IP地址是必需的；节点2和节点3用于横向扩展高可用性(HA)部署。DNS主机记录为必填项、所有地址都应位于同一VLAN上。</block>
   <block id="08b0c7e27d2f1780fce59893f12e7642" category="list-text">ONTAP工具应用程序地址____________。\____________。\____________。\____________</block>
   <block id="6bb090d29a0e3de8cc001d02c1e8a7b3" category="list-text">内部服务地址\____________。\____________。\____________。\____________</block>
   <block id="e32a9122e97bf17560b53c6993301629" category="list-text">节点1的DNS主机名\____________________________________________</block>
@@ -5752,7 +5746,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="76841410d8f9a6881e0b96f150e9cedf" category="inline-link">端口要求</block>
   <block id="1cb44e38b7d534b49fb7ce15d6726cb0" category="list-text">在网络防火墙中打开上述IP地址所需的端口。有关最新更新、请参见<block ref="d75d54fbd8f18143d683ed6f5389e615" category="inline-link-rx"></block>。</block>
   <block id="981b8fcee42e1e726a67a2b9a98ea6e9" category="inline-image-macro">四个</block>
-  <block id="fe2367acaa1f51e55b545df54a8794d7" category="list-title"><block ref="beadfa85a2fdca06b91edc1131c603e6" category="inline-image-macro-rx" type="image"></block>配置设备服务(可选)</block>
   <block id="640e990f06389e4b49f54086ba1aba46" category="inline-link">编辑设备设置并启用vasa服务</block>
   <block id="49b964c1f288e8e75650b3e86683914d" category="list-text">要使用此类卷、您必须先<block ref="c9f7d482e0b51df808dc044e3e43f591" category="inline-link-rx"></block>执行此操作。同时、请查看以下两项。</block>
   <block id="8ba46a1826b102cd1b8b0fb75a241176" category="inline-link">启用高可用性</block>
@@ -5760,23 +5753,19 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="fddd8f455515e6a6de8e8d876641e0c5" category="inline-link">启用SRA服务</block>
   <block id="777b715f4e7db3295048bd9409cb3a0f" category="list-text">如果您计划将ONTAP工具Storage Replication Adapter (SRA)用于VMware站点恢复管理器或实时站点恢复，<block ref="9eb793199b56cb94f5df0c657a62ea9e" category="inline-link-rx"></block></block>
   <block id="e5d9de39f7ca1ba2637e5640af3ae8aa" category="inline-image-macro">五个</block>
-  <block id="fdf409c5a691a69cd744dfc08ae641b5" category="list-title"><block ref="99e8b2f00e172bfcff96afdce69907bc" category="inline-image-macro-rx" type="image"></block>证书(可选)</block>
   <block id="e03ec7d1e46f44c47e1547f8c19fdbb5" category="list-text">根据VMware、如果在多个vCenter中使用Vvol、则需要CA签名证书。</block>
   <block id="777f90dea67a6de19d7e4287d6d65525" category="list-text">VASA服务\____________________________________________</block>
   <block id="50261e7dc97594e1ef47d1913fadd642" category="list-text">行政事务\____________________________________________</block>
   <block id="e6fbc0b9673f8c86726688d7607fc8f5" category="inline-image-macro">六个</block>
-  <block id="45109aee8db55f9962ba496902ac47d1" category="list-title"><block ref="ef78558f80439832e0f51cc22cee8b8c" category="inline-image-macro-rx" type="image"></block>存储</block>
   <block id="96c44f7328270a7b9e72a07f78739ecf" category="list-text">共享存储设备上需要一个数据存储库。或者、您也可以使用与节点1位于同一数据存储库中的内容库、以便使用VAAI快速克隆模板。</block>
   <block id="656b82abf6edc190097506cd4d1d585b" category="list-text">内容库(仅HA需要)___________________________________________</block>
   <block id="99325facb7679dc357733bd909532cfc" category="list-text">节点1数据存储库\____________________________________________</block>
   <block id="f669e2c7e65edea7adca0c4006b6cf36" category="list-text">节点2数据存储库(可选、但建议用于HA)___________________________________________</block>
   <block id="5ba1096fffa0ecfd4695651916c48133" category="list-text">节点3数据存储库(可选、但建议用于HA)___________________________________________________</block>
   <block id="12e67aac3e7f9227cc35f8f047d7dc74" category="inline-image-macro">七个</block>
-  <block id="34e299878c510a313972dbf8e915aa70" category="list-title"><block ref="36915574c413876eaa75cbd48f69fd00" category="inline-image-macro-rx" type="image"></block>部署OVA</block>
   <block id="db5321854b38ff4107ff88c3d3fb2602" category="inline-link">部署OVA</block>
   <block id="62386ee2b40ea01fd147eb04a3da8b17" category="list-text"><block ref="2b093a8e786abd40836246bfb87e05bd" category="inline-link-rx"></block>使用vSphere Client。</block>
   <block id="baca0ca6729684fd54206793ae4b5bd5" category="inline-image-macro">八个</block>
-  <block id="3af4c2c51fab2d80844fbb6e10989de8" category="list-title"><block ref="430057c670c01688e904ed2ba129a0b5" category="inline-image-macro-rx" type="image"></block>部署后任务</block>
   <block id="d40a477cc61e319a78ef1bb36d8ea566" category="list-text">为HA部署中的VM创建反关联性规则。</block>
   <block id="4695b076293ddedd5434ae5a73b57ae2" category="list-text">如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。</block>
   <block id="fde3f7a850bbaaac2a3706bf8c7df54c" category="inline-link">配置ONTAP用户角色和权限</block>
@@ -5786,10 +5775,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6245e46af5a3bdaf57696763c4214c70" category="inline-link">添加vCenter Server实例</block>
   <block id="427d083edfb4d6df118817492fea1fea" category="list-text"><block ref="9271e724c67dd3dffeb4e3ddaf43b80d" category="inline-link-rx"></block>在ONTAP工具管理器中。</block>
   <block id="75299228e38c6c56354b3fbc53bd01db" category="inline-link">板载集群</block>
-  <block id="3a4a4867d2582a3fc7b55ad4df5113f7" category="list-text">如果使用多租户SVM、则<block ref="ea2efd531a0984091e8158139d5ccc0c" category="inline-link-rx"></block>在ONTAP工具管理器中将其与vCenter关联。</block>
   <block id="0583aea4353aeb5998071022ebbb79ae" category="inline-link">板载SVM</block>
-  <block id="8ad9f2408218e1b63c20ae491c20ce60" category="list-text">如果使用多租户SVM、则<block ref="d765a6bb593f5e86f1e69993d841269b" category="inline-link-rx"></block>在ONTAP工具vCenter UI中执行此操作。</block>
-  <block id="d7788ac532a6f39741dcd93fd04481e6" category="list-text">如果*不*使用多租户SVM、则<block ref="ea2efd531a0984091e8158139d5ccc0c" category="inline-link-rx"></block>直接在ONTAP工具vCenter UI中执行。或者、在这种情况下、如果不使用Vvol、则可以直接添加SVM。</block>
   <block id="4d5a9665c20fe0f045d612f3d7c14c3a" category="inline-link">在VMware Live Site Recovery设备上配置SRA</block>
   <block id="74d3c40ee5d2741e75390e90d13a881a" category="list-text">如果您为SRM/vSR启用了SRA以保护传统数据存储库，<block ref="ae14a63430307f4358dbb1aa0a6215ef" category="inline-link-rx"></block>请。</block>
   <block id="56b3d744b9b4be462a3690ae4544597f" category="inline-link">RPO几乎为零</block>
@@ -5951,4 +5937,24 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="c50c3de11b39aab15ac6b3b860691105" category="paragraph">通过VMware Storage DRS功能、可以将数据存储库聚合到一个单元中、并在超过存储I/O控制(SIIOC)阈值时平衡虚拟机磁盘。</block>
   <block id="a6389705a0010980a83767268763aa53" category="sidebar">使用工具的虚拟卷(Virtual Volume、ONTAP) 10.</block>
   <block id="d858ab232a556e2be473d51d09bc0c3d" category="sidebar">ONTAP工具安装检查清单</block>
+  <block id="2e0a1393be1d4f990f277513b8384831" category="cell">保留默认值(1)有关详细信息、请参见<block ref="3b98534d1167689d42f2d1a533484036" category="inline-link-macro-rx"></block></block>
+  <block id="79a22fb066bcc86a371f557f30051d43" category="inline-link">配置分区</block>
+  <block id="b5d661217ddfecce129a41707ffa9fa9" category="list-text">确定是否要使用光纤通道(FC)进行存储连接。如果是、则必须<block ref="1ce5ae0107fd362eacaa4ef5b56c5d82" category="inline-link-rx"></block>在FC交换机上启用ESXi主机与SVM的FC LUN之间的连接。</block>
+  <block id="49e1b0dac188727de519431ac2068825" category="list-text">向网络团队请求以下IP信息。前三个IP地址是必需的；节点2和节点3用于横向扩展高可用性(HA)部署。DNS主机记录为必填项、所有节点名称和所有地址都应位于同一VLAN和子网中。</block>
+  <block id="7be8dd6dbcd142349f300df69f6a63d2" category="list-title"><block ref="beadfa85a2fdca06b91edc1131c603e6" category="inline-image-macro-rx" type="image"></block>存储</block>
+  <block id="829d9899725b36358387edfa5df0e486" category="list-title"><block ref="99e8b2f00e172bfcff96afdce69907bc" category="inline-image-macro-rx" type="image"></block>部署OVA</block>
+  <block id="2c63315a0e6899fa3f810f1b06553689" category="list-title"><block ref="ef78558f80439832e0f51cc22cee8b8c" category="inline-image-macro-rx" type="image"></block>将vCenter添加到ONTAP工具</block>
+  <block id="0547f403694814dca82327ab77f95205" category="list-title"><block ref="36915574c413876eaa75cbd48f69fd00" category="inline-image-macro-rx" type="image"></block>将存储后端添加到ONTAP工具</block>
+  <block id="3317c36267d6f484693b29dbd86b1e79" category="list-text">如果对SVM使用存储多租户、则使用此选项</block>
+  <block id="5abf46747a299bb4d24d81d3a3f343aa" category="list-text"><block ref="40ea307f91b1c1591600230b15a0b728" category="inline-link-rx"></block>在ONTAP工具管理器中、并将其与vCenter关联。</block>
+  <block id="e69b3c58a2b1480f291387c690bf92b4" category="list-text"><block ref="9f5477aac946ec407262cd052d80864d" category="inline-link-rx"></block>在ONTAP工具vCenter UI中。</block>
+  <block id="1ca4d08fe4d0cced2e4ebb5629b6613c" category="list-text">如果*不*使用多租户SVM</block>
+  <block id="9e80f1d38a7781fc49c6800d20337ec2" category="list-text"><block ref="40ea307f91b1c1591600230b15a0b728" category="inline-link-rx"></block>直接在ONTAP工具vCenter UI中。或者、在这种情况下、如果不使用Vvol、则可以直接添加SVM。</block>
+  <block id="421bdf5be659af6d75aab31df92b7907" category="list-title"><block ref="430057c670c01688e904ed2ba129a0b5" category="inline-image-macro-rx" type="image"></block>配置设备服务(可选)</block>
+  <block id="24db11216549ee55172c33cf3def2f3f" category="inline-image-macro">九</block>
+  <block id="8a339db13a88428ad39d370cfdd1129a" category="list-title"><block ref="b37b448eff4f65237cf47b29bdd2817c" category="inline-image-macro-rx" type="image"></block>证书(可选)</block>
+  <block id="a185c3c138dca5ef46afc33288a67d1f" category="inline-image-macro">十</block>
+  <block id="71fc21799db94f8cae72c8732659492c" category="list-title"><block ref="6097494f0af631df68e3dcb7a6da8d2a" category="inline-image-macro-rx" type="image"></block>其他部署后任务</block>
+  <block id="93da9d9a3842b9e17ab9de43211bf697" category="paragraph">有关详细信息，请参见<block ref="0802e50581eb79c07178f36fed073afc" category="inline-link-rx"></block></block>
+  <block id="275507174f3ab21b1a65c1d5e8446001" category="paragraph">您还应参考<block ref="0802e50581eb79c07178f36fed073afc" category="inline-link-rx"></block>。</block>
 </blocks>

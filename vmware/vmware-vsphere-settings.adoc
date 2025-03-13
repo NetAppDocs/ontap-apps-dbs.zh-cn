@@ -35,8 +35,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 | VMFS3.EnableBlockDelete | 保留默认值(0)、但可以根据需要进行更改。有关详细信息、请参见 link:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-storage-8-0/storage-provisioning-and-space-reclamation-in-vsphere/storage-space-reclamation-in-vsphere/space-reclamation-for-guest-operating-systems.html["VMFS5虚拟机的空间回收"] | 否 
 
 
-| VMFS3.EnableVMFS6Unmap | 保留默认值(1)
-有关详细信息，请参见 link:https://core.vmware.com/resource/vmware-vsphere-apis-array-integration-vaai#sec9426-sub4["VMware vSphere API：阵列集成(VAAI)"] | 否 
+| VMFS3.EnableVMFS6Unmap | 保留默认值(1)有关详细信息、请参见link:https://www.vmware.com/docs/vmw-vmware-vsphere-apis-array-integration-vaai["VMware vSphere API：阵列集成(VAAI)"] | 否 
 
 
 3+| *NFS设置* 
