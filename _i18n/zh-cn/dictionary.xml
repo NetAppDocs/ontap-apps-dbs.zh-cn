@@ -2160,7 +2160,6 @@
   <block id="70532c0374111d897ef1176b34b6396c" category="inline-link">NVMe和虚拟卷</block>
   <block id="50ec55042a7f4e8c2c66219ac096cfb3" category="inline-link">vmware.com</block>
   <block id="113c9d4e642d1ba4cc469267fb7fd0de" category="paragraph">有关详细信息，请参见<block ref="f8d477cd77073d731aafe4f52026608a" category="inline-link-rx"></block> 开启<block ref="1f1565cca975c4a703345d21e7f273b8" category="inline-link-rx"></block></block>
-  <block id="9664cdf7951789389813facac649fec1" category="cell">虚拟卷是指存储在虚拟卷数据存储库中的实际虚拟机文件和磁盘。术语VVOL(单个)是指单个特定文件、LUN或命名空间。ONTAP 会根据数据存储库使用的协议创建NVMe命名空间、LUN或文件。Vvol有几种不同的类型；最常见的类型是配置(元数据文件)、数据(虚拟磁盘或VMDK)和交换(在启动VM时创建)。受VMware VM加密保护的Vvol的类型为其他。不应将VMware VM加密与ONTAP 卷或聚合加密相混淆。</block>
   <block id="937251054fa0c1a7b946f8928cc857b9" category="section-title">基于策略的管理</block>
   <block id="2ce0d6ec59cca7e0b6e0bdc389301e63" category="section-title">使用存储策略部署虚拟机</block>
   <block id="e0795f8b847058e171dec5a519757ece" category="image-alt">使用存储策略部署虚拟机</block>
@@ -2196,7 +2195,6 @@
   <block id="858d314810762abccaa7baf230e3dc18" category="list-text">培训环境</block>
   <block id="ab7bbc294bf0f0354980a3014e8f4219" category="section-title">使用卷的常见优势</block>
   <block id="ccd6ea8c57e93a5401d07aab9c60f371" category="paragraph">在充分发挥其优势时(例如在上述使用情形中)、此类卷可提供以下具体改进：</block>
-  <block id="13491b3af50183642ea0035b2d1f95f9" category="list-text">克隆可以在一个卷内或ONTAP 集群中的多个卷之间快速创建、与启用了VAAI的传统克隆相比、这是一个优势。它们还具有高效存储的特点。卷中的克隆会使用ONTAP文件克隆、这与FlexClone卷类似、只会存储源VVOL/LUN /命名空间中的更改。因此、可以快速创建用于生产或其他应用程序目的的长期VM、占用的空间极少、并可受益于VM级别保护(使用适用于VMware vSphere的NetApp SnapCenter 插件、VMware托管快照或VADP备份)和性能管理(使用ONTAP QoS)。</block>
   <block id="1c21847cdc5616af138ba0c03aad7adb" category="list-text">在将TKG与vSphere CSI结合使用时、Vvol是理想的存储技术、可提供由vCenter管理员管理的离散存储类和容量。</block>
   <block id="d5f068caef73978a5483badd927a7e98" category="list-text">类似于Amazon EBS的服务可以通过FCD提供、因为顾名思义、FCD VMDK是vSphere中的一流公民、其生命周期可以独立于可能连接到的VM进行管理。</block>
   <block id="7e7040600922b2a78715f856613a3c08" category="doc">保护卷</block>
@@ -5769,7 +5767,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="d40a477cc61e319a78ef1bb36d8ea566" category="list-text">为HA部署中的VM创建反关联性规则。</block>
   <block id="4695b076293ddedd5434ae5a73b57ae2" category="list-text">如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。</block>
   <block id="fde3f7a850bbaaac2a3706bf8c7df54c" category="inline-link">配置ONTAP用户角色和权限</block>
-  <block id="881528aac1f478bd0dc0bcfa47b5bb31" category="list-text"><block ref="4ccf4d83bac775854f5f0cfb549c6d86" category="inline-link-rx"></block>使用随附的JSON文件。</block>
   <block id="064719d8b0308f2a4bc89590c3becdab" category="inline-link">使用管理证书</block>
   <block id="d59a2f6a46dd460183ac2d0c23cf6f75" category="list-text"><block ref="53fb9f19112a80479a138e84ac0182c6" category="inline-link-rx"></block>在ONTAP工具管理器中安装任何必需的CA签名证书。</block>
   <block id="6245e46af5a3bdaf57696763c4214c70" category="inline-link">添加vCenter Server实例</block>
@@ -5902,7 +5899,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="256a688cc49c759f4698b8d5d1dd7b6a" category="paragraph">在ASA R2系统中、卷或聚合的概念从用户那里抽象出来、从而消除了这种复杂性。系统会自动处理动态放置、并根据需要创建协议端点。如果需要进行额外扩展、可以即时自动创建其他协议端点。</block>
   <block id="66a77b29a2cc0bdf1aa1bf8f6d4dac96" category="paragraph">*确保您具有足够的数据Lifs。*请参阅 <block ref="d7e84668ac8db4130d4662ae6bde9c89" category="inline-link-macro-rx"></block>。</block>
   <block id="3518579aa5aedcfb4f4b83a6ccbe9cb6" category="admonition">本文档已进行更新、加入了vSphere 8.0 Update 3和ONTAP Tools 10.3版中的新vvol功能。</block>
-  <block id="c79161a37daeef2304a0236280cff223" category="paragraph">NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN、文件、现在使用vSphere 8 - NVMe命名空间时也可以是这些对象。NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。</block>
   <block id="b2dd36bd4918e00f8b2e15e6d62a4b94" category="section-title">VASA Provider</block>
   <block id="0a4ba68e118d83e29ea66516a02f1b48" category="section-title">协议端点(PE)</block>
   <block id="974863a1395a284a680d09e18cf6c9cc" category="section-title">虚拟协议端点(VPE)</block>
@@ -5911,7 +5907,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="3d947d83ddfd03d217cdfcc09be70c32" category="paragraph">通过VMware vSphere APIS for Storage AWARMIVAIVIAPI(VASA)、VM管理员可以轻松地使用配置VM所需的任何存储功能、而无需与其存储团队进行交互。在使用VASA之前、VM管理员可以定义VM存储策略、但必须与其存储管理员一起确定适当的数据存储库、通常使用文档或命名约定。通过使用VASA、具有适当权限的vCenter管理员可以定义一系列存储功能、然后vCenter用户可以使用这些功能来配置VM。通过在VM存储策略和数据存储库功能之间进行映射、vCenter可以显示兼容数据存储库的列表以供选择、并支持使用其他技术(例如、以前称为vReise)自动化或Tanzu Kubernetes网格)自动从分配的策略中选择存储。这种方法称为基于存储策略的管理。虽然VASA Provider规则和VM存储策略也可用于传统数据存储库、但此处我们重点介绍的是VVO尔 数据存储库。</block>
   <block id="9f1893d8db5ceaf62726d1a0aa228224" category="section-title">VM 存储策略</block>
   <block id="0aa8052a92097a4f8ec3114e7249a0e1" category="paragraph">VM存储策略在vCenter中的策略和配置文件下创建。对于虚拟卷、请使用NetApp虚拟卷存储类型提供程序中的规则创建一个规则集。现在、与ONTAP工具9.X相比、ONTAP工具10.X提供了一种更简单的方法、它允许您直接在VM存储策略本身中指定存储属性。</block>
-  <block id="6f8bbed3f609d6b6a41c94fa3692df52" category="paragraph">如上所述、使用策略有助于简化配置卷的任务。只需选择适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol volume中。</block>
   <block id="2efad47a2579a212fb659be8b8101b3c" category="paragraph">配置VM后、VASA Provider将继续检查合规性、并在后备卷不再符合策略时在vCenter中向VM管理员发出警报。</block>
   <block id="ede8e2fa9dea87dd87a82bda2b2cf090" category="paragraph">有关NetApp MetroCluster (称为MCC配置)的设置说明，请访问<block ref="2c736bccede87dae47dcf61108f083c4" category="inline-link-rx"></block>。有关SnapMirror活动同步(SMA)的说明，请参见<block ref="14203840309dd1b6e13f73373477bb9d" category="inline-link-rx"></block>。</block>
   <block id="ea27eb943310e6748735c2b98c65f5fd" category="paragraph">如果不使用MetroCluster、则可以使用SnapMirror主动同步、它可以在不同故障域的多个ONTAP集群之间提供数据存储库粒度保护和主动-主动访问。SMA使用一致性组(一致性组、CGS)确保一个或多个数据存储库之间的写入顺序一致性、您可以根据应用程序和数据存储库要求创建多个CGS。对于需要在多个数据存储库之间同步数据的应用程序、一致性组尤其有用。此外、SMA还支持原始设备映射(Raw Device Mapping、RDM)以及通过子系统内iSCSI启动程序连接到子系统的存储。有关一致性组的详细信息，请访问<block ref="8bba9b5b97dba092834d7a48a07f102d" category="inline-link-rx"></block>。</block>
@@ -5957,4 +5952,13 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="71fc21799db94f8cae72c8732659492c" category="list-title"><block ref="6097494f0af631df68e3dcb7a6da8d2a" category="inline-image-macro-rx" type="image"></block>其他部署后任务</block>
   <block id="93da9d9a3842b9e17ab9de43211bf697" category="paragraph">有关详细信息，请参见<block ref="0802e50581eb79c07178f36fed073afc" category="inline-link-rx"></block></block>
   <block id="275507174f3ab21b1a65c1d5e8446001" category="paragraph">您还应参考<block ref="0802e50581eb79c07178f36fed073afc" category="inline-link-rx"></block>。</block>
+  <block id="c44625cf01f743c720301c28e8461709" category="list-text">请注意、此步骤可能需要长达45分钟才能完成</block>
+  <block id="7747c50f7bb3ac05c39d999f8d5ce43e" category="list-text">在OVA部署的第3步中、选择"自定义此虚拟机的硬件"选项、并在第10步中设置以下内容：</block>
+  <block id="a7510781f5c52d40e5706471809518f0" category="list-text">"启用CPU热添加"</block>
+  <block id="5b1ae3ca31ee580e9664ebf0949a302c" category="list-text">"内存热插拔"</block>
+  <block id="2cd9adcb9e8de7c58834011ca647797d" category="list-text"><block ref="4ccf4d83bac775854f5f0cfb549c6d86" category="inline-link-rx"></block>如果不使用管理员、则使用随附的JSON文件。</block>
+  <block id="067561a3b92d67321174249eb7de567d" category="paragraph">NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN、文件、现在适用于vSphere 8 - NVMe命名空间(与ONTAP工具9.13P2结合使用)。NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。</block>
+  <block id="e867f73e9a09d015c82be5c45264cda9" category="paragraph">虚拟卷是指存储在虚拟卷数据存储库中的实际虚拟机文件和磁盘。术语VVOL(单个)是指单个特定文件、LUN或命名空间。ONTAP 会根据数据存储库使用的协议创建NVMe命名空间、LUN或文件。Vvol有多种不同的类型；最常见的类型是配置(唯一一种具有VMFS的Vvol、它包含VM的vmx文件等元数据文件)、数据(虚拟磁盘或VMDK)和交换(在VM启动时创建)。受VMware VM加密保护的Vvol的类型为其他。不应将VMware VM加密与ONTAP 卷或聚合加密相混淆。</block>
+  <block id="f615a85ee8b4ffd3bdd64ab72c2cf934" category="paragraph">如上所述、使用策略有助于简化配置VM或VMDK的任务。只需选择适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol volume中。</block>
+  <block id="d5938f26039c87ff0b18251b9b89e0ec" category="list-text">克隆可以在一个卷内或ONTAP 集群中的多个卷之间快速创建、与启用了VAAI的传统克隆相比、这是一个优势。它们还具有高效存储的特点。卷中的克隆会使用ONTAP文件克隆、这与FlexClone卷类似、只会存储源VVOL/LUN /命名空间中的更改。因此、可以快速创建用于生产或其他应用程序目的的长期VM、占用的空间极少、并可受益于VM级别保护(使用适用于VMware vSphere的NetApp SnapCenter 插件、VMware托管快照或VADP备份)和性能管理(使用ONTAP QoS)。使用VVOLs进行跨卷克隆的速度比使用Vaai快得多。由于使用了VASA、我们可以创建克隆、并允许在复制完成之前在目标位置访问它。数据块会作为后台进程进行复制、以填充目标VVOV。这与ONTAP无中断LUN移动适用于传统LUN的方式类似。</block>
 </blocks>

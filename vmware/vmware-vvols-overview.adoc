@@ -29,7 +29,7 @@ TIP: 本文档已进行更新、加入了vSphere 8.0 Update 3和ONTAP Tools 10.3
 
 == 虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)概述
 
-NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN、文件、现在使用vSphere 8 - NVMe命名空间时也可以是这些对象。NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。
+NetApp于2012年开始与VMware合作、为适用于vSphere 5的vSphere APIS for Storage AWARMIVAIVAICHUIAICHUDE(VASA )提供支持。通过早期的VASA Provider、可以在配置文件中定义存储功能、这些功能可用于在配置时筛选数据存储库、并在此后检查是否符合策略。随着时间的推移、这种情况不断发展、增加了一些新功能、以便在配置以及添加虚拟卷或vvol (其中、各个存储对象用于虚拟机文件和虚拟磁盘)方面实现更大的自动化。这些对象可以是LUN、文件、现在适用于vSphere 8 - NVMe命名空间(与ONTAP工具9.13P2结合使用)。NetApp与VMware密切合作、作为2015年随vSphere 6发布的vvol的参考合作伙伴、并再次作为在vSphere 8中基于网络结构使用NVMe的vvol的设计合作伙伴。NetApp将继续增强ONTAP 以利用其最新功能。
 
 需要注意以下几个组件：
 
@@ -65,7 +65,7 @@ vSphere 8中的新增功能是、在将基于网络结构的NVMe (NVMe-oF)与vvo
 
 === 虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)
 
-虚拟卷是指存储在虚拟卷数据存储库中的实际虚拟机文件和磁盘。术语VVOL(单个)是指单个特定文件、LUN或命名空间。ONTAP 会根据数据存储库使用的协议创建NVMe命名空间、LUN或文件。Vvol有几种不同的类型；最常见的类型是配置(元数据文件)、数据(虚拟磁盘或VMDK)和交换(在启动VM时创建)。受VMware VM加密保护的Vvol的类型为其他。不应将VMware VM加密与ONTAP 卷或聚合加密相混淆。
+虚拟卷是指存储在虚拟卷数据存储库中的实际虚拟机文件和磁盘。术语VVOL(单个)是指单个特定文件、LUN或命名空间。ONTAP 会根据数据存储库使用的协议创建NVMe命名空间、LUN或文件。Vvol有多种不同的类型；最常见的类型是配置(唯一一种具有VMFS的Vvol、它包含VM的vmx文件等元数据文件)、数据(虚拟磁盘或VMDK)和交换(在VM启动时创建)。受VMware VM加密保护的Vvol的类型为其他。不应将VMware VM加密与ONTAP 卷或聚合加密相混淆。
 
 
 
@@ -79,7 +79,7 @@ vSphere 8中的新增功能是、在将基于网络结构的NVMe (NVMe-oF)与vvo
 
 VM存储策略在vCenter中的策略和配置文件下创建。对于虚拟卷、请使用NetApp虚拟卷存储类型提供程序中的规则创建一个规则集。现在、与ONTAP工具9.X相比、ONTAP工具10.X提供了一种更简单的方法、它允许您直接在VM存储策略本身中指定存储属性。
 
-如上所述、使用策略有助于简化配置卷的任务。只需选择适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol volume中。
+如上所述、使用策略有助于简化配置VM或VMDK的任务。只需选择适当的策略、VASA Provider就会显示支持该策略的VVOs数据存储库、并将VVOV放入一个合规的FlexVol volume中。
 
 
 
@@ -178,7 +178,7 @@ VMware在2015年将VVOL支持引入到了ASA 2.0中、他们将其称为"一个�
 
 在充分发挥其优势时(例如在上述使用情形中)、此类卷可提供以下具体改进：
 
-* 克隆可以在一个卷内或ONTAP 集群中的多个卷之间快速创建、与启用了VAAI的传统克隆相比、这是一个优势。它们还具有高效存储的特点。卷中的克隆会使用ONTAP文件克隆、这与FlexClone卷类似、只会存储源VVOL/LUN /命名空间中的更改。因此、可以快速创建用于生产或其他应用程序目的的长期VM、占用的空间极少、并可受益于VM级别保护(使用适用于VMware vSphere的NetApp SnapCenter 插件、VMware托管快照或VADP备份)和性能管理(使用ONTAP QoS)。
+* 克隆可以在一个卷内或ONTAP 集群中的多个卷之间快速创建、与启用了VAAI的传统克隆相比、这是一个优势。它们还具有高效存储的特点。卷中的克隆会使用ONTAP文件克隆、这与FlexClone卷类似、只会存储源VVOL/LUN /命名空间中的更改。因此、可以快速创建用于生产或其他应用程序目的的长期VM、占用的空间极少、并可受益于VM级别保护(使用适用于VMware vSphere的NetApp SnapCenter 插件、VMware托管快照或VADP备份)和性能管理(使用ONTAP QoS)。使用VVOLs进行跨卷克隆的速度比使用Vaai快得多。由于使用了VASA、我们可以创建克隆、并允许在复制完成之前在目标位置访问它。数据块会作为后台进程进行复制、以填充目标VVOV。这与ONTAP无中断LUN移动适用于传统LUN的方式类似。
 * 在将TKG与vSphere CSI结合使用时、Vvol是理想的存储技术、可提供由vCenter管理员管理的离散存储类和容量。
 * 类似于Amazon EBS的服务可以通过FCD提供、因为顾名思义、FCD VMDK是vSphere中的一流公民、其生命周期可以独立于可能连接到的VM进行管理。
 

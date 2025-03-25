@@ -61,7 +61,11 @@ summary: ONTAP工具10安装检查清单
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["五个"]部署OVA
 [role="quick-margin-list"]
+* 请注意、此步骤可能需要长达45分钟才能完成
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["部署OVA"]使用vSphere Client。
+* 在OVA部署的第3步中、选择"自定义此虚拟机的硬件"选项、并在第10步中设置以下内容：
+* "启用CPU热添加"
+* "内存热插拔"
 
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["六个"]将vCenter添加到ONTAP工具
@@ -71,6 +75,7 @@ summary: ONTAP工具10安装检查清单
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-7.png["七个"]将存储后端添加到ONTAP工具
 [role="quick-margin-list"]
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/configure-user-role-and-privileges.html["配置ONTAP用户角色和权限"]如果不使用管理员、则使用随附的JSON文件。
 * 如果对SVM使用存储多租户、则使用此选项
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载集群"]在ONTAP工具管理器中、并将其与vCenter关联。
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载SVM"]在ONTAP工具vCenter UI中。
@@ -96,7 +101,6 @@ summary: ONTAP工具10安装检查清单
 [role="quick-margin-list"]
 * 为HA部署中的VM创建反关联性规则。
 * 如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。
-* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/configure-user-role-and-privileges.html["配置ONTAP用户角色和权限"]使用随附的JSON文件。
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/certificate-manage.html["使用管理证书"]在ONTAP工具管理器中安装任何必需的CA签名证书。
 * 如果您为SRM/vSR启用了SRA以保护传统数据存储库， https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/protect/configure-on-srm-appliance.html["在VMware Live Site Recovery设备上配置SRA"]请。
 * 为配置本机备份 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/enable-backup.html["RPO几乎为零"]。
