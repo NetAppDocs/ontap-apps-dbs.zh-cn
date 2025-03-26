@@ -6,7 +6,10 @@ summary: 基于ONTAP的Microsoft SQL Server
 searchtitle: 基于ONTAP的Microsoft SQL Server 
 ---
 = 概述
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

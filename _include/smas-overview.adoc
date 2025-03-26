@@ -16,11 +16,11 @@ SnapMirror活动同步(SM-AS)基于SnapMirror同步。两者都可以实现RRPO 
 
 SnapMirror主动同步提供位于两个不同站点上的LUN。在正常操作下、不存在"源"或"目标"。方向是双向的。指向给定LUN路径的所有读取IO将由本地控制器使用其本地数据副本进行处理。所有写入操作都将复制到远程配对节点、并在本地写入、然后才会得到确认。
 
-image:smas-overview.png["SnapMirror活动同步概述"]
+image:../media/smas-overview.png["SnapMirror活动同步概述"]
 
 从逻辑上讲、此行为类似于一组LUN。可以通过两个不同集群上的SAN路径将IO定向到这些逻辑LUN、但数据始终相同。IO行为对称、这对于许多主动-主动应用程序配置至关重要。
 
-image:smas-logical.png["SnapMirror主动同步逻辑设计"]
+image:../media/smas-logical.png["SnapMirror主动同步逻辑设计"]
 
 
 

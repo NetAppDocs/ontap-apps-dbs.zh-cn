@@ -6,13 +6,17 @@ summary: 采用SAN的MySQL
 searchtitle: 采用SAN的MySQL 
 ---
 = SAN
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
+:firstname: [.lead]
+:author: [.lead]
+:authorinitials: [
+:authors: [.lead]
+:revdate: There are two options to configure MySQL with SAN using the usual two-volume model.
 
-
-[role="lead"]
-使用通常的双卷模式为MySQL配置SAN有两种选择。
 
 只要I/O和容量需求不超过单个LUN文件系统的限制、就可以将较小的数据库放置在一对标准LUN上。例如、需要大约2K随机IOPS的数据库可以托管在单个LUN上的单个文件系统上。同样、大小仅为100 GB的数据库可以容纳在一个LUN上、而不会产生管理问题。
 

@@ -6,7 +6,10 @@ summary: Microsoft SQL Server存储注意事项
 searchtitle: Microsoft SQL Server存储注意事项 
 ---
 = 概述
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

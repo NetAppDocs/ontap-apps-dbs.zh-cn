@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-smas-sql.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, ONTAP, SMBC, SMas, SnapMirror Business Continuity 
 summary: Microsoft SQL Server和SnapMirror活动同步 
-searchtitle: 具有SnapMirror活动同步的Microsoft SQL Server 
+searchtitle: Microsoft SQL Server和SnapMirror活动同步 
 ---
 = 概述
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -21,7 +24,7 @@ searchtitle: 具有SnapMirror活动同步的Microsoft SQL Server
 
 使用独立设置时、SQL Server只能在一个站点上运行。可能link:mssql-dr-smas-uniform.html["统一"]会使用访问权限。
 
-image:smas-onehost.png["具有统一访问的单个主机"]
+image:../media/smas-onehost.png["具有统一访问的单个主机"]
 
 使用统一访问时、任一站点的存储故障都不会中断数据库操作。当然、如果包含数据库服务器的站点发生完全故障、则会导致中断。
 

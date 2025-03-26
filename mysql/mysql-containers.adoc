@@ -6,8 +6,10 @@ summary: MySQL容器化
 searchtitle: MySQL容器化 
 ---
 = 容器化
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -16,4 +18,4 @@ MySQL数据库容器化正在变得越来越普遍。
 
 底层容器管理几乎始终通过Docker来执行。OpenShift和Kubnetes等容器管理平台使大型容器环境的管理变得更加简单。容器化的优势包括降低成本、因为无需为虚拟机管理程序授予许可证。此外、容器还允许多个数据库彼此隔离运行、同时共享同一个底层内核和操作系统。容器只需几微秒即可完成配置。
 
-NetApp提供了Asta三项功能来提供高级存储管理功能。例如、Asta三元数据可以使在Kubnetes中创建的容器自动在适当的层上配置其存储、应用导出策略、设置快照策略、甚至可以将一个容器克隆到另一个容器。对于追加信息，请参见 link:https://docs.netapp.com/us-en/trident/index.html["Astra Trident 文档"]。
+NetApp提供了Asta三项功能来提供高级存储管理功能。例如、Asta三元数据可以使在Kubnetes中创建的容器自动在适当的层上配置其存储、应用导出策略、设置快照策略、甚至可以将一个容器克隆到另一个容器。有关更多信息，请参见link:https://docs.netapp.com/us-en/trident/index.html["Astra Trident 文档"^]。

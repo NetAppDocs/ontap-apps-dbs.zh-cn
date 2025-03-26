@@ -6,8 +6,10 @@ summary: MySQL配置参数
 searchtitle: MySQL配置参数 
 ---
 = 配置参数
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

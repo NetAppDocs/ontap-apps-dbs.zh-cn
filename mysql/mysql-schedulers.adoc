@@ -3,11 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-schedulers.html 
 keywords: MySQL,MariaDB,schedulers 
 summary: MySQL和IO计划程序 
-searchtitle: I/O计划程序和MySQL 
+searchtitle: MySQL和IO计划程序 
 ---
 = I/O计划程序
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

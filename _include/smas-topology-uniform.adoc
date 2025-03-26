@@ -24,7 +24,7 @@ SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道
 
 对于AFF系统、配置主机邻近性后、路径将如下所示。
 
-image:smas-uniform-aff.png["SnapMirror主动同步AFF统一网络"]
+image:../media/smas-uniform-aff.png["SnapMirror主动同步AFF统一网络"]
 
 在正常操作下、所有IO均为本地IO。读取和写入操作由本地存储阵列提供。当然、在确认写入IO之前、本地控制器也需要将其复制到远程系统、但所有读取IO都将在本地进行处理、并且不会通过遍历站点间的SAN链路而产生额外延迟。
 
@@ -38,7 +38,7 @@ image:smas-uniform-aff.png["SnapMirror主动同步AFF统一网络"]
 
 NetApp ASA系统可在集群上的所有路径之间提供主动-主动多路径功能。这也适用于SM-AS配置。
 
-image:smas-uniform-asa.png["SnapMirror主动同步ASA统一网络"]
+image:../media/smas-uniform-asa.png["SnapMirror主动同步ASA统一网络"]
 
 使用非一致访问的ASA配置的工作原理与使用AFF时大致相同。使用统一访问时、IO将跨越WAN。这可能是可取的、也可能不可取。
 

@@ -10,9 +10,12 @@
 
 在某些情况下、可以直接在ONTAP上计划快照。在其他情况下、可能需要SnapCenter等软件来编排应用程序或操作系统操作、然后再创建快照。无论哪种方法最适合您的工作负载、主动快照策略都可以通过频繁、轻松访问从启动LUN到任务关键型数据库的所有备份来确保数据安全。
 
-*注意*：ONTAP灵活卷或更简单地说、卷不是LUN的同义词。卷是文件或LUN等数据的管理容器。例如、数据库可能位于一个8 LUN条带集上、所有LUN都包含在一个卷中。
+[NOTE]
+====
+ONTAP灵活卷或更简单地说、卷与LUN并不同义。卷是文件或LUN等数据的管理容器。例如、数据库可能位于一个8 LUN条带集上、所有LUN都包含在一个卷中。
 
-有关快照的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/data-protection/manage-local-snapshot-copies-concept.html["此处。"]
+====
+有关快照的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/data-protection/manage-local-snapshot-copies-concept.html["ONTAP文档。"]
 
 
 
@@ -22,27 +25,30 @@
 
 这样可以确保即使侵入者、恶意内部人员甚至勒索软件攻击导致访问ONTAP系统本身、也不会影响备份。如果与频繁的快照计划结合使用、则可以提供极其强大的数据保护、并且RPO非常低。
 
-有关防篡改快照的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/snaplock/snapshot-lock-concept.html["此处。"]
+
+NOTE: 不能使用光纤池对防篡改快照进行分层。
+
+有关防篡改快照的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/snaplock/snapshot-lock-concept.html["ONTAP文档。"]
 
 
 
 == SnapMirror 复制
 
-也可以将快照复制到远程系统。这包括防篡改快照、其中会在远程系统上应用和实施保留期限。结果是、数据保护优势与本地快照相同、但数据位于另一个存储阵列上。这样可以确保销毁原始阵列不会影响备份。
+也可以将快照复制到远程系统。这包括防篡改快照、即在远程系统上应用和实施保留期限。结果是、数据保护优势与本地快照相同、但数据位于另一个存储阵列上。这样可以确保销毁原始阵列不会影响备份。
 
 第二个系统还为管理安全性打开了新的选项。例如、某些NetApp客户会隔离主存储系统和二级存储系统的身份验证凭据。没有一个管理用户可以同时访问这两个系统、这意味着恶意管理员无法删除所有数据副本。
 
-有关SnapMirror的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-unified-replication-concept.html["此处。"]
+有关SnapMirror的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-unified-replication-concept.html["ONTAP文档。"]
 
 
 
 == Storage Virtual Machine
 
-新配置的ONTAP存储系统与新配置的VMware ESX服务器类似、因为在创建虚拟机之前、这两个系统都不能支持任何用户。通过ONTAP、您可以创建一个Storage Virtual Machine (SVM)、此SVM将成为存储管理的最基本单元。每个SVM都有自己的存储资源、协议配置、IP地址和FCP WWN。  这是ONTAP多租户的基础。
+新配置的ONTAP存储系统与新配置的VMware ESX服务器类似、因为在创建虚拟机之前、这两个系统都不能支持任何用户。通过ONTAP、您可以创建一个Storage Virtual Machine (SVM)、此SVM将成为存储管理的最基本单元。每个SVM都有自己的存储资源、协议配置、IP地址和FCP WWN。这是ONTAP多租户的基础。
 
 例如、您可以为关键生产工作负载配置一个SVM、为开发活动配置另一个SVM。然后、您可以限制某些管理员对生产SVM的访问、同时授予开发人员对开发SVM中存储资源的更广泛的控制权限。您可能还需要为财务和人力资源团队提供第三个SVM、以存储非常关键的只读数据。
 
-有关SVM的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/concepts/storage-virtualization-concept.html["此处。"]
+有关SVM的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/concepts/storage-virtualization-concept.html["ONTAP文档。"]
 
 
 
@@ -50,15 +56,15 @@
 
 ONTAP为管理登录提供了功能强大的基于角色的访问控制(Role-Based Access Control、RBAC)。某些管理员可能需要完全集群访问权限、而其他管理员则可能只需要访问某些SVM。高级帮助台人员可能需要增加卷大小的能力。这样、您就可以为管理用户授予执行其工作职责所需的访问权限、而无需执行任何其他操作。此外、您还可以使用不同供应商提供的PKI来保护这些登录、限制对ssh密钥的访问、并强制执行失败登录尝试锁定。
 
-有关管理访问控制的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/authentication/manage-access-control-roles-concept.html["此处。"]
+有关管理访问控制的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/authentication/manage-access-control-roles-concept.html["ONTAP文档。"]
 
 
 
-== 多因素身份验证
+== 多因素身份验证(MFA)
 
 ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身份验证(MFA)。其结果是、用户名/密码被泄露本身并不是没有第二个因素(例如FOB或智能手机应用程序)的数据的安全线程。
 
-有关详细信息，请单击 link:https://docs.netapp.com/us-en/ontap/authentication/mfa-overview.html["此处。"]
+有关多因素身份验证(MFA)的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/authentication/mfa-overview.html["ONTAP文档。"]
 
 
 
@@ -66,7 +72,7 @@ ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身
 
 自动化需要API调用、但并非所有工具都需要完全管理访问权限。为了帮助保护自动化系统的安全、还在API级别提供了RBAC。您可以将自动化用户帐户限制为所需的API调用。例如、监控软件不需要更改访问权限、只需要读取访问权限即可。配置存储的工作流不需要删除存储。
 
-要了解更多信息、请启动https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html[here.]
+有关API RBAC的详细信息、请参见link:https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html["ONTAP文档。"]
 
 
 
@@ -74,4 +80,4 @@ ONTAP和某些其他NetApp产品现在支持使用多种方法进行多因素身
 
 通过要求两个不同的管理员(每个管理员都有自己的凭据)批准某些活动、可以进一步实现多"因素"身份验证。其中包括更改登录权限、运行诊断命令和删除数据。
 
-有关多管理员验证(MAV)的详细信息、请单击 link:https://docs.netapp.com/us-en/ontap/multi-admin-verify/index.html["此处"]
+有关多管理员验证(MAV)的详细信息、请参见link:https://docs.netapp.com/us-en/ontap/multi-admin-verify/index.html["ONTAP文档。"]

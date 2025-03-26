@@ -3,11 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-overview.html 
 keywords: MySQL,MariaDB,TR-4722 
 summary: 基于ONTAP的MySQL 
-searchtitle: 基于ONTAP的MySQL数据库 
+searchtitle: 基于ONTAP的MySQL 
 ---
 = 概述
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

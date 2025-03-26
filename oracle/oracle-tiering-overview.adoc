@@ -25,7 +25,7 @@ FabricPool是一种分层技术、可将块分为热块或冷块、并将其放�
 
 可以使用多个分层策略来控制块的分类方式、这些策略可以按卷设置、也可以根据需要进行更改。在性能层和容量层之间仅移动数据块。定义LUN和文件系统结构的元数据始终保留在性能层上。因此、可在ONTAP上集中管理。文件和LUN的显示与任何其他ONTAP配置中存储的数据没有任何不同。NetApp AFF或FAS控制器会应用定义的策略将数据移动到相应的层。
 
-image:oracle-fp_image1.png["错误：缺少图形映像"]
+image:../media/oracle-fp_image1.png["FabricPool 分层"]
 
 
 

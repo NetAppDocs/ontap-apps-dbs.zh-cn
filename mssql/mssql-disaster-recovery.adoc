@@ -6,7 +6,10 @@ summary: 使用ONTAP进行Microsoft SQL Server灾难恢复
 searchtitle: 使用ONTAP进行Microsoft SQL Server灾难恢复 
 ---
 = 灾难恢复
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

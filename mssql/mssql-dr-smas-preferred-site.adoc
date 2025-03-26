@@ -6,7 +6,10 @@ summary: Microsoft SQL Server和SM-AS首选站点
 searchtitle: Microsoft SQL Server和SM-AS首选站点 
 ---
 = 首选站点
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -19,7 +22,7 @@ SnapMirror主动同步会将一个站点视为"源"、而将另一个站点视�
 
 可通过SystemManager查看源/目标配置：
 
-image:smas-source-systemmanager.png["sm-as源的SM屏幕截图"]
+image:../media/smas-source-systemmanager.png["sm-as源的SM屏幕截图"]
 
 或在命令行界面上：
 

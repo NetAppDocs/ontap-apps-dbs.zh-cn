@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-smas-overview.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
 summary: Microsoft SQL Server和SnapMirror活动同步 
-searchtitle: SQL Server和SnapMirror活动同步 
+searchtitle: Microsoft SQL Server和SnapMirror活动同步 
 ---
 = 概述
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -19,9 +22,9 @@ SQL Server主机使用光纤通道(Fibre Channel、FC)或iSCSI LUN访问存储�
 
 
 
-== SnapMirror主动与对称主动/主动的架构
+== SnapMirror主动同步架构与对称主动/主动架构
 
-image:mssql-smas-architecture.png["错误：缺少图形映像"]
+image:../media/mssql-smas-architecture.png["SnapMirror主动同步架构"]
 
 **同步复制**
 

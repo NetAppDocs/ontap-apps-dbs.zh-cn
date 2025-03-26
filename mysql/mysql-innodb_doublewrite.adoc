@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-innodb_doublewrite.html 
 keywords: MySQL,MariaDB,innodb_doublewrite 
 summary: MySQL和InnoDB_doblewite 
+searchtitle: MySQL和InnoDB_doblewite 
 ---
 = InnoDB_doublewite
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

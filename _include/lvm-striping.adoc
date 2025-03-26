@@ -14,4 +14,4 @@
 
 下图显示了三个可能的条带大小和宽度调整选项。选择LUN数量是为了满足上述性能要求、但在所有情况下、单个条带内的总数据均为1 MB。
 
-image:ontap-lvm-striping.png["错误：缺少图形映像"]
+image:../media/ontap-lvm-striping.png["LVM条带化"]

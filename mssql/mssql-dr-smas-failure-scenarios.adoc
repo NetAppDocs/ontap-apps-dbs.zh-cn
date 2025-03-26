@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-smas-failure-scenarios.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, failover 
 summary: Microsoft SQL Server和SM-AS故障转移场景 
-searchtitle: Microsoft SQL Server和SnapMirror主动同步故障转移 
+searchtitle: Microsoft SQL Server和SM-AS故障转移场景 
 ---
 = 故障情形
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -23,7 +26,7 @@ searchtitle: Microsoft SQL Server和SnapMirror主动同步故障转移
 
 
 
-=== 站点A (首选站点)
+== 站点A (首选站点)
 
 首选站点上的复制链路故障会导致写入IO处理暂停大约15秒、因为ONTAP会在确定复制链路确实无法访问之前重试复制的写入操作。15秒后、站点A系统将恢复读取和写入IO处理。SAN路径不会更改、LUN将保持联机状态。
 

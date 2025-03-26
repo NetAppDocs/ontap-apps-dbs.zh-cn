@@ -6,7 +6,10 @@ summary: Microsoft SQL Server日志目录
 searchtitle: Microsoft SQL Server日志目录 
 ---
 = 日志目录
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

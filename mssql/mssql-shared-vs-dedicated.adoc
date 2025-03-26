@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mssql/mssql-shared-vs-dedicated.html 
 keywords: MSSQL,SQL Server, multiple instances, dedicated instance, ONTAP 
 summary: Microsoft SQL Server实例部署 
-searchtitle: Microsoft SQL Server共享实例与专用实例 
+searchtitle: Microsoft SQL Server实例部署 
 ---
 = 共享实例与专用实例
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-innodb_io_capacity.html 
 keywords: MySQL,MariaDB,innodb_io_capacity 
 summary: MySQL和InnoDB_IO_Capacity 
+searchtitle: MySQL和InnoDB_IO_Capacity 
 ---
 = InnoDB_IO_Capacity
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -26,4 +29,4 @@ CAUTION: 请勿使用极值(如20、000或更多)、除非您已证明较低的�
 InnoDB_IO_Capacity参数用于调节转储速率和相关I/O
 
 
-CAUTION: 如果将此参数或InnoDB_IO_capity_max参数设置得过高、并因过早转储而浪费I/O操作、可能会严重影响性能。
+CAUTION: 如果将此参数或InnoDB_IO_capACity_max参数设置得过高并设置为"wastin"、可能会严重影响性能

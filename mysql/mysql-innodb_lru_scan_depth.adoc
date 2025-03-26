@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-innodb_lru_scan_depth.html 
 keywords: MySQL,MariaDB,innodb_lru_scan_depth 
 summary: MySQL和InnoDB_LRU_SCAN_深度 
+searchtitle: MySQL和InnoDB_LRU_SCAN_深度 
 ---
 = InnoDB_LRU_SCAN_深度
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

@@ -6,7 +6,10 @@ summary: Microsoft SQL Server内存配置
 searchtitle: Microsoft SQL Server内存配置 
 ---
 = 内存配置
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

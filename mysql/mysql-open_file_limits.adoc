@@ -3,10 +3,13 @@ sidebar: sidebar
 permalink: mysql/mysql-open_file_limits.html 
 keywords: MySQL,MariaDB,open_file_limits 
 summary: MySQL和open_file_极限 
+searchtitle: MySQL和open_file_极限 
 ---
 = open_file_极限 值
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

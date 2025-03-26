@@ -14,7 +14,7 @@ SnapMirror主动同步支持两种类型的存储故障转移操作：计划内�
 
 绿线是活动路径、但可能会产生较长的延迟、因为该路径上的IO需要通过SnapMirror活动同步路径传递。额外的延迟取决于用于SnapMirror活动同步的站点之间的互连速度。
 
-image:smas-failover-1.png["错误：缺少图形映像"]
+image:../media/smas-failover-1.png["SnapMirror主动同步正常操作"]
 
 
 
@@ -22,7 +22,7 @@ image:smas-failover-1.png["错误：缺少图形映像"]
 
 如果活动镜像副本因计划内或计划外故障转移而变得不可用、则很明显、它将不再可用。但是、远程系统具有同步副本、并且指向远程站点的SAN路径已存在。远程系统能够为该LUN提供IO服务。
 
-image:smas-failover-2.png["错误：缺少图形映像"]
+image:../media/smas-failover-2.png["SnapMirror活动同步失败"]
 
 
 
@@ -30,7 +30,7 @@ image:smas-failover-2.png["错误：缺少图形映像"]
 
 故障转移会导致远程副本成为活动副本。这些路径将从"Active/Optimized"(活动/优化)更改为"Active/Optimized"(活动/优化)、并且IO将继续提供服务、而不会丢失数据
 
-image:smas-failover-3.png["错误：缺少图形映像"]
+image:../media/smas-failover-3.png["SnapMirror主动同步故障转移"]
 
 
 
@@ -38,7 +38,7 @@ image:smas-failover-3.png["错误：缺少图形映像"]
 
 源系统恢复使用后、SnapMirror活动同步可以重新同步复制、但运行的方向相反。现在、配置与起始点基本相同、只是已翻转主动镜像站点。
 
-image:smas-failover-4.png["错误：缺少图形映像"]
+image:../media/smas-failover-4.png["SnapMirror主动同步修复"]
 
 
 
@@ -46,4 +46,4 @@ image:smas-failover-4.png["错误：缺少图形映像"]
 
 如果需要、管理员可以执行故障恢复、并将LUN的活动副本移回原始控制器。
 
-image:smas-failover-1.png["错误：缺少图形映像"]
+image:../media/smas-failover-1.png["SnapMirror主动同步故障恢复"]

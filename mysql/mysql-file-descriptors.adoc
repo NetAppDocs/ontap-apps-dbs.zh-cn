@@ -6,8 +6,10 @@ summary: MySQL文件描述符
 searchtitle: MySQL文件描述符 
 ---
 = 文件描述符
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 

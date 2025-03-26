@@ -6,8 +6,10 @@ summary: MySQL和NFSv3插槽表
 searchtitle: MySQL和NFSv3插槽表 
 ---
 = NFSv3插槽表
+:hardbreaks:
 :allow-uri-read: 
 :icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -27,9 +29,5 @@ sunrpc.tcp_slot_table_entries = 128
 ....
 所有Linux系统都应包括 `sunrpc.tcp_slot_table_entries`，但只有部分包括 `sunrpc.tcp_max_slot_table_entries`。它们都应设置为128。
 
-|===
-| 小心 
 
-
-| 如果未设置这些参数、可能会对性能产生显著影响。在某些情况下、性能会受到限制、因为Linux操作系统发出的I/O不足在其他情况下、随着Linux操作系统尝试问题描述的I/O数超过可处理的I/O数、I/O时间会增加。 
-|===
+CAUTION: 如果未设置这些参数、可能会对性能产生显著影响。在某些情况下、性能会受到限制、因为Linux操作系统发出的I/O不足在其他情况下、随着Linux操作系统尝试问题描述的I/O数超过可处理的I/O数、I/O时间会增加。

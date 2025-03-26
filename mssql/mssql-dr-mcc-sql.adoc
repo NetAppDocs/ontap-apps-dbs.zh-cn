@@ -3,9 +3,13 @@ sidebar: sidebar
 permalink: mssql/mssql-dr-mcc-sql.html 
 keywords: MSSQL,SQL Server, MetroCluster 
 summary: 采用NetApp MetroCluster的Microsoft SQL Server 
+searchtitle: 采用NetApp MetroCluster的Microsoft SQL Server 
 ---
 = SQL Server与MetroCluster
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -26,4 +30,4 @@ SQL Server可在一个MetroCluster系统上扩展到多达数千个数据库。�
 
 此方法的主要要求是在远程站点上运行操作系统。它必须预配置SQL Server设置、并应使用等效的内部版本进行更新。SQL Server系统数据库也可以镜像到远程站点、并在发生灾难时进行挂载。
 
-如果在切换之前灾难恢复站点未使用托管虚拟化数据库的卷、文件系统和数据存储库、则无需在关联的卷上设置 `dr-force- nvfail`。
+如果在切换之前灾难恢复站点未使用托管虚拟化数据库的卷、文件系统和数据存储库、则无需在关联的卷上设置 `dr-force-nvfail`。

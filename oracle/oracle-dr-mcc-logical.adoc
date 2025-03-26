@@ -39,7 +39,7 @@ SyncMirror是一种镜像技术、可增强但不会取代RAID DP或RAID-TEC。�
 . 给定站点上的每组驱动器都会自动配置为一个或多个完全冗余的RAID DP或RAID-TEC组、而不依赖于镜像的使用。在镜像下使用RAID可提供数据保护、即使在站点丢失后也是如此。
 
 
-image:syncmirror.png["错误：缺少图形映像"]
+image:../media/syncmirror.png["SyncMirror配置"]
 
 上图显示了一个示例SyncMirror配置。在控制器上创建了一个包含24个驱动器的聚合、其中12个驱动器来自站点A上分配的磁盘架、12个驱动器来自站点B上分配的磁盘架这些驱动器被分组为两个镜像RAID组。RAID组0在站点A上包含一个6驱动器丛、该丛镜像到站点B上的一个6驱动器丛同样、RAID组1在站点A上包含一个6驱动器丛、该丛镜像到站点B上的6驱动器丛
 
@@ -121,13 +121,14 @@ MetroCluster集群存在于节点间通信和磁盘访问均依赖于站点间�
 
 === 具有光纤连接MetroCluster的MetroCluster Tieb破碎 机
 
-。 https://library.netapp.com/ecmdocs/ECMP12007400/html/GUID-3662A7CE-3AF2-4562-A11C-5C37DE0E3A87.html["NetApp MetroCluster Tieb破碎 机"^] 软件可以在第三个站点上运行、以监控MetroCluster环境的运行状况、发送通知、并在发生灾难时强制执行切换(可选)。有关Tieb破碎 机的完整问题描述、请参见 http://mysupport.netapp.com["NetApp 支持站点"^]但MetroCluster Tieb破碎 机的主要用途是检测站点丢失。它还必须区分站点丢失和连接丢失。例如、切换不应因TiebREAKER无法访问主站点而发生、这就是TiebREAKER同时监控远程站点联系主站点的能力的原因。
+该link:https://docs.netapp.com/us-en/ontap-metrocluster/install-ip/task_sw_config_configure_mediator.html["NetApp MetroCluster Tieb破碎 机"^]软件可以在第三个站点上运行、以监控MetroCluster环境的运行状况、发送通知、并在发生灾难时强制执行切换(可选)。有关Tieb破碎 机的完整说明link:http://mysupport.netapp.com["NetApp 支持站点"^]，请参见，但MetroCluster Tieb破碎 机的主要用途是检测站点丢失。它还必须区分站点丢失和连接丢失。例如、切换不应因TiebREAKER无法访问主站点而发生、这就是TiebREAKER同时监控远程站点联系主站点的能力的原因。
 
 使用AUSO自动切换也与MCTB兼容。AUSO反应非常迅速、因为它可以检测特定的故障事件、然后仅在NVRAM和SyncMirror plexes处于同步状态时调用切换。
 
 相反、Tieb破碎 机位于远程位置、因此必须等待计时器经过、然后才能宣布站点停机。Tieb破碎 机最终会检测到由AUSO涵盖的那种控制器故障、但通常、在Tieb破碎 机开始工作之前、AUSO已启动切换、并且可能已完成切换。Tieb破碎 机生成的第二个切换命令将被拒绝。
 
-*注意：*强制切换时、MCTB软件不会验证NVRAM是否同步和/或plexes是否同步。如果已配置自动切换、则应在维护活动期间禁用、从而导致NVRAM或SyncMirror plexes失去同步。
+
+CAUTION: 强制切换时、MCTB软件不会验证NVRAM是否同步和/或plexes是否同步。如果已配置自动切换、则应在维护活动期间禁用、从而导致NVRAM或SyncMirror plexes失去同步。
 
 此外、MCTB可能无法解决导致以下一系列事件的滚动灾难：
 
@@ -146,7 +147,7 @@ MetroCluster集群存在于节点间通信和磁盘访问均依赖于站点间�
 
 === 使用MetroCluster IP的ONTAP调解器
 
-ONTAP调解器可与MetroCluster IP和某些其他ONTAP解决方案结合使用。它的功能与上述MetroCluster Tieb破碎 机软件非常相似、但也包括一项关键功能、即执行自动无人值守切换。
+ONTAP调解器可与MetroCluster IP和某些其他ONTAP解决方案结合使用。它的功能与上述MetroCluster Tieb破碎 机软件非常相似、但也包括一项关键功能—执行自动无人值守切换。
 
 光纤连接的MetroCluster可以直接访问相反站点上的存储设备。这样、一个MetroCluster控制器就可以通过从驱动器中读取检测信号数据来监控其他控制器的运行状况。这样、一个控制器就可以识别另一个控制器的故障并执行切换。
 
@@ -158,7 +159,7 @@ ONTAP调解器可与MetroCluster IP和某些其他ONTAP解决方案结合使用�
 
 ClusterLion是一种高级MetroCluster监控设备、可充当虚拟第三站点。通过这种方法、可以在双站点配置中安全地部署MetroCluster、并提供完全自动化的切换功能。此外、ClusterLion还可以执行额外的网络级监控并执行切换后操作。完整文档可从ProLion获得。
 
-image:clusterlion.png["错误：缺少图形映像"]
+image:../media/clusterlion.png["ClusterLion图"]
 
 * ClusterLion设备可通过直接连接的以太网和串行缆线监控控制器的运行状况。
 * 这两个设备通过冗余3G无线连接相互连接。
