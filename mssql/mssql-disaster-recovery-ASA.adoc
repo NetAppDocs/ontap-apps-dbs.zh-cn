@@ -1,0 +1,36 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-disaster-recovery-ASA.html 
+keywords: MSSQL,SQL Server, disaster recovery, snapmirror 
+summary: 使用ONTAP进行Microsoft SQL Server灾难恢复 
+searchtitle: 使用ONTAP进行Microsoft SQL Server灾难恢复 
+---
+= 灾难恢复
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+企业数据库和应用程序基础架构通常需要进行复制、以防止发生自然灾难或意外业务中断、同时最大限度地减少停机时间。
+
+SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用以下选项的ONTAP复制技术。
+
+
+
+== SnapMirror
+
+SnapMirror技术为通过LAN和广域网复制数据提供了快速灵活的企业解决方案。SnapMirror技术仅在创建初始镜像后将更改后的数据块传输到目标、从而显著降低网络带宽要求。它可以配置为同步或异步模式。NetApp ASA中的SnapMirror同步复制使用SnapMirror活动同步进行配置。
+
+
+
+== SnapMirror活动同步
+
+对于许多客户来说、业务连续性不仅需要拥有远程数据副本、还需要能够快速利用这些数据、而在NetApp ONTAP中、可以使用SnapMirror主动同步来实现这一点
+
+使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。基于iSCSI/FC的LUN支持SnapMirror主动同步。
+
+SnapMirror主动同步可以提供RPO = 0复制、并且可以轻松地在两个独立的集群之间实施。当两个数据副本处于同步状态后、两个集群只需镜像写入即可。在一个集群上进行写入时、该写入会复制到另一个集群。只有在两个站点上的写入均已完成时、才会向主机确认写入。除了此协议拆分行为之外、这两个集群在其他方面都是正常的ONTAP集群。
+
+SM-AS的一个关键用例是粒度复制。有时、您不希望将所有数据作为一个单元进行复制、或者您需要能够有选择地对某些工作负载进行故障转移。
+
+SM-AS的另一个主要用例是主动-主动操作、您希望在位于两个不同位置的两个不同集群上提供完全可用的数据副本、这些集群具有相同的性能特征、如果需要、也不需要在站点间延伸SAN。如果应用程序受支持、则您的应用程序可能已在这两个站点上运行、这样可以减少故障转移操作期间的整体恢复时间。

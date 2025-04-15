@@ -1,15 +1,12 @@
 ---
 sidebar: sidebar 
-permalink: mssql/mssql-dr-smas-uniform.html 
+permalink: mssql/mssql-dr-smas-uniform-ASA.html 
 keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
 summary: Microsoft SQL Server和SM-AS统一访问 
 searchtitle: Microsoft SQL Server和SM-AS统一访问 
 ---
 = 统一访问
-:hardbreaks:
 :allow-uri-read: 
-:icons: font
-:linkattrs: 
 :imagesdir: ../media/
 
 
@@ -17,6 +14,16 @@ searchtitle: Microsoft SQL Server和SM-AS统一访问
 统一访问网络意味着主机能够访问两个站点(或同一站点中的故障域)上的路径。
 
 SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道主机所在的位置。将LUN映射到给定主机时、您可以指示它们是否接近给定存储系统。
+
+NetApp ASA系统可在集群上的所有路径之间提供主动-主动多路径功能。这也适用于SM-AS配置。
+
+image:smas-uniform-SQL-ASA.png["SnapMirror主动同步ASA统一网络"]
+
+使用统一访问时、IO将跨越WAN。这是一个全网状网络集群、在所有使用情形中、这可能是可取的、也可能不理想。
+
+如果两个站点之间相距100米且具有光纤连接、则WAN上不会出现可检测到的额外延迟、但如果两个站点相距较远、则两个站点上的读取性能都会受到影响。使用非一致访问网络的ASA可以获得ASA的成本和功能优势、而不会造成跨站点延迟访问损失、也不会使用主机邻近功能允许两个站点进行站点本地读/写访问。
+
+在低延迟配置中使用SM-A的ASA具有两个有趣的优势。首先、从本质上说、它可以将任何一台主机的性能提高一倍、因为使用两倍路径的控制器可以为IO提供服务。其次、在单站点环境中、它可以提供极高的可用性、因为整个存储系统可能会丢失、而不会中断主机访问。
 
 
 
@@ -32,16 +39,6 @@ SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道
 
 如果没有邻近设置、则该主机将平等使用这两个存储系统、因为这两个存储系统都会公布主动/优化路径。如果站点之间的SAN延迟和/或带宽有限、则可能无法实现这一点、您可能希望确保在正常操作期间、每个主机优先使用指向本地存储系统的路径。这可通过将主机的wwn/iSCSI ID作为近端主机添加到本地集群来配置。可通过命令行界面或SystemManager完成此操作。
 
+配置主机邻近性后、路径将如下所示。
 
-
-== AFF
-
-对于AFF系统、配置主机邻近性后、路径将如下所示。
-
-image:smas-uniform-aff.png["SnapMirror主动同步AFF统一网络"]
-
-在正常操作下、所有IO均为本地IO。读取和写入操作由本地存储阵列提供。当然、在确认写入IO之前、本地控制器也需要将其复制到远程系统、但所有读取IO都将在本地进行处理、并且不会通过遍历站点间的SAN链路而产生额外延迟。
-
-只有在所有主动/优化路径丢失时、才会使用非优化路径。例如、如果站点A上的整个阵列断电、则站点A上的主机仍可访问站点B上阵列的路径、因此、尽管延迟较长、但仍可保持正常运行。
-
-为了简单起见、这些图中未显示通过本地集群的冗余路径。ONTAP存储系统本身就是HA、因此控制器故障不应导致站点故障。它只会导致受影响站点上使用的本地路径发生更改。
+image:smas-uniform-SQL-ASA-Proximity.png["SnapMirror主动同步ASA统一邻近网络"]

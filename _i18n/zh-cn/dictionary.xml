@@ -532,7 +532,6 @@
   <block id="0a01e6837f5c691536f0b6cbdd0232ec" category="inline-link-macro">TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》</block>
   <block id="1cca1a3fad8c6dd7e2dadbd2aa08bf07" category="paragraph">有关SnapMirror的详细信息、请参见 <block ref="64b916f792bad525a069a243c092b62e" category="inline-link-macro-rx"></block>。</block>
   <block id="77641f4a3e4406855e878235cbd89b87" category="doc">CPU配置</block>
-  <block id="673c216e20d1cf8827f347c01dace664" category="paragraph">此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息、请参见计算容量限制(按SQL Server版本)。</block>
   <block id="cf0e2551e639758cc3c4d82df655eccd" category="inline-link-macro">SQL Server 2022：您的现代数据平台</block>
   <block id="809c9e1f6ce0bc82bf42fae361c6f43e" category="paragraph">因此、要使用所有CPU、应使用每个处理器的核心许可证。有关SQL Server许可的详细信息、请参见 <block ref="457abfaf1083b1cbfc49f2783069c6cd" category="inline-link-macro-rx"></block>。</block>
   <block id="cb8d56a3511d402b7355db8502a54c5a" category="section-title">CPU关联性</block>
@@ -3154,7 +3153,6 @@
   <block id="9852487272d9b2aa9026d0fddc0616fc" category="sidebar">PostgreSQL的存储配置</block>
   <block id="bc237072428e0e4c415160b898946d4c" category="sidebar">PostgreSQL的数据保护</block>
   <block id="3423582eed75b4bd6632c18238fd78e4" category="sidebar">Microsoft SQL Server的数据库配置</block>
-  <block id="6e97cf67ec5979ab5828852639efa208" category="sidebar">Microsoft SQL Server的存储配置</block>
   <block id="5a4517368fb2ab5498fc2108c2ea64c5" category="sidebar">Oracle数据库的数据库配置</block>
   <block id="e483c0ecf3a2b1a60f886d4a5ac553ff" category="sidebar">Oracle数据库的主机配置</block>
   <block id="06b078afa802a679ad4694d13a8a2495" category="sidebar">Oracle数据库的网络配置</block>
@@ -5148,7 +5146,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="0add8d6e7be42a854cd7e0161c7f9bcc" category="paragraph">通常、系统会为每个查询创建一个单独的操作系统线程。如果与SQL Server同时建立了数百个连接、则每个查询一个线程的配置可能会占用过多的系统资源。该<block ref="a9233738c364090bbc418d8a0e08a79e" prefix=" " category="inline-code"></block>选项可以使SQL Server创建一个工作线程池、从而共同为大量查询请求提供服务、从而有助于提高性能。</block>
   <block id="29daf9697a41a463dbe76855a2053a87" category="paragraph">以下示例显示了如何使用T-SQL配置最大工作线程数选项。</block>
   <block id="7039e99a0fdcc0d3ef80074ed42bf4e4" category="paragraph">数据库备份策略应基于已确定的业务要求、而不是理论能力。通过将ONTAP的Snapshot技术与Microsoft SQL Server API相结合、无论用户数据库大小如何、您都可以快速创建应用程序一致的备份。为了满足更高级或横向扩展的数据管理要求、NetApp提供了SnapCenter。</block>
-  <block id="4cd6720df070a1784bae9c6f525f483d" category="admonition">* NetApp建议*使用SnapCenter创建Snapshot副本。下文所述的T-SQL方法也有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。无需预配置。</block>
   <block id="97e73fdb42ddecb63ed519a484ff3c9b" category="paragraph">SQL Server还要求操作系统和存储之间进行协调、以确保创建快照时Snapshot中存在正确的数据。在大多数情况下、执行此操作的唯一安全方法是使用SnapCenter或T-SQL。如果未进行这种额外协调、则创建的快照可能无法可靠地恢复。</block>
   <block id="9d831cc4c73b8a2915ce6d8928d55915" category="paragraph">SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用ONTAP复制技术。有三个基本选项。</block>
   <block id="dd432f8769e4d3db8acf8bf9df94680a" category="paragraph">SnapMirror技术为通过LAN和广域网复制数据提供了快速灵活的企业解决方案。SnapMirror技术仅在创建初始镜像后将更改后的数据块传输到目标、从而显著降低网络带宽要求。它可以配置为同步或异步模式。</block>
@@ -5214,7 +5211,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="87dfe44a851d25873ee6bd0691ac0c6e" category="paragraph">如果在安装了SQL Server的服务器上配置了NUMA、则无需进行其他配置、因为SQL Server可识别NUMA、并且在NUMA硬件上性能良好。</block>
   <block id="7cf384150f5c5317f48125af9bf68c31" category="paragraph">index create memory选项是另一个高级选项、通常不需要更改默认值。</block>
   <block id="64e199b7fb089ffb63f4c4396bac2cd1" category="paragraph">默认情况下、"每个查询的最小内存"设置会为要运行的每个查询分配&gt;=到1024KB的内存。最佳做法是、将此设置保留为默认值、以便SQL Server能够动态管理为索引创建操作分配的内存量。但是、如果SQL Server的RAM超过高效运行所需的RAM、则提高此设置可以提高某些查询的性能。因此、只要SQL Server、任何其他应用程序或操作系统未使用服务器上的可用内存、则提高此设置就可以提高SQL Server的整体性能。如果没有可用内存，则增加此设置可能会影响整体性能。</block>
-  <block id="d4b44030b0eb9280a0e984cd6565e3b3" category="list-text">SnapCenter备份软件、包括以下组件：</block>
   <block id="95a3a11e77f5071b2a97b611548b866c" category="paragraph">本最佳实践部分的范围仅限于根据NetApp为存储基础架构建议的原则和首选标准进行技术设计。端到端实施已超出范围。</block>
   <block id="133dcf168b09b98ab4e6c6f77a743a14" category="paragraph">有关NetApp产品的兼容性信息，请参见<block ref="18e7fcfe606d6d0912191de7fd9eb56a" category="inline-link-macro-rx"></block>。</block>
   <block id="961963c19132b001c6c7289519292be5" category="paragraph">在部署SQL Server之前、您必须了解SQL Server数据库实例支持的应用程序的工作负载要求。每个应用程序对容量、性能和可用性有不同的要求、因此每个数据库的设计都应以最佳方式支持这些要求。许多组织使用应用程序要求定义SLA、将数据库分为多个管理层。SQL Server工作负载通常按如下所述进行分类：</block>
@@ -5967,4 +5963,81 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9b87cb3e85b59ad2d04537560673f94b" category="inline-image-macro">I/O类型</block>
   <block id="977d1017b39374152ac0d18ac3267ca2" category="paragraph"><block ref="977d1017b39374152ac0d18ac3267ca2" category="inline-image-macro-rx" type="image"></block></block>
   <block id="77ea00d93c10244a077ab55be57f5c28" category="admonition">如果将此参数或InnoDB_IO_capACity_max参数设置得过高并设置为"wastin"、可能会严重影响性能</block>
+  <block id="04a3449528520ec35e2bce9c433ee1a4" category="admonition">在新的ASA平台中、使用_vault_ policy将快照复制到远程集群、然后锁定目标以使快照不受篡改。</block>
+  <block id="c1a5c6240b77f4bda50ebb9ea018010b" category="paragraph"><block ref="c1a5c6240b77f4bda50ebb9ea018010b" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="a1fb4e9793df0c2c759586b0d4cc9a59" category="inline-link-macro">计算容量限制(按SQL Server版本)</block>
+  <block id="c637f2ccb4ed04efecb5d430f9b8e9fa" category="paragraph">此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息，请参见 <block ref="5f7d6b9101e39b0f89ce2a4419443b58" category="inline-link-macro-rx"></block>。</block>
+  <block id="027202a07b43ba49311d98b7812a6c84" category="searchtitle">使用NetApp管理软件保护Microsoft SQL Server数据</block>
+  <block id="a6612611980ab8001eb37d9b0d21fc8b" category="list-text">使用新的backup group和backup server命令同时对存储单元上的多个数据库执行快照。</block>
+  <block id="0dedd2c3e15900b4f533838e17976dab" category="list-text">如果数据库工作负载跨多个存储单元、请创建一致性组以简化管理任务。一致性组是指作为单个单元进行管理的一组存储单元。</block>
+  <block id="7f9d52f3748a3a0f2854076ed4952d80" category="admonition">* NetApp建议*使用SnapCenter创建Snapshot副本。上述T-SQL方法同样有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。</block>
+  <block id="e158a020500bd25736fbcb79dbd57ef0" category="admonition">如果SQL Server数据库托管在VMware虚拟化环境中运行的虚拟磁盘上、请使用SnapCenter。如果数据库托管在裸机物理服务器或子系统连接SCSI上、则使用T-SQL Snapshot命令备份数据库。</block>
+  <block id="19f005706f432809f0c867f9d97c05b0" category="admonition">* NetApp建议*使用SnapCenter创建Snapshot副本。上述T-SQL方法同样有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。无需预配置。</block>
+  <block id="88db39456c39e1de4d937d721ec1f2fc" category="doc">数据库文件和文件组</block>
+  <block id="2bcb2e2e60d655aca12a6062bc99f69c" category="section-title">数据库实例文件初始化</block>
+  <block id="44f4b94c8c1ceb120fb9fb9a843fbc0b" category="paragraph">SQL Server无中断可用性组复制功能是一个绝佳的选择、NetApp提供了将数据保护与无中断集成的选项。但是、在某些情况下、您可能需要考虑使用以下选项的ONTAP复制技术。</block>
+  <block id="5698ceeb808e1afe078605b6dbb0a4cb" category="paragraph">SnapMirror技术为通过LAN和广域网复制数据提供了快速灵活的企业解决方案。SnapMirror技术仅在创建初始镜像后将更改后的数据块传输到目标、从而显著降低网络带宽要求。它可以配置为同步或异步模式。NetApp ASA中的SnapMirror同步复制使用SnapMirror活动同步进行配置。</block>
+  <block id="8d4bad202645c8ab15f054b63fe34160" category="paragraph">对于许多客户来说、业务连续性不仅需要拥有远程数据副本、还需要能够快速利用这些数据、而在NetApp ONTAP中、可以使用SnapMirror主动同步来实现这一点</block>
+  <block id="07b431b6fdd20fcb79eababc436bc39b" category="paragraph">使用SnapMirror主动同步时、您实际上拥有两个不同的ONTAP系统、它们会维护LUN数据的独立副本、但会相互协作、为该LUN提供一个实例。从主机角度来看、它是一个LUN实体。基于iSCSI/FC的LUN支持SnapMirror主动同步。</block>
+  <block id="2ae812ab75c34451d9dd11549d394f2a" category="paragraph">SnapMirror主动同步可以提供RPO = 0复制、并且可以轻松地在两个独立的集群之间实施。当两个数据副本处于同步状态后、两个集群只需镜像写入即可。在一个集群上进行写入时、该写入会复制到另一个集群。只有在两个站点上的写入均已完成时、才会向主机确认写入。除了此协议拆分行为之外、这两个集群在其他方面都是正常的ONTAP集群。</block>
+  <block id="1848ac209b4ee9b7c68bbc4a1711a45d" category="paragraph">SM-AS的另一个主要用例是主动-主动操作、您希望在位于两个不同位置的两个不同集群上提供完全可用的数据副本、这些集群具有相同的性能特征、如果需要、也不需要在站点间延伸SAN。如果应用程序受支持、则您的应用程序可能已在这两个站点上运行、这样可以减少故障转移操作期间的整体恢复时间。</block>
+  <block id="bdd8b094b65ec8544e0ad9724a1984ad" category="searchtitle">Microsoft SQL Server和SnapMirror主动同步故障转移</block>
+  <block id="3fc36a3b35bb877723ed17d69c3d57fb" category="summary">Microsoft SQL Server和ONTAP调解器</block>
+  <block id="b029689b71622a39b3564f8800798f34" category="paragraph"><block ref="b029689b71622a39b3564f8800798f34" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="5a2e2e33df9734d8ef57bcb93643d89a" category="paragraph">相比之下、Oracle RAC等集群应用程序可以提供在两个不同站点上同时提供的服务。丢失站点并不意味着整个应用程序服务都会丢失。实例仍可用、并且在正常运行的站点上运行。</block>
+  <block id="a87e788e43169f3df56a7eee4e9bd79c" category="searchtitle">SQL Server和SnapMirror活动同步</block>
+  <block id="5181c0b41b072fc878e6ffdb78976292" category="paragraph">SnapMirror主动同步支持对称主动/主动架构、可提供同步双向复制、以实现业务连续性和灾难恢复。它可以跨多个故障域同时对数据进行读写访问、从而帮助您保护关键SAN工作负载的数据访问、从而确保无中断运行、并在发生灾难或系统故障时最大限度地减少停机时间。</block>
+  <block id="3fa280b2a8840046be265109ff9f0696" category="section-title">SnapMirror主动与对称主动/主动的架构</block>
+  <block id="a93a13dd139e6bb0629cd0ace446c595" category="paragraph"><block ref="a93a13dd139e6bb0629cd0ace446c595" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="c2048364072b2c53688aeb273047e068" category="paragraph">** ONTAP调解器**</block>
+  <block id="309d61d5c343d8fd53c2c585c64587b6" category="searchtitle">具有SnapMirror活动同步的Microsoft SQL Server</block>
+  <block id="c3764435b077d7aa876e89575fe5dd64" category="paragraph"><block ref="c3764435b077d7aa876e89575fe5dd64" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="335b6de9aebdde6ff1e76f9688ff7ff7" category="paragraph"><block ref="335b6de9aebdde6ff1e76f9688ff7ff7" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="481a499afea5f44d3d3173e0504a6ee5" category="paragraph">使用统一访问时、IO将跨越WAN。这是一个全网状网络集群、在所有使用情形中、这可能是可取的、也可能不理想。</block>
+  <block id="e7de94b63ec3b4535a16228dd6f49119" category="paragraph">如果两个站点之间相距100米且具有光纤连接、则WAN上不会出现可检测到的额外延迟、但如果两个站点相距较远、则两个站点上的读取性能都会受到影响。使用非一致访问网络的ASA可以获得ASA的成本和功能优势、而不会造成跨站点延迟访问损失、也不会使用主机邻近功能允许两个站点进行站点本地读/写访问。</block>
+  <block id="cb2187a7d951edc5247ba9c129fee8f3" category="paragraph">配置主机邻近性后、路径将如下所示。</block>
+  <block id="277d64d9a84f721cc341e91f0de1dcae" category="inline-image-macro">SnapMirror主动同步ASA统一邻近网络</block>
+  <block id="7ee14065ea840a8b3d77ca1b09cd0d68" category="paragraph"><block ref="7ee14065ea840a8b3d77ca1b09cd0d68" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="988f5836c7a60d1374a4804da23d51e4" category="paragraph"><block ref="988f5836c7a60d1374a4804da23d51e4" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="b7986b8213ecdd63004689cc2dedb163" category="searchtitle">使用SnapMirror进行Microsoft SQL Server灾难恢复</block>
+  <block id="f10483e265b11816545d508fc76923ed" category="list-text">同步复制与SnapMirror主动同步结合使用、后者对快速数据恢复的需求较高、而异步解决方案则可实现RPO的灵活性。</block>
+  <block id="76deb86c7bf1ea33d737ef060d9ffff6" category="list-text">如果您使用SnapCenter备份数据库并将快照复制到远程集群、请勿出于一致性目的从控制器计划SnapMirror更新。而是应启用SnapCenter中的SnapMirror更新、以便在完整备份或日志备份完成后更新SnapMirror。</block>
+  <block id="ad2a53b49c8e7cc0e22f4346908a1866" category="list-text">在集群中的不同节点之间平衡包含SQL Server数据的存储单元、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。</block>
+  <block id="98b161980bf5831bfe65c048b46d0439" category="summary">在ASA上放置Microsoft SQL Server数据库文件</block>
+  <block id="1b1b4c822e9c1b28b845dcc038fec08e" category="searchtitle">Microsoft SQL Server数据库文件和文件组</block>
+  <block id="ba25a3e50659c5e29996ff4f5d42a259" category="paragraph">日志目录在SQL Server中指定、用于在主机级别存储事务日志备份数据。如果使用SnapCenter备份日志文件、则SnapCenter使用的每个SQL Server主机都必须配置一个主机日志目录、才能执行日志备份。</block>
+  <block id="c05ca2066a3b729016e386c067cd91b4" category="paragraph">将日志目录放在专用存储单元上。主机日志目录中的数据量取决于备份的大小以及备份的保留天数。SnapCenter只允许每个SQL Server主机有一个主机日志目录。您可以在SnapCenter --&gt; Host --&gt; Configure Plug-in中配置主机日志目录。</block>
+  <block id="74432d98a78bf2e3e3b497b91dc1c516" category="list-text">在SnapCenter将事务日志复制到的专用存储单元上创建主机日志目录。</block>
+  <block id="00b0277b7e21cfea83e1cd6202498b9e" category="list-text">如果您使用的是无中断故障转移集群实例、则用于主机日志目录的存储单元必须是与要在SnapCenter中备份的SQL Server实例位于同一集群组中的集群磁盘资源。</block>
+  <block id="c42f502d6a45acd6c1d2a13f44016270" category="summary">ASA系统上的Microsoft SQL Server存储注意事项</block>
+  <block id="e7a0b265e1ae7c0bf7047bd4770bc53d" category="paragraph">NetApp ASA R2是一款简化且功能强大的解决方案、适用于运行任务关键型工作负载的纯SAN客户。运行ONTAP存储解决方案的ASA R2平台与Microsoft SQL Server相结合、可以实现企业级数据库存储设计、从而满足当今最苛刻的应用程序要求。</block>
+  <block id="95cc7be66d78a646c5ee563f83198ab4" category="paragraph">以下ASA平台归类为支持所有SAN协议(iSCSI、FC、NVMe/FC、NVMe/TCP)的ASA R2系统。iSCSI、FC、NVMe/FC和NVMe/TCP协议支持对称双主动多路径架构、以便主机和存储之间的所有路径都处于主动/优化状态：</block>
+  <block id="5d6a7459a3583d9e29f4b486d809b6a1" category="list-text">ASA A1K</block>
+  <block id="009f19d7e9e80eda1c7dbf7374519e58" category="list-text">ASA A90</block>
+  <block id="cd527b2aadf2bebf28ba082002724ab0" category="list-text">ASA A70</block>
+  <block id="3ee9bc9a210bd85fa921ca63bdeef612" category="list-text">ASA A50</block>
+  <block id="e21bdbd552261278be0a5ad02fbc6fa7" category="list-text">ASA A30</block>
+  <block id="3c609b480f1311eaec9774146ac50e79" category="list-text">ASA A20</block>
+  <block id="2b304856171196502641312a496c6d54" category="inline-link-macro">NetApp ASA</block>
+  <block id="4dd59f71d7cf036df0941aa4fcd50443" category="paragraph">有关详细信息、请参见 <block ref="a37d9d52d65391d0ce6c582426431be1" category="inline-link-macro-rx"></block></block>
+  <block id="bb9a4cadd83e3ce26b592d1a9eeafb2e" category="paragraph">要优化基于ONTAP的SQL Server解决方案、需要了解SQL Server I/O模式和特征。为SQL Server数据库精心设计的存储布局必须支持SQL Server的性能要求、同时还必须在整体上最大限度地提高基础架构的可管理性。良好的存储布局还可以成功完成初始部署、并随着业务的增长逐步平稳地扩展环境。</block>
+  <block id="bfdf538d8298e1c20008ee59ebb494a0" category="paragraph">Microsoft建议将数据和日志文件放在不同的驱动器上。对于同时更新和请求数据的应用程序、日志文件会占用大量写入资源、而数据文件(取决于您的应用程序)会占用大量读/写资源。对于数据检索、不需要日志文件。因此、可以通过放置在其自己驱动器上的数据文件来满足数据请求。</block>
+  <block id="801afe45de7db517b57f747a8973280a" category="section-title">存储单元注意事项</block>
+  <block id="5e64d69892f623826e85a5239abf0607" category="paragraph">ASA中的存储单元是指SCSI/FC主机的LUN或NVMe主机的命名空间。根据支持的协议、系统将提示您创建LUN和/或NVMe命名空间。在为数据库部署创建存储单元之前、请务必了解SQL Server I/O模式和特征如何根据工作负载以及备份和恢复要求而有所不同。请参见以下存储单元的NetApp建议：</block>
+  <block id="506a88168c6bdfeb32f8fae8409c1eba" category="list-text">避免在同一主机上运行的多个SQL Server之间共享同一存储单元、以避免复杂的管理。如果在同一主机上运行多个SQL Server实例、则除非某个节点上的存储单元接近限制、否则请避免共享、而是为每个主机的每个实例设置单独的存储单元、以简化数据管理。</block>
+  <block id="3c00c0b1042b695af03e498424f2ee1e" category="list-text">使用NTFS挂载点而不是驱动器盘符、以超过Windows中26个驱动器盘符的限制。</block>
+  <block id="216443bb5f5d2545cc1881816458e899" category="list-text">禁用快照计划和保留策略。请改用SnapCenter来协调SQL Server数据存储单元的Snapshot副本。</block>
+  <block id="44d48620d1d725aaad54d642f73970a9" category="list-text">将SQL Server系统数据库放在专用存储单元上。</block>
+  <block id="5375f513e791de754ec7d070bbf5512c" category="list-text">tempdb是一个系统数据库、SQL Server会使用它作为临时工作空间、尤其是用于I/O密集型DBCC CHECKDB操作。因此、请将此数据库放在专用存储单元上。在存储单元计数存在挑战的大型环境中、您可以在仔细规划后将tempdb与系统数据库整合到同一存储单元中。tempdb的数据保护不是高优先级、因为每次重新启动SQL Server时都会重新创建此数据库。</block>
+  <block id="5b2b825a890a5ed31984f174b5420a05" category="list-text">将用户数据文件<block ref="937f38432beb92fdba3d47780720bdf7" prefix="(" category="inline-code"></block>()放在单独的存储单元上，因为它们是随机读/写工作负载。通常、创建事务日志备份的频率比创建数据库备份的频率更高。因此，请将事务日志文件<block ref="cb15b9539ae0d984ff8740c68b52561c" prefix="(" category="inline-code"></block>()放在与数据文件不同的存储单元或VMDK上，以便可以为每个存储单元或VMDK创建独立的备份计划。这种分离还会将日志文件的顺序写入I/O与数据文件的随机读/写I/O隔离开来、并显著提高SQL Server性能。</block>
+  <block id="892e3db84641b51931ab0dac9977d1bf" category="list-text">确保用户数据库文件和用于存储日志备份的日志目录位于单独的存储单元上、以防止保留策略在存储策略中的SnapMirror功能中使用快照时覆盖快照。</block>
+  <block id="d3bcdc884b8b6c9a2e038e5aca8eb201" category="list-text">请勿在同一存储单元上混合使用数据库文件和非数据库文件、例如与全文搜索相关的文件。</block>
+  <block id="c7b140168b3cdc8eaaa3041ffa0d954a" category="list-text">将数据库二级文件(作为文件组的一部分)放在单独的存储单元上可提高SQL Server数据库的性能。只有当数据库的文件不与任何其他文件共享其存储单元<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>时、此隔离才有效<block ref="937f38432beb92fdba3d47780720bdf7" prefix=" " category="inline-code"></block>。</block>
+  <block id="47d411a79b7445f424218bb5a6265a1a" category="list-text">在Windows服务器中使用磁盘管理器格式化磁盘时、请确保分区的分配单元大小设置为64K。</block>
+  <block id="b1d3c04670a31b00b47ed2f54cef4f19" category="list-text">请勿将用户数据库或系统数据库放置在托管挂载点的存储单元上。</block>
+  <block id="995050bacc63636e91e211836cab350a" category="list-text">如果您使用的是无中断故障转移集群实例、则必须将用户数据库置于在Windows服务器故障转移集群节点之间共享的存储单元上、并且物理磁盘集群资源会分配给与SQL Server实例关联的集群组。</block>
+  <block id="79b0cf2c987928face3999e45504752c" category="sidebar">AFF或FAS系统上的存储配置</block>
+  <block id="120f8cb87e8ceb36804a526419a5803a" category="sidebar">基于Microsoft/SQL系统的AFF FAS</block>
+  <block id="fc5b2b3c5350dcd6f3cc1cc3cdf1a13f" category="sidebar">ASA R2系统上的存储配置</block>
+  <block id="8bdbdec629db36efc1c9bdbf743dd56a" category="sidebar">ASA系统上的Microsoft SQL Server</block>
 </blocks>

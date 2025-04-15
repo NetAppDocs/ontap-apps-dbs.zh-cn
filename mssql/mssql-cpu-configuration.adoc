@@ -24,7 +24,7 @@ SQL Server的性能与CPU和核心配置有多种依赖性。
 
 超线程会导致逻辑CPU在操作系统中显示为物理CPU。然后、SQL Server会看到这些额外的CPU、并将其用作核心数多于物理内核数的情况。这可以通过提高并行处理能力显著提高性能。
 
-此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息、请参见计算容量限制(按SQL Server版本)。
+此处需要注意的是、每个SQL Server版本都有自己的计算能力限制。有关详细信息，请参见 link:https://learn.microsoft.com/en-us/sql/sql-server/compute-capacity-limits-by-edition-of-sql-server?view=sql-server-ver16&redirectedfrom=MSDN["计算容量限制(按SQL Server版本)"]。
 
 
 

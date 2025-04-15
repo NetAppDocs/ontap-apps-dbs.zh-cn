@@ -23,7 +23,6 @@ NetApp假定读者具备以下方面的实践知识：
 
 * ONTAP
 * Microsoft SQL Server架构和管理
-* SnapCenter备份软件、包括以下组件：
 * NetApp SnapCenter作为备份软件、其中包括：
 +
 ** 适用于 Microsoft Windows 的 SnapCenter 插件

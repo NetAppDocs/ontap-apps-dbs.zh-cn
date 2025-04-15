@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-dr-snapmirror-ASA.html 
+keywords: MSSQL,SQL Server, disaster recovery, snapmirror 
+summary: 使用ONTAP进行Microsoft SQL Server灾难恢复 
+searchtitle: 使用SnapMirror进行Microsoft SQL Server灾难恢复 
+---
+= SnapMirror
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+下面是有关适用于SQL Server的SnapMirror的建议：
+
+* 同步复制与SnapMirror主动同步结合使用、后者对快速数据恢复的需求较高、而异步解决方案则可实现RPO的灵活性。
+* 如果您使用SnapCenter备份数据库并将快照复制到远程集群、请勿出于一致性目的从控制器计划SnapMirror更新。而是应启用SnapCenter中的SnapMirror更新、以便在完整备份或日志备份完成后更新SnapMirror。
+* 在集群中的不同节点之间平衡包含SQL Server数据的存储单元、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。
+
+
+有关SnapMirror的详细信息、请参见 link:https://www.netapp.com/us/media/tr-4015.pdf["TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》"^]。
