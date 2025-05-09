@@ -26,6 +26,9 @@ entries:
     url: "/mssql/mssql-storage-efficiency.html"
   - title: 数据保护
     url: "/mssql/mssql-data-protection.html"
+    entries:
+    - title: 使用SnapCenter的SQL Server可用性组
+      url: "/mssql/mssql-ag-snapcenter.html"
   - title: 灾难恢复
     entries:
     - title: 概述

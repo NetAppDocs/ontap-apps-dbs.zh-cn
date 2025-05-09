@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: mssql/mssql-ag-snapcenter.html 
+keywords: MSSQL,SQL Server, data protection, snapmirror, availability group 
+summary: 使用SnapCenter的Microsoft SQL Server可用性组 
+searchtitle: 使用SnapCenter的Microsoft SQL Server可用性组 
+---
+= 使用SnapCenter的SQL Server可用性组
+:allow-uri-read: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+SnapCenter支持备份使用Windows故障转移集群配置的SQL Server可用性组数据库。
+
+适用于Microsoft SQL Server的SnapCenter插件必须安装在Windows服务器故障转移集群的所有节点上。有关设置SnapCenter插件的前提条件和步骤、请参见link:https://docs.netapp.com/us-en/snapcenter/protect-scsql/concept_prerequisites_for_using_snapcenter_plug_in_for_microsoft_sql_server.html["文档"]。
+
+SnapCenter会发现Windows主机中的所有数据库、实例和可用性组、SnapCenter资源页面上会枚举这些主机和资源。
+
+
+
+=== 保护始终可用性组中的数据库
+
+可用性组中的数据库可以通过多种方式进行保护。
+
+* 数据库级备份：为数据库资源页面选择可用性数据库、添加包含完整备份/日志备份的策略、并计划备份。无论数据库角色是主副本还是二级副本、SnapCenter都会执行备份。也可以通过将数据库添加到资源组来配置保护。
+* 实例级备份：选择实例、实例上运行的所有数据库将根据选定策略受到保护。所有数据库(包括作为主副本或二级副本运行的可用性数据库)都会使用SnapCenter进行备份。也可以通过将实例添加到资源组来配置此保护。
+* 可用性组级别备份：配置策略时、SnapCenter提供了一个用于可用性组级别备份的高级选项。策略中的可用性组设置允许用户选择要备份的副本首选项。您可以选择主副本、二级副本或全部副本。默认选项基于SQL Server可用性组配置中的备份副本集。
+
+
+仅当可用性组级别备份用于保护可用性组数据库而不适用于数据库或实例级别备份时、SnapCenter策略中的可用性组设置才会适用。
+
+
+TIP: * NetApp建议*使用可用性级别备份来备份在NetApp ONTAP存储上运行的所有副本。
+
+
+
+=== 在SnapCenter中配置日志备份
+
+如果在独立SQL Server设置中设置了可用性组、则必须在Windows服务器故障转移集群的每个节点上挂载一个专用磁盘。应使用专用磁盘配置日志目录以保存事务日志备份。
+
+如果在SQL Server故障转移集群上设置了可用性组、则应在SQL Server故障转移集群实例上创建集群磁盘、以托管日志目录。
+
+
+
+=== 使用SnapCenter在可用性组设置中还原数据库
+
+* SnapCenter提供了reeseed选项、可从二级副本上提供的最新快照自动恢复数据库。重新密封操作将自动还原数据库备份并将其加入可用性组。
+* 在可用性组中还原副本数据库的另一种方法是、中断可用性组并执行完整的完整还原和日志还原。使用SnapCenter在恢复模式下还原数据库、然后使用SQL Server Management Studio或T-SQL将数据库重新加入可用性组。
+* 要仅恢复部分数据、可以使用SnapCenter的克隆功能创建数据库的克隆副本。使用SnapCenter在几分钟内创建数据库副本、然后使用SQL Server本机工具将数据导出到主副本。
+
+
+有关设置数据库存储布局以满足RTO和RPO要求的最佳实践，请参见link:https://www.netapp.com/pdf.html?item=/media/12400-tr4714.pdf["TR-4714《使用NetApp SnapCenter的Microsoft SQL Server最佳实践》"]。
+
+
+NOTE: SnapCenter不支持分布式可用性组和包含的可用性组。

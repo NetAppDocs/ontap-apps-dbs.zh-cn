@@ -269,7 +269,6 @@
   <block id="0e7c78164adb6d4650ea685a79d8e99e" category="section-title">效率最佳实践</block>
   <block id="ec499ad25fa5a765ba43ec2c87819623" category="section-title">AFF默认值</block>
   <block id="9f7127e69d50bf7b844ff3723b86fbd1" category="section-title">一般建议</block>
-  <block id="2c24e4751310e03f119a4df187a3bc08" category="list-text">如果卷和(或) LUN未进行精简配置、则必须禁用所有效率设置、因为使用这些功能不会节省空间、而将厚配置与已启用空间效率相结合会发生原因发生意外行为、包括空间不足错误。</block>
   <block id="4922fe547c351d6a121465da036d478e" category="list-text">如果数据不会被覆盖(例如使用备份或数据库事务日志)、则可以通过在较低的冷却期启用TSSE来提高效率。</block>
   <block id="e75fd383e4106eb78482b18896975daf" category="list-text">某些文件可能包含大量不可压缩数据、例如、在应用程序级别已启用数据压缩时、文件已加密。如果出现上述任一情况、请考虑禁用数据压缩、以便在包含可压缩数据的其他卷上执行更高效的操作。</block>
   <block id="64d5def835c194cac8afe4fafded756e" category="doc">Policies—本地快照</block>
@@ -5225,7 +5224,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="b0874893f6e3e7030833ec488dc9da90" category="list-text">将用户数据文件<block ref="937f38432beb92fdba3d47780720bdf7" prefix="(" category="inline-code"></block>()放在不同的卷上，因为它们是随机读/写工作负载。通常、创建事务日志备份的频率比创建数据库备份的频率更高。因此，请将事务日志文件<block ref="cb15b9539ae0d984ff8740c68b52561c" prefix="(" category="inline-code"></block>()放在与数据文件不同的卷或VMDK上，以便可以为每个卷或VMDK创建独立的备份计划。这种分离还会将日志文件的顺序写入I/O与数据文件的随机读/写I/O隔离开来、并显著提高SQL Server性能。</block>
   <block id="f7f1cb17ab4960f1a8e4c28a7fbccb0d" category="list-text">不要在同一LUN上混合使用数据库文件和非数据库文件、例如与全文搜索相关的文件。</block>
   <block id="58ccb3e2006ffa82c78944061df94b30" category="paragraph">ONTAP存储效率已进行优化、可存储和管理SQL Server数据、所用存储空间量最低、不会对性能产生任何影响。</block>
-  <block id="f250d23ef016c3e48436a679c5dab1df" category="list-text">请勿在包含SQL Server数据文件的任何卷上启用重复数据删除、除非已知该卷包含同一数据的多个副本、例如、将数据库从备份还原到单个卷。</block>
   <block id="6f80e9146e2184b9ec3c46b6d7dd903f" category="paragraph">如果SQL Server必须向特殊系统页面写入数据以分配新对象、则全局分配映射(GAM)、共享全局分配映射(SGAM)或页面可用空间(PFS)页面可能会发生页面争用。闩锁将这些页面锁定在内存中。在繁忙的SQL Server实例上、可能需要很长时间才能在tempdb中的系统页面上获得锁定。这会导致查询运行时间变慢、并称为闩锁争用。请参见以下创建tempdb数据文件的最佳实践：</block>
   <block id="255bd5c00b8de4b2f998369f766b2b5e" category="paragraph">本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括<block ref="06d0604733fc7f7e3f9befaa1239278d" category="inline-link-macro-rx"></block>和<block ref="87f167af2516b222ddeec7405581e8b8" category="inline-link-macro-rx"></block></block>
   <block id="ad8d77efdce72d372a83929b50a127d1" category="paragraph">崩溃状态一致的数据集备份是指在一个时间点捕获整个数据集结构。如果数据集存储在单个卷中、则此过程非常简单；可以随时创建Snapshot。如果数据集跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</block>
@@ -6040,4 +6038,29 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="120f8cb87e8ceb36804a526419a5803a" category="sidebar">基于Microsoft/SQL系统的AFF FAS</block>
   <block id="fc5b2b3c5350dcd6f3cc1cc3cdf1a13f" category="sidebar">ASA R2系统上的存储配置</block>
   <block id="8bdbdec629db36efc1c9bdbf743dd56a" category="sidebar">ASA系统上的Microsoft SQL Server</block>
+  <block id="3e2b4674c9afc41f9c3a0311b458ed23" category="list-text">如果卷和(或) LUN未进行精简配置、则必须禁用所有效率设置、因为使用这些功能不会节省空间、并且将厚配置与空间效率结合使用可能会导致意外行为、包括空间不足错误。</block>
+  <block id="c2dc7d465f4be5df7a663820063fe07c" category="summary">使用SnapCenter的Microsoft SQL Server可用性组</block>
+  <block id="b474dc2fb6ce60c11ecdfbe0a373bf34" category="doc">使用SnapCenter的SQL Server可用性组</block>
+  <block id="0a1151b962e7b34ea7fa78538961cc63" category="paragraph">SnapCenter支持备份使用Windows故障转移集群配置的SQL Server可用性组数据库。</block>
+  <block id="55876228853abf632dec9346a4f372ec" category="inline-link-macro">文档</block>
+  <block id="19bc77c28d506c79f4e3acd767956f68" category="paragraph">适用于Microsoft SQL Server的SnapCenter插件必须安装在Windows服务器故障转移集群的所有节点上。有关设置SnapCenter插件的前提条件和步骤、请参见<block ref="7ea17b48fc658598752bd1b70818d0c2" category="inline-link-macro-rx"></block>。</block>
+  <block id="878026ceb11256fd34df776a768794b2" category="paragraph">SnapCenter会发现Windows主机中的所有数据库、实例和可用性组、SnapCenter资源页面上会枚举这些主机和资源。</block>
+  <block id="feb288d4161a267b78f781ef497c33f6" category="section-title">保护始终可用性组中的数据库</block>
+  <block id="6493759953e55bc95c88e42046f8c8e1" category="paragraph">可用性组中的数据库可以通过多种方式进行保护。</block>
+  <block id="71903a5ca626286195e8839f74b46627" category="list-text">数据库级备份：为数据库资源页面选择可用性数据库、添加包含完整备份/日志备份的策略、并计划备份。无论数据库角色是主副本还是二级副本、SnapCenter都会执行备份。也可以通过将数据库添加到资源组来配置保护。</block>
+  <block id="402962f18d83fc2e3da0155e7c85d340" category="list-text">实例级备份：选择实例、实例上运行的所有数据库将根据选定策略受到保护。所有数据库(包括作为主副本或二级副本运行的可用性数据库)都会使用SnapCenter进行备份。也可以通过将实例添加到资源组来配置此保护。</block>
+  <block id="4eea6cb4e656587b45ce878e96aced6c" category="list-text">可用性组级别备份：配置策略时、SnapCenter提供了一个用于可用性组级别备份的高级选项。策略中的可用性组设置允许用户选择要备份的副本首选项。您可以选择主副本、二级副本或全部副本。默认选项基于SQL Server可用性组配置中的备份副本集。</block>
+  <block id="df79a1b2903886af697a431a42cecd61" category="paragraph">仅当可用性组级别备份用于保护可用性组数据库而不适用于数据库或实例级别备份时、SnapCenter策略中的可用性组设置才会适用。</block>
+  <block id="2b371d66d8eda6963cd085c7a884f4d7" category="admonition">* NetApp建议*使用可用性级别备份来备份在NetApp ONTAP存储上运行的所有副本。</block>
+  <block id="5c0ae1f6e89ffad82dfe5e7773da2fd6" category="section-title">在SnapCenter中配置日志备份</block>
+  <block id="b3b9b1046ddf8efb1b774f35855a0d1c" category="paragraph">如果在独立SQL Server设置中设置了可用性组、则必须在Windows服务器故障转移集群的每个节点上挂载一个专用磁盘。应使用专用磁盘配置日志目录以保存事务日志备份。</block>
+  <block id="ac3f0583ff584e6a0d60cd070d6edce2" category="paragraph">如果在SQL Server故障转移集群上设置了可用性组、则应在SQL Server故障转移集群实例上创建集群磁盘、以托管日志目录。</block>
+  <block id="57194431a839a253461e94f7d15e0d30" category="section-title">使用SnapCenter在可用性组设置中还原数据库</block>
+  <block id="cb66b1b1ce1e9f56d0a1572ba3dcccdd" category="list-text">SnapCenter提供了reeseed选项、可从二级副本上提供的最新快照自动恢复数据库。重新密封操作将自动还原数据库备份并将其加入可用性组。</block>
+  <block id="4c25cf6fd81e138392692e0a7e5523f3" category="list-text">在可用性组中还原副本数据库的另一种方法是、中断可用性组并执行完整的完整还原和日志还原。使用SnapCenter在恢复模式下还原数据库、然后使用SQL Server Management Studio或T-SQL将数据库重新加入可用性组。</block>
+  <block id="533d3de92f8337e84aa0eccec7e4698f" category="list-text">要仅恢复部分数据、可以使用SnapCenter的克隆功能创建数据库的克隆副本。使用SnapCenter在几分钟内创建数据库副本、然后使用SQL Server本机工具将数据导出到主副本。</block>
+  <block id="f652b77e8bd5ef106d3fbeec02a874c5" category="inline-link-macro">TR-4714《使用NetApp SnapCenter的Microsoft SQL Server最佳实践》</block>
+  <block id="9cc210a8901b58403ed2b299b9f87ac9" category="paragraph">有关设置数据库存储布局以满足RTO和RPO要求的最佳实践，请参见<block ref="4619ebf0116b8a67a7bd991a2d661c12" category="inline-link-macro-rx"></block>。</block>
+  <block id="724394156ac637a07abed4b02026424a" category="admonition">SnapCenter不支持分布式可用性组和包含的可用性组。</block>
+  <block id="f9feae8e1753d6486bf95d4403f7d5a7" category="list-text">请勿在FAS中包含SQL Server数据文件的任何卷上启用重复数据删除、除非已知该卷包含同一数据的多个副本、例如、将数据库从备份还原到单个卷。</block>
 </blocks>
