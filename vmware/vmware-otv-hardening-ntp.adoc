@@ -4,7 +4,7 @@ permalink: vmware/vmware-otv-hardening-ntp.html
 keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
 summary: 适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。 
 ---
-= 网络时间协议(NTP)配置
+= ONTAP工具的网络时间协议(NTP)配置9.13.
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

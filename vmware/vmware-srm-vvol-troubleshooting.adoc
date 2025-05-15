@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-srm-vvol-troubleshooting.html 
-keywords: vmware, site, recovery manager, vsrm, hybrid, cloud, srm, vvols, replication 
+keywords: vmware, site, recovery manager, vlsr, hybrid, cloud, srm, vvols, replication 
 summary: 与SRA和传统数据存储库相比、使用VASA进行VVOs复制可提供独特的功能。 
 ---
-= 对使用 VVol 复制的 SRM 进行故障排除
+= 使用卷复制时对volSRM/SRM进行故障排除
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 与SRA和传统数据存储库相比、使用VASA进行VVOs复制可提
 
 
 [role="lead"]
-使用 VVOL 复制时， SRM 中的工作流与使用 SRA 和传统数据存储库时的工作流有明显不同。例如，没有阵列管理器概念。因此， `discoverarrays` 和 `discoverdevices` 无法看到命令。
+使用ONTAP工具9.13P2时、使用vvol复制时、vSR和SRM中的工作流与使用SRA和传统数据存储库时的工作流明显不同。例如，没有阵列管理器概念。因此、 `discoverarrays`和 `discoverdevices`命令永远不会显示出来。
 
 在进行故障排除时，了解下面列出的新工作流非常有用：
 

@@ -150,9 +150,9 @@ VMware Storage Distributed Resource Scheduler （ SDRS ）是一项 vSphere 功�
 
 == 基于存储策略的管理和虚拟卷
 
-通过 VMware vSphere 存储感知 API （ VASA ），存储管理员可以轻松地为数据存储库配置定义明确的功能，并允许 VM 管理员在需要时使用这些功能来配置 VM ，而无需彼此交互。值得一看的是、这种方法可以帮助您简化虚拟化存储操作、避免大量琐碎的工作。
+利用VMware vSphere APIS for Storage AWARENYUIYUHEYUJIYUDEJIYUDEJIYUDEJUDEJIEMIYUDEJUDEJUDEJUDEJUHE值得一看的是、这种方法可以帮助您简化虚拟化存储操作、避免大量琐碎的工作。
 
-在使用 VASA 之前， VM 管理员可以定义 VM 存储策略，但他们必须与存储管理员合作，通常使用文档或命名约定来确定适当的数据存储库。借助 VASA ，存储管理员可以定义一系列存储功能，包括性能，分层，加密和复制。一个卷或一组卷的一组功能称为存储功能配置文件（ Storage Capability Profile ， SCP ）。
+在使用VASA之前、VM管理员可以定义VM存储策略、但他们必须与存储管理员一起确定适当的数据存储库、通常使用文档或命名约定。借助 VASA ，存储管理员可以定义一系列存储功能，包括性能，分层，加密和复制。一个卷或一组卷的一组功能称为存储功能配置文件（ Storage Capability Profile ， SCP ）。
 
 SCP支持为VM的数据Vvol设置最小和/或最大QoS。只有 AFF 系统才支持最低 QoS 。适用于 VMware vSphere 的 ONTAP 工具包含一个信息板，用于显示 ONTAP 系统上 VVol 的 VM 粒度性能和逻辑容量。
 

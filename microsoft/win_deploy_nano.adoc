@@ -23,10 +23,10 @@ summary: 了解如何部署Microsoft Windows MicroServer
 要将一个Hyper－V主机部署为一个Hyper－V主机，请完成以下步骤：
 
 . 以管理员组成员的身份登录到Windows Server。
-. 将NanoServerImageGenerator文件夹从Windows Server ISO中的\NanoServer文件夹复制到本地硬盘驱动器。
+. 将NanoServerImageGenerator文件夹从Windows Server ISO中的\NanoServer文件夹复制到本地硬盘。
 . 要创建一个"Vano Server VHD/VHDX"、请完成以下步骤：
 +
-.. 以管理员身份启动Windows PowerShell、导航到本地硬盘驱动器上复制的NanoServerImageGenerator文件夹、然后运行以下cmdlet：
+.. 以管理员身份启动Windows PowerShell、导航到本地硬盘上复制的纳米服务器映像生成器文件夹、然后运行以下cmdlet：
 +
 ....
 Set-ExecutionPolicy RemoteSigned

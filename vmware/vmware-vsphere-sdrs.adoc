@@ -14,7 +14,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 
 [role="lead"]
-VMware Storage Distributed Resource Scheduler （ SDRS ）是一项 vSphere 功能，可根据当前 I/O 延迟和空间使用情况将 VM 放置在存储上。
+VMware Storage Distributed Resource Scheduler (SDRS)是一项vSphere功能、可根据当前I/O延迟和空间使用情况自动将VM放置在数据存储库集群中。
 
 然后，它会在数据存储库集群（也称为 Pod ）中的数据存储库之间无中断地移动虚拟机或 VMDK ，从而选择最佳数据存储库，以便将虚拟机或 VMDK 放置在数据存储库集群中。数据存储库集群是一组相似的数据存储库、从vSphere管理员的角度来看、这些数据存储库会聚合到一个使用单元中。
 
@@ -22,12 +22,25 @@ VMware Storage Distributed Resource Scheduler （ SDRS ）是一项 vSphere 功�
 
 有关 SDRS 的其他 ONTAP 最佳实践包括：
 
+* 除非您有特定要求、否则请勿使用SDRS。
++
+** 使用ONTAP时不需要SDRS。SDRS无法识别重复数据删除和数据压缩等ONTAP存储效率功能、因此、它可能会做出不适合您环境的决策。
+** SDRS无法识别ONTAP QoS策略、因此可能会做出性能不理想的决策。
+** SDRS无法识别ONTAP Snapshot副本、因此它可能会做出导致快照呈指数级增长的决策。例如、将虚拟机移动到另一个数据存储库会在新数据存储库中创建新文件、从而导致快照增长。对于具有大型磁盘或多个快照的VM尤其如此。然后、如果将虚拟机移回原始数据存储库、则原始数据存储库上的快照将增大。
+
+
+
+
+如果您确实使用SDRS、请考虑以下最佳实践：
+
 * 集群中的所有数据存储库都应使用相同类型的存储（例如 SAS ， SATA 或 SSD ），可以是所有 VMFS 或 NFS 数据存储库，并且具有相同的复制和保护设置。
 * 请考虑在默认（手动）模式下使用 SDRS 。通过此方法，您可以查看建议并决定是否应用这些建议。请注意 VMDK 迁移的以下影响：
 +
-** 在数据存储库之间移动 VMDK 时，通过 ONTAP 克隆或重复数据删除节省的任何空间都将丢失。您可以重新运行重复数据删除以重新获得这些节省。
+** 当SDRS在数据存储库之间移动VMDK时、ONTAP克隆或重复数据删除节省的空间可能会减少、具体取决于重复数据删除或数据压缩在目标上的效果。
 ** 在SDRS移动VMDK后、NetApp建议在源数据存储库中重新创建快照、因为空间会被移动的VM锁定。
 ** 在同一聚合上的数据存储库之间移动 VMDK 没有什么优势， SDRS 无法查看可能共享该聚合的其他工作负载。
 
 
 
+
+有关SDRS的详细信息，请参见VMware文档，网址为 https://knowledge.broadcom.com/external/article/320864/storage-drs-faq.html["存储DRS常见问题解答"^]。

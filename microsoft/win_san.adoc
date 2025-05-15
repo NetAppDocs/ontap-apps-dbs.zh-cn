@@ -81,9 +81,9 @@ Get-InitiatorPort | Where \{$_.ConnectionType -eq 'Fibre Channel'} | Select-Obje
 
 Windows Server使用非对称逻辑单元访问(ALUA)扩展MPIO来确定LUN的直接和间接路径。即使SVM拥有的每个LIF都接受其LUN的读/写请求、但在任何给定时刻、实际上只有一个集群节点拥有支持该LUN的磁盘。这会将LUN的可用路径划分为两种类型：直接路径或间接路径、如下图所示。
 
-LUN的直接路径是指SVM的Lifs和要访问的LUN位于同一节点上的路径。要从物理目标端口转到磁盘、无需遍历集群网络。
+LUN的直接路径是指SVM的Lifs和要访问的LUN位于同一节点上的路径。要从物理目标端口转到磁盘、无需遍历集群互连。
 
-间接路径是指SVM的Lifs和要访问的LUN位于不同节点上的数据路径。数据必须遍历集群网络才能从物理目标端口传输到磁盘。
+间接路径是指SVM的Lifs和要访问的LUN位于不同节点上的数据路径。数据必须遍历集群互连、才能从物理目标端口传输到磁盘。
 
 image:win_image3.png["SAN环境中的多个路径、宽度=624、高度=232"]
 
@@ -196,7 +196,7 @@ Start-Service msiscsi
 +
 ....
 # Create a new iSCSI target portal
-New-IscsiTargetPortal â€“TargetPortalAddress <SVM LIF>
+New-IscsiTargetPortal -TargetPortalAddress <SVM LIF>
 ....
 +
 ....
@@ -242,12 +242,12 @@ Enable-WindowsOptionalFeature -Online -FeatureName MultipathIo
 +
 ....
 # Get the Network adapters and their IPs
-Get-NetIPAddress â€“AddressFamily IPv4 â€“PrefixOrigin <Dhcp or Manual>
+Get-NetIPAddress -AddressFamily IPv4 -PrefixOrigin <Dhcp or Manual>
 ....
 +
 ....
 # Create one MPIO-enabled iSCSI connection per network adapter
-Connect-IscsiTarget -NodeAddress <NodeAddress> -IsPersistent $True â€“IsMultipathEnabled $True â€“InitiatorPortalAddress <IP Address of ethernet adapter>
+Connect-IscsiTarget -NodeAddress <NodeAddress> -IsPersistent $True -IsMultipathEnabled $True -InitiatorPortalAddress <IP Address of ethernet adapter>
 ....
 +
 ....

@@ -4,7 +4,7 @@ permalink: vmware/vmware-otv-hardening-login-banner.html
 keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
 summary: 《适用于VMware vSphere的ONTAP工具安全增强指南》、登录横幅。 
 ---
-= 登录横幅
+= ONTAP工具9.13登录横幅
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 《适用于VMware vSphere的ONTAP工具安全增强指南》、登录�
 
 
 [role="lead"]
-用户在登录提示符中输入用户名后、将显示以下登录横幅。请注意、默认情况下、SSH处于禁用状态、从VM控制台启用SSH后、它仅允许一次性登录。
+用户在登录提示符中输入用户名后、将显示以下登录横幅。请注意、SSH在默认情况下处于禁用状态、如果从VM控制台启用了SSH、则只允许一次性登录。
 
 ....
 WARNING: Unauthorized access to this system is forbidden and will be

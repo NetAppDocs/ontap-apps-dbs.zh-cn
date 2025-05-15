@@ -16,13 +16,11 @@ summary: 本文档对建议的存储和网络设置进行了分类和列举。
 [role="lead"]
 NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提供了有关多路径和HBA超时设置的特定指导、以便根据NetApp和VMware内部测试在ONTAP中正常运行。
 
-可以使用适用于VMware vSphere的ONTAP工具轻松设置这些值：从摘要信息板中、单击主机系统portlet中的编辑设置、或者在vCenter中右键单击主机、然后导航到ONTAP工具>设置建议值。
+可以使用适用于VMware vSphere的ONTAP工具轻松设置这些值：从ONTAP工具概述页面向下滚动到底部、然后单击ESXi主机合规性portlet中的应用建议设置。
 
 下面是当前所有受支持的ONTAP版本的建议主机设置。
 
 |===
-
-
 | *主机设置* | * NetApp建议值* | *需要重新启动* 
 
 
@@ -39,6 +37,9 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 
 
 3+| *NFS设置* 
+
+
+| newSyncInterval | 如果您不使用适用于Kubnetes的vSphere CSI、请按设置 https://knowledge.broadcom.com/external/article/386364/reducing-excessive-vsan-cnssync-warnings.html["VMware 知识库 386364"^] | 否 
 
 
 | Net.TcpipHeapSize | vSphere 6.0 或更高版本，设置为 32 。
@@ -108,7 +109,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 设置此值有助于防止出现 I/O 错误。 | 否 
 |===
 
-NOTE: 1—使用VMware vSphere ESXi 7.0.1和VMware vSphere ESXi 7.0.2时、NFS高级配置选项MaxQueueDepth可能无法按预期工作。请参考 link:https://kb.vmware.com/s/article/86331?lang=en_US["VMware知识库86331"] 有关详细信息 ...
+NOTE: 使用VMware vSphere 7.0.1和VMware vSphere ESXi 7.3.2时、NFS高级配置选项MaxQueue深度 可能无法正常工作。有关详细信息、请参见link:https://kb.vmware.com/s/article/86331?lang=en_US["VMware知识库86331"]。
 
 在创建 ONTAP FlexVol 卷和 LUN 时， ONTAP 工具还会指定某些默认设置：
 

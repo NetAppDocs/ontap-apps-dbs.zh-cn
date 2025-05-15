@@ -17,7 +17,7 @@ summary: ONTAP工具10安装检查清单
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["一个"]初步规划
 [role="quick-margin-list"]
-* 开始安装之前、您应检查 https://imt.netapp.com/matrix/#search["互操作性表工具"]以确保您的部署已通过认证。
+* 开始安装之前、您应检查 https://imt.netapp.com/matrix/#search["互操作性表工具（ IMT ）"^]以确保您的部署已通过认证。
 * 确定您的环境所需的ONTAP工具配置的大小和类型。有关详细信息、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/prerequisites.html["部署适用于VMware vSphere的ONTAP工具的配置限制"]。
 * 确定要使用多租户SVM还是允许完全集群访问。如果使用多租户SVM、则需要在要使用的每个SVM上具有一个SVM管理LIF。ONTAP工具必须可通过端口443访问此LIF。
 * 确定是否要使用光纤通道(FC)进行存储连接。如果是、则必须 https://docs.netapp.com/us-en/ontap/san-config/fibre-channel-fcoe-zoning-concept.html["配置分区"]在FC交换机上启用ESXi主机与SVM的FC LUN之间的连接。

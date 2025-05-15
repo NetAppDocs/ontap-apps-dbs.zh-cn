@@ -4,7 +4,7 @@ permalink: vmware/vmware-otv-hardening-mutual-tls.html
 keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
 summary: 适用于VMware vSphere的ONTAP工具安全增强指南、存储管理连接的相互TLS加密。 
 ---
-= 相互TLS (基于证书的身份验证)
+= ONTAP工具9.13相互TLS (基于证书的身份验证)
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

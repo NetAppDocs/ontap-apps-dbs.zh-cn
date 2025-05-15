@@ -14,31 +14,40 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方�
 
 
 [role="lead"]
-在 vSphere 中，可以通过三种方式使用块存储 LUN ：
+在vSphere中、可以通过四种方式使用块存储设备：
 
 * 使用 VMFS 数据存储库
 * 使用原始设备映射（ RDM ）
 * 作为iSCSI连接的LUN或NVMe/TCP连接的命名空间、由软件启动程序从VM子操作系统访问和控制
+* 作为一个卷数据存储库
 
 
 VMFS 是一种高性能集群文件系统，可提供共享存储池中的数据存储库。可以为VMFS数据存储库配置使用FC、iSCSI、FCoE访问的LUN、或者配置使用NVMe/FC或NVMe/TCP协议访问的NVMe命名区。VMFS允许集群中的每个ESX服务器同时访问存储。从ONTAP 9.12.1P2 (以及ASA系统中的更早版本)开始、最大LUN大小通常为128 TB；因此、可以使用一个LUN来创建大小上限为64 TB的VMFS 5或6数据存储库。
 
-vSphere 内置了对存储设备的多条路径的支持，称为原生多路径（ NMP ）。NMP 可以检测受支持存储系统的存储类型，并自动配置 NMP 堆栈以支持正在使用的存储系统的功能。
 
-NMP和ONTAP都支持通过非对称逻辑单元访问(ANAA)来协商优化和非优化路径。在 ONTAP 中，经过 ALUA 优化的路径遵循直接数据路径，并使用托管所访问 LUN 的节点上的目标端口。默认情况下，在 vSphere 和 ONTAP 中均已启用 ALUA 。NMP会将ONTAP集群识别为ALOA、并使用ALOA存储阵列类型插件 (`VMW_SATP_ALUA`)、然后选择轮循环路径选择插件 (`VMW_PSP_RR`）。
+TIP: 块区是一个vSphere存储概念、您可以将多个LUN "拼接"在一起、以创建一个更大的数据存储库。切勿使用块区来达到所需的数据存储库大小。对于VMFS数据存储库、最佳做法是使用一个LUN。
 
-ESXi 6增加了对多达256个LUN以及多达1、024个LUN总路径的支持。ESXi不会发现任何超出这些限制的LUN或路径。假设 LUN 数量达到最大值，则路径限制允许每个 LUN 使用四个路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。
+vSphere内置了对存储设备的多个路径的支持。vSphere可以检测受支持存储系统的存储设备类型、并自动配置多路径堆栈以支持所使用存储系统的功能、无论所使用的协议如何、也无论使用的是ASA、AFF、FAS还是软件定义的ONTAP。
+
+vSphere和ONTAP均支持使用NVMe/FC和NVMe/TCP为光纤通道和iSCSI建立主动/优化和主动/非优化路径、并为NVMe命名空间建立非对称命名空间访问(ANA）。在ONTAP中、AUA或ANA优化的路径遵循直接数据路径、使用托管要访问的LUN或命名空间的节点上的目标端口。默认情况下、vSphere和ONTAP均会启用ALOA/ANA。vSphere中的多路径软件会将ONTAP集群识别为AUA或ANA、并使用适当的本机插件和轮叫负载平衡策略。
+
+在NetApp的ASA系统中、LUN和名称库会通过对称路径提供给ESXi主机。表示所有路径均处于活动状态并已进行优化。vSphere中的多路径软件会将ASA系统识别为对称系统、并使用适当的本机插件和循环负载平衡策略。
+
+
+TIP: 有关优化的多路径设置、请参见link:vmware-vsphere-settings.html["建议的 ESXi 主机和其他 ONTAP 设置"^]。
+
+ESXi不会发现任何超出其限制的LUN、名称和路径。在较大的 ONTAP 集群中，可以在达到 LUN 限制之前达到路径限制。为了解决此限制， ONTAP 在 8.3 及更高版本中支持选择性 LUN 映射（ SLM ）。
 
 
 NOTE: 有关ESXi中支持的最新限制、请参见link:https://configmax.broadcom.com/guest?vmwareproduct=vSphere&release=vSphere%208.0&categories=2-0["VMware配置最大值工具"^]。
 
-SLM 会限制向给定 LUN 公布路径的节点。NetApp 最佳实践是，每个 SVM 的每个节点至少具有一个 LIF ，并使用 SLM 限制向托管 LUN 的节点及其 HA 配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意，在 8.3 之前的版本中创建的 LUN 会公布所有路径，需要进行修改，以便仅向托管 HA 对公布这些路径。有关SLM的详细信息，请查看的第5.9节 https://www.netapp.com/pdf.html?item=/media/10680-tr4080pdf.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
+SLM 会限制向给定 LUN 公布路径的节点。NetApp最佳实践是、每个SVM的每个节点至少具有两个LIT、并使用SLM限制向托管LUN的节点及其HA配对节点公布的路径。虽然存在其他路径、但默认情况下不会公布这些路径。可以使用 SLM 中的添加和删除报告节点参数修改公布的路径。请注意、在8.3之前的版本中创建的LUN会公布所有路径、需要进行修改、以便仅向托管HA对公布路径。有关SLM的详细信息，请查看的第5.9节 https://www.netapp.com/pdf.html?item=/media/10680-tr4080pdf.pdf["TR-4080"^]。也可以使用先前的端口集方法进一步减少 LUN 的可用路径。端口集有助于减少 igroup 中启动程序可通过的可见路径数。
 
 * 默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。
-* 对于在Data ONTAP 8.3之前创建的LUN、请通过运行手动应用SLM `lun mapping remove-reporting-nodes` 命令以删除LUN报告节点并将LUN访问限制为LUN所属节点及其HA配对节点。
+* 对于在Data ONTAP 8.3之前创建的LUN、请运行命令手动应用SLM `lun mapping remove-reporting-nodes`、以删除LUN报告节点并限制LUN访问权限、使其只能访问拥有LUN的节点及其HA配对节点。
 
 
-块协议（ iSCSI ， FC 和 FCoE ）使用 LUN ID 和序列号以及唯一名称来访问 LUN 。FC 和 FCoE 使用全球通用名称（ WWPN 和 WWPN ）， iSCSI 使用 iSCSI 限定名称（ IQN ）。存储中 LUN 的路径对于块协议没有意义，并且不会显示在协议的任何位置。因此，只包含 LUN 的卷根本无需在内部挂载，而包含数据存储库中使用的 LUN 的卷则不需要接合路径。ONTAP 中的 NVMe 子系统的工作原理类似。
+基于SCSI的块协议(iSCSI、FC和FCoE)使用LUN ID、序列号以及唯一名称来访问LUN。FC和FCoE使用全球通用名称(WWNN和WWPN)、而iSCSI则使用iSCSI限定名称(iSCSI限定名称、IQN)根据按端口集和SLM筛选的LUN到igrou的映射来建立路径。基于NVMe的块协议可通过将具有自动生成的命名空间ID的命名空间分配给NVMe子系统并将该子系统映射到主机的NVMe限定名称(NQN)来进行管理。无论FC或TCP如何、NVMe命名空间都使用NQN而不是WWPN或WWNN进行映射。然后、主机会为映射的子系统创建一个软件定义的控制器、以访问其命名存储。ONTAP中LUN和名称区的路径对于块协议没有意义、不会显示在协议中的任何位置。因此，只包含 LUN 的卷根本无需在内部挂载，而包含数据存储库中使用的 LUN 的卷则不需要接合路径。
 
 要考虑的其他最佳实践：
 

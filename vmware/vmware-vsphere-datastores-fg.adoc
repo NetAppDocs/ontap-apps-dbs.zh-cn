@@ -16,17 +16,17 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP FlexGroup卷的
 [role="lead"]
 将ONTAP和FlexGroup卷与VMware vSphere结合使用、可实现简单且可扩展的数据存储库、从而充分利用整个ONTAP集群的全部功能。
 
-ONTAP 9.8以及适用于VMware vSphere 9.8的ONTAP工具和适用于VMware 4.4版本的SnapCenter插件增加了对vSphere中FlexGroup卷支持的数据存储库的支持。FlexGroup卷可以简化大型数据存储库的创建过程、并自动在ONTAP集群中创建必要的分布式成分卷、以最大程度地提高ONTAP系统的性能。
+ONTAP 9.8以及适用于VMware vSphere的ONTAP工具9.8-9.13和适用于VMware 4.4及更高版本的SnapCenter插件增加了对vSphere中FlexGroup卷支持的数据存储库的支持。FlexGroup卷可以简化大型数据存储库的创建过程、并自动在ONTAP集群中创建必要的分布式成分卷、以最大程度地提高ONTAP系统的性能。
 
-如果您需要一个具有完整ONTAP集群功能的可扩展vSphere数据存储库、或者您的克隆工作负载非常大、可以从新的FlexGroup克隆机制中受益、请将FlexGroup卷与vSphere结合使用。
+如果您需要一个具有完整ONTAP集群功能的可扩展vSphere数据存储库、或者如果您的克隆工作负载非常大、可以通过持续保持克隆缓存预热来从FlexGroup克隆机制中受益、请将FlexGroup卷与vSphere结合使用。
 
 
 
 == 副本卸载
 
-除了对vSphere工作负载进行广泛的系统测试之外、ONTAP 9.8还为FlexGroup数据存储库添加了一种新的副本卸载机制。这一新系统使用经过改进的复制引擎在后台成分卷之间复制文件、同时允许访问源和目标。然后、可以使用此本地缓存根据需要快速例化VM克隆。
+除了对vSphere工作负载进行广泛的系统测试之外、ONTAP 9.8还为FlexGroup数据存储库添加了一种新的副本卸载机制。这一新系统使用经过改进的复制引擎在后台成分卷之间复制文件、同时允许访问源和目标。然后、可以使用此成分卷本地缓存根据需要快速例化VM克隆。
 
-要启用FlexGroup优化的副本卸载、请参见 https://kb.netapp.com/onprem/ontap/dm/VAAI/How_to_Configure_ONTAP_FlexGroups_to_allow_VAAI_copy_offload["如何配置ONTAP FlexGroup以允许VAAI副本卸载"]
+要启用FlexGroup优化的副本卸载、请参见 https://kb.netapp.com/onprem/ontap/dm/VAAI/How_to_Configure_ONTAP_FlexGroups_to_allow_VAAI_copy_offload["如何配置ONTAP FlexGroup卷以允许VAAI副本卸载"]
 
 您可能会发现、如果您使用VAAI克隆、但克隆量不足以保持缓存热度、则克隆速度可能不会比基于主机的副本快。如果是这种情况、您可以调整缓存超时以更好地满足您的需求。
 
@@ -40,7 +40,7 @@ ONTAP 9.8以及适用于VMware vSphere 9.8的ONTAP工具和适用于VMware 4.4�
 
 卷收到的每个新克隆作业都会重置超时。如果示例FlexGroup中的成分卷在超时之前未收到克隆请求、则会清除该特定虚拟机的缓存、并且需要重新填充该卷。此外、如果原始克隆的源发生更改(例如、您已更新模板)、则每个成分卷上的本地缓存都将失效、以防止发生任何冲突。如前文所述、缓存可进行调整、并可根据环境需求进行设置。
 
-有关将FlexGroup与VAAI结合使用的详细信息、请参阅此知识库文章： https://kb.netapp.com/?title=onprem%2Fontap%2Fdm%2FVAAI%2FVAAI%3A_How_does_caching_work_with_FlexGroups%253F["VAAI：如何对FlexGroup卷使用缓存？"^]
+有关将FlexGroup卷与VAAI结合使用的详细信息、请参阅此知识库文章： https://kb.netapp.com/?title=onprem%2Fontap%2Fdm%2FVAAI%2FVAAI%3A_How_does_caching_work_with_FlexGroups%253F["VAAI：如何对FlexGroup卷使用缓存？"^]
 
 如果您无法充分利用FlexGroup缓存、但仍需要快速跨卷克隆、请考虑使用虚拟卷。与使用传统数据存储库相比、使用FlexVol进行跨卷克隆的速度要快得多、并且不依赖于缓存。
 
@@ -52,7 +52,7 @@ ONTAP 9.8以及适用于VMware vSphere 9.8的ONTAP工具和适用于VMware 4.4�
 
 此时、可以在vCenter UI中或使用ONTAP工具通过REST API在数据存储库中的单个虚拟机或所有虚拟机上设置QoS (最大/最小IOPS)。在所有 VM 上设置 QoS 将取代任何单独的每 VM 设置。将来，设置不会扩展到新的或迁移的虚拟机；可以在新虚拟机上设置 QoS ，也可以将 QoS 重新应用于数据存储库中的所有虚拟机。
 
-请注意、VMware vSphere会将NFS数据存储库的所有IO视为每个主机的一个队列、而一个VM上的QoS限制可能会影响同一数据存储库中其他VM的性能。这与Vvol不同、Vvol可以在迁移到另一个数据存储库时保持其QoS策略设置、并且在受到控制时不会影响其他VM的IO。
+请注意、VMware vSphere会将NFS数据存储库的所有IO视为每个主机的一个队列、而一个VM上的QoS限制可能会影响该主机的同一数据存储库中其他VM的性能。这与Vvol不同、Vvol可以在迁移到另一个数据存储库时保持其QoS策略设置、并且在受到控制时不会影响其他VM的IO。
 
 
 
@@ -66,8 +66,8 @@ ONTAP 9.8还为FlexGroup文件添加了新的基于文件的性能指标(IOPS、
 
 * 使用ONTAP工具创建FlexGroup数据存储库、以确保以最佳方式创建FlexGroup、并根据您的vSphere环境配置导出策略。但是、在使用ONTAP工具创建FlexGroup卷之后、您会发现vSphere集群中的所有节点都使用一个IP地址挂载数据存储库。这可能会导致网络端口出现瓶颈。要避免此问题、请卸载此数据存储库、然后使用标准vSphere数据存储库向导使用轮叫DNS名称重新挂载它、以便在SVM上的各个SVM之间平衡负载。重新挂载后、ONTAP工具将再次能够管理数据存储库。如果ONTAP工具不可用、请使用FlexGroup默认值并按照中的准则创建导出策略 link:vmware-vsphere-datastores-nfs.html["数据存储库和协议—NFS"]。
 * 在估算 FlexGroup 数据存储库的规模时，请记住， FlexGroup 由多个较小的 FlexVol 卷组成，这些卷会创建一个较大的命名空间。因此、请将数据存储库的大小至少设置为最大VMDK文件大小的8倍(假设默认为8个成分卷)、外加10-20%的未使用余量、以便灵活地重新平衡。例如、如果您的环境中有6 TB VMDK、请将FlexGroup数据存储库的大小设置为不小于52.8 TB (6x8 + 10%)。
-* 从ONTAP 9.14.1开始、VMware和NetApp支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。有关nconnect的详细信息、请参见 link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vmware-vsphere8-nfsv3-nconnect.html["NetApp和VMware的NFSv3 nConnect功能"]。
-* 使用适用于 VMware VAAI 的 NFS 插件执行副本卸载。请注意、如前文所述、虽然FlexGroup数据存储库中的克隆功能得到了增强、但在FlexVol和/或FlexGroup卷之间复制VM时、ONTAP与ESXi主机副本相比、不会提供显著的性能优势。因此、在决定使用VAai或FlexGroup时、请考虑克隆工作负载。修改成分卷数量是针对基于FlexGroup的克隆进行优化的一种方法。正如调整前面提到的缓存超时。
-* 使用适用于VMware vSphere 9.8或更高版本的ONTAP工具、通过ONTAP指标(信息板和VM报告)监控FlexGroup VM的性能、并管理各个VM上的QoS。目前无法通过 ONTAP 命令或 API 获得这些指标。
+* 从ONTAP 9.14.1开始、VMware和NetApp支持NFSv4.1会话中继。有关特定版本的详细信息、请参见NetApp NFS 4.1互操作性表工具(IMT)说明。从vSphere 8.0U2开始、NFSv3不支持卷的多个物理路径、但支持nconnect。有关nconnect的详细信息，请参见link:https://docs.netapp.com/us-en/netapp-solutions/vmware/vmware-vsphere8-nfs-nconnect.html["NetApp和VMware的NFSv3 nConnect功能"]。
+* 使用适用于 VMware VAAI 的 NFS 插件执行副本卸载。请注意、如前文所述、虽然FlexGroup数据存储库中的克隆功能得到了增强、但在FlexVol和/或FlexGroup卷之间复制VM时、ONTAP与ESXi主机副本相比、不会提供显著的性能优势。因此、在决定使用VAAI或FlexGroup卷时、请考虑克隆工作负载。修改成分卷数量是针对基于FlexGroup的克隆进行优化的一种方法。正如调整前面提到的缓存超时。
+* 使用适用于VMware vSphere的ONTAP工具9.8-9.13通过ONTAP指标(信息板和VM报告)监控FlexGroup VM的性能、并管理各个VM上的QoS。目前无法通过 ONTAP 命令或 API 获得这些指标。
 * 适用于VMware vSphere的SnapCenter插件4.4及更高版本支持备份和恢复主存储系统上FlexGroup数据存储库中的VM。4．6号选择控制阀为基于FlexGroup的数据存储库增加了SnapMirror支持。使用基于阵列的快照和复制是保护数据的最有效方式。
 

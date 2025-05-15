@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-vsphere-datastores-nfs.html 
-keywords: vSphere, datastore, VMFS, FC, FCoE, NVMe/FC, iSCSI, NFS, vVols, NFSv3, NFSv4.1 
+keywords: vSphere, datastore, NFS, vVols, NFSv3, NFSv4.1 
 summary: 此页面介绍了使用ONTAP和NFS连接的数据存储库实施VMware vSphere的最佳实践。 
 ---
 = NFS
@@ -27,6 +27,7 @@ ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持V
 
 
 * 为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。
+* 如果使用fpolicy、请务必排除.lck文件、因为vSphere会使用这些文件在启动虚拟机时进行锁定。
 * 当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 (适用于NFS v3)和Update 3 (适用于NFS v4.1)新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。有关nconnect功能及其如何提高性能的详细信息，请访问link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vmware-vsphere8-nfsv3-nconnect.html["NetApp和VMware的NFSv3 nconnect功能"]。
 
 
@@ -42,9 +43,10 @@ ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持V
 * 值得注意的是、NFSv3和NFSv4.1使用不同的锁定机制。NFSv3使用客户端锁定、而NFSv4.1使用服务器端锁定。虽然ONTAP卷可以通过这两种协议导出、但ESXi只能通过一种协议挂载数据存储库。但是、这并不意味着其他ESXi主机不能通过其他版本挂载同一数据存储库。为了避免出现任何问题、请务必指定挂载时要使用的协议版本、以确保所有主机使用相同版本、从而使用相同的锁定模式。请务必避免在主机之间混用NFS版本。如果可能、请使用主机配置文件检查合规性。
 +
 ** 由于 NFSv3 和 NFSv4.1 之间不会自动转换数据存储库，因此请创建一个新的 NFSv4.1 数据存储库，并使用 Storage vMotion 将 VM 迁移到新数据存储库。
-** 请参见中的 NFS v4.1 互操作性表注释 link:https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^] 支持所需的特定 ESXi 修补程序级别。
+** 有关支持所需的特定ESXi修补程序级别、请参见中的NFS v4.1互操作性表说明link:https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^]。
 
 
+* 如中所述link:vmware/vmware-vsphere-settings.html["设置"]，如果您不使用适用于Kubnetes的vSphere CSI，则应将newSyncInterval设置为 https://knowledge.broadcom.com/external/article/386364/reducing-excessive-vsan-cnssync-warnings.html["VMware 知识库 386364"^]
 * NFS导出策略规则用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于NFS、ESXi会使用sys (UNIX)安全模式、并需要根挂载选项来执行VM。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、对于和 `-allow-suid`使用不同值的导出策略规则 `-anon`可能会导致ONTAP工具出现SVM发现问题。IP地址应是一个逗号分隔列表、挂载数据存储库的vmkernel端口地址不含空格。下面是一个策略规则示例：
 +
 ** 访问协议：NFS (包括nfs3和nfs4)

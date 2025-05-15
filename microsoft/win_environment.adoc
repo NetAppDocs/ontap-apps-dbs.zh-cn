@@ -25,7 +25,7 @@ summary: 了解NetApp存储和Windows Server环境
 * 其他应用程序工作负载
 
 
-此外、NetApp存储效率功能还包括重复数据删除、NetApp FlexCLONE (R)副本、NetApp Snapshot技术、精简配置、数据压缩、 存储层为在Windows Server上运行的工作负载提供了显著的价值。
+此外、重复数据删除、NetApp FlexClone (R)副本、NetApp快照技术、精简配置、数据压缩和存储分层等NetApp存储效率功能为Windows Server上运行的工作负载提供了显著价值。
 
 
 
@@ -33,9 +33,9 @@ summary: 了解NetApp存储和Windows Server环境
 
 ONTAP是在NetApp存储控制器上运行的管理软件。NetApp存储控制器称为节点、是一种具有处理器、RAM和NVRAM的硬件设备。节点可以连接到SATA、SAS或SSD磁盘驱动器、也可以连接到这些驱动器的组合。
 
-多个节点聚合到一个集群系统中。集群中的节点会持续相互通信、以协调集群活动。此外、这些节点还可以使用冗余路径连接到由两个10 Gb以太网交换机组成的专用集群网络、从而在节点之间透明地移动数据。在任何故障转移情形下、集群中的节点都可以相互接管、以提供高可用性。集群在整个集群而非每个节点上进行管理、并从一个或多个Storage Virtual Machine (SVM)提供数据。一个集群必须至少具有一个SVM才能提供数据。
+多个节点聚合到一个集群系统中。集群中的节点会持续相互通信、以协调集群活动。此外、这些节点还可以使用冗余路径连接到由两个10 Gb以太网交换机组成的专用集群互连、从而在节点之间透明地移动数据。在任何故障转移情形下、集群中的节点都可以相互接管、以提供高可用性。集群在整个集群而非每个节点上进行管理、并从一个或多个Storage Virtual Machine (SVM)提供数据。一个集群必须至少具有一个SVM才能提供数据。
 
-集群的基本单元是节点、节点会作为高可用性(HA)对的一部分添加到集群中。HA对通过HA互连(与专用集群网络隔离)相互通信并维护与HA对磁盘的冗余连接、从而实现高可用性。尽管磁盘架可能包含属于HA对任一成员的磁盘、但HA对之间不会共享磁盘。下图展示了Windows Server环境中的NetApp存储部署。
+集群的基本单元是节点、节点会作为高可用性(HA)对的一部分添加到集群中。HA对通过HA互连(与专用集群互连分开)相互通信并维护与HA对磁盘的冗余连接、从而实现高可用性。尽管磁盘架可能包含属于HA对任一成员的磁盘、但HA对之间不会共享磁盘。下图展示了Windows Server环境中的NetApp存储部署。
 
 image:win_image1.png["在Windows Server环境中部署NetApp存储、宽度=624、高度=479"]
 
@@ -77,7 +77,7 @@ image:win_image2.png["ONTAP Storage Virtual Machine、宽度=572、高度=443"]
 
 == NetApp PowerShell工具包
 
-NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端自动化并支持ONTAP的存储管理。ONTAP模块包含2、000多个cmdlet、可帮助管理FAS、NetApp全闪存FAS (AFF)、商用硬件和云资源。
+NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端自动化并支持ONTAP的存储管理。ONTAP模块包含2、000多个cmdlet、可帮助管理NetApp AFF、FAS、商用硬件和云资源。
 
 
 

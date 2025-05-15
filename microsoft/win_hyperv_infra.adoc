@@ -52,7 +52,7 @@ image:win_image5.png["基于NetApp的Hyper-V存储基础架构、宽度=624、�
 === 最佳实践
 
 * 当VM及其数据存储在NetApp存储上时、NetApp建议定期在卷级别运行NetApp重复数据删除。如果在CSV或SMB共享上托管相同的VM、则这种做法会显著节省空间。重复数据删除在存储控制器上运行、不会影响主机系统和虚拟机的性能。
-* 在对Hyper-V使用iSCSI LUN时、请确保启用 `iSCSI Service (TCP-In) for Inbound` 和 `iSCSI Service (TCP-Out) for Outbound` 在Hyper-V主机的防火墙设置中。这样可以使iSCSI流量进出Hyper-V主机和NetApp控制器。
+* 在对Hyper-V使用iSCSI LUN时、请确保在Hyper-V主机的防火墙设置中启用"入站iSCSI服务(tcp-in)"和"出站iSCSI服务(tcp-out)"。这样可以使iSCSI流量进出Hyper-V主机和NetApp控制器。
 * NetApp建议取消选中允许管理操作系统共享Hyper-V虚拟交换机的此网络适配器选项。这样会为VM创建一个专用网络。
 
 
@@ -60,7 +60,7 @@ image:win_image5.png["基于NetApp的Hyper-V存储基础架构、宽度=624、�
 
 === 需要记住的事项
 
-* 使用虚拟光纤通道配置VM需要N_Port ID Virtualizationâ€"enabled FC HBA。最多支持四个FC端口。
+* 使用虚拟光纤通道配置VM需要启用了N_Port ID虚拟化的FC HBA。最多支持四个FC端口。
 * 如果主机系统配置有多个FC端口并提供给虚拟机、则必须在虚拟机中安装MPIO才能启用多路径。
 * 如果在主机上使用MPIO、则无法为该主机配置直通磁盘、因为直通磁盘不支持MPIO。
 * 用于VHD/VHDx文件的磁盘应使用64K格式进行分配。
@@ -70,7 +70,7 @@ image:win_image5.png["基于NetApp的Hyper-V存储基础架构、宽度=624、�
 
 === 进一步阅读
 
-* 有关FC HBA的信息、请参见 http://mysupport.netapp.com/matrix/["NetApp 互操作性表"]。
+* 有关FC HBA的信息，请参见 http://mysupport.netapp.com/matrix/["互操作性表工具（ IMT ）"]。
 * 有关虚拟光纤通道的详细信息、请参见Microsoft https://technet.microsoft.com/en-us/library/hh831413.aspx["Hyper-V虚拟光纤通道概述"] 页面。
 
 
@@ -134,7 +134,7 @@ cluster::> set privilege admin
 
 故障转移集群可为Hyper-V服务器提供高可用性和可扩展性。故障转移集群是一组独立的Hyper-V服务器、它们协同工作以提高VM的可用性和可扩展性。
 
-Hyper-V集群模式服务器(称为节点)通过物理网络和集群软件进行连接。这些节点使用共享存储来存储VM文件、其中包括配置、虚拟硬盘(Virtual Hard Disk、VHD)文件和Snapshot副本。共享存储可以是NetApp SMB/CCIFS共享、也可以是基于NetApp LUN的CSV、如下所示。此共享存储可提供一个一致的分布式命名空间、集群中的所有节点均可同时访问此命名空间。因此、如果集群中的一个节点发生故障、另一个节点将通过故障转移过程提供服务。故障转移集群可以使用故障转移集群管理器管理单元和故障转移集群Windows PowerShell cmdlet进行管理。
+Hyper-V集群模式服务器(称为节点)通过物理网络和集群软件进行连接。这些节点使用共享存储来存储VM文件、其中包括配置、虚拟硬盘(Virtual Hard Disk、VHD)文件和快照。共享存储可以是NetApp SMB/CCIFS共享、也可以是基于NetApp LUN的CSV、如下所示。此共享存储可提供一个一致的分布式命名空间、集群中的所有节点均可同时访问此命名空间。因此、如果集群中的一个节点发生故障、另一个节点将通过故障转移过程提供服务。故障转移集群可以使用故障转移集群管理器管理单元和故障转移集群Windows PowerShell cmdlet进行管理。
 
 
 

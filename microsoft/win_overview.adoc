@@ -37,7 +37,7 @@ NOTE: *本文档替代以前发布的技术报告_TR-4568：《适用于Windows 
 
 
 
-ONTAP可提供NetApp存储效率功能、例如NetApp SnapSnapshot (R)技术、克隆、重复数据删除、精简配置、精简复制、 数据压缩、虚拟存储分层等、同时提高性能和效率。
+ONTAP可通过增强的性能和效率提供NetApp存储效率功能、例如NetApp快照技术、克隆、重复数据删除、精简配置、精简复制、数据压缩、虚拟存储分层等。
 
 Windows Server和ONTAP可以一起在大型环境中运行、为数据中心整合以及私有云或混合云部署带来巨大价值。这种组合还可以高效地提供无中断工作负载、并支持无缝可扩展性。
 
@@ -54,4 +54,4 @@ Windows Server和ONTAP可以一起在大型环境中运行、为数据中心整�
 * 读者具备Windows Server操作系统和Hyper-V的基本知识
 
 
-有关经过测试且受支持的SAN和NAS配置的定期更新的完整列表、请参见 http://mysupport.netapp.com/matrix/["互操作性表工具（ IMT ）"] 在NetApp 支持站点 上。通过IMT、您可以确定特定环境支持的确切产品和功能版本。NetApp IMT定义了与NetApp支持的配置兼容的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。
+有关经过测试且受支持的SAN和NAS配置的定期更新的完整列表、请参见 http://mysupport.netapp.com/matrix/["互操作性表工具（ IMT ）"]NetApp支持站点上的。通过IMT、您可以确定特定环境支持的确切产品和功能版本。NetApp IMT定义了与NetApp支持的配置兼容的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。

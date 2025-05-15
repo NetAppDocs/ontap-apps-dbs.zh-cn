@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-vvols-deploy.html 
-keywords: tr-4400, vvols, ontap, virtual volumes, deploy 
+keywords: tr-4400, vvols, ontap, virtual volumes, deploy, ASA r2, ASA, AFF, FAS, vSphere, VMware 
 summary:  
 ---
-= 部署Virtual Storage
+= 在AFF、ASA、ASA R2和FAS系统上部署虚拟卷
 :allow-uri-read: 
 :nofooter: 
 :icons: font
@@ -15,21 +15,21 @@ summary:
 [role="lead"]
 请遵循以下最佳实践为虚拟机创建虚拟卷存储。
 
-配置vols数据存储库涉及几个步骤。NetApp的ASA R2系统专为VMware工作负载而设计、可提供与传统ONTAP系统不同的用户体验。使用ASA R2系统时、ONTAP工具10.3或更高版本所需的设置步骤更少、并且包含针对更新后的存储架构优化的UI扩展和REST API支持。
+配置vols数据存储库涉及几个步骤。NetApp的ASA R2系统专为VMware工作负载而设计、可提供与传统ONTAP系统不同的用户体验。使用ASA R2系统时、ONTAP工具10.3或更高版本所需的设置步骤更少、并且包含针对新存储架构优化的UI扩展和REST API支持。
 
 
 
 == 准备使用ONTAP工具创建虚拟卷存储库
 
-如果您已经在使用ONTAP工具来管理、自动化和报告现有VMFS或基于NFS的传统存储、则可以跳过部署过程的前两个步骤。
+如果您已经在使用ONTAP工具来管理、自动化和报告现有VMFS或基于NFS的传统存储、则可以跳过部署过程的前两个步骤。您还可以参考此完整说明link:vmware-vvols-checklist.html["检查清单"]来部署和配置ONTAP工具。
 
-. 创建Storage Virtual Machine (SVM)及其协议配置。请注意、ASA R2系统可能不需要执行此操作、因为它们通常已有一个SVM用于数据服务。您可以选择NVMe/FC (仅限ONTAP工具9.13)、NFSv3、NFSv4.1、iSCSI、FCP或这些选项的组合。使用ONTAP工具10.3时、NVMe/TCP和NVMe/FC也可用于传统VMFS数据存储库。您可以使用ONTAP系统管理器向导或集群Shell命令行。
+. 创建Storage Virtual Machine (SVM)及其协议配置。请注意、ASA R2系统可能不需要执行此操作、因为它们通常已有一个SVM用于数据服务。您可以选择NVMe/FC (仅限ONTAP工具9.13)、NFSv3、NFSv4.1、iSCSI、FCP或这些选项的组合。使用ONTAP工具10.3及更高版本时、NVMe/TCP和NVMe/FC也可用于传统VMFS数据存储库。您可以使用ONTAP系统管理器向导或集群Shell命令行。
 +
 ** https://docs.netapp.com/us-en/ontap/disks-aggregates/assign-aggregates-svms-task.html["为SVM分配本地层(聚合)"]适用于所有非ASA R2系统。
 ** 对于每个交换机/网络结构连接、每个节点至少需要一个LIF。作为最佳实践、为每个节点创建两个或更多基于FCP、iSCSI或NVMe的协议。每个节点一个LIF足以支持基于NFS的卷、但此LIF应受LACP ifgroup保护。有关详细信息、请参见 https://docs.netapp.com/us-en/ontap/networking/configure_lifs_cluster_administrators_only_overview.html["配置文件配置概览"]和 https://docs.netapp.com/us-en/ontap/networking/combine_physical_ports_to_create_interface_groups.html["将物理端口组合在一起以创建接口组"]。
 ** 如果要对租户vCenter使用SVM范围的凭据、则每个SVM至少需要一个管理LIF。
 ** 如果您计划使用SnapMirror，请确保您的源和目标 https://docs.netapp.com/us-en/ontap/peering/["ONTAP集群和SVM已建立对等关系"]。
-** 此时可以创建卷、但最佳做法是、让ONTAP工具中的_ProVision数据存储库_向导来创建卷。此规则的唯一例外情况是、如果您计划将vvol复制与VMware Site Recovery Manager和ONTAP工具9结合使用。对于具有现有SnapMirror关系的已有FlexVol 卷、设置起来更容易。请注意、不要在要用于虚拟卷的任何卷上启用QoS、因为这是要由SPBM和ONTAP 工具管理的。
+** 对于非ASA R2系统、此时可以创建卷、但最佳做法是、让ONTAP工具中的_ProVision数据存储库_向导来创建卷。此规则的唯一例外情况是、如果您计划将vvol复制与VMware Site Recovery Manager和ONTAP工具9.13结合使用。对于具有现有SnapMirror关系的已有FlexVol 卷、设置起来更容易。请注意、不要在要用于虚拟卷的任何卷上启用QoS、因为这是要由SPBM和ONTAP 工具管理的。
 
 
 . https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/ontap-tools-deployment.html["部署适用于VMware vSphere的ONTAP工具"]使用从NetApp支持站点下载的OVA。
@@ -46,7 +46,7 @@ summary:
 
 [TIP]
 ====
-* 建议的最佳实践是 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-appliance-settings.html["横向扩展ONTAP工具"]、为所有生产工作负载配置10.3到3节点高可用性(HA)配置。出于实验室或测试目的、可以使用单节点部署。
+* 对于所有生产工作负载、建议将 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-appliance-settings.html["横向扩展ONTAP工具"]10.3及更高版本配置为三节点高可用性(HA)配置。出于实验室或测试目的、可以使用单节点部署。
 * 使用生产用的卷时、建议的最佳实践是消除任何单点故障。创建反关联性规则、以防止ONTAP工具VM在同一主机上同时运行。在初始部署后、还建议使用Storage vMotion将ONTAP工具VM放置到不同的数据存储库中。阅读有关或 https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-resource-management-8-0/using-drs-clusters-to-manage-resources/create-a-vm-vm-affinity-rule.html["创建VM-VM关联性规则"]的更多信息 https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-resource-management-8-0/using-drs-clusters-to-manage-resources/using-affinity-rules-without-vsphere-drs.html["在不使用vSphere DRS的情况下使用关联规则"]。您还应计划频繁备份和/或 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/enable-backup.html#create-backup-and-download-the-backup-file["使用内置配置备份实用程序"]。
 
 
@@ -159,7 +159,7 @@ NOTE: 与先前版本一样、ONTAP工具10.0及更高版本不再使用存储�
 
 === 正在创建VM存储策略
 
-在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用NetApp。集群模式Data。ONTAP。VP.VVO卷"存储类型。有关使用ONTAP工具VASA Provider的示例、请参见链接：vmware-vvols-ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。"NetApp.Clustered.Data.ONTAP .VP.VASA10"存储的规则适用于非基于VVO尔 的数据存储库。
+在vSphere中、VM存储策略用于管理可选功能、例如存储I/O控制或vSphere加密。它们还可与Vvol结合使用、以便为VM应用特定的存储功能。使用NetApp。集群模式Data。ONTAP。VP.VVO"存储类型。有关使用ONTAP工具VASA Provider的示例、请参见链接：vmware-vvols-ONTAP。html#Best Practices[使用基于NFS v3的VVOLs的网络配置示例]。ONTAP 10"存储的规则应与非基于NetApp的数据存储库结合使用。
 
 创建存储策略后、即可在配置新VM时使用该策略。
 

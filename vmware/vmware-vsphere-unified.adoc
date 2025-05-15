@@ -16,7 +16,7 @@ summary: 近20年来、ONTAP一直是适用于VMware vSphere环境的领先存�
 [role="lead"]
 ONTAP通过简化的软件定义方法统一存储、实现安全高效的管理、提高性能和无缝可扩展性。这种方法可增强数据保护并有效利用云资源。
 
-最初、这种统一方法指的是在一个存储系统上同时支持NAS和SAN协议、而ONTAP凭借其在NAS中的原有优势、仍然是SAN的领先平台。ONTAP现在还提供S3对象协议支持。虽然S3不用于数据存储库、但您可以将其用于子系统内应用程序。您可以在中了解有关ONTAP中S3协议支持的更多信息 link:https://docs.netapp.com/us-en/ontap/s3-config/index.html["S3配置概述"]。
+最初、这种统一方法指的是在一个存储系统上同时支持NAS和SAN协议、而ONTAP凭借其在NAS中的原有优势、仍然是SAN的领先平台。ONTAP现在还提供S3对象协议支持。虽然S3不用于数据存储库、但您可以将其用于子系统内应用程序。有关ONTAP中S3协议支持的详细信息，请参见link:https://docs.netapp.com/us-en/ontap/s3-config/index.html["S3配置概述"]。统一存储一词已发展为一种统一的存储管理方法、包括通过一个界面管理所有存储资源的能力。这包括能够同时管理内部和云存储资源、最新的全SAN阵列(ASA)系统、以及从一个界面管理多个存储系统。
 
 Storage Virtual Machine (SVM)是ONTAP中的安全多租户单元。它是一种逻辑构造、允许客户端访问运行ONTAP的系统。SVM 可以通过多个数据访问协议通过逻辑接口（ Logical Interface ， LIF ）同时提供数据。SVM 可通过 CIFS 和 NFS 等 NAS 协议提供文件级数据访问，并通过 iSCSI ， FC/FCoE 和 NVMe 等 SAN 协议提供块级数据访问。SVM可以同时分别为SAN和NAS客户端以及S3提供数据。
 

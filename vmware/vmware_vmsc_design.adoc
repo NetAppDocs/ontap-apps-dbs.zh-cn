@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware_vmsc_design.html 
-keywords: VMware, Data protection, MetroCluster, SMBC, SnapMirror active sync, vMSC 
+keywords: VMware, Data protection, MetroCluster, SMBC, SMas, SnapMirror active sync, vMSC, metro storage cluster, vSphere, vCenter, business continuity, disaster recovery, ONTAP 
 summary: 《VMSC设计和实施准则》。 
 ---
 = 《VMSC设计和实施准则》
@@ -20,15 +20,19 @@ summary: 《VMSC设计和实施准则》。
 
 == NetApp存储配置
 
-有关NetApp MetroCluster (称为MCC配置)的设置说明，请访问 https://docs.netapp.com/us-en/ontap-metrocluster/["MetroCluster 文档"]。有关SnapMirror活动同步(SMA)的说明，请参见 https://docs.netapp.com/us-en/ontap/smbc/index.html["SnapMirror 业务连续性概述"]。
+有关NetApp MetroCluster的设置说明，请访问 https://docs.netapp.com/us-en/ontap-metrocluster/["MetroCluster 文档"]。有关SnapMirror活动同步(SMA)的说明，请参见 https://docs.netapp.com/us-en/ontap/smbc/index.html["SnapMirror 业务连续性概述"]。
 
 配置MetroCluster后、对其进行管理就像管理传统ONTAP环境一样。您可以使用命令行界面(CLI)、System Manager或Ans得 等各种工具设置Storage Virtual Machine (SVM)。配置SVM后、在集群上创建要用于正常操作的逻辑接口(Logical Interface、Li)、卷和逻辑单元号(Logical Unit Number、LUN)。这些对象将自动通过集群对等网络复制到另一个集群。
 
-如果不使用MetroCluster、则可以使用SnapMirror主动同步、它可以在不同故障域的多个ONTAP集群之间提供数据存储库粒度保护和主动-主动访问。SMA使用一致性组(一致性组、CGS)确保一个或多个数据存储库之间的写入顺序一致性、您可以根据应用程序和数据存储库要求创建多个CGS。对于需要在多个数据存储库之间同步数据的应用程序、一致性组尤其有用。此外、SMA还支持原始设备映射(Raw Device Mapping、RDM)以及通过子系统内iSCSI启动程序连接到子系统的存储。有关一致性组的详细信息，请访问 https://docs.netapp.com/us-en/ontap/consistency-groups/index.html["一致性组概述"]。
+如果未使用MetroCluster、或者您的ONTAP系统不支持MetroCluster、例如ASA R2系统、则可以使用SnapMirror主动同步、它可以在不同故障域的多个ONTAP集群之间提供数据存储库粒度保护和主动-主动访问。SMA使用一致性组(一致性组、CGS)确保一个或多个数据存储库之间的写入顺序一致性、您可以根据应用程序和数据存储库要求创建多个CGS。对于需要在多个数据存储库之间同步数据的应用程序、一致性组尤其有用。例如、分布在数据存储库之间的子系统LVM。此外、SMA还支持原始设备映射(Raw Device Mapping、RDM)以及通过子系统内iSCSI启动程序连接到子系统的存储。有关一致性组的详细信息，请访问 https://docs.netapp.com/us-en/ontap/consistency-groups/index.html["一致性组概述"]。
 
-现在、ONTAP工具提供了一种为VMSC配置SnapMirror活动同步的简单方法。您可以使用ONTAP工具vCenter插件在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。此插件提供了一个简单直观的界面、用于在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。有关ONTAP工具vCenter插件的详细信息，请访问 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用于 VMware vSphere 的 ONTAP 工具"]，或者直接跳转到 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/protect-cluster.html["使用主机集群保护进行保护"]。
+与MetroCluster相比、使用SnapMirror活动同步管理VMSC配置有一些不同。首先、SMA是一种仅SAN配置、SnapMirror活动同步无法保护任何NFS数据存储库。其次、您必须将两个LUN副本映射到ESXi主机、以使其能够访问这两个故障域中复制的数据存储库。第三、您必须为要使用SnapMirror主动同步保护的数据存储库创建一个或多个一致性组。最后、您必须为创建的一致性组创建SnapMirror策略。所有这些操作都可以通过ONTAP工具vCenter插件中的"保护集群"向导轻松完成、也可以使用ONTAP命令行界面或System Manager手动完成。
 
-与MetroCluster相比、使用SnapMirror活动同步管理VMSC配置有一些不同。首先、SMA是一种仅SAN配置、SnapMirror活动同步无法保护任何NFS数据存储库。其次、您必须将两个LUN副本映射到ESXi主机、以使其能够访问这两个故障域中复制的数据存储库。
+
+
+== 使用适用于SnapMirror活动同步的ONTAP工具vCenter插件
+
+ONTAP工具vCenter插件提供了一种简单直观的方法来为VMSC配置SnapMirror活动同步。您可以使用ONTAP工具vCenter插件在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。此插件提供了一个易于使用的界面、用于高效地建立和管理这些关系。有关ONTAP工具vCenter插件的详细信息，请访问 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用于 VMware vSphere 的 ONTAP 工具"]，或者直接跳转到 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/protect-cluster.html["使用主机集群保护进行保护"]。
 
 
 
@@ -68,7 +72,7 @@ image::../media/vmsc_3_3.png[VM监控,624,480]
 
 image::../media/vmsc_3_4.png[准入控制,624,479]
 
-. 单击"OK"(确定)。
+. 单击"确定"。
 . 选择DRS并单击编辑。
 . 除非您的应用程序要求、否则请将自动化级别设置为手动。
 
@@ -76,7 +80,7 @@ image::../media/vmsc_3_4.png[准入控制,624,479]
 image::../media/vmsc_3_5.png[VMSC 3 5.,624,336]
 
 . 启用VM组件保护、请参见 https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-availability/GUID-F01F7EB8-FF9D-45E2-A093-5F56A788D027.html["docs.vmware.com"]。
-. 对于采用MCC的VMSC、建议使用以下附加vSphere HA设置：
+. 对于采用MetroCluster的VMSC、建议使用以下附加vSphere HA设置：
 
 
 [cols="50%,50%"]
@@ -141,7 +145,7 @@ image::../media/vmsc_3_6.png[自动生成的计算机问题描述的屏幕截图
 
 image::../media/vmsc_3_7.png[自动生成的计算机问题描述的屏幕截图,624,545]
 
-添加名为ds.heartbeatDsPerHost的高级设置可以增加检测信号数据存储库的数量。使用四个检测信号数据存储库(HB DSS)—每个站点两个。使用“从列表中选择但恭维”选项。这是必需的、因为如果一个站点发生故障、您仍需要两个HB DSS。但是、这些数据不必通过MCC或SnapMirror主动同步进行保护。
+添加名为ds.heartbeatDsPerHost的高级设置可以增加检测信号数据存储库的数量。使用四个检测信号数据存储库(HB DSS)—每个站点两个。使用"从列表中选择但恭维"选项。这是必需的、因为如果一个站点发生故障、您仍需要两个HB DSS。但是、这些数据不必通过MetroCluster或SnapMirror主动同步进行保护。
 
 有关详细信息，请参见 https://www.vmware.com/docs/vmw-vmware-vsphere-metro-storage-cluster-recommended-practices["VMware vSphere Metro Storage Cluster 建议的实践"]
 

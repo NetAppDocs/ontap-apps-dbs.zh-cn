@@ -47,7 +47,7 @@ image:vvols-image5.png["ONTAP 工具VASA Provider架构,240"]
 最佳实践是、将ONTAP工具和vCenter设备存储在传统NFS或VMFS数据存储库上、以避免任何相互依赖关系冲突。由于vCenter和ONTAP工具必须在vvol操作期间相互通信、因此请勿将ONTAP工具设备或vCenter Server设备(VCSAS)安装或移动到它们所管理的vvol存储中。如果发生这种情况、重新启动vCenter或ONTAP工具设备可能会导致控制平台访问中断、并且设备无法启动。
 
 ====
-可以使用可从NetApp支持站点上下载的升级ISO文件(NSS—需要登录)原位升级ONTAP工具 https://mysupport.netapp.com/site/products/all/details/otv10/downloads-tab["适用于VMware vSphere 10的ONTAP工具—下载"]。按照 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/upgrade/upgrade-ontap-tools.html["从适用于VMware vSphere 10.x的ONTAP工具升级到10.3"]指南说明升级设备。也可以从ONTAP工具9.13并排升级到10.3。有关该主题的详细信息、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/migrate/migrate-to-latest-ontaptools.html["从适用于VMware vSphere 9.x的ONTAP工具迁移到10.3"]。
+可以使用ONTAP支持站点上可下载的升级ISO文件(需要登录)原位升级NetApp工具 https://mysupport.netapp.com/site/products/all/details/otv10/downloads-tab["适用于VMware vSphere 10的ONTAP工具—下载"]。按照 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/upgrade/upgrade-ontap-tools.html["从适用于VMware vSphere 10.x的ONTAP工具升级到10.3"]指南说明升级设备。也可以从ONTAP工具9.13并排升级到10.3。有关该主题的详细信息、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/migrate/migrate-to-latest-ontaptools.html["从适用于VMware vSphere 9.x的ONTAP工具迁移到10.3"]。
 
 要估算虚拟设备的规模并了解配置限制、请参见 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/deploy/prerequisites.html#configuration-limits-to-deploy-ontap-tools-for-vmware-vsphere["部署适用于VMware vSphere的ONTAP工具的配置限制"^]
 
@@ -73,7 +73,7 @@ https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用�
 
 ==== 使用 ONTAP 工具
 
-* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-vvols-datastore.html["配置数据存储库"^]
+* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/create-datastore.html["配置数据存储库"^]
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/configure-user-role-and-privileges.html["配置基于角色的访问控制"^]
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-appliance-settings.html["配置高可用性"^]
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/edit-esxi-host-settings.html["修改 ESXi 主机设置"^]
@@ -106,11 +106,11 @@ VASA Provider包括一个信息板、其中包含各个VVO尔VM的性能和容�
 
 *使用适用于VMware vSphere的UI扩展或REST API的ONTAP 工具来配置vvol数据存储库*和协议端点*
 
-虽然可以使用常规vSphere界面创建vvol数据存储库、但使用ONTAP工具将根据需要自动创建协议端点、并使用ONTAP最佳实践创建FlexVol卷(ASA R2不需要)。只需右键单击主机/集群/数据中心、然后选择_ ONTAP tools_和_配置数据存储库_。您只需在向导中选择所需的卷选项即可。
+虽然可以使用常规vSphere界面创建vvol数据存储库、但使用ONTAP工具将根据需要自动创建协议端点、并使用ONTAP最佳实践创建FlexVol卷(ASA R2不需要)。只需右键单击主机/集群/数据中心、然后选择_ ONTAP tools_和_配置数据存储库_即可。您只需在向导中选择所需的卷选项即可。
 
 *切勿将ONTAP 工具设备或vCenter Server设备(VCSA)存储在其所管理的VVOLs数据存储库中。*
 
-如果您需要重新启动设备、因为它们在重新启动期间无法重新绑定自己的虚拟卷、这可能会导致出现"鸡肉和鸡蛋的情况"。您可以将其存储在由其他ONTAP 工具和vCenter部署管理的Vvol数据存储库中。
+如果您需要重新启动设备、因为它们在重新启动期间无法重新绑定自己的虚拟卷、则可能会出现"鸡肉和鸡蛋的情况"。您可以将其存储在由其他ONTAP 工具和vCenter部署管理的Vvol数据存储库中。
 
 *避免在不同ONTAP 版本之间执行虚拟卷操作。*
 
@@ -130,7 +130,7 @@ https://www.netapp.com/media/10680-tr4080.pdf["_TR-4080：《现代SAN ONTAP 9_�
 
 https://www.netapp.com/pdf.html?item=/media/10681-tr4684.pdf["_TR-4684使用NVMe-oF实施和配置现代SAN"^]
 
-*根据需要规划您的后备FlexVol。*
+*根据需要规划备用FlexVol卷。*
 
 对于非R2系统、可能需要向ASA数据存储库添加多个后备卷、以便在ONTAP集群中分布工作负载、支持不同的策略选项或增加允许的LUN或文件数量。但是、如果需要最大的存储效率、请将所有备份卷放在一个聚合上。或者、如果需要最大的克隆性能、则可以考虑使用一个FlexVol 卷、并将模板或内容库保留在同一个卷中。VASA Provider会将许多VVOLs存储操作(包括迁移、克隆和快照)卸载到ONTAP。如果在一个FlexVol 卷中执行此操作、则会使用节省空间的文件克隆、并且这些克隆几乎可以即时使用。在FlexVol 卷之间执行此操作时、这些副本可以快速可用并使用实时重复数据删除和数据压缩、但只有在使用后台重复数据删除和数据压缩的卷上运行后台作业后、才能最大程度地恢复存储效率。根据源和目标、某些效率可能会降级。
 

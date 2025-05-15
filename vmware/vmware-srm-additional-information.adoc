@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware-srm-additional-information.html 
-keywords: vmware, site, recovery manager, vsrm, hybrid, cloud, additional, information 
+keywords: vmware, site, recovery manager, vsrm, hybrid, cloud, additional, information, srm, vlsr 
 summary: 要了解有关本文档中所述信息的更多信息，请查看以下文档和 / 或网站： 
 ---
 = 追加信息
@@ -16,18 +16,15 @@ summary: 要了解有关本文档中所述信息的更多信息，请查看以�
 [role="lead"]
 要了解有关本文档中所述信息的更多信息，请查看以下文档和 / 或网站：
 
+* 适用于VMware vSphere 10.x的ONTAP工具资源link:https://mysupport.netapp.com/site/products/all/details/otv10/docs-tab["https://mysupport.netapp.com/site/products/all/details/otv10/docs-tab"]
+* 适用于VMware vSphere 9.x的ONTAP工具资源link:https://mysupport.netapp.com/site/products/all/details/otv/docsandkb-tab["https://mysupport.netapp.com/site/products/all/details/otv/docsandkb-tab"]
 * TR-4597 ：适用于 ONTAP 的 VMware vSphere
 link:vmware-vsphere-overview.html["https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vsphere-overview.html"]
 * TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷
 link:vmware-vvols-overview.html["https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vvols-overview.html"]
 * TR-4015 《适用于 ONTAP 9 的 SnapMirror 配置最佳实践指南》
 link:https://www.netapp.com/media/17229-tr4015.pdf?v=127202175503P["https://www.netapp.com/media/17229-tr4015.pdf?v=127202175503P"]
-* 适用于 ONTAP 的 RBAC User Creator
-link:https://mysupport.netapp.com/site/tools/tool-eula/rbac["https://mysupport.netapp.com/site/tools/tool-eula/rbac"]
-* 适用于 VMware vSphere 的 ONTAP 工具资源
-link:https://mysupport.netapp.com/site/products/all/details/otv/docsandkb-tab["https://mysupport.netapp.com/site/products/all/details/otv/docsandkb-tab"]
-* VMware Site Recovery Manager 文档
-link:https://docs.vmware.com/en/Site-Recovery-Manager/index.html["https://docs.vmware.com/en/Site-Recovery-Manager/index.html"]
+* VMware Live Site Recovery文档link:https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0.html["https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0.html"]
 
 
-请参见 link:http://mysupport.netapp.com/matrix["互操作性表工具（ IMT ）"] 在 NetApp 支持站点上，验证您的特定环境是否支持本文档中所述的确切产品和功能版本。NetApp IMT 定义了可用于构建 NetApp 支持的配置的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。
+要验证您的特定环境是否支持本文档所述的确切产品和功能版本、请参见link:http://mysupport.netapp.com/matrix["互操作性表工具（ IMT ）"]NetApp支持站点上的。NetApp IMT 定义了可用于构建 NetApp 支持的配置的产品组件和版本。具体结果取决于每个客户是否按照已发布的规格进行安装。

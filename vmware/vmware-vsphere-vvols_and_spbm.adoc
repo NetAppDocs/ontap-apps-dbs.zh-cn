@@ -16,7 +16,8 @@ summary: 此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方�
 [role="lead"]
 NetApp于2012年首次宣布、是VMware的早期设计合作伙伴、负责开发VMware vSphere APIS for Storage AWAREIVAWARE(VASA)、这是企业级存储阵列基于存储策略的管理(Storage Policy Based Management、SPBM)的基础。这种方法为VMFS和NFS存储提供了有限的VM粒度存储管理。
 
- As a technology design partner, NetApp provided architectural input and in 2015 announced support for vVols. This new technology now enabled the automation of VM-granular and truly array-native storage provisioning through SPBM.
+作为技术设计合作伙伴、NetApp提供了架构方面的投入、并于2015年宣布支持虚拟卷。现在、这项新技术可通过SPBM实现VM粒度和真正的阵列本机存储配置自动化。
+
 
 
 == 虚拟卷(Virtual Volume、Virtual Volume、Virtual Volume)
@@ -41,9 +42,9 @@ NetApp ONTAP在虚拟卷扩展领域居于存储行业领先地位，可在一�
 
 我们之前提到、VM管理员可以将容量用作存储池。这可以通过使用存储容器来实现、这些存储容器在vSphere中表示为逻辑数据存储库。
 
-存储容器由存储管理员创建、用于对可由VM管理员使用的存储资源进行分组。根据您使用的ONTAP系统类型、创建存储容器的方式可能有所不同。对于传统ONTAP 9集群、系统会为容器分配一个或多个后备FlexVol、这些FlexVol共同构成存储池。对于ASA R2系统、整个集群都是存储池。
+存储容器由存储管理员创建、用于对可由VM管理员使用的存储资源进行分组。根据您使用的ONTAP系统类型、创建存储容器的方式可能有所不同。对于传统ONTAP 9集群、系统会为容器分配一个或多个后备FlexVol卷、这些卷共同构成存储池。对于ASA R2系统、整个集群都是存储池。
 
 
 NOTE: 有关 VMware vSphere 虚拟卷， SPBM 和 ONTAP 的详细信息，请参见 link:vmware-vvols-overview.html["TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷"^]。
 
- \* Depending on platform and protocol
+*取决于平台和协议

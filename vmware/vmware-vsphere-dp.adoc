@@ -14,18 +14,56 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 
 [role="lead"]
-备份虚拟机并快速恢复虚拟机是 ONTAP for vSphere 的一项强大优势，使用适用于 VMware vSphere 的 SnapCenter 插件在 vCenter 中轻松管理此功能。
+备份和快速恢复虚拟机(VM)是使用适用于vSphere的ONTAP的主要优势。可以通过适用于VMware vSphere的SnapCenter插件在vCenter中轻松管理此功能。许多客户通过SnapCenter增强了第三方备份解决方案、以利用ONTAP的快照技术、因为它提供了使用ONTAP恢复VM的最快、最直接的方式。拥有ONTAP One许可证的客户可以免费获得SnapCenter、也可以获得其他许可证包。
+
+此外，适用于VMware的SnapCenter插件可以与集成 https://docs.netapp.com/us-en/bluexp-backup-recovery/concept-protect-vm-data.html["用于备份和恢复虚拟机的BlueXP "^]，从而为大多数ONTAP系统提供有效的3-2-1备份解决方案。请注意、如果将BlueXP  备份和恢复用于具有高级服务的虚拟机、例如用于额外备份存储的对象存储、则可能需要支付一些费用。本节概述了可用于保护VM和数据存储库的各种选项。
+
+
+
+== NetApp ONTAP卷快照
 
 使用快照快速创建虚拟机或数据存储库的副本而不影响性能、然后使用SnapMirror将其发送到二级系统、以实现长期异地数据保护。这种方法只存储更改后的信息，从而最大限度地减少存储空间和网络带宽。
 
-使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter插件等应用程序工具来保护SQL Server或Oracle等事务数据。这些快照与VMware (一致性)快照不同、适用于长期保护。由于性能和其他影响、建议仅在短期内使用VMware快照。link:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/snapshot-limitations.html["Snapshot限制"^]有关详细信息、请参见。
+快照是ONTAP的一项重要功能、可用于创建数据的时间点副本。它们节省空间、并且可以快速创建、因此非常适合保护虚拟机和数据存储库。快照可用于各种用途、包括备份、恢复和测试。这些快照与VMware (一致性)快照不同、适用于长期保护。由于性能和其他影响、建议仅在短期内使用VMware vCenter管理的快照。link:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/snapshot-limitations.html["Snapshot限制"^]有关详细信息、请参见。
 
-这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。借助 vSphere ，您可以使用它们来保护 SQL Server 或 Oracle 数据库，其中的数据存储在 RDM LUN 上，直接连接到子操作系统的 iSCSI LUN 或 VMFS 或 NFS 数据存储库上的 VMDK 文件上。这些插件允许指定不同类型的数据库备份、支持联机或脱机备份、并保护数据库文件和日志文件。除了备份和恢复之外、这些插件还支持出于开发或测试目的克隆数据库。
+快照是在卷级别创建的、可用于保护该卷中的所有虚拟机和数据存储库。这意味着、您可以创建整个数据存储库的快照、其中包括该数据存储库中的所有虚拟机。
+
+对于NFS数据存储库、您可以通过浏览.Snapshot目录轻松查看快照中的VM文件。这样、您就可以快速从快照访问和还原文件、而无需使用特定的备份解决方案。
+
+对于VMFS数据存储库、您可以根据所需的快照创建数据存储库的FlexClone。这样、您就可以根据快照创建新的数据存储库、此数据存储库可用于测试或开发目的。FlexClone仅会为创建快照后所做的更改占用空间、从而可以节省空间来创建数据存储库副本。创建FlexClone后、您可以像常规数据存储库一样、将LUN或命名空间映射到ESXi主机。这样、您不仅可以还原特定的VM文件、还可以根据生产数据快速创建测试或开发环境、而不会影响生产环境的性能。
+
+有关快照的详细信息、请参阅ONTAP文档。以下链接提供了其他详细信息：https://docs.netapp.com/us-en/ontap/data-protection/manage-local-snapshot-copies-concept.html["ONTAP本地Snapshot副本"^] https://docs.netapp.com/us-en/ontap/data-protection/manage-snapmirror-replication.html["ONTAP SnapMirror复制"^]
+
+
+
+== 适用于VMware vSphere的SnapCenter插件
+
+使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。但是，由于 VMware 快照对性能的影响，通常不建议使用这些快照，除非您需要暂停子文件系统。而是使用快照进行常规保护、并使用SnapCenter应用程序插件等应用程序工具来保护SQL Server或Oracle等事务处理数据。
+
+这些插件提供了扩展功能，可在物理和虚拟环境中保护数据库。在vSphere中、您可以使用它们来保护SQL Server或Oracle数据库、其中数据存储在RDM LUN、Vvol或NVMe/TCP命名空间和直接连接到子操作系统的iSCSI LUN上、或者VMFS或NFS数据存储库上的VMDK文件上。这些插件允许指定不同类型的数据库备份、支持联机或脱机备份、并保护数据库文件和日志文件。除了备份和恢复之外、这些插件还支持出于开发或测试目的克隆数据库。
 
 下图显示了 SnapCenter 部署的一个示例。
 
 image:vsphere_ontap_image4.png["SnapCenter部署"]
 
-要增强灾难恢复功能，请考虑将适用于 ONTAP 的 NetApp SRA 与 VMware Site Recovery Manager 结合使用。除了支持将数据存储库复制到灾难恢复站点之外，它还可以通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。通过 SRA 中内置的自动化功能，还可以轻松地从灾难中恢复并在中断解决后重新保护生产。
+有关规模估算信息、请参见 https://kb.netapp.com/data-mgmt/SnapCenter/SC_KBs/SCV__Sizing_Guide_for_SnapCenter_Plugin_for_VMware_vSphere["适用于VMware vSphere的SnapCenter插件规模估算指南"^]
 
-最后、要获得最高级别的数据保护、请考虑使用NetApp MetroCluster的VMware vSphere Metro Storage Cluster (VMSC)配置。VMSC是一款经过VMware认证的解决方案、它将同步复制与基于阵列的集群相结合、可提供与高可用性集群相同的优势、但会分布在不同的站点上、以防止站点灾难。NetApp MetroCluster为同步复制提供了经济高效的配置，可以从任何单个存储组件故障中透明地进行恢复，并在发生站点灾难时进行单命令恢复。中详细介绍了VMSC。 https://www.netapp.com/pdf.html?item=/media/19773-tr-4128.pdf["TR-4128"^]
+
+
+== 适用于采用VMware Live Site Recovery的VMware vSphere的ONTAP工具
+
+适用于VMware vSphere的ONTAP工具(OT4VS)是一款免费插件、可在VMware vSphere和NetApp ONTAP之间实现无缝集成。您可以通过它直接从vSphere Web Client管理ONTAP存储、从而更轻松地执行配置存储、管理复制和监控性能等任务。
+
+要改进灾难恢复功能、请考虑使用适用于VMware vSphere的ONTAP工具中的适用于ONTAP的NetApp SRA以及VMware Live Site Recovery (以前称为Site Recovery Manager)。此工具不仅支持使用SnapMirror将数据存储库复制到灾难恢复站点、还支持通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。此外、借助内置的自动化功能、还可以简化从灾难中恢复以及在解决中断后重新保护生产环境的过程。
+
+
+
+== BlueXP  灾难恢复
+
+BlueXP  灾难恢复(Disaster Recovery、DR)是一项基于云的服务、可提供全面的解决方案、用于在发生灾难时保护数据和应用程序。它提供一系列功能、包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对内部和基于云的ONTAP系统的支持。BlueXP  灾难恢复可与ONTAP和您的VMware vSphere环境无缝结合使用、从而为灾难恢复提供统一的解决方案。
+
+
+
+== NetApp MetroCluster和SnapMirror处于活动同步状态的vSphere Metro Storage Cluster (VMSC)
+
+最后、要获得最高级别的数据保护、请考虑使用NetApp MetroCluster的VMware vSphere Metro Storage Cluster (VMSC)配置。VMSC是一款经VMware认证且受NetApp支持的解决方案、它使用同步复制、可提供与高可用性集群相同的优势、但分布在不同的站点上以防止站点灾难。NetApp SnapMirror Active Sync (采用ASA和AFF)以及MetroCluster (采用AFF)为同步复制提供了经济高效的配置，可从任何单个存储组件故障中透明恢复，并可在SnapMirror活动同步时透明恢复，或在发生站点灾难时使用MetroCluster进行单命令恢复。中详细介绍了VMSC。 https://www.netapp.com/pdf.html?item=/media/19773-tr-4128.pdf["TR-4128"^]

@@ -4,7 +4,7 @@ permalink: vmware/vmware-otv-hardening-integrity.html
 keywords: VMware, Data protection, security, OTV, Hardening, ONTAP Tools 
 summary: 适用于VMware vSphere的ONTAP工具安全增强指南、完整性验证。 
 ---
-= 验证适用于VMware vSphere的ONTAP工具安装包的完整性
+= 验证适用于VMware vSphere 9.13的ONTAP工具安装包的完整性
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -36,7 +36,7 @@ vapp安装包以tarball的形式提供。此tarball包含虚拟设备的中间�
 
 . 使用VMware vSphere Client登录到vCenter Server。
 . 为administrator@vsphere.local或vCenter Single Sign-On Administrators组的其他成员指定用户名和密码。如果您在安装期间指定了其他域、请以管理员身份@mydomain登录。
-. 导航到证书管理用户界面：a.从主菜单中、选择管理。B在"证书"下、单击"证书管理"。
+. 导航到证书管理UI：a.从主菜单中、选择管理。b.在证书下、单击证书管理。
 . 如果系统提示您、请输入vCenter Server的凭据。
 . 在可信根证书下、单击添加。
 . 单击浏览并选择证书.prom文件(OTV_OVA_inter_root_CERT_chain.prom)的位置。

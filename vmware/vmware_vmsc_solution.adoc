@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: vmware/vmware_vmsc_solution.html 
-keywords: VMware, Data protection, MetroCluster, SMBC, SnapMirror active sync, vMSC 
+keywords: VMware, Data protection, MetroCluster, SMBC, SMas, SnapMirror active sync, vMSC, metro storage cluster, vSphere, vCenter, business continuity, disaster recovery, ONTAP 
 summary: VMware vSphere解决方案概述 
 ---
 = VMware vSphere解决方案概述
@@ -20,13 +20,13 @@ vCenter Server Appliance (VCCSA)是一款功能强大的集中式管理系统和
 
 == vSphere高可用性
 
-VMware的集群技术可将ESXi服务器分组到虚拟机的共享资源池中、并提供vSphere High Availability (HA)。vSphere HA可为虚拟机中运行的应用程序提供易于使用的高可用性。在集群上启用HA功能后、每个ESXi服务器都会与其他主机保持通信、以便在任何ESXi主机无响应或隔离时、 HA集群可以在集群中的无故障主机之间协商恢复该ESXi主机上运行的虚拟机。如果子操作系统发生故障、vSphere HA会在同一物理服务器上重新启动受影响的虚拟机。借助vSphere HA、可以减少计划内停机、防止计划外停机并从中断中快速恢复。
+VMware的集群技术可将ESXi服务器分组到虚拟机的共享资源池中、并提供vSphere高可用性(HA)。vSphere HA可为虚拟机中运行的应用程序提供易于使用的高可用性。在集群上启用HA功能后、每个ESXi服务器都会与其他主机保持通信、以便在任何ESXi主机无响应或隔离时、 HA集群可以在集群中的无故障主机之间协商恢复该ESXi主机上运行的虚拟机。如果子操作系统发生故障、vSphere HA可以在同一物理服务器上重新启动受影响的虚拟机。vSphere HA可以减少计划内停机、防止计划外停机、并从中断中快速恢复。
 
 vSphere HA集群从故障服务器中恢复VM。
 
 image::../media/vmsc_2_1.png[VMSC示意图,624,301]
 
-请务必了解、VMware vSphere不了解NetApp MetroCluster或SnapMirror活动同步、并且会根据主机和VM组关联性配置、将vSphere集群中的所有ESXi主机视为符合HA集群操作条件的主机。
+请务必了解、VMware vSphere不了解NetApp MetroCluster或SnapMirror主动同步、并且会根据主机和VM组关联性配置将vSphere集群中的所有ESXi主机视为符合HA集群操作条件的主机。
 
 
 
@@ -54,9 +54,9 @@ NetApp建议至少指定两个额外的隔离地址、并且每个地址都是�
 
 == 主机隔离响应
 
-隔离响应是vSphere HA中的一项设置、用于确定当vSphere HA集群中的主机丢失其管理网络连接但仍继续运行时在虚拟机上触发的操作。此设置有三个选项："Disabled (禁用)"、"Shut Down and Restart VMs"(关闭并重新启动VM)和"Power Off and Restart VMs"(关闭并重新启动VM)。
+隔离响应是vSphere HA中的一项设置、用于确定当vSphere HA集群中的主机丢失其管理网络连接但仍继续运行时在虚拟机上触发的操作。此设置有三个选项："禁用"、"关闭并重新启动虚拟机"和"关闭并重新启动虚拟机"。
 
-"Shut down (关闭)"优于"Power Off (关闭)"、后者不会刷新最近对磁盘所做的更改或提交事务。如果虚拟机在300秒内未关闭、则会将其关闭。要更改等待时间、请使用高级选项as.isolationshutdowntimeout。
+"关闭"优于"关闭"、后者不会刷新最近对磁盘所做的更改或提交事务。如果虚拟机在300秒内未关闭、则会将其关闭。要更改等待时间、请使用高级选项as.isolationshutdowntimeout。
 
 在HA启动隔离响应之前、它会首先检查vSphere HA主代理是否拥有包含VM配置文件的数据存储库。否则、主机将不会触发隔离响应、因为没有主节点可重新启动VM。主机将定期检查数据存储库状态、以确定是否由具有主角色的vSphere HA代理声明数据存储库。
 
@@ -81,7 +81,7 @@ vSphere 6中与HA相关的一项增强功能是VMCP。VMCP可针对块(FC、iSCS
 
 [TIP]
 ====
-NetApp建议将"Response for Data with PCL"(使用数据存储库的响应)设置为"*关闭并重新启动VMS*"。检测到这种情况后、VM将在vSphere HA集群中运行正常的主机上立即重新启动。
+NetApp建议将"Response for Data with PLU"(使用基于文件系统的数据存储库响应)设置为"*关闭并重新启动VMS*"。检测到这种情况后、VM将在vSphere HA集群中运行正常的主机上立即重新启动。
 
 ====
 
@@ -96,17 +96,22 @@ APD是指主机无法访问存储设备且没有指向阵列的路径时发生�
 ====
 * NetApp建议将"Response for Data with APD"配置为"*关闭并重新启动VM (保守)*"。
 * 保守是指HA能够重新启动VM的可能性。如果设置为保守、则只有在HA知道其他主机可以重新启动受APD影响的虚拟机时、它才会重新启动该虚拟机。如果发生主动、即使HA不知道其他主机的状态、也会尝试重新启动虚拟机。如果任何主机都无法访问虚拟机所在的数据存储库、则可能导致虚拟机无法重新启动。
-* 如果APD状态为已解决、并且在超时之前还原了对存储的访问、则HA不会不必要地重新启动虚拟机、除非您明确对此虚拟机进行配置。如果即使环境已从APD条件中恢复、也需要响应、则应将APD超时后APD恢复的响应配置为重置VM。
+* 如果APD状态为已解决、并且在超时时间之前还原了对存储的访问、则HA不会不必要地重新启动虚拟机、除非您明确对此虚拟机进行配置。如果即使环境已从APD条件中恢复、也需要响应、则应将APD超时后APD恢复的响应配置为重置VM。
 * NetApp建议将APD超时后APD恢复的响应配置为已禁用。
 
 
 ====
 
 
+== 为NetApp SnapMirror活动同步实施VMware DRS
+
+VMware DRS是一项将主机资源聚合到集群中的功能、主要用于在虚拟基础架构中的集群内进行负载平衡。VMware DRS主要计算在集群中执行负载平衡所需的CPU和内存资源。由于vSphere无法识别延伸型集群、因此在进行负载平衡时、它会考虑两个站点中的所有主机。
+
+
+
 == 适用于NetApp MetroCluster的VMware DRS实施
 
-VMware DRS是一项将主机资源聚合到集群中的功能、主要用于在虚拟基础架构中的集群内进行负载平衡。VMware DRS主要计算在集群中执行负载平衡所需的CPU和内存资源。由于vSphere无法识别延伸型集群、因此在进行负载平衡时、它会考虑两个站点中的所有主机。为了避免跨站点流量、NetApp建议配置DRS关联性规则、以管理VM的逻辑隔离。这样可以确保、除非完全发生站点故障、否则HA和DRS将仅使用本地主机。
-
+ To avoid cross-site traffic, NetApp recommends configuring DRS affinity rules to manage a logical separation of VMs. This will ensure that unless there is a complete site failure, HA and DRS will only use local hosts.
 如果为集群创建DRS关联性规则、则可以指定vSphere在虚拟机故障转移期间如何应用该规则。
 
 您可以通过两种类型的规则来指定vSphere HA故障转移行为：

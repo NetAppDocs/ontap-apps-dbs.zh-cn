@@ -41,7 +41,7 @@ https://kb.netapp.com/mgmt/OTV/Virtual_Storage_Console/How_to_perform_a_VASA_Pro
 
 ONTAP 工具9.7.1与VMware Site Recovery Manager (SRM) 8.3版结合使用、可利用NetApp SnapMirror技术增加对灾难恢复和迁移工作流流程编排的支持。
 
-在ONTAP 工具9.7.1的SRM支持初始版本中、需要先预先创建FlexVol并启用SnapMirror保护、然后再将其用作VVO尔 数据存储库的后备卷。从ONTAP 工具9.10开始、不再需要此过程。现在、您可以向现有备份卷添加SnapMirror保护、并更新VM存储策略、以便利用与SRM集成的灾难恢复和迁移流程编排及自动化功能、实现基于策略的管理。
+在ONTAP SRM对的初始支持版本中、需要先预创建FlexVol卷并启用SnapMirror保护、然后再将其用作9.7.1数据存储库的后备卷。从ONTAP 工具9.10开始、不再需要此过程。现在、您可以向现有备份卷添加SnapMirror保护、并更新VM存储策略、以便利用与SRM集成的灾难恢复和迁移流程编排及自动化功能、实现基于策略的管理。
 
 目前、VMware SRM是NetApp支持的唯一适用于vvol的灾难恢复和迁移自动化解决方案 、ONTAP 工具将检查是否存在已向vCenter注册的SRM 8.3或更高版本服务器、然后再允许您启用vvol复制。 虽然可以利用ONTAP 工具REST API创建您自己的服务。
 

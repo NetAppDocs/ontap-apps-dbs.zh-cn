@@ -6,6 +6,8 @@ entries:
   entries:
   - title: 概述
     url: "/vmware/vmware-vsphere-overview.html"
+  - title: 为什么选择ONTAP for VMware
+    url: "/vmware/vmware-vsphere-why.html"
   - title: 统一存储
     url: "/vmware/vmware-vsphere-unified.html"
   - title: 虚拟化工具
