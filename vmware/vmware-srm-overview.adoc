@@ -14,12 +14,12 @@ summary: '适用于VMware Live Site Recovery (vrr)和Site Recovery Manager (SRM)
 
 
 [role="lead"]
-自2002年引入现代数据中心以来、ONTAP已成为VMware vSphere以及最近的Cloud Foundation环境的主要存储解决方案。它继续推出创新功能、以简化管理并降低成本。
+自二十多年前 ESX 引入现代数据中心以来， ONTAP一直是 VMware vSphere 以及最近的 Cloud Foundation 的领先存储解决方案。 NetApp不断推出创新系统，例如最新一代ASA A 系列，以及SnapMirror主动同步等功能。这些进步简化了管理，增强了弹性，并降低了 IT 基础设施的总拥有成本 (TCO)。
 
-本文档介绍了适用于VMware实时站点恢复(VSR)的ONTAP解决方案(以前称为站点恢复管理器(SRM))、这是VMware行业领先的灾难恢复(Disaster Recovery、DR)软件、其中包括可简化部署、降低风险和简化日常管理的最新产品信息和最佳实践。
+本文档介绍了适用于 VMware Live Site Recovery (VLSR)（以前称为 Site Recovery Manager (SRM)，VMware 业界领先的灾难恢复 (DR) 软件）的ONTAP解决方案，包括最新产品信息和最佳实践，以简化部署、降低风险并简化持续管理。
 
 
-NOTE: 本文档将取代先前发布的技术报告_TR-4900:《使用ONTAP的VMware Site Recovery Manager_》
+NOTE: 本文档取代了之前发布的技术报告《TR-4900：使用 ONTAP 的 VMware Site Recovery Manager》
 
 最佳实践是指南和兼容性工具等其他文档的补充。它们是根据 NetApp 工程师和客户的实验室测试和丰富的现场经验开发的。在某些情况下，建议的最佳实践可能不适合您的环境；但是，它们通常是最简单的解决方案，可满足大多数客户的需求。
 
@@ -29,11 +29,11 @@ NOTE: 本文档将取代先前发布的技术报告_TR-4900:《使用ONTAP的VMw
 
 == 为什么要将ONTAP与甚量卷请求或SRM结合使用？
 
-由ONTAP提供支持的NetApp数据管理平台是VLSR采用最广泛的存储解决方案之一。原因很多：一个安全、高性能、统一协议(NAS和SAN结合使用)的数据管理平台、可提供行业定义的存储效率、多租户、服务质量控制、利用节省空间的快照保护数据、以及利用SnapMirror进行复制。利用原生混合多云集成来保护 VMware 工作负载，以及触手可及的大量自动化和流程编排工具。
+由ONTAP提供支持的NetApp数据管理平台是 VLSR 最广泛采用的存储解决方案之一。原因有很多：一个安全、高性能、统一协议（NAS 和 SAN 结合）的数据管理平台，提供行业定义的存储效率、多租户、服务质量控制、使用空间高效快照的数据保护以及使用SnapMirror的复制。所有这些都利用原生混合多云集成来保护 VMware 工作负载，并提供大量自动化和编排工具。
 
-使用SnapMirror进行基于阵列的复制时、您可以利用ONTAP最成熟、最成熟的技术之一。SnapMirror 可以让您获得安全高效的数据传输优势，只复制更改过的文件系统块，而不是复制整个 VM 或数据存储库。即使这些块也可以利用重复数据删除，数据压缩和数据缩减等空间节省。现代 ONTAP 系统现在使用与版本无关的 SnapMirror ，让您可以灵活地选择源集群和目标集群。SnapMirror 确实已成为灾难恢复可用的最强大工具之一。
+当您使用SnapMirror进行基于阵列的复制时，您可以利用 ONTAP 最成熟、最成熟的技术之一。 SnapMirror为您提供安全、高效的数据传输优势，仅复制更改的文件系统块，而不是整个虚拟机或数据存储区。即使这些块也利用了空间节省功能，例如重复数据删除、压缩和压缩。现代ONTAP系统现在使用与版本无关的SnapMirror，让您可以灵活地选择源集群和目标集群。  SnapMirror确实已成为最强大的灾难恢复工具之一。
 
-无论您使用的是传统 NFS ， iSCSI 还是光纤通道连接的数据存储库（现在支持 VVol 数据存储库）， VLSR 都可以提供强大的第一方产品，充分利用 ONTAP 的最佳功能进行灾难恢复或数据中心迁移规划和编排。
+无论您使用的是传统的 NFS、iSCSI 还是光纤通道连接的数据存储（现在支持vVols数据存储），VLSR 都能提供强大的第一方产品，利用ONTAP的最佳功能进行灾难恢复或数据中心迁移规划和编排。
 
 
 
@@ -46,11 +46,11 @@ VLSR 可通过与适用于 VMware vSphere 的 ONTAP 工具集成来利用 ONTAP 
 * SRA 与 VLSR 结合使用，用于管理传统 VMFS 和 NFS 数据存储库的生产站点和灾难恢复站点之间的 VM 数据复制，并用于无中断测试灾难恢复副本。它有助于自动执行发现，恢复和重新保护任务。它既包含一个SRA服务器设备、又包含用于Windows SRM服务器和vrr设备的SRA适配器。
 
 
-在vrr服务器上安装并配置SRA适配器以保护非vvol数据存储库后、您可以开始配置vSphere环境以实现灾难恢复的任务。
+在 VLSR 服务器上安装并配置 SRA 适配器以保护非 vVols 数据存储区后，您可以开始配置 vSphere 环境以进行灾难恢复的任务。
 
 SRA为VSR服务器提供了一个命令和控制界面、用于管理包含VMware虚拟机(VM)的ONTAP FlexVol卷以及对其进行保护的SnapMirror复制。
 
-VLSR可以使用NetApp的专有FlexClone技术无干扰地测试您的灾难恢复计划、以便为灾难恢复站点上受保护的数据存储库创建近乎即时的克隆。VLSR 会创建一个沙盒来进行安全测试，以便在发生真正灾难时保护您的组织和客户，从而让您对组织在发生灾难时执行故障转移的能力充满信心。
+VLSR 可以使用 NetApp 专有的FlexClone技术无中断地测试您的 DR 计划，以便在您的 DR 站点几乎即时地克隆受保护的数据存储。  VLSR 创建了一个沙箱来进行安全测试，以便在发生真正的灾难时保护您的组织和客户，让您对组织在灾难期间执行故障转移的能力充满信心。
 
 如果发生真正的灾难甚至是计划内迁移， VLSR 允许您通过最终 SnapMirror 更新（如果您选择这样做）向数据集发送任何最后一分钟的更改。然后，它会中断镜像并将数据存储库挂载到灾难恢复主机。此时，您可以根据预先规划的策略按任意顺序自动启动 VM 。
 
@@ -61,7 +61,7 @@ NOTE: 虽然ONTAP系统允许您将同一集群中的SVM配对以进行SnapMirro
 
 == 采用 ONTAP 的 VLSR 以及其他使用情形：混合云和迁移
 
-与本地存储选项相比，将 VLSR 部署与 ONTAP 高级数据管理功能相集成，可以显著提高扩展能力和性能。除此之外，它还带来了混合云的灵活性。通过混合云，您可以使用 FabricPool 将未使用的数据块从高性能阵列分层到首选超大规模存储器，从而节省资金。 StorageGRID 可以是 NetApp 等内部 S3 存储。此外，您还可以将SnapMirror用于具有软件定义的ONTAP Select或基于云的灾难恢复的基于边缘的系统，并使用Cloud Volumes ONTAP (CCVO) https://www.equinix.com/partners/netapp["基于Equix Metal®的NetApp存储"^]或，或其他托管的ONTAP服务。
+将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR，使用Cloud Volumes ONTAP (CVO) 或 https://www.equinix.com/partners/netapp["基于Equix Metal®的NetApp存储"^]或其他托管ONTAP服务。
 
 借助FlexClone、您可以在云服务提供商的数据中心内执行测试故障转移、存储占用空间接近零。现在，保护您的组织的成本比以往任何时候都低。
 

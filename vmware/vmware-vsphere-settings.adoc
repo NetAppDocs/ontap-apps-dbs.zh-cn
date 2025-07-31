@@ -69,7 +69,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 | nfs.HeartbeatTimeout | 对于所有NFS配置、设置为5。 | 否 
 
 
-| SUNRPC.MaxConnPerIP | vSphere 7.0或更高版本、请设置为128。 | 否 
+| SUNRPC.MaxConnPerIP | vSphere 7.0 到 8.0，设置为 128。  ESXi 8.0 之后的版本中将忽略此设置。 | 否 
 
 
 3+| * FC/FCoE 设置 * 
@@ -154,8 +154,8 @@ NOTE: 使用VMware vSphere 7.0.1和VMware vSphere ESXi 7.3.2时、NFS高级配�
 
 虽然当前未使用可用的ONTAP工具进行配置、但NetApp建议使用以下配置选项：
 
-* 在高性能环境中或使用单个 LUN 数据存储库测试性能时，请考虑将轮循（ VMW_PSP_RR ）路径选择策略（ PSP ）的负载平衡设置从默认 IOPS 设置 1000 更改为 1 。有关详细信息、请参见link:https://knowledge.broadcom.com/external/article?legacyId=2069356["VMware 知识库 2069356"^]。
-* 在 vSphere 6.7 Update 1 中， VMware 为轮循 PSP 引入了一种新的延迟负载平衡机制。新选项会在选择最佳 I/O 路径时考虑 I/O 带宽和路径延迟在路径连接不等的环境中使用它可能会受益、例如、一条路径上的网络跃点比另一条路径多、或者使用NetApp全SAN阵列(ASA)系统。有关详细信息、请参见 https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-storage-8-0/understanding-multipathing-and-failover-in-the-esxi-environment/viewing-and-managing-storage-paths-on-esxi-hosts.html#GUID-1940AE9E-04CF-40BE-BB71-398621F0642E-en["更改延迟轮循的默认参数"^] 。
+* 在高性能环境中使用非ASA系统或使用单个 LUN 数据存储测试性能时，请考虑将循环 (VMW_PSP_RR) 路径选择策略 (PSP) 的负载平衡设置从默认 IOPS 设置 1000 更改为值 1。看link:https://knowledge.broadcom.com/external/article?legacyId=2069356["VMware 知识库 2069356"^]了解更多信息。
+* 在 vSphere 6.7 Update 1 中，VMware 为 Round Robin PSP 引入了一种新的延迟负载平衡机制。现在，当使用带有 NVMe 命名空间的 HPP（高性能插件）以及 vSphere 8.0u2 及更高版本、iSCSI 和 FCP 连接的 LUN 时，也可以使用延迟选项。新选项在选择 I/O 最佳路径时会考虑 I/O 带宽和路径延迟。 NetApp建议在具有非等效路径连接的环境中使用延迟选项，例如一条路径上的网络跳数比另一条路径上的网络跳数更多的情况，或者使用NetApp ASA系统时。看 https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-storage-8-0/understanding-multipathing-and-failover-in-the-esxi-environment/viewing-and-managing-storage-paths-on-esxi-hosts.html#GUID-1940AE9E-04CF-40BE-BB71-398621F0642E-en["更改延迟轮循的默认参数"^]了解更多信息。
 
 
 
