@@ -25,7 +25,7 @@ NOTE: 本文档可替代先前发布的技术报告_TR-4128：《基于NetApp Me
 
 == 适用于vSphere环境的持续可用性解决方案
 
-ONTAP架构是一个灵活且可扩展的存储平台、可为数据存储库提供SAN (FCP、iSCSI和NVMe-oF)和NAS (NFS v3和v4.1)服务。NetApp AFF、ASA和FAS存储系统使用ONTAP操作系统为子系统存储访问提供其他协议、例如S3和SMB/CCIFS。
+ONTAP架构是一个灵活且可扩展的存储平台，为数据存储提供 SAN（FCP、iSCSI 和 NVMe-oF）和 NAS（NFS v3 和 v4.1）服务。NetApp AFF、 ASA和FAS存储系统使用ONTAP操作系统为客户存储访问提供附加协议，如 S3 和 SMB/CIFS。
 
 NetApp MetroCluster使用NetApp的HA (控制器故障转移或CFO)功能来防止控制器发生故障。它还包括本地SyncMirror技术、灾难时集群故障转移(集群灾难故障转移或CFOD)、硬件冗余和地理分隔、以实现高可用性。SyncMirror通过将数据写入两个丛(本地磁盘架上主动提供数据的本地丛和通常不提供数据的远程丛)、在MetroCluster配置的两部分之间同步镜像数据。所有MetroCluster组件(例如控制器、存储、缆线、交换机(用于光纤MetroCluster)和适配器)都具有硬件冗余。
 
@@ -41,7 +41,7 @@ NetApp MetroCluster使用NetApp的HA (控制器故障转移或CFO)功能来防�
 
 == 什么是vSphere Metro Storage Cluster？
 
-vSphere Metro Storage Cluster (VMSC)是一种经过认证的配置、可保护虚拟机(VM)和容器免受故障的影响。这可以通过使用延伸型存储概念以及分布在不同故障域(例如机架、建筑物、园区甚至城市)中的ESXi主机集群来实现。NetApp MetroCluster和SnapMirror主动同步存储技术用于为主机集群提供零恢复点目标(RPO = 0)保护。VMSC配置旨在确保数据始终可用、即使完整的物理或逻辑"站点"发生故障也是如此。在成功完成VMSC认证过程后、属于VMSC配置的存储设备必须经过认证。所有受支持的存储设备均可在中找到 https://www.vmware.com/resources/compatibility/search.php["《VMware存储兼容性指南》"]。
+vSphere Metro Storage Cluster (vMSC) 是一种经过认证的配置，可保护虚拟机 (VM) 和容器免受故障影响。这是通过使用延伸存储概念以及 ESXi 主机集群来实现的，这些集群分布在不同的故障域中，例如机架、建筑物、校园甚至城市。NetApp MetroCluster和SnapMirror主动同步存储技术用于为主机集群提供零恢复点目标 (RPO=0) 保护。vMSC 配置旨在确保即使整个物理或逻辑“站点”发生故障，数据也始终可用。作为 vMSC 配置一部分的存储设备必须在成功完成 vMSC 认证过程后进行认证。所有受支持的存储设备都可以在 https://compatibilityguide.broadcom.com/["《VMware存储兼容性指南》"]。
 
 如果您需要有关vSphere Metro Storage Cluster设计准则的详细信息、请参阅以下文档：
 

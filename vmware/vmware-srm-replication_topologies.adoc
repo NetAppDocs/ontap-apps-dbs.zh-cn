@@ -16,7 +16,7 @@ summary: 将ONTAP与SnapMirror以及VMware vrSR和SRM结合使用的复制拓扑
 [role="lead"]
 在 ONTAP 9 中，集群管理员可以看到集群的物理组件，但使用集群的应用程序和主机无法直接看到这些物理组件。物理组件提供了一个共享资源池，用于构建逻辑集群资源。应用程序和主机仅通过包含卷和 LIF 的 SVM 访问数据。
 
-在 VMware vCenter Site Recovery Manager 中，每个 NetApp SVM 都被视为一个阵列。VLSR 支持某些阵列到阵列（或 SVM 到 SVM ）复制布局。
+每个NetApp SVM 在 Site Recovery Manager 中都被视为一个唯一阵列。VLSR 支持某些阵列到阵列（或 SVM 到 SVM）复制布局。
 
 一个虚拟机不能在多个 VLSR 阵列上拥有虚拟机磁盘（ Virtual Machine Disk ， VMDK ）或 RDM 数据，原因如下：
 
@@ -43,6 +43,20 @@ image:vsrm-ontap9_image8.png["SnapMirror关系布局"]
 image:vsrm-ontap9_image9.png["SnapMirror关系布局"]
 
 image:vsrm-ontap9_image10.png["SnapMirror关系布局"]
+
+
+
+== VMFS 支持SnapMirror主动同步
+
+ONTAP工具 10.3 及更高版本还支持使用SnapMirror主动同步 (SMas) 保护您的 VMFS 数据存储库。这使得两个相对较近的数据中心（称为故障域）之间的业务连续性能够实现透明的故障转移。然后可以通过带有 VLSR 的ONTAP工具 SRA 使用异步SnapMirror来协调远距离灾难恢复。
+
+https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/["了解ONTAP SnapMirror主动同步"]
+
+数据存储区被收集在一个一致性组 (CG) 中，并且所有数据存储区的虚拟机都将作为同一 CG 的成员保持写入顺序一致。
+
+一些示例可能是柏林和汉堡的站点受 SMas 保护，第三个站点副本使用SnapMirror异步并受 VLSR 保护。另一个例子可能是使用 SMas 保护纽约和新泽西的站点，并保护芝加哥的第三个站点。
+
+image:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-104/media/fan-out-protection.png["SMas布局"]
 
 
 

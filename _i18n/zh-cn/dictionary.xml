@@ -2498,7 +2498,6 @@
   <block id="99c6c4d349151c1f4a6694e424aef741" category="inline-link">为VM存储更多快照</block>
   <block id="01fa297dbdab5aceb83a45a98161efe0" category="list-text">* FabricPool 。 * FabricPool 可为 ONTAP 数据快速轻松地分层。冷块可以迁移到公有云或私有StorageGRID对象存储中的对象存储、并在再次访问ONTAP数据时自动重新调用。或者，使用对象层作为已由 SnapVault 管理的数据的第三级保护。这种方法可以让您做到<block ref="60d027dbb3c3f076cbb70c6b246eb433" category="inline-link-rx"></block> 在主和 / 或二级 ONTAP 存储系统上。</block>
   <block id="1a7072854c9dd945a98f4314b3f77408" category="list-text">* ONTAP Select 。 * 使用 NetApp 软件定义的存储将您的私有云扩展到 Internet 上的远程设施和办公室，您可以在这些设施和办公室使用 ONTAP Select 支持块和文件服务以及您在企业数据中心拥有的相同 vSphere 数据管理功能。</block>
-  <block id="79aec220098057ef8c0e46281a45d6c2" category="paragraph">在设计基于 VM 的应用程序时，请考虑未来的云移动性。例如，与其将应用程序和数据文件放在一起，不如对数据使用单独的 LUN 或 NFS 导出。这样，您就可以将虚拟机和数据单独迁移到云服务。</block>
   <block id="af63597853dc0983258c8f86a12aae0b" category="section-title">vSphere 数据加密</block>
   <block id="63a07ab9352c9297cea3894d6cd41c3f" category="paragraph">如今，通过加密保护空闲数据的需求日益增长。虽然最初的关注点是金融和医疗保健信息、但人们越来越关注保护所有信息、无论是存储在文件、数据库中还是其他数据类型中。</block>
   <block id="937a352e0f824ff55e4cd50c8e3b051e" category="paragraph">可以通过多种方法保护在 VMware vSphere 上运行的虚拟化应用程序的数据。一种方法是在子操作系统级别使用虚拟机中的软件保护数据。vSphere 6.5 等较新的虚拟机管理程序现在支持在 VM 级别进行加密，这是另一种替代方案。但是， NetApp 软件加密简单易用，并且具有以下优势：</block>
@@ -4397,13 +4396,8 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="e44de13cc4b452eccde9961bbe9da42b" category="inline-link-macro">ONTAP安全性和数据加密产品文档</block>
   <block id="c76e848365d3a2199dfced47ddbf8690" category="list-text"><block ref="c76e848365d3a2199dfced47ddbf8690" category="inline-link-macro-rx"></block></block>
   <block id="1a523ba4ece9125275b92ebb41e3cf23" category="inline-link-macro">Cloud Volumes ONTAP 文档</block>
-  <block id="e4501a9ef639002a658af0113906add9" category="list-text"><block ref="e4501a9ef639002a658af0113906add9" category="inline-link-macro-rx"></block></block>
   <block id="7436b418bed093768e360d32105591d2" category="inline-link-macro">ONTAP Select 文档</block>
   <block id="82fe32c89de73116e2188701ca735c39" category="list-text"><block ref="82fe32c89de73116e2188701ca735c39" category="inline-link-macro-rx"></block></block>
-  <block id="c756b6b1ba6b752239a8d49eda5ad2a4" category="inline-link-macro">BlueXP备份和恢复文档</block>
-  <block id="f99b2e5828a20fe99efc9b8c25b42d83" category="list-text"><block ref="f99b2e5828a20fe99efc9b8c25b42d83" category="inline-link-macro-rx"></block></block>
-  <block id="b044111e167403664c9e3432eca1f25a" category="inline-link-macro">BlueXP灾难恢复文档</block>
-  <block id="ec39a9c8e559c87efc4a1ac3c8dfd136" category="list-text"><block ref="ec39a9c8e559c87efc4a1ac3c8dfd136" category="inline-link-macro-rx"></block></block>
   <block id="f5c286d9dc4cdaffcb8e5c86388e6ed8" category="list-text"><block ref="f5c286d9dc4cdaffcb8e5c86388e6ed8" category="inline-link-macro-rx"></block></block>
   <block id="4dab2f9796b0af6304d00e21e2b9dfb4" category="inline-link-macro">基于 AWS 的 VMware Cloud</block>
   <block id="560d5b2cd40977bd7b77b31d7088f657" category="list-text"><block ref="560d5b2cd40977bd7b77b31d7088f657" category="inline-link-macro-rx"></block></block>
@@ -5555,7 +5549,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="8525b77695e58a3254731f53ce2b2162" category="list-text">ONTAP提供自己的存储效率功能、例如重复数据删除、数据压缩和数据缩减、这些功能可能会受到存储DRS的影响。</block>
   <block id="c9a841ce409cdc722c7bdd080f0f88de" category="list-text">如果您使用的是ONTAP快照、则Storage vMotion会在快照中保留VM副本、这可能会提高存储利用率、并可能影响NetApp SnapCenter等跟踪VM及其ONTAP快照的备份应用程序。</block>
   <block id="e5239709587bb3ebb34629be6c41ac7b" category="paragraph">NetApp®MetroCluster™和SnapMirror主动同步(以前称为SnapMirror业务连续性或SMBC)均支持VMSC解决方案，如果一个或多个故障域发生完全中断，则可以提供高级业务连续性。不同故障模式的故障恢复能力取决于您选择的配置选项。</block>
-  <block id="5c6034b4452ec29d83cf38ddf5f9e2f6" category="paragraph">ONTAP架构是一个灵活且可扩展的存储平台、可为数据存储库提供SAN (FCP、iSCSI和NVMe-oF)和NAS (NFS v3和v4.1)服务。NetApp AFF、ASA和FAS存储系统使用ONTAP操作系统为子系统存储访问提供其他协议、例如S3和SMB/CCIFS。</block>
   <block id="1e1566860cb6afbc338f9fba32c4e5e5" category="list-text">对称活动同步(ONTAP 9.15.1)</block>
   <block id="b9ca5ba97cf75d3dafb51f78e073770a" category="inline-link">NetApp文档</block>
   <block id="1c71125ba0668792e46d93c17dc6c428" category="paragraph">有关SnapMirror主动同步的特定设计和部署信息、请参见<block ref="9ace5d3ebe2fe57037322de54ac9a869" category="inline-link-rx"></block>。</block>
@@ -5857,7 +5850,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="99a06707f3209b90d504a54a5ea6d69f" category="inline-link">基于Equix Metal®的NetApp存储</block>
   <block id="8fff56a05881c6f706c3ed3a782050f2" category="paragraph">VLSR 还可用于执行计划内迁移，方法是利用 SnapMirror 将 VM 从一个数据中心高效地传输到另一个数据中心，甚至在同一个数据中心内高效地传输 VM ，无论您自己还是通过任意数量的 NetApp 合作伙伴服务提供商。</block>
   <block id="d274b8ae04172dec40c6aa0549b00986" category="summary">将ONTAP与SnapMirror以及VMware vrSR和SRM结合使用的复制拓扑。</block>
-  <block id="10140c04b3ae3f49aedaf52f157363d3" category="paragraph">在 VMware vCenter Site Recovery Manager 中，每个 NetApp SVM 都被视为一个阵列。VLSR 支持某些阵列到阵列（或 SVM 到 SVM ）复制布局。</block>
   <block id="08db3b842a4cb2c270982436a350d96f" category="paragraph">一个虚拟机不能在多个 VLSR 阵列上拥有虚拟机磁盘（ Virtual Machine Disk ， VMDK ）或 RDM 数据，原因如下：</block>
   <block id="d8a9d635a5de68d706349e0ba1582a33" category="list-text">VLSR 只能识别 SVM ，而不能识别单个物理控制器。</block>
   <block id="03a2d94e9dd3faa9d1c2ba5048e50ff5" category="cell">要确定可支持性，请牢记以下规则：要使用 VLSR 和 NetApp SRA 保护 VM ， VM 的所有部分都必须仅位于一个 SVM 上。此规则适用于受保护站点和恢复站点。</block>
@@ -5882,8 +5874,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="f6f2c5686cc4f0cddb9b97a821855375" category="list-text">SRA (与VMware Live Site Recon/Site Recovery Manager结合使用)。此处，克隆用于无中断测试灾难恢复副本的恢复情况。</block>
   <block id="ab145b0c5bc936679238040b42d242a8" category="list-text">使用 SnapCenter 等 NetApp 工具进行备份和恢复。VM克隆用于验证备份操作以及挂载VM备份、以便可以还原各个文件。</block>
   <block id="b1fd904929f16090f01753d2728346c6" category="paragraph">VMware ， NetApp 和第三方工具可以调用 ONTAP 卸载克隆。卸载到 ONTAP 的克隆具有多个优势。在大多数情况下，它们节省空间，只需要存储即可更改对象；读取和写入它们不会产生额外的性能影响，在某些情况下，通过在高速缓存中共享块来提高性能。它们还会从 ESXi 服务器卸载 CPU 周期和网络 I/O 。使用FlexVol volume的传统数据存储库中的副本卸载在获得FlexClone许可(包含在ONTAP One许可证中)的情况下可以快速而高效、但FlexVol卷之间的副本速度可能会较慢。如果您将 VM 模板维护为克隆源，请考虑将其放置在数据存储库卷中（使用文件夹或内容库对其进行组织），以实现节省空间的快速克隆。</block>
-  <block id="ebd95a7e5bdcc4b40ab6f7413106b3f2" category="list-text">*第一方产品。*Amazon FSx for NetApp ONTAP、Google Cloud NetApp Volumes和Azure NetApp Files可在领先的公共云环境中提供高性能、多协议托管存储服务。它们可直接由VMware Cloud on AWS (AWS上的VMC)、Azure VMware Solution (AVS)和Google Cloud VMware Engine (GCVE)用作子操作系统(GOS)和计算实例的数据存储库或存储。</block>
-  <block id="4fa2b20fbe14dd41ca86a9f5b4c5bfcb" category="list-text">*云服务。*使用BlueXP  备份和恢复或SnapMirror云保护使用公共云存储的内部系统中的数据。Cloud Sync可帮助您在NAS、对象存储和Cloud Volumes Service存储之间迁移数据并保持数据同步。BlueXP灾难恢复提供了一个经济高效的解决方案、可利用NetApp技术作为强大且功能强大的灾难恢复解决方案的基础、用于灾难恢复到云、灾难恢复到内部以及内部到内部。</block>
   <block id="706253931ccf2225bbabb539eead1ee1" category="paragraph">ONTAP 9.8以及适用于VMware vSphere的ONTAP工具9.8-9.13和适用于VMware 4.4及更高版本的SnapCenter插件增加了对vSphere中FlexGroup卷支持的数据存储库的支持。FlexGroup卷可以简化大型数据存储库的创建过程、并自动在ONTAP集群中创建必要的分布式成分卷、以最大程度地提高ONTAP系统的性能。</block>
   <block id="fea36c6d0158f7614a47593cee5c4381" category="paragraph">如果您需要一个具有完整ONTAP集群功能的可扩展vSphere数据存储库、或者如果您的克隆工作负载非常大、可以通过持续保持克隆缓存预热来从FlexGroup克隆机制中受益、请将FlexGroup卷与vSphere结合使用。</block>
   <block id="4b2e7f21f2ab284dbe47715a088a87e4" category="paragraph">除了对vSphere工作负载进行广泛的系统测试之外、ONTAP 9.8还为FlexGroup数据存储库添加了一种新的副本卸载机制。这一新系统使用经过改进的复制引擎在后台成分卷之间复制文件、同时允许访问源和目标。然后、可以使用此成分卷本地缓存根据需要快速例化VM克隆。</block>
@@ -5935,8 +5925,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="279b6091a0ac82b44d1b55974e5be84e" category="paragraph">ONTAP工具也是适用于ONTAP的VASA Provider的许多功能的管理界面、支持使用VVO尔 进行基于存储策略的管理。</block>
   <block id="56de38ee4f3cd70309ddc44c00acb1fb" category="list-text">NetApp仅建议在ONTAP集群中的集群互连端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用。有关流量控制的更多背景信息、请参见<block ref="3455dc2b3e7cd12a38e508bec690aa67" category="inline-link-rx"></block>。</block>
   <block id="3a04c6fe53e84b0859143746f9b8b3bc" category="paragraph">备份和快速恢复虚拟机(VM)是使用适用于vSphere的ONTAP的主要优势。可以通过适用于VMware vSphere的SnapCenter插件在vCenter中轻松管理此功能。许多客户通过SnapCenter增强了第三方备份解决方案、以利用ONTAP的快照技术、因为它提供了使用ONTAP恢复VM的最快、最直接的方式。拥有ONTAP One许可证的客户可以免费获得SnapCenter、也可以获得其他许可证包。</block>
-  <block id="67d2d8d1dc0c08c63452e2a455c1bf3d" category="inline-link">用于备份和恢复虚拟机的BlueXP </block>
-  <block id="4ea1273c8c926cd862a042dc3ea5ea79" category="paragraph">此外，适用于VMware的SnapCenter插件可以与集成<block ref="1cc430bf00ff724bb248ae086da62e35" category="inline-link-rx"></block>，从而为大多数ONTAP系统提供有效的3-2-1备份解决方案。请注意、如果将BlueXP  备份和恢复用于具有高级服务的虚拟机、例如用于额外备份存储的对象存储、则可能需要支付一些费用。本节概述了可用于保护VM和数据存储库的各种选项。</block>
   <block id="17d20b1dcedfc04c7879e9675412b0db" category="section-title">NetApp ONTAP卷快照</block>
   <block id="424a2b394957a69a3a605706153f9539" category="paragraph">快照是ONTAP的一项重要功能、可用于创建数据的时间点副本。它们节省空间、并且可以快速创建、因此非常适合保护虚拟机和数据存储库。快照可用于各种用途、包括备份、恢复和测试。这些快照与VMware (一致性)快照不同、适用于长期保护。由于性能和其他影响、建议仅在短期内使用VMware vCenter管理的快照。<block ref="edb84c63886608dd2a747873a2732130" category="inline-link-macro-rx"></block>有关详细信息、请参见。</block>
   <block id="9fe3ffc9df0f8a5c691d2ed0c67a5b03" category="paragraph">快照是在卷级别创建的、可用于保护该卷中的所有虚拟机和数据存储库。这意味着、您可以创建整个数据存储库的快照、其中包括该数据存储库中的所有虚拟机。</block>
@@ -5953,8 +5941,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="555f2327888d8e7cf50068fd301b189d" category="section-title">适用于采用VMware Live Site Recovery的VMware vSphere的ONTAP工具</block>
   <block id="bdfe900673edfc6634c23bde843c6420" category="paragraph">适用于VMware vSphere的ONTAP工具(OT4VS)是一款免费插件、可在VMware vSphere和NetApp ONTAP之间实现无缝集成。您可以通过它直接从vSphere Web Client管理ONTAP存储、从而更轻松地执行配置存储、管理复制和监控性能等任务。</block>
   <block id="d6c59a18f3b83d8486f9527e20ea1941" category="paragraph">要改进灾难恢复功能、请考虑使用适用于VMware vSphere的ONTAP工具中的适用于ONTAP的NetApp SRA以及VMware Live Site Recovery (以前称为Site Recovery Manager)。此工具不仅支持使用SnapMirror将数据存储库复制到灾难恢复站点、还支持通过克隆复制的数据存储库在灾难恢复环境中进行无中断测试。此外、借助内置的自动化功能、还可以简化从灾难中恢复以及在解决中断后重新保护生产环境的过程。</block>
-  <block id="79a1fdb37699dfdc15254e04268351a9" category="section-title">BlueXP  灾难恢复</block>
-  <block id="7016de5d1fb67d54b51ad6574763fd9a" category="paragraph">BlueXP  灾难恢复(Disaster Recovery、DR)是一项基于云的服务、可提供全面的解决方案、用于在发生灾难时保护数据和应用程序。它提供一系列功能、包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对内部和基于云的ONTAP系统的支持。BlueXP  灾难恢复可与ONTAP和您的VMware vSphere环境无缝结合使用、从而为灾难恢复提供统一的解决方案。</block>
   <block id="d223a7adee575c4956124c0868f0825f" category="section-title">NetApp MetroCluster和SnapMirror处于活动同步状态的vSphere Metro Storage Cluster (VMSC)</block>
   <block id="85abd770c37e6b8f0dd32bb10e63df19" category="paragraph">最后、要获得最高级别的数据保护、请考虑使用NetApp MetroCluster的VMware vSphere Metro Storage Cluster (VMSC)配置。VMSC是一款经VMware认证且受NetApp支持的解决方案、它使用同步复制、可提供与高可用性集群相同的优势、但分布在不同的站点上以防止站点灾难。NetApp SnapMirror Active Sync (采用ASA和AFF)以及MetroCluster (采用AFF)为同步复制提供了经济高效的配置，可从任何单个存储组件故障中透明恢复，并可在SnapMirror活动同步时透明恢复，或在发生站点灾难时使用MetroCluster进行单命令恢复。中详细介绍了VMSC。<block ref="252912db8b98e51588a897ab91b985e0" category="inline-link-rx"></block></block>
   <block id="99f033ca163a880d3ebaf5192a303bf9" category="paragraph">运行ONTAP的系统可通过空闲加密轻松保护任何数据。NetApp存储加密(NSE)将自加密驱动器(Self-Encryption Drive、SE)与ONTAP结合使用来保护SAN和NAS数据。NetApp 还提供 NetApp 卷加密和 NetApp 聚合加密，这是一种基于软件的简单方法，用于对任何磁盘驱动器上的卷进行加密。这种软件加密不需要特殊的磁盘驱动器或外部密钥管理器、ONTAP客户可以免费使用。您可以升级并开始使用它、而不会对客户端或应用程序造成任何中断、并且这些客户端或应用程序已通过FIPS 140-2 1级标准(包括板载密钥管理器)的验证。</block>
@@ -5990,14 +5976,10 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9955c42610092bf7a7dbb035ba2362df" category="paragraph">ONTAP One许可证附带了以下工具、无需额外付费。有关这些工具在 vSphere 环境中如何协同工作的说明，请参见图 1 。</block>
   <block id="28c25b3bd0941927acf5da7cedf09056" category="paragraph"><block ref="b4726a9e2d7c67e5d20fb7588efe2682" category="inline-link-rx"></block>是一组用于将ONTAP存储与vSphere结合使用的工具。无论您使用的是 SAN 还是 NAS ， vCenter 插件（以前称为 Virtual Storage Console （ VSC ））均可简化存储管理和效率功能，提高可用性并降低存储成本和运营开销。它使用最佳实践配置数据存储库，并为 NFS 和块存储环境优化 ESXi 主机设置。为了获得所有这些优势、NetApp建议在将vSphere与运行ONTAP的系统结合使用时、最佳做法是使用这些ONTAP工具。它包括服务器设备、vCenter、VASA Provider和Storage Replication Adapter的用户界面扩展。ONTAP 工具中的几乎所有内容都可以通过简单的REST API实现自动化、而大多数现代自动化工具都可以使用这些API。</block>
   <block id="88450f60f7fbe5f503e1fecfcab9fb4d" category="list-text">*vCenter UI扩展。*ONTAP工具UI扩展可通过直接在vCenter UI中嵌入易于使用的上下文相关菜单来管理主机和存储、信息性portlet以及本机警报功能来简化工作流、从而简化运营团队和vCenter管理员的工作。</block>
-  <block id="c8e653ada77ce95f09e584738b7cf6bf" category="list-text">*存储复制适配器。*SRA可与VMware Live Site Recovery (vrr)/Site Recovery Manager (SRM)结合使用、以便使用SnapMirror进行基于阵列的复制、从而管理生产站点和灾难恢复站点之间的数据复制。它可以在发生灾难时自动执行故障转移任务、并有助于无故障测试灾难恢复副本、以确保对灾难恢复解决方案的信心。</block>
-  <block id="e94c7ddc81c8b496a2e0b9c41f3a0d27" category="paragraph"><block ref="df7f63ec4790cd7696ac38c73a72d254" category="inline-link-rx"></block>是适用于vCenter Server的插件、可用于管理虚拟机(VM)和数据存储库的备份和还原。它提供了一个界面、用于管理多个ONTAP系统中VM和数据存储库的备份、还原和克隆。SnapCenter支持使用SnapMirror复制到二级站点以及从二级站点进行恢复。最新版本还支持SnapMirror到云(S3)、防篡改快照、SnapLock和SnapMirror主动同步。适用于VMware vSphere的SnapCenter插件可以与SnapCenter应用程序插件集成、以提供应用程序一致的备份。</block>
   <block id="8fc0876b17dbd4327218c6365f4d3ed1" category="inline-link">适用于VMware VAAI的NetApp NFS插件</block>
   <block id="6b7f9103f91020461893e7625153d87c" category="paragraph"><block ref="e56b6fbfc57db1f13007ad438701316e" category="inline-link-rx"></block>是适用于ESXi主机的插件、允许这些主机对ONTAP上的NFS数据存储库使用VAAI功能。它支持克隆操作的副本卸载、厚虚拟磁盘文件的空间预留以及快照卸载。将副本操作卸载到存储不一定会更快完成、但它会降低网络带宽要求、并减轻CPU周期、缓冲区和队列等主机资源的负载。您可以使用适用于VMware vSphere的ONTAP 工具在ESXi主机或vSphere Lifecycle Manager (如果支持)上安装此插件。</block>
   <block id="662df1486cbd8ddf1909b804fde3b122" category="section-title">高级软件选项</block>
-  <block id="754f31315c54f74cb54fc3931b77bc4e" category="inline-link">BlueXP  灾难恢复(DR)</block>
   <block id="89a13650cc26099f24645b3ebabd8681" category="inline-link">数据基础架构洞察力(DII)</block>
-  <block id="99d0a5a8bf2f7f9a2f986e018accdd63" category="paragraph">NetApp提供以下高级软件产品。ONTAP One许可证不附带这些许可证、必须单独购买。*<block ref="051ef9ea109551a5c499e15c7ed416cd" category="inline-link-rx"></block>适用于VMware vSphere。这是一项基于云的服务、可为VMware环境提供灾难恢复和备份。无论是否使用SnapCenter、它都支持使用SAN或NAS进行内部到内部灾难恢复、并在支持的情况下使用NFS在内部与云之间来回灾难恢复。*<block ref="7c477508804cee468db4a7dd703b8ca2" category="inline-link-rx"></block>。这是一项基于云的服务、可为VMware环境提供监控和分析。它支持异构存储环境中的其他存储供应商、以及多家交换机供应商和其他虚拟机管理程序。DII提供有关VMware环境的性能、容量和运行状况的完整端到端洞察。</block>
   <block id="7449970110f98c992170b6bbd68252f9" category="paragraph">作为技术设计合作伙伴、NetApp提供了架构方面的投入、并于2015年宣布支持虚拟卷。现在、这项新技术可通过SPBM实现VM粒度和真正的阵列本机存储配置自动化。</block>
   <block id="09807314260bef27b90345fd0212a57f" category="paragraph">存储容器由存储管理员创建、用于对可由VM管理员使用的存储资源进行分组。根据您使用的ONTAP系统类型、创建存储容器的方式可能有所不同。对于传统ONTAP 9集群、系统会为容器分配一个或多个后备FlexVol卷、这些卷共同构成存储池。对于ASA R2系统、整个集群都是存储池。</block>
   <block id="660bee009f0ed31eb05e51ba93850f4d" category="paragraph">*取决于平台和协议</block>
@@ -6009,8 +5991,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="9406fb3af0e8e2bf8446823785c0e069" category="inline-link">数据基础架构洞察力</block>
   <block id="1c951601876e4daa83bce02aba074440" category="list-text">开始安装之前、您应检查<block ref="ab7acb1690084e25996646d49d4a381e" category="inline-link-rx"></block>以确保您的部署已通过认证。</block>
   <block id="ef30f0c0c266a8b9be1816aa72a0f58f" category="list-text">确定要使用多租户SVM还是允许完全集群访问。如果使用多租户SVM、则需要在要使用的每个SVM上具有一个SVM管理LIF。ONTAP工具必须可通过端口443访问此LIF。</block>
-  <block id="9822a79db54f54873c45b9060e0caedf" category="list-text">如果对SVM使用存储多租户、则使用此选项</block>
-  <block id="7d895ca5b825b3c5a05a52e7d39c803c" category="list-text">如果*不*使用多租户SVM</block>
   <block id="4050ff4d6d35bffd46dbff7fad4e6941" category="doc">在AFF、ASA、ASA R2和FAS系统上部署虚拟卷</block>
   <block id="8a440842662a6052845e4abd1f7d5dec" category="paragraph">配置vols数据存储库涉及几个步骤。NetApp的ASA R2系统专为VMware工作负载而设计、可提供与传统ONTAP系统不同的用户体验。使用ASA R2系统时、ONTAP工具10.3或更高版本所需的设置步骤更少、并且包含针对新存储架构优化的UI扩展和REST API支持。</block>
   <block id="3164e4b18dd8dcc542a3c18024fc82b6" category="inline-link-macro">检查清单</block>
@@ -6044,7 +6024,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="d34c2eaf11cfea5ea00aa0943b8fcfab" category="admonition">本文档可替代先前发布的技术报告_TR-4128：《基于NetApp MetroCluster的vSphere》_</block>
   <block id="2483a165b6002a92b0e076050cb48ea0" category="paragraph">NetApp MetroCluster使用NetApp的HA (控制器故障转移或CFO)功能来防止控制器发生故障。它还包括本地SyncMirror技术、灾难时集群故障转移(集群灾难故障转移或CFOD)、硬件冗余和地理分隔、以实现高可用性。SyncMirror通过将数据写入两个丛(本地磁盘架上主动提供数据的本地丛和通常不提供数据的远程丛)、在MetroCluster配置的两部分之间同步镜像数据。所有MetroCluster组件(例如控制器、存储、缆线、交换机(用于光纤MetroCluster)和适配器)都具有硬件冗余。</block>
   <block id="4e7a787aaa9321ad4106d26a88e54252" category="paragraph">非MetroCluster系统和ASA R2系统上提供的NetApp SnapMirror主动同步功能可通过FCP和iSCSI SAN协议提供数据存储库粒度保护。通过它、您可以保护整个VMSC、也可以有选择地保护高优先级工作负载。与主动-备用解决方案NetApp MetroCluster不同、它可以同时对本地和远程站点进行主动-主动访问。从ONTAP 9.15.1开始、SnapMirror主动同步支持对称主动/主动功能、可通过双向同步复制从受保护LUN的两个副本执行读写I/O操作、从而使两个LUN副本均可在本地处理I/O操作。在ONTAP 9.151之前的版本中、SnapMirror主动同步仅支持非对称主动/主动配置、即二级站点上的数据代理到LUN的主副本。</block>
-  <block id="2462481c7f95cdbb29fa1b2e3a5263ca" category="paragraph">vSphere Metro Storage Cluster (VMSC)是一种经过认证的配置、可保护虚拟机(VM)和容器免受故障的影响。这可以通过使用延伸型存储概念以及分布在不同故障域(例如机架、建筑物、园区甚至城市)中的ESXi主机集群来实现。NetApp MetroCluster和SnapMirror主动同步存储技术用于为主机集群提供零恢复点目标(RPO = 0)保护。VMSC配置旨在确保数据始终可用、即使完整的物理或逻辑"站点"发生故障也是如此。在成功完成VMSC认证过程后、属于VMSC配置的存储设备必须经过认证。所有受支持的存储设备均可在中找到<block ref="293ceee3268d7991d7fe245e02c1c5c9" category="inline-link-rx"></block>。</block>
   <block id="0e050612c89bbe89c4a1f2c79db93a7f" category="paragraph">NetApp MetroCluster可以部署在两种不同的配置中、以便与vSphere结合使用：</block>
   <block id="bb74c883034be56ad2c714b34888809d" category="image-alt">使用MetroCluster的VMSC示意图</block>
   <block id="2a36d659f1adb408dfdab4248eac6770" category="image-alt">带有MSA和ONTAP调解器的VMSC示意图</block>
@@ -6090,4 +6069,33 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6876f82e64fd9d6a64f99665e3913906" category="list-text">*存储效率。*尽管NetApp是第一个为生产工作负载提供重复数据删除功能的公司，但这项创新并不是该领域的第一次或最后一次创新。它从快照开始，这是一种节省空间且不会影响性能的数据保护机制，同时结合FlexClone技术，可以立即为生产和备份使用制作虚拟机的读/写副本。  NetApp继续提供内联功能，包括重复数据删除、压缩和零块重复数据删除，以从昂贵的 SSD 中榨取最多的存储空间。 ONTAP还增加了使用压缩将较小的 I/O 操作和文件打包到磁盘块中的功能。这些功能的结合使得客户普遍看到 VSI 节省高达 5:1，VDI 节省高达 30:1。最新一代ONTAP系统还包括硬件加速压缩和重复数据删除功能，可以进一步提高存储效率并降低成本。这种方法允许您在更少的空间内存储更多数据，从而降低总体存储成本并提高性能。  NetApp对其存储效率功能非常有信心，因此提供了一个链接： https://www.netapp.com/pdf.html?item=/media/79014-ng-937-Efficiency-Guarantee-Customer-Flyer.pdf item=/media/79014-ng-937-Efficiency-Guarantee-Customer-Flyer.pdf [效率保证^]。</block>
   <block id="a54f2a3da40d66f7a06b1a0b6fdfa9a8" category="list-text">*多租户* ONTAP长期以来一直是多租户领域的领导者，允许您在单个集群上创建多个存储虚拟机 (SVM)。这种方法允许您隔离工作负载并为不同的租户提供不同级别的服务，使其成为服务提供商和大型企业的理想选择。最新一代ONTAP系统还包括对租户容量管理的支持。此功能允许您为每个租户设置容量限制，确保没有单个租户可以消耗所有可用资源。这种方法有助于确保所有租户都能获得他们期望的服务级别，同时还能在租户之间提供高级别的安全性和隔离。此外，ONTAP 的多租户功能与 VMware 的 vSphere 平台集成，使您可以通过以下方式轻松管理和监控虚拟化环境<block ref="238135431b1a2d25dda1f29146112b60" category="inline-link-rx"></block>和<block ref="409cf7667ac8df435e8d9883234935b9" category="inline-link-rx"></block>。</block>
   <block id="2a2939154778c60691f9f31e86248f82" category="list-text">*混合云。*无论用于本地私有云、公共云基础架构还是结合两者优点的混合云， ONTAP解决方案都可以帮助您构建数据结构以简化和优化数据管理。从高性能全闪存系统开始，然后将它们与磁盘或云存储系统结合，以实现数据保护和云计算。从 Azure、AWS、IBM 或 Google Cloud 中选择，以优化成本并避免锁定。根据需要利用对 OpenStack 和容器技术的高级支持。  NetApp还为ONTAP提供基于云的备份（ SnapMirror Cloud、 Cloud Backup Service和Cloud Sync）以及存储分层和归档工具（FabricPool ），以帮助降低运营费用并利用云的广泛覆盖范围。</block>
+  <block id="ea286565525af4dcaa423ad23150249f" category="paragraph">每个NetApp SVM 在 Site Recovery Manager 中都被视为一个唯一阵列。VLSR 支持某些阵列到阵列（或 SVM 到 SVM）复制布局。</block>
+  <block id="229406b7ca97303faec1240cf4a1fc11" category="section-title">VMFS 支持SnapMirror主动同步</block>
+  <block id="1843642fc06043e7400ba7901fad582a" category="paragraph">ONTAP工具 10.3 及更高版本还支持使用SnapMirror主动同步 (SMas) 保护您的 VMFS 数据存储库。这使得两个相对较近的数据中心（称为故障域）之间的业务连续性能够实现透明的故障转移。然后可以通过带有 VLSR 的ONTAP工具 SRA 使用异步SnapMirror来协调远距离灾难恢复。</block>
+  <block id="eb9f146fc1b0b4bc5e3804fa7d20b1a5" category="inline-link">了解ONTAP SnapMirror主动同步</block>
+  <block id="7bcca325804b87edcbde47da8ec3bb3c" category="paragraph"><block ref="7bcca325804b87edcbde47da8ec3bb3c" category="inline-link-rx"></block></block>
+  <block id="a0b90d1e79d4aef818085b3423183ae7" category="paragraph">数据存储区被收集在一个一致性组 (CG) 中，并且所有数据存储区的虚拟机都将作为同一 CG 的成员保持写入顺序一致。</block>
+  <block id="d27c7eb1b19cbebab6552ca4574e51e5" category="paragraph">一些示例可能是柏林和汉堡的站点受 SMas 保护，第三个站点副本使用SnapMirror异步并受 VLSR 保护。另一个例子可能是使用 SMas 保护纽约和新泽西的站点，并保护芝加哥的第三个站点。</block>
+  <block id="3b2b0ebfa27de38f05b20b21651ca265" category="inline-image-macro">SMas布局</block>
+  <block id="65e70274fc1f803a54b1efd4b9ef1df0" category="paragraph"><block ref="65e70274fc1f803a54b1efd4b9ef1df0" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="c8749d248615e8d7d496cc56d369068d" category="list-text">*第一方产品。*Amazon FSx for NetApp ONTAP、 Google Cloud NetApp Volumes和Azure NetApp Files在领先的公共云环境中提供高性能、多协议托管存储服务。VMware Cloud on AWS（VMC on AWS）、Azure VMware Solution（AVS）和 Google Cloud VMware Engine（GCVE）可以直接将它们用作客户操作系统（GOS）和计算实例的数据存储或存储。</block>
+  <block id="ac3d641f5a8a83a77a11b6feae2a2368" category="list-text">*云服务。*使用NetApp Backup and Recovery或SnapMirror Cloud 通过公共云存储保护来自本地系统的数据。Cloud Sync有助于在 NAS、对象存储和Cloud Volumes Service存储之间迁移并保持数据同步。NetApp Disaster Recovery提供了一种经济高效的解决方案，利用NetApp技术作为强大且功能强大的灾难恢复解决方案的基础，适用于 DR 到云、DR 到本地以及本地到本地。</block>
+  <block id="aff39d99fde3099978b06c2121c26bd9" category="paragraph">在设计基于虚拟机的应用程序时，请考虑未来的云移动性。例如，不要将应用程序和数据文件放在一起，而是对数据使用单独的 LUN 或 NFS 导出。这使您可以将虚拟机和数据分别迁移到云服务。</block>
+  <block id="3f42091db773b0aae7161e4d74acb758" category="list-text"><block ref="3f42091db773b0aae7161e4d74acb758" category="inline-link-macro-rx"></block></block>
+  <block id="a34428791f8c5ce4b1184d505db69402" category="inline-link-macro">备份和恢复文档</block>
+  <block id="48f148d7f57b20a6060d03bbcf7335ad" category="list-text"><block ref="48f148d7f57b20a6060d03bbcf7335ad" category="inline-link-macro-rx"></block></block>
+  <block id="e198d5cba43e1161bc035f28e60cc161" category="inline-link-macro">灾难恢复文档</block>
+  <block id="d39786efdbd499fa740dd3765a7d5cf9" category="list-text"><block ref="d39786efdbd499fa740dd3765a7d5cf9" category="inline-link-macro-rx"></block></block>
+  <block id="0da690016e4be64638cdfef258418203" category="inline-link">NetApp Backup and Recovery</block>
+  <block id="cd7147239f56f957d4a7cc78ef256227" category="paragraph">此外，适用于 VMware 的SnapCenter插件可以与<block ref="ea219d297aff06b5ddbb99bc32d2e25b" category="inline-link-rx"></block>，为大多数ONTAP系统提供有效的 3-2-1 备份解决方案。请注意，如果使用具有高级服务的虚拟机备份和恢复，可能会收取一些费用，例如用于额外备份存储的对象存储。本节概述了可用于保护虚拟机和数据存储的各种选项。</block>
+  <block id="19cbafc0246850c97323cac4fb786794" category="section-title">NetApp Disaster Recovery</block>
+  <block id="dac1f09dc4b67b2074c1794d98339876" category="paragraph">灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。BlueXP DR 旨在与ONTAP和您的 VMware vSphere 环境无缝协作，为灾难恢复提供统一的解决方案。</block>
+  <block id="c256d43e8fa2b8e01df9b9333e730677" category="list-text">*存储复制适配器。*SRA 与 VMware Live Site Recovery (VLSR)/Site Recovery Manager (SRM) 一起使用，使用SnapMirror进行基于阵列的复制，管理生产站点和灾难恢复站点之间的数据复制。它可以在发生灾难时自动执行故障转移任务，并可以帮助无中断地测试 DR 副本，以确保对 DR 解决方案的信心。</block>
+  <block id="78dea62c276f3a86642777c27b42218f" category="paragraph">这<block ref="df7f63ec4790cd7696ac38c73a72d254" category="inline-link-rx"></block> 是 vCenter Server 的一个插件，可让您管理虚拟机 (VM) 和数据存储区的备份和还原。它提供了一个单一界面来管理跨多个ONTAP系统的虚拟机和数据存储库的备份、恢复和克隆。SnapCenter支持使用SnapMirror复制到辅助站点以及从辅助站点恢复。最新版本还支持SnapMirror到云（S3）、防篡改快照、 SnapLock和SnapMirror主动同步。适用于 VMware vSphere 的SnapCenter插件可以与SnapCenter应用程序插件集成，以提供应用程序一致的备份。</block>
+  <block id="1e3f6786e57985e5818c765f46508ca6" category="inline-link">NetApp Disaster Recovery(DR)</block>
+  <block id="420046e382e2e07d599fd36d475ab881" category="paragraph">NetApp提供以下优质软件产品。它们不包含在ONTAP One 许可证中，必须单独购买。*<block ref="0a0bd4d1f113d075351e4eec418259a3" category="inline-link-rx"></block> 适用于 VMware vSphere。这是一项基于云的服务，为 VMware 环境提供灾难恢复和备份。它可以与SnapCenter一起使用，也可以单独使用，并且支持使用 SAN 或 NAS 进行本地到本地的 DR，以及使用 NFS 进行本地到云/从云（如果支持）。*<block ref="7c477508804cee468db4a7dd703b8ca2" category="inline-link-rx"></block>。这是一项基于云的服务，为 VMware 环境提供监控和分析。它支持异构存储环境中的其他存储供应商，以及多个交换机供应商和其他虚拟机管理程序。DII 提供有关 VMware 环境的性能、容量和健康状况的完整端到端洞察。</block>
+  <block id="9469e1759c7e42bfeb74f9c90db108cb" category="list-text">如果您打算使用存储多租户而不是使用 vCenter 中的ONTAP集群凭据将特定 SVM 分配给 vCenter，请按照以下步骤操作：</block>
+  <block id="617275a68b9e63b5c1bdbaedd18295fb" category="list-text">如果*不*在 vCenter 中使用多租户 SVM：</block>
+  <block id="618f681cdba2c4c2fc4bbcbf50528810" category="paragraph">ONTAP架构是一个灵活且可扩展的存储平台，为数据存储提供 SAN（FCP、iSCSI 和 NVMe-oF）和 NAS（NFS v3 和 v4.1）服务。NetApp AFF、 ASA和FAS存储系统使用ONTAP操作系统为客户存储访问提供附加协议，如 S3 和 SMB/CIFS。</block>
+  <block id="dece980ac7b814fce6a3ac5ab9c2c18d" category="paragraph">vSphere Metro Storage Cluster (vMSC) 是一种经过认证的配置，可保护虚拟机 (VM) 和容器免受故障影响。这是通过使用延伸存储概念以及 ESXi 主机集群来实现的，这些集群分布在不同的故障域中，例如机架、建筑物、校园甚至城市。NetApp MetroCluster和SnapMirror主动同步存储技术用于为主机集群提供零恢复点目标 (RPO=0) 保护。vMSC 配置旨在确保即使整个物理或逻辑“站点”发生故障，数据也始终可用。作为 vMSC 配置一部分的存储设备必须在成功完成 vMSC 认证过程后进行认证。所有受支持的存储设备都可以在<block ref="34bc39e238eb497134ec6f46ab689fb0" category="inline-link-rx"></block>。</block>
 </blocks>

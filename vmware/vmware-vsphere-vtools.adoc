@@ -26,7 +26,7 @@ https://mysupport.netapp.com/site/products/all/details/otv10/docs-tab["适用于
 
 * *vCenter UI扩展。*ONTAP工具UI扩展可通过直接在vCenter UI中嵌入易于使用的上下文相关菜单来管理主机和存储、信息性portlet以及本机警报功能来简化工作流、从而简化运营团队和vCenter管理员的工作。
 * *适用于ONTAP 的VASA Provider。*适用于ONTAP 的VASA Provider支持VMware vStorage APIs for Storage Awareness (VASA)框架。它作为适用于 VMware vSphere 的 ONTAP 工具的一部分提供，作为一个虚拟设备，易于部署。VASA Provider 可将 vCenter Server 与 ONTAP 连接起来，以帮助配置和监控 VM 存储。它支持 VMware 虚拟卷（ VVOL ）支持，管理存储功能配置文件和单个 VM VVOL 性能，并提供警报以监控容量和配置文件合规性。
-* *存储复制适配器。*SRA可与VMware Live Site Recovery (vrr)/Site Recovery Manager (SRM)结合使用、以便使用SnapMirror进行基于阵列的复制、从而管理生产站点和灾难恢复站点之间的数据复制。它可以在发生灾难时自动执行故障转移任务、并有助于无故障测试灾难恢复副本、以确保对灾难恢复解决方案的信心。
+* *存储复制适配器。*SRA 与 VMware Live Site Recovery (VLSR)/Site Recovery Manager (SRM) 一起使用，使用SnapMirror进行基于阵列的复制，管理生产站点和灾难恢复站点之间的数据复制。它可以在发生灾难时自动执行故障转移任务，并可以帮助无中断地测试 DR 副本，以确保对 DR 解决方案的信心。
 
 
 下图显示了适用于 vSphere 的 ONTAP 工具。
@@ -37,7 +37,7 @@ image:vsphere_ontap_image1.png["适用于vSphere的ONTAP工具"]
 
 == 适用于VMware vSphere的SnapCenter插件
 
- https://mysupport.netapp.com/site/products/all/details/scv/docs-tab["适用于VMware vSphere的SnapCenter插件"]是适用于vCenter Server的插件、可用于管理虚拟机(VM)和数据存储库的备份和还原。它提供了一个界面、用于管理多个ONTAP系统中VM和数据存储库的备份、还原和克隆。SnapCenter支持使用SnapMirror复制到二级站点以及从二级站点进行恢复。最新版本还支持SnapMirror到云(S3)、防篡改快照、SnapLock和SnapMirror主动同步。适用于VMware vSphere的SnapCenter插件可以与SnapCenter应用程序插件集成、以提供应用程序一致的备份。
+这 https://mysupport.netapp.com/site/products/all/details/scv/docs-tab["适用于VMware vSphere的SnapCenter插件"] 是 vCenter Server 的一个插件，可让您管理虚拟机 (VM) 和数据存储区的备份和还原。它提供了一个单一界面来管理跨多个ONTAP系统的虚拟机和数据存储库的备份、恢复和克隆。SnapCenter支持使用SnapMirror复制到辅助站点以及从辅助站点恢复。最新版本还支持SnapMirror到云（S3）、防篡改快照、 SnapLock和SnapMirror主动同步。适用于 VMware vSphere 的SnapCenter插件可以与SnapCenter应用程序插件集成，以提供应用程序一致的备份。
 
 
 
@@ -49,4 +49,4 @@ image:vsphere_ontap_image1.png["适用于vSphere的ONTAP工具"]
 
 == 高级软件选项
 
-NetApp提供以下高级软件产品。ONTAP One许可证不附带这些许可证、必须单独购买。* https://www.netapp.com/data-services/disaster-recovery/["BlueXP  灾难恢复(DR)"]适用于VMware vSphere。这是一项基于云的服务、可为VMware环境提供灾难恢复和备份。无论是否使用SnapCenter、它都支持使用SAN或NAS进行内部到内部灾难恢复、并在支持的情况下使用NFS在内部与云之间来回灾难恢复。* https://www.netapp.com/data-infrastructure-insights/["数据基础架构洞察力(DII)"]。这是一项基于云的服务、可为VMware环境提供监控和分析。它支持异构存储环境中的其他存储供应商、以及多家交换机供应商和其他虚拟机管理程序。DII提供有关VMware环境的性能、容量和运行状况的完整端到端洞察。
+NetApp提供以下优质软件产品。它们不包含在ONTAP One 许可证中，必须单独购买。* https://www.netapp.com/data-services/disaster-recovery/["NetApp Disaster Recovery(DR)"] 适用于 VMware vSphere。这是一项基于云的服务，为 VMware 环境提供灾难恢复和备份。它可以与SnapCenter一起使用，也可以单独使用，并且支持使用 SAN 或 NAS 进行本地到本地的 DR，以及使用 NFS 进行本地到云/从云（如果支持）。* https://www.netapp.com/data-infrastructure-insights/["数据基础架构洞察力(DII)"]。这是一项基于云的服务，为 VMware 环境提供监控和分析。它支持异构存储环境中的其他存储供应商，以及多个交换机供应商和其他虚拟机管理程序。DII 提供有关 VMware 环境的性能、容量和健康状况的完整端到端洞察。

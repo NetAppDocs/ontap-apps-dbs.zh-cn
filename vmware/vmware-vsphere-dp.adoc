@@ -16,7 +16,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 [role="lead"]
 备份和快速恢复虚拟机(VM)是使用适用于vSphere的ONTAP的主要优势。可以通过适用于VMware vSphere的SnapCenter插件在vCenter中轻松管理此功能。许多客户通过SnapCenter增强了第三方备份解决方案、以利用ONTAP的快照技术、因为它提供了使用ONTAP恢复VM的最快、最直接的方式。拥有ONTAP One许可证的客户可以免费获得SnapCenter、也可以获得其他许可证包。
 
-此外，适用于VMware的SnapCenter插件可以与集成 https://docs.netapp.com/us-en/bluexp-backup-recovery/concept-protect-vm-data.html["用于备份和恢复虚拟机的BlueXP "^]，从而为大多数ONTAP系统提供有效的3-2-1备份解决方案。请注意、如果将BlueXP  备份和恢复用于具有高级服务的虚拟机、例如用于额外备份存储的对象存储、则可能需要支付一些费用。本节概述了可用于保护VM和数据存储库的各种选项。
+此外，适用于 VMware 的SnapCenter插件可以与 https://docs.netapp.com/us-en/data-services-backup-recovery/concept-protect-vm-data.html["NetApp Backup and Recovery"^]，为大多数ONTAP系统提供有效的 3-2-1 备份解决方案。请注意，如果使用具有高级服务的虚拟机备份和恢复，可能会收取一些费用，例如用于额外备份存储的对象存储。本节概述了可用于保护虚拟机和数据存储的各种选项。
 
 
 
@@ -58,9 +58,9 @@ image:vsphere_ontap_image4.png["SnapCenter部署"]
 
 
 
-== BlueXP  灾难恢复
+== NetApp Disaster Recovery
 
-BlueXP  灾难恢复(Disaster Recovery、DR)是一项基于云的服务、可提供全面的解决方案、用于在发生灾难时保护数据和应用程序。它提供一系列功能、包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对内部和基于云的ONTAP系统的支持。BlueXP  灾难恢复可与ONTAP和您的VMware vSphere环境无缝结合使用、从而为灾难恢复提供统一的解决方案。
+灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。BlueXP DR 旨在与ONTAP和您的 VMware vSphere 环境无缝协作，为灾难恢复提供统一的解决方案。
 
 
 

@@ -76,10 +76,10 @@ summary: ONTAP工具10安装检查清单
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-7.png["七个"]将存储后端添加到ONTAP工具
 [role="quick-margin-list"]
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/configure-user-role-and-privileges.html["配置ONTAP用户角色和权限"]如果不使用管理员、则使用随附的JSON文件。
-* 如果对SVM使用存储多租户、则使用此选项
+* 如果您打算使用存储多租户而不是使用 vCenter 中的ONTAP集群凭据将特定 SVM 分配给 vCenter，请按照以下步骤操作：
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载集群"]在ONTAP工具管理器中、并将其与vCenter关联。
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载SVM"]在ONTAP工具vCenter UI中。
-* 如果*不*使用多租户SVM
+* 如果*不*在 vCenter 中使用多租户 SVM：
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/add-storage-backend.html["板载集群"]直接在ONTAP工具vCenter UI中。或者、在这种情况下、如果不使用Vvol、则可以直接添加SVM。
 
 
