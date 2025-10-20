@@ -17,8 +17,7 @@ summary: ONTAP广泛支持混合云。
 ONTAP 的另一个优势是广泛支持混合云，将内部私有云中的系统与公有云功能相结合。以下是可与 vSphere 结合使用的一些 NetApp 云解决方案：
 
 * *第一方产品。*Amazon FSx for NetApp ONTAP、 Google Cloud NetApp Volumes和Azure NetApp Files在领先的公共云环境中提供高性能、多协议托管存储服务。VMware Cloud on AWS（VMC on AWS）、Azure VMware Solution（AVS）和 Google Cloud VMware Engine（GCVE）可以直接将它们用作客户操作系统（GOS）和计算实例的数据存储或存储。
-* * Cloud Volumes ONTAP 。 * NetApp Cloud Volumes ONTAP 数据管理软件可在您选择的云中控制，保护，灵活性和效率您的数据。Cloud Volumes ONTAP是基于ONTAP存储构建的云原生数据管理软件。与 Cloud Manager 结合使用，可与内部 ONTAP 系统一起部署和管理 Cloud Volumes ONTAP 实例。利用高级NAS和iSCSI SAN功能以及统一数据管理、包括快照和SnapMirror复制。
-* *云服务。*使用NetApp Backup and Recovery或SnapMirror Cloud 通过公共云存储保护来自本地系统的数据。Cloud Sync有助于在 NAS、对象存储和Cloud Volumes Service存储之间迁移并保持数据同步。NetApp Disaster Recovery提供了一种经济高效的解决方案，利用NetApp技术作为强大且功能强大的灾难恢复解决方案的基础，适用于 DR 到云、DR 到本地以及本地到本地。
+* *云服务。*使用NetApp Backup and Recovery或SnapMirror Cloud 通过公共云存储保护来自本地系统的数据。NetApp Copy and Sync有助于在 NAS 和对象存储之间迁移数据并保持数据同步。NetApp Disaster Recovery提供了一种经济高效的解决方案，利用NetApp技术作为强大且功能强大的灾难恢复解决方案的基础，适用于 DR 到云、DR 到本地以及本地到本地。
 * * FabricPool 。 * FabricPool 可为 ONTAP 数据快速轻松地分层。冷块可以迁移到公有云或私有StorageGRID对象存储中的对象存储、并在再次访问ONTAP数据时自动重新调用。或者，使用对象层作为已由 SnapVault 管理的数据的第三级保护。这种方法可以让您做到 https://www.linkedin.com/pulse/rethink-vmware-backup-again-keith-aasen/["为VM存储更多快照"^] 在主和 / 或二级 ONTAP 存储系统上。
 * * ONTAP Select 。 * 使用 NetApp 软件定义的存储将您的私有云扩展到 Internet 上的远程设施和办公室，您可以在这些设施和办公室使用 ONTAP Select 支持块和文件服务以及您在企业数据中心拥有的相同 vSphere 数据管理功能。
 
@@ -27,14 +26,12 @@ ONTAP 的另一个优势是广泛支持混合云，将内部私有云中的系�
 
 要深入了解更多安全主题、请参阅以下资源。
 
-* link:https://docs.netapp.com/us-en/storage-management-cloud-volumes-ontap/index.html["Cloud Volumes ONTAP 文档"]
 * link:https://docs.netapp.com/us-en/ontap-select/["ONTAP Select 文档"]
 * link:https://docs.netapp.com/us-en/data-services-backup-recovery/index.html["备份和恢复文档"]
 * link:https://docs.netapp.com/us-en/data-services-disaster-recovery/index.html["灾难恢复文档"]
 * link:https://aws.amazon.com/fsx/netapp-ontap/["适用于 NetApp ONTAP 的 Amazon FSX"]
 * link:https://www.vmware.com/products/vmc-on-aws.html["基于 AWS 的 VMware Cloud"]
-* link:https://learn.microsoft.com/en-us/azure/azure-netapp-files/azure-netapp-files-introduction["什么是Azure NetApp Files？
-"]
+* link:https://learn.microsoft.com/en-us/azure/azure-netapp-files/azure-netapp-files-introduction["什么是Azure NetApp Files？"]
 * link:https://azure.microsoft.com/en-us/products/azure-vmware/["Azure VMware 解决方案"]
 * link:https://cloud.google.com/vmware-engine["Google Cloud VMware 引擎"]
 * link:https://cloud.google.com/netapp/volumes/docs/discover/overview["什么是Google Cloud NetApp卷？"]

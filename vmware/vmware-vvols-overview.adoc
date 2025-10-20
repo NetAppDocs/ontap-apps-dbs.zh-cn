@@ -105,7 +105,7 @@ image::vvols-image4.png[虚拟机存储策略合规性,320,100]
 
 === ONTAP
 
-除了AFF、ASA和FAS系统上的ONTAP 9之外、NetApp还支持ONTAP Select上的VMware工作负载、基于AWS上的VMware Cloud的Amazon FSx for NetApp、基于Azure VMware解决方案的Azure NetApp Files、基于Google Cloud VMware Engine的Cloud Volumes Service以及Equinox中的NetApp私有存储。 但是、具体功能可能会因服务提供商和可用网络连接而异。此外、vSphere子系统还可以访问这些配置以及Cloud Volumes ONTAP 中存储的数据。
+除了AFF、 ASA和FAS系统上的ONTAP 9 之外， NetApp还支持ONTAP Select上的 VMware 工作负载、带有 VMware Cloud on AWS 的Amazon FSx for NetApp 、带有 Azure VMware Solution 的Azure NetApp Files 、带有 Google Cloud VMware Engine 的Google Cloud NetApp Volumes以及 Equinix 中的NetApp Private Storage，但具体功能可能因服务提供商和可用的网络连接而异。
 
 在本报告发布时、超规模云环境仅限于传统NFS v3数据存储库、因此、Vvol仅适用于内部ONTAP 系统或提供内部系统全部功能的云连接系统、例如由全球NetApp合作伙伴和服务提供商托管的系统。
 

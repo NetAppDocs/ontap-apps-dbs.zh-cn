@@ -13,4 +13,4 @@ summary: ONTAP上的EPIC部署示例—协议
 
 此外、NetApp还支持使用NVMe/FC (如果您的AIX和RHEL操作系统版本可以)、并可提高性能。FCP和NVMe/FC可以同时位于同一个网络结构中。
 
-NetApp客户已在Azure云中成功运行所有Epic工作负载。AWS还可以运行Epic工作负载。借助NetApp Cloud Volumes ONTAP和NetApp Cloud Volumes服务、NetApp可提供在云中有效运行Epic所需的企业级功能和性能。NetApp云选项可通过iSCSI提供块、并通过NFS或SMB提供文件。
+NetApp客户已成功在 Azure 云中运行所有 Epic 工作负载。  AWS 和 Google Cloud 也能够运行 Epic 工作负载。  NetApp提供企业级功能和在云中有效运行 Epic 所需的性能。  NetApp云选项通过 iSCSI 提供块并通过 NFS 或 SMB 提供文件。
