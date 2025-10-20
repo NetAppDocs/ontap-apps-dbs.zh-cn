@@ -61,7 +61,7 @@ NOTE: 虽然ONTAP系统允许您将同一集群中的SVM配对以进行SnapMirro
 
 == 采用 ONTAP 的 VLSR 以及其他使用情形：混合云和迁移
 
-将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR，使用Cloud Volumes ONTAP (CVO) 或 https://www.equinix.com/partners/netapp["基于Equix Metal®的NetApp存储"^]或其他托管ONTAP服务。
+将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR https://www.equinix.com/partners/netapp["Equinix Metal 上的NetApp存储"^]或其他托管ONTAP服务。
 
 借助FlexClone、您可以在云服务提供商的数据中心内执行测试故障转移、存储占用空间接近零。现在，保护您的组织的成本比以往任何时候都低。
 

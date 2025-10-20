@@ -25,7 +25,6 @@ NOTE: *本文档替代以前发布的技术报告_TR-4568：《适用于Windows 
 * 软件定义的统一架构
 +
 ** 在VMware vSphere或KVM上运行的ONTAP Select
-** Cloud Volumes ONTAP作为云原生实例运行
 
 
 * 超超群云提供商提供的第一方产品

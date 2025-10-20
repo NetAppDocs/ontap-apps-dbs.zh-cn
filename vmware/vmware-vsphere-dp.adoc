@@ -60,7 +60,7 @@ image:vsphere_ontap_image4.png["SnapCenter部署"]
 
 == NetApp Disaster Recovery
 
-灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。BlueXP DR 旨在与ONTAP和您的 VMware vSphere 环境无缝协作，为灾难恢复提供统一的解决方案。
+灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。NetApp Disaster Recovery旨在与ONTAP和您的 VMware vSphere 环境无缝协作，提供统一的灾难恢复解决方案。
 
 
 
