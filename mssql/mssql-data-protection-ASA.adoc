@@ -44,6 +44,3 @@ SQL Server还要求操作系统和存储之间进行协调、以确保创建快�
 
 
 TIP: * NetApp建议*使用SnapCenter创建Snapshot副本。上述T-SQL方法同样有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。
-
-
-NOTE: 如果SQL Server数据库托管在VMware虚拟化环境中运行的虚拟磁盘上、请使用SnapCenter。如果数据库托管在裸机物理服务器或子系统连接SCSI上、则使用T-SQL Snapshot命令备份数据库。

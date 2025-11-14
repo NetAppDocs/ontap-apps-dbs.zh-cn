@@ -5662,7 +5662,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="a6612611980ab8001eb37d9b0d21fc8b" category="list-text">使用新的backup group和backup server命令同时对存储单元上的多个数据库执行快照。</block>
   <block id="0dedd2c3e15900b4f533838e17976dab" category="list-text">如果数据库工作负载跨多个存储单元、请创建一致性组以简化管理任务。一致性组是指作为单个单元进行管理的一组存储单元。</block>
   <block id="7f9d52f3748a3a0f2854076ed4952d80" category="admonition">* NetApp建议*使用SnapCenter创建Snapshot副本。上述T-SQL方法同样有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。</block>
-  <block id="e158a020500bd25736fbcb79dbd57ef0" category="admonition">如果SQL Server数据库托管在VMware虚拟化环境中运行的虚拟磁盘上、请使用SnapCenter。如果数据库托管在裸机物理服务器或子系统连接SCSI上、则使用T-SQL Snapshot命令备份数据库。</block>
   <block id="19f005706f432809f0c867f9d97c05b0" category="admonition">* NetApp建议*使用SnapCenter创建Snapshot副本。上述T-SQL方法同样有效、但SnapCenter可实现备份、还原和克隆过程的完全自动化。同时、它还会执行发现以确保创建的快照正确无误。无需预配置。</block>
   <block id="88db39456c39e1de4d937d721ec1f2fc" category="doc">数据库文件和文件组</block>
   <block id="2bcb2e2e60d655aca12a6062bc99f69c" category="section-title">数据库实例文件初始化</block>
@@ -6095,4 +6094,5 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="2ee606af5da3062695cabb75a160eb48" category="inline-link">Equinix Metal 上的NetApp存储</block>
   <block id="fea612aa54d66a179c5538c5cd1b8525" category="paragraph">将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR<block ref="48f4ab00daadfbd5f3a95d2ba27ed047" category="inline-link-rx"></block>或其他托管ONTAP服务。</block>
   <block id="0fc9a0e7b30259b88ee28dc36905dc46" category="paragraph">灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。NetApp Disaster Recovery旨在与ONTAP和您的 VMware vSphere 环境无缝协作，提供统一的灾难恢复解决方案。</block>
+  <block id="b49008ff3ed6386e7b79c895a99dfda0" category="paragraph">调解员实际上并不是打破僵局的人，尽管它实际上发挥了这样的作用。中介器有助于确定集群节点的状态，并在站点发生故障时协助自动切换过程。在任何情况下，中介都不会传输数据。</block>
 </blocks>
