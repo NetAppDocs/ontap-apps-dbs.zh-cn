@@ -32,7 +32,7 @@ summary: 使用 SnapCenter ，您可以创建可应用于多个作业的备份�
 
 对于VMFS数据存储库、您可以根据所需的快照创建数据存储库的FlexClone。这样、您就可以根据快照创建新的数据存储库、此数据存储库可用于测试或开发目的。FlexClone仅会为创建快照后所做的更改占用空间、从而可以节省空间来创建数据存储库副本。创建FlexClone后、您可以像常规数据存储库一样、将LUN或命名空间映射到ESXi主机。这样、您不仅可以还原特定的VM文件、还可以根据生产数据快速创建测试或开发环境、而不会影响生产环境的性能。
 
-有关快照的详细信息、请参阅ONTAP文档。以下链接提供了其他详细信息：https://docs.netapp.com/us-en/ontap/data-protection/manage-local-snapshot-copies-concept.html["ONTAP本地Snapshot副本"^] https://docs.netapp.com/us-en/ontap/data-protection/manage-snapmirror-replication.html["ONTAP SnapMirror复制"^]
+有关快照的更多信息，请参阅ONTAP文档。以下链接提供了更多详细信息： https://docs.netapp.com/us-en/ontap/data-protection/manage-local-snapshot-copies-concept.html["ONTAP本地Snapshot副本"^] https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-replication-workflow-concept.html["ONTAP SnapMirror复制工作流程"^]
 
 
 

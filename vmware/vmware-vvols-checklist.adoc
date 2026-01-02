@@ -103,6 +103,6 @@ summary: ONTAP工具10安装检查清单
 * 如果使用HA、则Storage vMotion会将节点2和节点3分隔为不同的数据存储库(可选、但建议使用)。
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/certificate-manage.html["使用管理证书"]在ONTAP工具管理器中安装任何必需的CA签名证书。
 * 如果您为SRM/vSR启用了SRA以保护传统数据存储库， https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/protect/configure-on-srm-appliance.html["在VMware Live Site Recovery设备上配置SRA"]请。
-* 为配置本机备份 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/enable-backup.html["RPO几乎为零"]。
+* 配置本地备份 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/backup-settings.html["RPO几乎为零"]。
 * 配置定期备份到其他存储介质。
 

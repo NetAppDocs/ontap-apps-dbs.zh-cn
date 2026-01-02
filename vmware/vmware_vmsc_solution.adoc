@@ -14,7 +14,7 @@ summary: VMware vSphere解决方案概述
 
 
 [role="lead"]
-vCenter Server Appliance (VCCSA)是一款功能强大的集中式管理系统和适用于vSphere的单一管理平台、可使管理员有效地运行ESXi集群。它有助于实现关键功能、例如VM配置、vMotion操作、高可用性(HA)、分布式资源计划程序(DRS)、Tanzu Kubernetes Grid等。它是VMware云环境中的一个重要组件、在设计时应考虑服务可用性。
+vCenter Server Appliance (VCSA) 是一个功能强大的集中式管理系统和 vSphere 的单一管理界面，使管理员能够有效地操作 ESXi 集群。它支持虚拟机配置、vMotion 操作、高可用性 (HA)、分布式资源调度器 (DRS)、VMware vSphere Kubernetes 服务 (VKS) 等关键功能。它是 VMware 云环境中的一个重要组成部分，在设计时应考虑到服务的可用性。
 
 
 
@@ -22,7 +22,7 @@ vCenter Server Appliance (VCCSA)是一款功能强大的集中式管理系统和
 
 VMware的集群技术可将ESXi服务器分组到虚拟机的共享资源池中、并提供vSphere高可用性(HA)。vSphere HA可为虚拟机中运行的应用程序提供易于使用的高可用性。在集群上启用HA功能后、每个ESXi服务器都会与其他主机保持通信、以便在任何ESXi主机无响应或隔离时、 HA集群可以在集群中的无故障主机之间协商恢复该ESXi主机上运行的虚拟机。如果子操作系统发生故障、vSphere HA可以在同一物理服务器上重新启动受影响的虚拟机。vSphere HA可以减少计划内停机、防止计划外停机、并从中断中快速恢复。
 
-vSphere HA集群从故障服务器中恢复VM。
+vSphere HA 集群从故障服务器恢复虚拟机。
 
 image::../media/vmsc_2_1.png[VMSC示意图,624,301]
 
@@ -32,7 +32,7 @@ image::../media/vmsc_2_1.png[VMSC示意图,624,301]
 
 == 主机故障检测
 
-创建HA集群后、集群中的所有主机都会参与选择、其中一个主机将成为主主机。每个从节点对主节点执行网络检测信号、而主节点则对所有从节点主机执行网络检测信号。vSphere HA集群的主主机负责检测从主机的故障。
+HA集群创建完成后，集群中的所有主机都会参与选举，其中一台主机将成为主主机。每个从设备都会向主设备发送网络心跳信号，而主设备反过来也会向所有从设备主机发送网络心跳信号。vSphere HA 集群的主主机负责检测从主机的故障。
 
 根据检测到的故障类型、可能需要对主机上运行的虚拟机进行故障转移。
 
@@ -54,9 +54,9 @@ NetApp建议至少指定两个额外的隔离地址、并且每个地址都是�
 
 == 主机隔离响应
 
-隔离响应是vSphere HA中的一项设置、用于确定当vSphere HA集群中的主机丢失其管理网络连接但仍继续运行时在虚拟机上触发的操作。此设置有三个选项："禁用"、"关闭并重新启动虚拟机"和"关闭并重新启动虚拟机"。
+隔离响应是 vSphere HA 中的一项设置，用于确定当 vSphere HA 集群中的主机失去其管理网络连接但仍继续运行时，在虚拟机上触发的操作。此设置有三个选项：“禁用”、“关闭并重启虚拟机”和“关闭电源并重启虚拟机”。
 
-"关闭"优于"关闭"、后者不会刷新最近对磁盘所做的更改或提交事务。如果虚拟机在300秒内未关闭、则会将其关闭。要更改等待时间、请使用高级选项as.isolationshutdowntimeout。
+“关机”比“断电”更好，“断电”不会将最近的更改刷新到磁盘或提交事务。如果虚拟机在 300 秒内没有关闭，则会将其断电。要更改等待时间，请使用高级选项 das.isolationshutdowntimeout。
 
 在HA启动隔离响应之前、它会首先检查vSphere HA主代理是否拥有包含VM配置文件的数据存储库。否则、主机将不会触发隔离响应、因为没有主节点可重新启动VM。主机将定期检查数据存储库状态、以确定是否由具有主角色的vSphere HA代理声明数据存储库。
 
@@ -77,25 +77,25 @@ vSphere 6中与HA相关的一项增强功能是VMCP。VMCP可针对块(FC、iSCS
 
 === 永久设备丢失(永久设备丢失)(财产和财产
 
-如果存储设备永久出现故障或被管理员删除、并且不希望返回、则会出现上述情况。NetApp存储阵列向ESXi发出SCSI检测代码、声明设备已永久丢失。在vSphere HA的故障条件和VM响应部分中、您可以配置检测到无效条件后的响应。
+PDL 是指存储设备永久发生故障或被管理员移除且预计不会恢复的情况。NetApp存储阵列向 ESXi 发出 SCSI Sense 代码，声明该设备已永久丢失。在 vSphere HA 的“故障条件和 VM 响应”部分，您可以配置检测到 PDL 条件后应采取的响应。
 
 [TIP]
 ====
-NetApp建议将"Response for Data with PLU"(使用基于文件系统的数据存储库响应)设置为"*关闭并重新启动VMS*"。检测到这种情况后、VM将在vSphere HA集群中运行正常的主机上立即重新启动。
+NetApp建议将“带有 PDL 的数据存储的响应”设置为“*关闭电源并重新启动虚拟机*”。当检测到此情况时，虚拟机将在 vSphere HA 集群中运行正常的宿主机上立即重新启动。
 
 ====
 
 
 === 所有路径已关闭(APD)
 
-APD是指主机无法访问存储设备且没有指向阵列的路径时发生的情况。ESXi认为此问题是设备的临时问题、并希望它能够再次可用。
+APD 是指存储设备对主机不可见，且没有通往阵列的路径时发生的情况。ESXi 认为这是设备的暂时性问题，预计该设备将再次可用。
 
 检测到APD情况时、计时器将启动。140秒后、系统将正式声明APD条件、并且设备会标记为APD超时。超过140秒后、HA将开始计算VM故障转移APD延迟中指定的分钟数。指定时间过后、HA将重新启动受影响的虚拟机。您可以根据需要将VMCP配置为以不同方式响应("Disabled (已禁用)"、"VM Events (问题描述事件)"或"Power Off and Restart VM (关闭并重新启动VM)")。
 
 [TIP]
 ====
 * NetApp建议将"Response for Data with APD"配置为"*关闭并重新启动VM (保守)*"。
-* 保守是指HA能够重新启动VM的可能性。如果设置为保守、则只有在HA知道其他主机可以重新启动受APD影响的虚拟机时、它才会重新启动该虚拟机。如果发生主动、即使HA不知道其他主机的状态、也会尝试重新启动虚拟机。如果任何主机都无法访问虚拟机所在的数据存储库、则可能导致虚拟机无法重新启动。
+* 保守性是指 HA 能够重启虚拟机的可能性。当设置为保守模式时，HA 仅在知道另一台主机可以重启受 APD 影响的虚拟机时才会重启该虚拟机。对于“积极型”HA，即使不知道其他主机的状态，它也会尝试重启虚拟机。如果没有主机可以访问虚拟机所在的存储区域，则可能导致虚拟机无法重启。
 * 如果APD状态为已解决、并且在超时时间之前还原了对存储的访问、则HA不会不必要地重新启动虚拟机、除非您明确对此虚拟机进行配置。如果即使环境已从APD条件中恢复、也需要响应、则应将APD超时后APD恢复的响应配置为重置VM。
 * NetApp建议将APD超时后APD恢复的响应配置为已禁用。
 
@@ -111,10 +111,10 @@ VMware DRS是一项将主机资源聚合到集群中的功能、主要用于在�
 
 == 适用于NetApp MetroCluster的VMware DRS实施
 
- To avoid cross-site traffic, NetApp recommends configuring DRS affinity rules to manage a logical separation of VMs. This will ensure that unless there is a complete site failure, HA and DRS will only use local hosts.
+ To avoid cross-site traffic, NetApp recommends configuring DRS affinity rules to manage a logical separation of VMs. This will ensure that, unless there is a complete site failure, HA and DRS will only use local hosts.
 如果为集群创建DRS关联性规则、则可以指定vSphere在虚拟机故障转移期间如何应用该规则。
 
-您可以通过两种类型的规则来指定vSphere HA故障转移行为：
+您可以为 vSphere HA 故障转移行为指定两种类型的规则：
 
 * VM反关联性规则会强制指定的虚拟机在故障转移操作期间保持分离状态。
 * 在故障转移操作期间、VM主机关联性规则会将指定的虚拟机放置在特定主机或已定义主机组的成员上。
@@ -132,7 +132,7 @@ image::../media/vmsc_2_2.png[VM主机组和关联性规则,528,369]
 
 NetApp建议实施"应该"规则、而不是"必须"规则、因为如果发生故障、vSphere HA会违反这些规则。使用"必须"规则可能会导致服务中断。
 
-服务的可用性应始终高于性能。如果完整数据中心发生故障、则"必须"规则必须从VM主机关联性组中选择主机、并且当数据中心不可用时、虚拟机不会重新启动。
+服务的可用性应始终优先于服务的性能。如果整个数据中心发生故障，“必须”规则必须从 VM 主机亲缘性组中选择主机，并且当数据中心不可用时，虚拟机将不会重新启动。
 
 
 
@@ -150,7 +150,7 @@ NetApp建议实施"应该"规则、而不是"必须"规则、因为如果发生�
 
 * 通常、不需要或不建议将存储DRS用于ONTAP存储系统。
 * ONTAP提供自己的存储效率功能、例如重复数据删除、数据压缩和数据缩减、这些功能可能会受到存储DRS的影响。
-* 如果您使用的是ONTAP快照、则Storage vMotion会在快照中保留VM副本、这可能会提高存储利用率、并可能影响NetApp SnapCenter等跟踪VM及其ONTAP快照的备份应用程序。
+* 如果您正在使用ONTAP快照，则存储 vMotion 会在快照中留下 VM 的副本，这可能会增加存储利用率，并可能影响NetApp SnapCenter等备份应用程序，这些应用程序会跟踪 VM 及其ONTAP快照。
 
 
 ====
