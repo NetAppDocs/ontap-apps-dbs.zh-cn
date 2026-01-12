@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-config-qos.html 
+keywords: qos, bandwidth, minimum, guaranteed, adaptive, ASA r2, oracle 
+summary: 在ASA r2 上使用ONTAP QoS 进行 Oracle 数据库性能管理 
+searchtitle: 在ASA r2 上使用ONTAP QoS 进行 Oracle 数据库性能管理 
+---
+= 在ASA r2 系统上使用ONTAP QoS 进行性能管理
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+在ASA r2 上安全高效地管理多个 Oracle 数据库需要有效的 QoS 策略。这一点尤其重要，因为ASA r2 系统是全闪存 SAN 平台，专为极高的性能和工作负载整合而设计。
+
+即使是最强大的控制器，相对较少的 SSD 也可能会使其达到饱和，因此 QoS 控制对于确保跨多个工作负载的可预测性能至关重要。作为参考， ASA r2 系统（例如ASA A1K 或 A90）可以提供数十万到超过一百万的 IOPS，延迟低于毫秒级。很少有单个工作负载会消耗如此高的性能，因此要充分利用性能通常需要托管多个数据库或应用程序。安全地执行此操作需要 QoS 策略来防止资源争用。
+
+ONTAP QoS 在ASA r2 上的工作原理与在AFF/ FAS系统上相同，主要有两种类型的控制：IOPS 和带宽。QoS 控制可以应用于 SVM 和 LUN。
+
+
+
+== IOPS QoS
+
+基于 IOPS 的 QoS 限制了给定资源的总 IOPS。在ASA r2 中，QoS 策略可以应用于 SVM 级别和单个存储对象（例如 LUN）。当工作负载达到其 IOPS 限制时，额外的 I/O 请求会排队等待令牌，从而引入延迟。这是预期行为，可以防止任何单一工作负载垄断系统资源。
+
+
+NOTE: 将 QoS 控制应用于数据库事务/重做日志数据时要谨慎。这些工作负载具有突发性，对于平均活动而言看似合理的 QoS 限制可能对于峰值突发而言过低，从而导致严重的性能问题。一般而言，重做日志和归档日志不应受服务质量 (QoS) 的限制。
+
+
+
+== 带宽QoS
+
+基于带宽的服务质量限制吞吐量（以Mbps为单位）。当工作负载执行大块读取或写入操作（例如全表扫描或备份操作）时，这非常有用，因为这些操作会消耗大量带宽，但 IOPS 相对较少。结合 IOPS 和带宽限制可以提供更精细的控制。
+
+
+
+== 最低/有保障的QoS
+
+最低服务质量策略将性能保留给关键工作负载。例如，在生产数据库和开发数据库混合的环境中，对开发工作负载应用最大 QoS，对生产工作负载应用最小 QoS，以确保性能可预测。
+
+
+
+== 自适应 QoS
+
+自适应 QoS 会根据存储对象的大小调整限制。虽然很少用于数据库（因为大小与性能需求不相关），但对于性能要求随容量扩展的虚拟化工作负载来说，它可能很有用。

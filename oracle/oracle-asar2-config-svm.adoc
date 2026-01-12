@@ -1,0 +1,45 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-config-svm.html 
+keywords: svm, ASA r2, oracle 
+summary: 使用ASA r2 为 Oracle 数据库配置 SVM 
+searchtitle: Oracle 数据库和存储虚拟机与ASA r2 
+---
+= Storage Virtual Machine
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+ASA r2 系统上的 Oracle 数据库存储管理也集中在存储虚拟机 (SVM) 上，在ONTAP CLI 中称为 vserver。
+
+SVM 是ONTAP中存储配置和安全的基本单元，类似于 VMware ESX 服务器上的客户虚拟机。当ONTAP首次安装在ASA r2 上时，在创建 SVM 之前，它不具备数据服务能力。SVM 定义了 SAN 环境的个性和数据服务。
+
+ASA r2 系统采用仅限 SAN 的ONTAP特性，该特性经过简化，支持块协议（FC、iSCSI、NVMe/FC、NVMe/TCP），并移除了与 NAS 相关的功能。这简化了管理，并确保所有 SVM 配置都针对 SAN 工作负载进行了优化。与AFF/ FAS系统不同， ASA r2 不提供 NAS 服务选项，例如主目录或 NFS 共享。
+
+创建集群时， ASA r2 会自动配置一个名为 svm1 的默认数据 SVM，并启用 SAN 协议。该SVM无需手动配置协议服务即可进行块存储操作。默认情况下，此 SVM 中的 IP 数据 LIF 支持 iSCSI 和 NVMe/TCP 协议，并使用默认数据块服务策略，从而简化了 SAN 工作负载的初始设置。管理员之后可以根据性能、安全性或多租户要求创建额外的 SVM 或自定义 LIF 配置。
+
+
+NOTE: SAN 协议的逻辑接口 (LIF) 应根据性能和可用性要求进行设计。ASA r2 支持 iSCSI、FC 和 NVMe LIF，但请注意，默认情况下未启用自动 iSCSI LIF 故障转移，因为ASA r2 对 NVMe 和 SCSI 主机使用共享网络。要启用自动故障转移，请创建 https://docs.netapp.com/us-en/asa-r2/administer/manage-client-vm-access.html#create-a-lif-network-interface["仅支持 iSCSI 的 LIF"]。
+
+
+
+== svms
+
+与其他ONTAP平台一样，对于要创建的 SVM 数量没有官方的最佳实践；该决定取决于管理和安全要求。
+
+大多数客户日常运营只使用一台主SVM，并根据特殊需求创建额外的SVM，例如：
+
+* 由专业团队管理的专用支持虚拟机，用于关键业务数据库。
+* 具有委托管理控制权的开发小组的支持向量机
+* 用于处理需要受限管理访问权限的敏感数据的 SVM
+
+
+在多租户环境中，每个租户都可以分配一个专用的 SVM。每个集群、HA 对和节点的 SVM 和 LIF 数量的限制取决于所使用的协议、节点模型和ONTAP版本。请咨询 link:https://hwu.netapp.com/["NetApp Hardware Universe"^] 在这些限制条件下。
+
+
+NOTE: 从ONTAP 9.18.1 开始， ASA r2 每个集群和每个 HA 对最多支持 256 个 SVM（早期版本中为 32 个）。

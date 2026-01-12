@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-storage-san-config-lun-sizing.html 
+keywords: SAN, ASM, LVM, oracle, lun, sizing, count, ASA r2 
+summary: Oracle 数据库 LUN 大小调整和 LUN 数量指南（ ASA r2） 
+searchtitle: 使用ASA r2 进行 Oracle 数据库 LUN 大小调整和 LUN 计数 
+---
+= LUN大小调整和LUN计数
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+要获得Oracle数据库的最佳性能和易管理性、选择最佳LUN大小和要使用的LUN数量至关重要。
+
+LUN 是ONTAP上的虚拟化对象，它存在于ASA r2 系统上托管存储可用区 (SAZ) 的所有驱动器中。因此，LUN 的性能不受其大小的影响，因为无论选择什么大小，LUN 都能充分利用 SAZ 的全部性能潜力。
+
+为了方便起见、客户可能希望使用特定大小的LUN。例如、如果数据库是基于LVM或Oracle ASM磁盘组构建的、其中每个磁盘组包含两个1 TB的LUN、则该磁盘组必须以1 TB为增量进行增长。最好使用八个500 GB的LUN来构建磁盘组、以便可以以较小的增量来增加磁盘组。
+
+建议不要建立通用标准LUN大小、因为这样做会使易管理性复杂化。例如、如果数据库或数据存储库的大小介于1 TB到2 TB之间、则100 GB的标准LUN大小可能效果良好、但20 TB的数据库或数据存储库需要200个LUN。这意味着、服务器重新启动时间会更长、需要在各种用户界面中管理更多对象、SnapCenter等产品必须对许多对象执行发现。使用更少、更大的LUN可避免此类问题。
+
+* ASA r2 注意事项：*
+
+* ASA r2 的最大 LUN 大小为 128TB，这允许使用更少但更大的 LUN，而不会影响性能。
+* ASA r2 使用存储可用区 (SAZ) 而不是聚合，但这并不会改变 Oracle 工作负载的 LUN 大小调整逻辑。
+* 默认情况下启用精简配置；调整 LUN 大小不会造成中断，也不需要将其脱机。
+
+
+
+
+== LUN计数
+
+与LUN大小不同、LUN计数会影响性能。应用程序性能通常取决于通过SCSI层执行并行I/O的能力。因此、两个LUN的性能优于一个LUN。使用Veritas VLVM、Linux LVM2或Oracle ASM等LVM是提高并行性的最简单方法。
+
+对于ASA r2，LUN 计数的原则与AFF/ FAS相同，因为ONTAP在跨平台处理并行 I/O 的方式类似。然而， ASA r2 的 SAN 专用架构和主动-主动对称路​​径确保了所有 LUN 的一致性能。
+
+虽然对随机I/O非常繁重的100% SSD环境进行的测试表明、LUN数量最多可增加到64个、但一般来说、NetApp客户从LUN数量增加到16个以上所获得的优势微乎其微。
+
+[TIP]
+====
+* NetApp建议*：
+
+一般来说，4 到 16 个 LUN 足以满足任何给定 Oracle 数据库工作负载的 I/O 需求。由于主机 SCSI 实现方面的限制，少于四个 LUN 可能会造成性能限制。除了极端情况（例如非常高的随机 I/O SSD 工作负载）之外，将 LUN 数量增加到 16 个以上很少能提高性能。
+
+====

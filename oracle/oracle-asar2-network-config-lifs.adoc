@@ -1,0 +1,83 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-network-config-lifs.html 
+keywords: LIF, multipath, multipathing, ASA r2, oracle 
+summary: 使用ASA r2 的 Oracle 数据库逻辑接口设计 
+searchtitle: 使用ASA r2 的 Oracle 数据库逻辑接口设计 
+---
+= 逻辑接口
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Oracle数据库需要访问存储。逻辑接口(Logical Interface、Logical Interface、Logical Interface)是将Storage Virtual Machine (SVM)连接到网络并进而连接到数据库的网络管道。要确保每个数据库工作负载都有足够的带宽、并且故障转移不会导致存储服务丢失、需要正确的LIF设计。
+
+本节概述了ASA r2 系统的关键 LIF 设计原则，该系统针对仅限 SAN 环境进行了优化。如需更全面的文档，请参阅 link:https://docs.netapp.com/us-en/ontap/network-management/index.html["ONTAP网络管理文档"]。与数据库架构的其他方面一样，存储虚拟机 (SVM，在 CLI 中称为 vserver) 和逻辑接口 (LIF) 设计的最佳选择很大程度上取决于扩展要求和业务需求。
+
+在制定LIF策略时、请考虑以下主要主题：
+
+* *表现。*网络带宽是否足以满足Oracle工作负载的需求？
+* *故障恢复能力。*设计中是否存在单点故障？
+* *易管理性。*网络能否无干扰地扩展？
+
+
+这些主题适用于从主机到交换机再到存储系统的端到端解决方案。
+
+
+
+== LIF类型
+
+LIF类型有多种。 link:https://docs.netapp.com/us-en/ontap/networking/lif_compatibility_with_port_types.html["有关LIF类型的ONTAP文档"] 请提供有关此主题的更完整信息、但从功能角度来看、可以将这些生命周期表分为以下几组：
+
+* *集群和节点管理Lifs.*用于管理存储集群的Lifs。
+* * SVM管理LIF.*允许通过REST API或ONTAPI (也称为ZAPI)访问SVM的接口、用于执行创建快照或调整卷大小等功能。SnapManager for Oracle (SMO)等产品必须能够访问SVM管理LIF。
+* *数据 LIF。*仅支持 SAN 协议的接口：FC、iSCSI、NVMe/FC、NVMe/TCP。ASA r2 系统不支持 NAS 协议（NFS、SMB/CIFS）。
+
+
+
+NOTE: 尽管 iSCSI（或 NVMe/TCP）和管理流量都使用 IP 协议，但无法为两者配置同一个接口。在 iSCSI 或 NVMe/TCP 环境中，需要单独的管理 LIF。为了提高弹性和性能，每个节点每个协议配置多个 SAN 数据 LIF，并将它们分布在不同的物理端口和结构上。与AFF/ FAS系统不同， ASA r2 不允许 NFS 或 SMB 流量，因此无法将 NAS 数据 LIF 重新用于管理。
+
+
+
+== SAN LIF设计
+
+SAN环境中的LIF设计相对简单、原因之一是：多路径。所有现代SAN实施都允许客户端通过多个独立的网络路径访问数据、并选择最佳访问路径。因此、与LIF设计相关的性能更易于解决、因为SAN客户端会自动在最佳可用路径之间对I/O进行负载平衡。
+
+如果某个路径不可用、则客户端会自动选择其他路径。由此带来的设计精简性使SAN的生命周期通常更易于管理。这并不意味着SAN环境始终可以更轻松地进行管理、因为SAN存储的许多其他方面都比NFS复杂得多。这只是意味着SAN LIF的设计更简单。
+
+
+
+=== 性能
+
+在 SAN 环境中，影响 LIF 性能的最重要因素是带宽。例如，一个双节点ASA r2 集群，每个节点有两个 32Gb FC 端口，每个节点最多可提供 64Gb 的带宽。同样，对于 NVMe/TCP 或 iSCSI，要确保 Oracle 工作负载有足够的 25GbE 或 100GbE 连接。
+
+
+
+=== 故障恢复能力
+
+SAN LIF 的故障转移方式与ASA LIF 不同。ASA r2 系统依靠主机多路径（MPIO/ALUA）来实现弹性恢复。如果由于控制器故障转移导致 SAN LIF 不可用，客户端的多路径软件会检测到路径丢失，并将 I/O 重定向到备用路径。ASA r2 可能会在短暂延迟后执行 LIF 重定位以恢复完整路径的可用性，但这不会中断 I/O，因为伙伴节点上已经存在活动路径。故障转移过程是为了恢复所有已定义端口上的主机访问权限。
+
+
+
+=== 易管理性
+
+在 SAN 环境中，当 HA 对内的卷被重新定位时，无需迁移 LIF。这是因为，卷迁移完成后， ONTAP会向 SAN 发送路径变更通知，SAN 客户端会自动重新优化。使用 SAN 进行 LIF 迁移主要与重大的物理硬件变更相关。例如，如果需要对控制器进行无中断升级，则 SAN LIF 会迁移到新硬件。如果发现 FC 端口出现故障，可以将 LIF 迁移到未使用的端口。
+
+
+
+=== 设计建议
+
+NetApp针对ASA r2 SAN环境提出以下建议：
+
+* 请勿创建超出所需数量的路径。路径数量过多会使整体管理变得更加复杂、并且某些主机上的路径故障转移可能会出现发生原因问题。此外、对于SAN启动等配置、某些主机存在意外的路径限制。
+* 很少有配置需要一个LUN具有四个以上的路径。如果有两个以上的节点向LUN公布路径、则其价值会受到限制、因为如果拥有LUN的节点及其HA配对节点发生故障、则托管LUN的聚合将无法访问。在这种情况下、在主HA对以外的节点上创建路径毫无用处。
+* 虽然可以通过选择要包含在FC分区中的端口来管理可见LUN路径的数量、但通常在FC分区中包含所有潜在目标点并在ONTAP级别控制LUN可见性会更容易。
+* 使用选择性 LUN 映射 (SLM) 功能，该功能默认启用。使用 SLM，任何新的 LUN 都会从拥有底层聚合的节点和该节点的 HA 伙伴自动发布。这种安排避免了创建端口集或配置区域来限制端口访问权限的需要。每个 LUN 都部署在满足最佳性能和弹性所需的最少节点上。
+* 如果需要将 LUN 迁移到两个控制器之外，则可以使用以下方式添加额外的节点： `lun mapping add-reporting-nodes` 命令将 LUN 通告到新节点上。这样做会为 LUN 迁移创建额外的 SAN 路径。但是，主机必须执行发现操作才能使用新路径。
+* 不要过分关注间接流量。在I/O密集型环境中、最好避免间接流量、因为在这种环境中、每微秒的延迟都至关重要、但对于典型工作负载、可见的性能影响可以忽略不计。
+

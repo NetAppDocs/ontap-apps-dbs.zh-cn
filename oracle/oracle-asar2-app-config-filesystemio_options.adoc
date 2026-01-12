@@ -1,0 +1,46 @@
+---
+permalink: oracle/oracle-asar2-app-config-filesystemio_options.html 
+sidebar: sidebar 
+keywords: oracle, database, ASA r2, ontap, filesystemio_options, filesystemio, async, directio 
+summary: Oracle 数据库参数 - filesystemio_options（ ASA r2） 
+searchtitle: Oracle 数据库参数 - filesystemio_options（ ASA r2） 
+---
+= filesystemio_options
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Oracle初始化参数 `filesystemio_options` 控制异步和直接I/O的使用
+
+ASA r2 上的 filesystemio_options 的行为和建议与AFF/ FAS系统相同，因为该参数是 Oracle 特有的，与存储平台无关。ASA r2 和AFF/ FAS一样使用ONTAP ，因此相同的最佳实践也适用。
+
+与通常的看法相反、异步I/O和直接I/O并不互相排斥。NetApp发现、在客户环境中、此参数经常配置不当、这种配置不当直接导致许多性能问题。
+
+异步I/O意味着可以并行处理Oracle I/O操作。在各种操作系统上提供异步I/O之前、用户配置了大量dbwriter进程并更改了服务器进程配置。使用异步I/O时、操作系统本身会代表数据库软件以高度高效的并行方式执行I/O。此过程不会使数据面临风险、Oracle重做日志记录等关键操作仍会同步执行。
+
+直接I/O会绕过操作系统缓冲区缓存。UNIX系统上的I/O通常流经操作系统缓冲区缓存。这对于不维护内部缓存的应用程序非常有用、但Oracle在SGA中具有自己的缓冲区缓存。在几乎所有情况下、最好启用直接I/O并将服务器RAM分配给SGA、而不是依赖操作系统缓冲区缓存。Oracle SGA可以更高效地使用内存。此外、当I/O流经操作系统缓冲区时、它会受到额外处理的影响、从而增加了缓存。当低延迟是一项关键要求时、对于写入I/O负载繁重的情况、延迟增加尤为明显。
+
+的选项 `filesystemio_options` 是：
+
+* *async.* Oracle将I/O请求提交给操作系统进行处理。此过程允许Oracle执行其他工作、而不是等待I/O完成、从而提高I/O并行处理能力。
+* *directio.* Oracle直接对物理文件执行I/O、而不是通过主机操作系统缓存路由I/O。
+* *无。* Oracle使用同步和缓冲I/O在这种配置中、在共享和专用服务器进程之间进行选择以及dbwriter的数量更重要。
+* *setall.* Oracle同时使用异步和直接I/O在几乎所有情况下、使用 `setall` 最佳。
+
+
+
+NOTE: 在 ASM 环境中，Oracle 会自动对 ASM 管理的磁盘使用直接 I/O 和异步 I/O，因此 `filesystemio_options` 对 ASM 磁盘组没有影响。对于非 ASM 部署（例如，SAN LUN 上的文件系统），请设置： `filesystemio_options = setall`。这样既可以实现异步 I/O，也可以实现直接 I/O，从而获得最佳性能。
+
+一些较旧的操作系统在异步 I/O 方面存在问题，导致一些过时的建议认为应该避免使用异步 I/O。但是，异步 I/O 稳定可靠，并且在所有当前的操作系统上都得到全面支持。除非发现特定的操作系统漏洞，否则没有理由禁用它。
+
+如果数据库一直在使用缓冲I/O、则切换到直接I/O可能还需要更改SGA大小。禁用缓冲的I/O可消除主机操作系统缓存为数据库提供的性能优势。将RAM重新添加到SGA可修复此问题。最终结果应该是I/O性能有所提高。
+
+尽管Oracle SGA使用RAM几乎总是优于操作系统缓冲区缓存、但可能无法确定最佳值。例如、在具有许多间歇性活动Oracle实例的数据库服务器上、最好使用SGA大小非常小的缓冲I/O。这种安排允许所有正在运行的数据库实例灵活地使用操作系统上剩余的可用RAM。这是一种非常少见的情况、但在某些客户站点上也发现过。
+
+
+TIP: NetApp建议设置 `filesystemio_options` 到 `setall`但请注意，在某些情况下，主机缓冲区缓存的丢失可能需要增加 Oracle SGA。ASA r2 系统针对低延迟的 SAN 工作负载进行了优化，因此使用 setall 与 ASA 的高性能 Oracle 部署设计完美契合。

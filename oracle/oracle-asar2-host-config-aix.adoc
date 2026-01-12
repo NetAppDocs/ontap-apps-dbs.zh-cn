@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-host-config-aix.html 
+keywords: oracle, database, ASA r2, ontap, aix, cio 
+summary: 在ASA r2 上使用 AIX 的 Oracle 数据库 
+searchtitle: 在ASA r2 上使用 IBM AIX 的 Oracle 数据库 
+---
+= AIX
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+IBM AIX 上 Oracle 数据库与ASA r2 ONTAP的配置主题。
+
+[NOTE]
+====
+AIX 支持使用NetApp ASA r2 托管 Oracle 数据库，前提是：
+
+* 您已正确配置 Oracle 以支持并发 I/O。
+* 您使用受支持的 SAN 协议（FC/iSCSI/NVMe）。
+* 您在ASA r2 上运行ONTAP 9.16.x 或更高版本。
+
+
+====
+
+
+== 并发I/O
+
+在 IBM AIX 上使用ASA r2 实现最佳性能需要使用并发 I/O。如果没有并发 I/O，性能可能会受到限制，因为 AIX 执行的是串行原子 I/O，这会产生很大的开销。
+
+最初， NetApp建议使用 `cio` 挂载选项可以强制文件系统进行并发 I/O，但此过程存在缺点，现在已不再需要。自 AIX 5.2 和 Oracle 10gR1 推出以来，AIX 上的 Oracle 可以打开单个文件进行并发 I/O，而不是强制对整个文件系统进行并发 I/O。
+
+启用并发I/O的最佳方法是设置 `init.ora` 参数 `filesystemio_options` to `setall`。这样、Oracle就可以打开特定文件、以便用于并发I/O
+
+使用 cio 作为挂载选项会强制使用并发 I/O，这可能会产生负面影响。例如，强制并发 I/O 会禁用文件系统上的预读功能，这可能会损害 Oracle 数据库软件外部发生的 I/O 的性能，例如复制文件和执行磁带备份。此外，Oracle GoldenGate 和 SAP BR*Tools 等产品与某些版本的 Oracle 使用 cio mount 选项不兼容。
+
+[TIP]
+====
+* NetApp建议*：
+
+* 请勿使用 `cio` 文件系统级别的挂载选项。而是通过使用来启用并发I/O `filesystemio_options=setall`。
+* 仅使用 `cio` 如果无法设置挂载选项，则进行设置 `filesystemio_options=setall`。
+
+
+====
+
+NOTE: 由于ASA r2 不支持 NAS，因此 AIX 上的所有 Oracle 部署都必须使用块协议。
+
+
+
+== AIX jfs/JFS2挂载选项
+
+下表列出了AIX jfs/jfs2挂载选项。
+
+|===
+| 文件类型 | 挂载选项 
+
+
+| ADr主页 | 默认值 
+
+
+| 控制文件、 | 默认值 
+
+
+| 数据文件 | 默认值 
+
+
+| 重做日志 | 默认值 
+
+
+| ORACLE_HOME | 默认值 
+|===
+在使用 AIX 之前 `hdisk` 在任何环境（包括数据库）中的设备，检查参数 `queue_depth`。此参数并非HBA队列深度；而是与单个SCSI卡的队列深度相关。 `hdisk device`。根据ASA r2 LUN 的配置方式，该值会有所不同。 `queue_depth` 可能太低，无法获得良好的性能。测试表明最佳值为 64。

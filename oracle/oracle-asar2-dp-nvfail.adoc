@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-dp-nvfail.html 
+keywords: oracle, nvfail, ASA r2 
+summary: 配置 NVFAIL 以保护ASA r2 上的 Oracle 数据库 
+searchtitle: Oracle 数据库和ASA r2 上的 NVFAIL 
+---
+= NVFAIL
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+NVFAIL 是ONTAP 的一项功能，可在灾难性故障转移情况下确保数据完整性。
+
+即使ASA r2 系统采用简化的 SAN 架构（SAZ 和存储单元而不是卷），此功能仍然适用于ASA r2 系统。
+
+由于数据库维护着大量的内部缓存，因此在存储故障转移事件期间容易发生数据损坏。如果发生灾难性事件需要强制ONTAP故障转移，无论整体配置的健康状况如何，结果都是先前已确认的更改可能会被有效地丢弃。存储阵列的内容向前跳跃，数据库缓存的状态不再反映磁盘上的数据状态。这种不一致会导致数据损坏。
+
+缓存可以在应用层或服务器层进行。例如，Oracle Real Application Cluster (RAC) 配置中，服务器在主站点和远程站点上都处于活动状态，并将数据缓存在 Oracle SGA 中。强制故障转移操作导致数据丢失，会使数据库面临损坏的风险，因为存储在 SGA 中的数据块可能与磁盘上的数据块不匹配。
+
+缓存还有一个不太明显的用途，那就是在操作系统文件系统层。基于位于主站点的 LUN 的集群文件系统可以挂载到远程站点的服务器上，并且可以再次缓存数据。在这些情况下， NVRAM故障或强制接管可能会导致文件系统损坏。
+
+ONTAP使用 NVFAIL 及其相关设置来保护数据库和操作系统免受此情况的影响，这些设置会向主机发出信号，使缓存数据失效，并在故障转移后重新挂载受影响的文件系统。该机制适用于ASA r2 LUN 和命名空间，就像适用于AFF/ FAS一样。
+
+[NOTE]
+====
+ASA r2 的关键考虑因素：
+
+* NVFAIL 在 LUN 级别（存储单元）运行，而不是在 SAZ 级别运行。
+* 对于 Oracle 数据库，应在所有托管关键组件（数据文件、重做日志、控制文件）的 LUN 上启用 NVFAIL。
+* ASA r2 不支持MetroCluster ，因此 NVFAIL 主要适用于本地 HA 故障转移场景。
+* ASA r2 不支持 NFS，因此 NVFAIL 注意事项仅适用于基于 SAN 的工作负载（FC/iSCSI/NVMe）。
+
+
+====

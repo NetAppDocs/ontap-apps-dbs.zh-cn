@@ -1,0 +1,29 @@
+---
+permalink: oracle/oracle-asar2-app-config-mbr.html 
+sidebar: sidebar 
+keywords: oracle, database, ASA r2, ontap, db_file_multiblock_read_count, multiblock 
+summary: Oracle 数据库参数 - db_file_multiblock_read_count（ ASA r2） 
+searchtitle: Oracle 数据库参数 - db_file_multiblock_read_count（ ASA r2） 
+---
+= db_file_multiblock_read_count
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+。 `db_file_multiblock_read_count` 参数用于控制Oracle在顺序I/O期间单次操作读取的Oracle数据库块的最大数量
+
+与AFF/ FAS系统相比，建议没有变化。ONTAP 的行为和 Oracle 最佳实践在ASA r2、 AFF和FAS平台上保持不变。
+
+但是、此参数不会影响Oracle在任何和所有读取操作期间读取的块数、也不会影响随机I/O只有顺序I/O的块大小会受到影响。
+
+Oracle建议用户不要设置此参数。这样可以使数据库软件自动设置最佳值。这通常意味着、将此参数设置为一个可产生1 MB I/O大小的值。例如、读取1 MB的8 KB块需要读取128个块、因此、此参数的默认值为128。
+
+NetApp在客户站点发现的大多数数据库性能问题都与此参数的设置不正确有关。在Oracle版本8和9中更改此值有充分的理由。因此、参数可能会在不为人所用的情况下出现在中 `init.ora` 文件、因为数据库已原位升级到Oracle 10及更高版本。与默认值128相比、原有设置8或16会严重损害顺序I/O性能。
+
+
+TIP: * NetApp建议*设置 `db_file_multiblock_read_count` 参数不应出现在中 `init.ora` 文件NetApp从未遇到过更改此参数可提高性能的情况、但在许多情况下、它会明显损坏顺序I/O吞吐量。

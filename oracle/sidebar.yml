@@ -4,7 +4,8 @@ title: Oracle 数据库
 entries:
 - title: 概述
   url: "/oracle/oracle-overview.html"
-- title: ONTAP 配置
+- title: AFF/ FAS系统上的ONTAP配置
+  pdf-filename: Oracle 数据库的ONTAP配置
   entries:
   - title: RAID
     url: "/oracle/oracle-ontap-config-raid.html"
@@ -20,7 +21,24 @@ entries:
     url: "/oracle/oracle-ontap-config-thin-provisioning.html"
   - title: 故障转移和切换
     url: "/oracle/oracle-ontap-config-failover.html"
-- title: 数据库配置
+- title: ASA r2 系统上的ONTAP配置
+  pdf-filename: 适用于配备ASA r2 系统的 Oracle 数据库的ONTAP配置
+  entries:
+  - title: RAID
+    url: "/oracle/oracle-asar2-config-raid.html"
+  - title: 容量限制
+    url: "/oracle/oracle-asar2-config-capacity-limits.html"
+  - title: Storage Virtual Machine
+    url: "/oracle/oracle-asar2-config-svm.html"
+  - title: 服务质量（ QoS ）
+    url: "/oracle/oracle-asar2-config-qos.html"
+  - title: 效率
+    url: "/oracle/oracle-asar2-config-efficiency.html"
+  - title: 精简配置
+    url: "/oracle/oracle-asar2-config-thin-provisioning.html"
+  - title: 故障转移
+    url: "/oracle/oracle-asar2-config-failover.html"
+- title: 使用AFF/ FAS系统进行数据库配置
   pdf-filename: Oracle数据库的数据库配置
   entries:
   - title: 数据文件和重做块大小
@@ -31,7 +49,18 @@ entries:
     url: "/oracle/oracle-app-config-filesystemio_options.html"
   - title: Oracle RAC
     url: "/oracle/oracle-app-config-rac.html"
-- title: 主机配置
+- title: 使用ASA r2 系统进行数据库配置
+  pdf-filename: 适用于ASA r2 系统的 Oracle 数据库配置
+  entries:
+  - title: 数据文件和重做块大小
+    url: "/oracle/oracle-asar2-app-config-block-sizes.html"
+  - title: db_file_multiblock_read_count
+    url: "/oracle/oracle-asar2-app-config-mbr.html"
+  - title: filesystemio_options
+    url: "/oracle/oracle-asar2-app-config-filesystemio_options.html"
+  - title: Oracle RAC
+    url: "/oracle/oracle-asar2-app-config-rac.html"
+- title: 主机配置与AFF/ FAS系统
   pdf-filename: Oracle数据库的主机配置
   entries:
   - title: AIX
@@ -46,7 +75,22 @@ entries:
     url: "/oracle/oracle-host-config-windows.html"
   - title: Solaris
     url: "/oracle/oracle-host-config-solaris.html"
-- title: 网络配置：
+- title: 使用ASA r2 系统的主机配置
+  pdf-filename: 适用于配备ASA r2 系统的 Oracle 数据库主机配置
+  entries:
+  - title: AIX
+    url: "/oracle/oracle-asar2-host-config-aix.html"
+  - title: HP-UX
+    url: "/oracle/oracle-asar2-host-config-hp-ux.html"
+  - title: Linux
+    url: "/oracle/oracle-asar2-host-config-linux.html"
+  - title: 带有ASMlib和AFC的Linux
+    url: "/oracle/oracle-asar2-host-config-asmlib-afd.html"
+  - title: Microsoft Windows
+    url: "/oracle/oracle-asar2-host-config-windows.html"
+  - title: Solaris
+    url: "/oracle/oracle-asar2-host-config-solaris.html"
+- title: AFF/ FAS系统的网络配置
   pdf-filename: Oracle数据库的网络配置
   entries:
   - title: 逻辑接口
@@ -57,7 +101,18 @@ entries:
     url: "/oracle/oracle-network-config-fc.html"
   - title: 直连网络
     url: "/oracle/oracle-network-config-direct-connect.html"
-- title: 存储配置
+- title: ASA r2 系统上的网络配置
+  pdf-filename: Oracle 数据库与ASA r2 系统的网络配置
+  entries:
+  - title: 逻辑接口
+    url: "/oracle/oracle-asar2-network-config-lifs.html"
+  - title: 以太网配置
+    url: "/oracle/oracle-asar2-network-config-ethernet.html"
+  - title: FC SAN配置
+    url: "/oracle/oracle-asar2-network-config-fc.html"
+  - title: 直连网络
+    url: "/oracle/oracle-asar2-network-config-direct-connect.html"
+- title: AFF或FAS系统上的存储配置
   pdf-filename: Oracle数据库的存储配置
   entries:
   - title: FC SAN
@@ -88,6 +143,25 @@ entries:
     url: "/oracle/oracle-dp-nvfail.html"
   - title: ASM Recasation Utility
     url: "/oracle/oracle-storage-san-config-asmru.html"
+- title: ASA R2系统上的存储配置
+  pdf-filename: Oracle 数据库与ASA r2 系统的存储配置
+  entries:
+  - title: FC SAN
+    entries:
+    - title: LUN对齐
+      url: "/oracle/oracle-asar2-storage-san-config-lun-alignment.html"
+    - title: LUN计数和LUN大小
+      url: "/oracle/oracle-asar2-storage-san-config-lun-sizing.html"
+    - title: LUN放置
+      url: "/oracle/oracle-asar2-storage-san-config-lun-placement.html"
+    - title: LUN大小调整
+      url: "/oracle/oracle-asar2-storage-san-config-lun-resizing.html"
+    - title: LVM条带化
+      url: "/oracle/oracle-asar2-storage-san-config-lvm-striping.html"
+  - title: Oracle和NVFAIL
+    url: "/oracle/oracle-asar2-dp-nvfail.html"
+  - title: ASM Recasation Utility
+    url: "/oracle/oracle-asar2-storage-san-config-asru.html"
 - title: 虚拟化
   url: "/oracle/oracle-virtualization-introduction.html"
 - title: 分层

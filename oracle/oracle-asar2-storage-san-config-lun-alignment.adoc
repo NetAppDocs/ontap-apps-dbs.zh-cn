@@ -1,0 +1,57 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-storage-san-config-lun-alignment.html 
+keywords: SAN, ASM, LVM, oracle, ASA r2 
+summary: 在ASA r2 上与 Oracle 数据库进行 LUN 对齐 
+searchtitle: 使用ASA r2 进行 Oracle 数据库 I/O 的 LUN 对齐 
+---
+= LUN对齐
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+LUN对齐是指针对底层文件系统布局优化I/O。
+
+ASA r2 系统使用与AFF/ FAS相同的ONTAP架构，但配置模型更简化。ASA r2 系统使用存储可用区 (SAZ) 而不是聚合，但对齐原则保持不变，因为ONTAP跨平台一致地管理块布局。但是，请注意以下ASA特有的几点：
+
+* ASA r2 系统为所有 LUN 提供主动-主动对称路​​径，从而消除了对齐期间的路径不对称问题。
+* 存储单元 (LUN) 默认采用精简配置；对齐方式不会改变此行为。
+* 在创建 LUN 期间可以配置快照保留和自动快照删除（ONTAP 9.18.1 及更高版本）。
+
+
+在ONTAP系统上、存储以4 KB为单位进行组织。一个数据库或文件系统的8 KB块应正好映射到两个4 KB块。如果LUN配置错误使对齐在任一方向上移动1 KB、则每个8 KB块将位于三个不同的4 KB存储块上、而不是两个。这种安排会增加发生原因延迟、并在存储系统中执行发生原因额外的I/O。
+
+对齐也会影响LVM架构。如果在整个驱动器设备上定义了逻辑卷组中的物理卷(不创建分区)、则LUN上的第一个4 KB块与存储系统上的第一个4 KB块对齐。这是正确的对齐方式。分区会出现问题、因为它们会移动操作系统使用LUN的起始位置。只要偏移量以4 KB的整数单位移动、LUN就会对齐。
+
+在Linux环境中、在整个驱动器设备上构建逻辑卷组。如果需要分区、请运行并验证每个分区的起始位置是否为八的倍数、以检查对齐 `fdisk -u`情况。这意味着分区从八个512字节扇区的倍数开始、即4 KB。
+
+另请参见一节中有关压缩块对齐的讨论link:oracle-ontap-config-efficiency.html["效率"]。与8 KB压缩块边界对齐的任何布局也与4 KB边界对齐。
+
+
+
+== 未对齐警告
+
+数据库重做/事务日志记录通常会生成未对齐的I/O、此I/O可能会导致发生原因发出有关ONTAP上LUN错位的警告、从而使人产生误解。
+
+日志记录会使用不同大小的写入顺序写入日志文件。不与4 KB边界对齐的日志写入操作通常不会出现发生原因性能问题、因为下一个日志写入操作会完成块。因此、ONTAP几乎能够将所有写入作为完整的4 KB块进行处理、即使某些4 KB块中的数据是在两个单独的操作中写入的。
+
+使用诸如此类的工具来验证对齐情况。 `sio` 或者 `dd` 能够以规定的块大小生成 I/O。可以使用以下命令查看存储系统的 I/O 对齐统计信息： `stats` 命令。看 link:../notes/wafl_alignment_verification.html["WAFL对齐验证"] 了解更多信息。
+
+Solaris环境中的对齐更为复杂。请参见 http://support.netapp.com/documentation/productlibrary/index.html?productID=61343["ONTAP SAN 主机配置"^] 有关详细信息 ...
+
+[CAUTION]
+====
+在Solaris x86环境中，请格外注意正确对齐，因为大多数配置都有多个分区层。Solaris x86分区片通常位于标准主引导记录分区表之上。
+
+====
+其他最佳实践：
+
+* 使用NetApp互操作性矩阵工具 (IMT) 验证 HBA 固件和操作系统设置。
+* 使用 sanlun 工具确认路径健康状况和对齐情况。
+* 对于 Oracle ASM 和 LVM，请确保配置文件（/etc/lvm/lvm.conf、/etc/sysconfig/oracleasm）设置正确，以避免出现对齐问题。
+

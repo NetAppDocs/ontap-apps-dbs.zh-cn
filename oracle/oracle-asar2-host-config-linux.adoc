@@ -1,0 +1,84 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-host-config-linux.html 
+keywords: oracle, database, ASA r2, ontap, linux, nfs, xfs, ext4, slot tables 
+summary: 在ASA r2 上使用 Linux 的 Oracle 数据库 
+searchtitle: 在ASA r2 上使用 Linux 的 Oracle 数据库 
+---
+= Linux
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+针对 Linux 操作系统和ASA r2 ONTAP 的配置主题。
+
+[NOTE]
+====
+ASA r2 支持 Oracle 数据库，并兼容 Linux（Oracle Linux、RHEL、SUSE）。使用 SAN 协议，正确配置多路径，并应用 Oracle 最佳实践进行 ASM 和 I/O 调优。
+
+====
+
+
+== I/O计划程序
+
+Linux内核允许对块设备的I/O计划方式进行低级控制。各种Linux发行版的默认值差别很大。测试表明、截止日期通常会获得最佳结果、但NOOP有时会稍好一些。性能差异极小、但如果需要从数据库配置中提取尽可能高的性能、请同时测试这两个选项。CFQ是许多配置中的默认设置、它已证明数据库工作负载存在严重的性能问题。
+
+有关配置I/O计划程序的说明、请参见相关的Linux供应商文档。
+
+
+
+== 多路径
+
+某些客户在网络中断期间遇到崩溃、因为多路径守护进程未在其系统上运行。在最新版本的Linux上、操作系统和多路径守护进程的安装过程可能会使这些操作系统容易受到此问题的影响。软件包安装正确、但未配置为在重新启动后自动启动。
+
+例如，RHEL 9.7 上的多路径守护进程的默认配置可能如下所示：
+
+....
+[root@host1 ~]# systemctl list-unit-files --type=service | grep multipathd
+multipathd.service                      disabled
+....
+可使用以下命令更正此问题：
+
+....
+[root@host1 ~]# systemctl enable multipathd.service
+[root@host1 ~]# systemctl list-unit-files --type=service | grep multipathd
+multipathd.service                      enabled
+....
+
+
+== 队列深度
+
+为 SAN 设备设置合适的队列深度，以避免 I/O 瓶颈。Linux 上的默认队列深度通常设置为 128，这可能会导致 Oracle 数据库出现性能问题。队列深度设置过高会导致 I/O 排队过多，从而导致延迟增加和吞吐量降低。设置得太低会限制未完成的 I/O 请求数量，从而降低整体性能。对于ASA r2 上的 Oracle 数据库工作负载，队列深度 64 通常是一个不错的起点，但可能需要根据具体的工作负载特性和性能测试进行调整。
+
+
+
+== ASM镜像
+
+ASM 镜像可能需要更改 Linux 多路径设置，以使 ASM 能够识别问题并切换到备用故障组。ONTAP 上的大多数 ASM 配置都使用外部冗余，这意味着数据保护由外部阵列提供，并且 ASM 不会镜像数据。某些站点使用正常冗余的 ASM 来提供双向镜像，通常在不同站点之间进行镜像。
+
+对于支持主动-主动多路径的ASA r2 系统，应调整这些多路径设置。由于所有路径都处于活动状态并进行了负载均衡，因此不需要无限期排队。相反，多路径参数应优先考虑性能和快速故障恢复。这种行为对于 ASM 镜像很重要，因为 ASM 必须收到 I/O 失败才能在备用 LUN 上重试 I/O。如果 I/O 无限期地排队，ASM 无法触发故障转移。
+
+在Linux中设置以下参数 `multipath.conf` 用于ASM镜像的ASM LUN文件：
+
+....
+polling_interval 5
+no_path_retry 24
+failback immediate
+path_grouping_policy multibus
+path_selector "service-time 0"
+....
+这些设置会为ASM设备创建120秒超时。超时计算为 `polling_interval` * `no_path_retry` 以秒为单位。在某些情况下、可能需要调整确切的值、但120秒的超时时间对于大多数使用来说应该足以满足要求。具体来说、120秒应允许控制器接管或恢复发生、而不会产生会导致故障组脱机的I/O错误。
+
+a较低 `no_path_retry` 值可以缩短ASM切换到备用故障组所需的时间、但这也会增加在控制器接管等维护活动期间发生不必要故障转移的风险。可以通过仔细监控ASM镜像状态来缓解此风险。如果发生不必要的故障转移、并且重新同步执行速度相对较快、则可以快速重新同步镜像。对于追加信息、请参见有关使用的Oracle软件版本的ASM快速镜像重新同步的Oracle文档。
+
+
+
+== Linux xfs、ext3和ext4挂载选项
+
+
+TIP: NetApp建议使用默认挂载选项。在 LUN 上创建文件系统时，请确保正确对齐。

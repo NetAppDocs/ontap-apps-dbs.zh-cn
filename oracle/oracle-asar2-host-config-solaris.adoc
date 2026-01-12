@@ -1,0 +1,195 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-host-config-solaris.html 
+keywords: oracle, database, ASA r2, ontap, solaris, zfs 
+summary: 在ASA r2 上使用 Solaris 的 Oracle 数据库 
+searchtitle: 在ASA r2 上使用 Solaris 的 Oracle 数据库 
+---
+= Solaris
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+适用于 Solaris 操作系统和ASA r2 ONTAP 的配置主题。
+
+
+
+== Solaris UFS挂载选项
+
+NetApp强烈建议使用日志记录挂载选项、以便在Solaris主机崩溃或FC连接中断时保持数据完整性。日志记录挂载选项还会保留Snapshot备份的可用性。
+
+
+
+== Solaris ZFS
+
+必须仔细安装和配置Solaris ZFS，才能提供最佳性能。
+
+
+
+=== mvector
+
+Solaris 11对其处理大型I/O操作的方式进行了更改、这可能会导致SAN存储阵列出现严重的性能问题。此问题已记录在NetApp跟踪错误报告“Solaris 11 ZFS性能回归”中。
+
+这不是ONTAP错误。这是Solaris缺陷、根据Solaris缺陷7199305和7082975进行跟踪。
+
+您可以咨询Oracle支持部门、了解您的Solaris 11版本是否受到影响、也可以更改为较小的值来测试解决方法 `zfs_mvector_max_size`。
+
+为此、您可以以root用户身份运行以下命令：
+
+....
+[root@host1 ~]# echo "zfs_mvector_max_size/W 0t131072" |mdb -kw
+....
+如果此更改出现任何意外问题、可以通过以root用户身份运行以下命令轻松反转此更改：
+
+....
+[root@host1 ~]# echo "zfs_mvector_max_size/W 0t1048576" |mdb -kw
+....
+
+
+== 内核
+
+要获得可靠的ZFS性能、需要对Solaris内核进行修补、以防止出现LUN对齐问题。此修复程序是在Solaris 10的修补程序147440-19以及Solaris 11的SRU 10.5中引入的。请仅将Solaris 10及更高版本与ZFS结合使用。
+
+
+
+== LUN配置
+
+要配置LUN、请完成以下步骤：
+
+. 创建类型为的LUN `solaris`。
+. 安装指定的相应Host Utility Kit (HUK) link:https://imt.netapp.com/matrix/#search["NetApp 互操作性表工具（ IMT ）"^]。
+. 完全按照所述执行HUK中的说明。基本步骤概述如下、但请参见 link:https://docs.netapp.com/us-en/ontap-sanhost/index.html["最新文档"^] 正确的操作步骤。
++
+.. 运行 `host_config` 实用程序以更新 `sd.conf/sdd.conf` 文件这样可以使SCSI驱动器正确发现ONTAP LUN。
+.. 按照提供的说明进行操作 `host_config` 用于启用多路径输入/输出(MPIO)的实用程序。
+.. 重新启动。要在整个系统中识别任何更改、必须执行此步骤。
+
+
+. 对LUN进行分区并验证它们是否已正确对齐。有关如何直接测试和确认对齐的说明，请参阅“附录B：WAFL对齐验证”。
+
+
+
+
+=== zpools
+
+只能在中的步骤之后创建zpool link:oracle-host-config-solaris.html#lun-configuration["LUN配置"] 执行。如果操作步骤未正确执行、则可能会因I/O对齐而导致性能严重下降。要在ONTAP上获得最佳性能、需要将I/O与驱动器上的4K边界对齐。在zpool上创建的文件系统使用有效块大小、该大小通过名为的参数进行控制 `ashift`，可通过运行命令来查看 `zdb -C`。
+
+的值 `ashift` 默认为9、表示2^9或512字节。为了获得最佳性能、 `ashift` 值必须为12 (2^12=4k)。此值在创建zpool时设置、并且无法更改、这意味着具有的zpool中的数据 `ashift` 应通过将数据复制到新创建的zpool来迁移12以外的文件。
+
+创建zpool后、请验证的值 `ashift` 然后继续。如果此值不是12、则表示未正确发现LUN。销毁zpool、确认相关Host Utilities文档中显示的所有步骤均已正确执行、然后重新创建zpool。
+
+
+
+=== zpool和Solaris LDom
+
+Solaris LDOM还要求确保I/O对齐正确。虽然LUN可能会作为4K设备正确地被发现、但LDOM上的虚拟vdsk设备不会继承I/O域中的配置。基于该LUN的vdsk默认为512字节的块。
+
+需要一个额外的配置文件。首先、必须为各个LLOM修补Oracle错误27824910、以启用其他配置选项。此修补程序已移植到所有当前使用的Solaris版本中。对LDOM进行修补后、即可按如下所示配置正确对齐的新LUN：
+
+. 确定要在新zpool中使用的一个或多个LUN。在此示例中、它是C2D1设备。
++
+....
+[root@LDOM1 ~]# echo | format
+Searching for disks...done
+AVAILABLE DISK SELECTIONS:
+  0. c2d0 <Unknown-Unknown-0001-100.00GB>
+     /virtual-devices@100/channel-devices@200/disk@0
+  1. c2d1 <SUN-ZFS Storage 7330-1.0 cyl 1623 alt 2 hd 254 sec 254>
+     /virtual-devices@100/channel-devices@200/disk@1
+....
+. 检索要用于ZFS池的设备的VDC实例：
++
+....
+[root@LDOM1 ~]#  cat /etc/path_to_inst
+#
+# Caution! This file contains critical kernel state
+#
+"/fcoe" 0 "fcoe"
+"/iscsi" 0 "iscsi"
+"/pseudo" 0 "pseudo"
+"/scsi_vhci" 0 "scsi_vhci"
+"/options" 0 "options"
+"/virtual-devices@100" 0 "vnex"
+"/virtual-devices@100/channel-devices@200" 0 "cnex"
+"/virtual-devices@100/channel-devices@200/disk@0" 0 "vdc"
+"/virtual-devices@100/channel-devices@200/pciv-communication@0" 0 "vpci"
+"/virtual-devices@100/channel-devices@200/network@0" 0 "vnet"
+"/virtual-devices@100/channel-devices@200/network@1" 1 "vnet"
+"/virtual-devices@100/channel-devices@200/network@2" 2 "vnet"
+"/virtual-devices@100/channel-devices@200/network@3" 3 "vnet"
+"/virtual-devices@100/channel-devices@200/disk@1" 1 "vdc" << We want this one
+....
+. 编辑 `/platform/sun4v/kernel/drv/vdc.conf`：
++
+....
+block-size-list="1:4096";
+....
++
+这意味着为设备实例1分配的块大小为4096。
+
++
+作为另一个示例、假设需要为vdsk实例1到6配置4K块大小和 `/etc/path_to_inst` 内容如下：
+
++
+....
+"/virtual-devices@100/channel-devices@200/disk@1" 1 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@2" 2 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@3" 3 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@4" 4 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@5" 5 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@6" 6 "vdc"
+....
+. 最终版本 `vdc.conf` 文件应包含以下内容：
++
+....
+block-size-list="1:8192","2:8192","3:8192","4:8192","5:8192","6:8192";
+....
++
+[CAUTION]
+====
+配置vdc.conf并创建vdsk后、必须重新启动LLOM。这一步是不可避免的。块大小更改仅在重新启动后生效。继续进行zpool配置、并确保将ashift正确设置为12、如上所述。
+
+====
+
+
+
+
+=== ZFS意图日志(ZIL)
+
+通常，没有理由在其他设备上查找ZFS意图日志(ZIL)。日志可以与主池共享空间。单独的ZIL主要用于使用在现代存储阵列中缺少写入缓存功能的物理驱动器。
+
+
+
+=== 对数偏差
+
+设置 `logbias` 用于托管Oracle数据的ZFS文件系统上的参数。
+
+....
+zfs set logbias=throughput <filesystem>
+....
+使用此参数可降低整体写入级别。在默认设置下、写入的数据会先提交到ZIL、然后再提交到主存储池。此方法适用于使用普通驱动器配置的配置、该配置包括基于SSD的ZIL设备和用于主存储池的旋转介质。这是因为它允许在可用延迟最低的介质上的单个I/O事务中进行提交。
+
+如果使用的是具有自身缓存功能的现代存储阵列、则通常不需要使用此方法。在极少数情况下、可能需要将具有单个事务的写入提交到日志中、例如由高度集中且对延迟敏感的随机写入组成的工作负载。写入放大会产生一定的后果、因为记录的数据最终会写入主存储池、从而导致写入活动增加一倍。
+
+
+
+=== 直接I/O
+
+许多应用程序(包括Oracle产品)都可以通过启用直接I/O来绕过主机缓冲区缓存此策略无法按预期用于ZFS文件系统。尽管会绕过主机缓冲区缓存，但ZFS本身仍会继续缓存数据。在使用FIO或SIO等工具执行性能测试时、此操作可能会导致误导性的结果、因为很难预测I/O是到达存储系统还是在操作系统中本地缓存。此操作还会使使用此类综合测试来比较ZFS与其他文件系统的性能变得非常困难。实际上、在实际用户工作负载下、文件系统性能几乎没有差别。
+
+
+
+=== 多个zpool
+
+必须在zpool级别对基于ZFS的数据执行基于Snapshot的备份、还原、克隆和归档、并且通常需要多个zpool。zpool类似于LVM磁盘组、应使用相同的规则进行配置。例如、数据库的布局可能最好是将数据文件驻留在上 `zpool1` 以及上的归档日志、控制文件和重做日志 `zpool2`。此方法允许使用标准热备份、其中数据库将置于热备份模式、然后是的快照 `zpool1`。然后、数据库将从热备份模式中删除、并强制执行日志归档和的快照 `zpool2` 已创建。还原操作需要卸载zfs文件系统并使zpool完全脱机、然后执行SnapRestore还原操作。然后、可以将zpool重新联机并恢复数据库。
+
+
+
+=== filesystemio_options
+
+Oracle参数 `filesystemio_options` 与ZFS的工作方式不同。条件 `setall` 或 `directio` 使用时、写入操作是同步的、并会绕过操作系统缓冲区缓存、但读取操作会由ZFS进行缓冲。此操作会导致性能分析出现困难、因为I/O有时会被ZFS缓存截获并提供服务、从而使存储延迟和总I/O比看起来要小。

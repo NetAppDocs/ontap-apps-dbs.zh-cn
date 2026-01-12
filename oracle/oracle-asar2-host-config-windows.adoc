@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-host-config-windows.html 
+keywords: oracle, database, ASA r2, ontap, windows 
+summary: 在ASA r2 上使用 Microsoft Windows 的 Oracle 数据库 
+searchtitle: 在ASA r2 上使用 Microsoft Windows 的 Oracle 数据库 
+---
+= Microsoft Windows
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+在 Microsoft Windows 上使用ASA r2 ONTAP 的Oracle 数据库配置主题。
+
+
+
+== SAN
+
+为了获得最佳压缩效率、请确保NTFS文件系统使用8K或更大的分配单元。使用4K分配单元(通常为默认分配单元)会对压缩效率产生负面影响。

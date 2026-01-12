@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-network-config-direct-connect.html 
+keywords: direct-connect, oracle, ASA r2 
+summary: Oracle 数据库和ONTAP直连与ASA r2 的连接 
+searchtitle: Oracle 数据库和ONTAP直连与ASA r2 的连接 
+---
+= 直连网络
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+存储管理员有时倾向于通过从配置中删除网络交换机来简化其基础架构。在某些情况下、可以支持此功能。
+
+
+
+== iSCSI和NVMe/TCP
+
+使用 iSCSI 或 NVMe/TCP 的主机可以直接连接到ASA r2 存储系统并正常运行。原因在于路径规划。直接连接到两个不同的存储控制器，会产生两条独立的数据流路径。只要多路径配置正确，路径、端口或控制器的丢失并不会阻止使用其他路径。
+
+
+
+== FC直连
+
+使用 FC 协议无法将主机直接连接到ASA r2 存储系统。原因与AFF/ FAS系统相同，即使用 NPIV。用于识别 FC 网络中ONTAP FC 端口的 WWN 使用一种称为 NPIV 的虚拟化类型。任何连接到ONTAP系统的设备都必须能够识别 NPIV WWN。目前还没有任何 HBA 供应商提供可以安装在能够支持 N​​PIV 目标的宿主机上的 HBA。

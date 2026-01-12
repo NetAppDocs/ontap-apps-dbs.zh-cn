@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-config-capacity-limits.html 
+keywords: capacity, ASA r2, oracle 
+summary: 数据库和ASA r2 ONTAP存储容量以及ASA r2 上的可用空间 
+searchtitle: ASA r2 上的 Oracle 数据库和存储容量管理 
+---
+= 容量管理
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+要使用可预测、可管理的高性能企业存储管理数据库或其他企业应用程序、需要在驱动器上留出一些可用空间来管理数据和元数据。所需的可用空间量取决于使用的驱动器类型和业务流程。
+
+ASA r2 使用存储可用区 (SAZ) 而不是聚合，但原理仍然相同：可用空间包括未被实际数据、快照或系统开销占用的任何物理容量。还必须考虑精简配置——逻辑分配并不能反映真实的物理使用情况。
+
+NetApp对用于企业应用的ASA r2 存储系统的建议如下：
+
+
+
+== ASA r2 系统中的 SSD 池
+
+
+TIP: NetApp建议在ASA r2 环境中保持至少 10% 的可用物理空间。本指南适用于ASA r2 系统使用的仅限 SSD 的存储池，包括 SAZ 和存储单元内的所有未使用空间。逻辑空间并不重要；重点在于可用于数据存储的实际物理空间。
+
+虽然ASA r2 可以维持高利用率而不降低性能，但在接近满负荷运行时，扩展存储时会增加空间耗尽和管理开销的风险。驱动器利用率超过 90% 可能不会影响性能，但会使管理复杂化并延迟额外驱动器的配置。
+
+ASA r2 系统支持高达 128TB 的存储单元和高达 2PB 的 SAZ 大小（每个 HA 对）， ONTAP会自动在节点之间平衡容量。监控集群、SAZ 和存储单元级别的利用率对于确保快照、精简配置工作负载和未来增长有足够的可用空间至关重要。如果容量接近临界阈值（~90% 利用率），则应分组（至少六个驱动器）添加额外的 SSD，以保持性能和弹性。

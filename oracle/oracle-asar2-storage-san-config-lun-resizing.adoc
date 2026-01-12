@@ -1,0 +1,41 @@
+---
+sidebar: sidebar 
+permalink: oracle/oracle-asar2-storage-san-config-lun-resizing.html 
+keywords: SAN, ASM, LVM, oracle, LUN, ASA r2 
+summary: 在ASA r2 上使用 Oracle 数据库调整 LUN 和 LVM 大小 
+searchtitle: 使用ASA r2 调整 Oracle 数据库 LUN 和 LVM 的大小 
+---
+= LUN大小调整和LVM大小调整
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+当基于 SAN 的文件系统或 Oracle ASM 磁盘组在ASA r2 上达到容量限制时，有两种方法可以增加可用空间：
+
+* 增加现有 LUN（存储单元）的容量
+* 向现有 ASM 磁盘组或 LVM 卷组添加新的 LUN，并扩展其包含的逻辑卷。
+
+
+虽然ASA r2 支持 LUN 调整大小，但通常最好使用逻辑卷管理器 (LVM)，例如 Oracle ASM。LVM 存在的主要原因之一是避免频繁调整 LUN 大小。使用 LVM，可以将多个 LUN 组合成一个虚拟存储池。从该存储池中划分出的逻辑卷可以轻松调整大小，而不会影响底层存储配置。
+
+使用 LVM 或 ASM 的其他好处包括：
+
+* 性能优化：将 I/O 分布到多个 LUN 上，减少热点。
+* 灵活性：添加新的 LUN 而不会中断现有工作负载。
+* 透明迁移：ASM 或 LVM 可以将扩展区迁移到新的 LUN 以进行均衡或分层，而无需主机停机。
+
+
+[NOTE]
+====
+ASA r2 的关键考虑因素：
+
+* LUN 调整大小是在存储虚拟机 (SVM) 内的存储单元级别执行的，使用来自存储可用区 (SAZ) 的容量。
+* 对于 Oracle 而言，最佳实践是将 LUN 添加到 ASM 磁盘组，而不是调整现有 LUN 的大小，以保持条带化和并行性。
+
+
+====
