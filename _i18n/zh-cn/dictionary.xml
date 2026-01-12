@@ -4207,8 +4207,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="4cd2d5d8d873ad1f707d88334324153a" category="paragraph">但是、这些示例均不涉及卷与LUN的比例为1：1。我们的目标仍然是通过在卷中主机代管相关LUN来优化易管理性。</block>
   <block id="a9fd7be1f3363701ad1b35b16af02c9e" category="paragraph">例如、LUN与卷的比例为1：1就意味着容器化、在容器化中、每个LUN可能真正代表一个工作负载、需要逐个进行管理。在这种情况下、1：1的比例可能是最佳的。</block>
   <block id="64e5a77897fe6326f14436eaaaf5432b" category="section-title">可用空间和LVM空间分配</block>
-  <block id="702db8f3db66a0eec35817fe5d2e4544" category="inline-link-macro">ASMRU</block>
-  <block id="096ca5ad0b3774fee4699e2da1bfa884" category="paragraph">随着数据被删除、文件系统环境中活动LUN的精简配置效率可能会逐渐降低。除非删除的数据被零覆盖(另请参见 <block ref="5b58c4ec517e475a59d0a785f87cabdc" category="inline-link-macro-rx"></block> 或者通过TRIM/UNMAP空间回收释放空间、"已擦除"的数据会在文件系统中占用越来越多的未分配空格。此外、活动LUN的精简配置在许多数据库环境中的用途有限、因为数据文件在创建时会初始化为其完整大小。</block>
   <block id="ceb8ec6ec593174c2c6f33be2ca966eb" category="summary">Oracle和ONTAP卷以及LUN放置</block>
   <block id="0724b56ced27e0a66fb4692a57fb1436" category="doc">Oracle数据库LUN放置</block>
   <block id="f595bf3bf71ab0c91a5503ba4efb8ea4" category="paragraph">数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。</block>
@@ -6398,4 +6396,5 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="d9c561cf68fdc77bb1da849869a07f1c" category="sidebar">ASA r2 系统上的网络配置</block>
   <block id="38e7ae928dc580caab650dc5df5d2fc1" category="sidebar">Oracle 数据库与ASA r2 系统的网络配置</block>
   <block id="8637dea0297332b772f83909e4341446" category="sidebar">Oracle 数据库与ASA r2 系统的存储配置</block>
+  <block id="bf9da0db0cba95abeb9d604e28d6fae5" category="paragraph">在文件系统环境中，随着数据的删除，活动 LUN 的精简配置效率可能会随时间推移而降低。除非删除的数据被零覆盖（另请参阅链接：oracle-storage-san-config-asm ru.html[ASMRU]）或使用 TRIM/UNMAP 空间回收释放空间，否则“擦除”的数据会在文件系统中占用越来越多的未分配空白空间。此外，在许多数据库环境中，活动 LUN 的精简配置用途有限，因为数据文件在创建时会被初始化为全部大小。</block>
 </blocks>
