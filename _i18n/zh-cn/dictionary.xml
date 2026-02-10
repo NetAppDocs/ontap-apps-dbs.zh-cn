@@ -2511,9 +2511,6 @@
   <block id="26aae26f61844ac20ab7b04ba6f5c515" category="cell">VMFS 或 RDM</block>
   <block id="18263a30df8afc60a733e59c60676ac0" category="cell">VMFS</block>
   <block id="8dc6d0c66219ddb809322c0d248e55e6" category="cell">数据存储库或 LUN 的最大数量</block>
-  <block id="aa23f9914ce1939ea7a4d479edfdc915" category="cell">每个主机1024个LUN</block>
-  <block id="1af3b27207afc48a363629a315d76b59" category="cell">每个服务器1024个LUN</block>
-  <block id="0705fd627c25b5fba17cd9a022ed7d72" category="cell">每个服务器256个命名空间</block>
   <block id="51c0dc217976e27de06e262947947a62" category="cell">最大数据存储库大小</block>
   <block id="856c997f909830b8249756c07dc9452b" category="cell">64 TB</block>
   <block id="b4fb1d41fedaec79072964cbb4d16e3d" category="cell">最大数据存储库文件大小</block>
@@ -5091,7 +5088,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="a4ec3dfc79c8493b1e9fcaee6b06b5a8" category="summary">ONTAP广泛支持混合云。</block>
   <block id="14f3c0fa1399e57b5998b528cc5f3515" category="paragraph">ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持VMware vSphere从许多ESXi主机并发访问NFS连接的数据存储库、远远超出了对VMFS文件系统施加的限制。将NFS与vSphere结合使用可提供一些易用性和存储效率可见性优势、如一节中所述<block ref="72b655a9973dbed02099f5e63762d591" category="inline-link-macro-rx"></block>。</block>
   <block id="ef7f5a0b4e0866202a92874cc85a2fd2" category="list-text">需要更仔细迁移的虚拟机包括使用连接存储的数据库和应用程序。一般情况下、请考虑使用应用程序的工具来管理迁移。对于 Oracle ，请考虑使用 RMAN 或 ASM 等 Oracle 工具迁移数据库文件。有关详细信息、请参见<block ref="74eec9db95a0d18126c677c2dcc1d6f1" category="inline-link-rx"></block> 。同样，对于 SQL Server ，请考虑使用 SQL Server Management Studio 或 NetApp 工具，例如适用于 SQL Server 的 SnapManager 或 SnapCenter 。</block>
-  <block id="8c796e9ce33123891311630e9843b227" category="paragraph">在运行ONTAP的系统上使用vSphere时、配置网络设置非常简单、与其他网络配置类似。需要考虑以下几点：</block>
   <block id="66149c951df015fb5f7aa252fa92bf64" category="paragraph">在运行ONTAP的系统上使用vSphere时、配置网络设置非常简单、与其他网络配置类似。</block>
   <block id="bfcd75cb17a665212ae0889e787a7330" category="paragraph">运行ONTAP的系统可以使用存储服务质量(QoS)功能来限制不同存储对象(例如文件、LUN、卷或整个SVM)的吞吐量(以MBps和/或每秒I/O数(IOPS)为单位)。</block>
   <block id="5c60617d5730a7a614bfa0383a2affbd" category="admonition">这不适用于此类卷。</block>
@@ -5293,7 +5289,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="7eae63bf83e6298ab64a2dd5e2544df9" category="inline-link-macro">VMware配置最大值工具</block>
   <block id="ee1c3928454779ec08bd2d50271b6621" category="admonition">有关ESXi中支持的最新限制、请参见<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>。</block>
   <block id="387b349695476180bf90cc1891288318" category="list-text">检查<block ref="1f38ac07598dbb4b06912539aafa4211" category="inline-link-macro-rx"></block>NetApp与VMware合作建议的设置。</block>
-  <block id="9c4a21e654649a6a5201381ce4ba6cbd" category="paragraph">下表介绍了ONTAP支持vSphere的传统数据存储库功能。此信息不适用于VVOL数据存储库、但它通常适用于使用受支持的ONTAP 版本的适用场景 vSphere 6.x及更高版本。您还可以参考了解<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>特定vSphere版本、以确认特定限制。</block>
   <block id="27071f484b59aa9ce5f5cffcefefd481" category="paragraph">^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM目前不支持对NFS v4.1执行基于阵列的复制。适用于VMware vSphere Storage Replication Adapter (SRA)的ONTAP工具目前不支持使用NVMe-oF进行基于阵列的复制。</block>
   <block id="f992800e6b8aa5ca675e5d1c9fd9950c" category="summary">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。</block>
   <block id="0a99e5aa10081a6cc2cd756764a791f5" category="inline-link-macro">Snapshot限制</block>
@@ -5853,19 +5848,11 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="a383dfc926e414528d11cef825a5dbf3" category="cell">启用了SnapCenter和VADP的备份软件、vSphere Client和vSphere Web Client数据存储库浏览器</block>
   <block id="f44de200e9dad7356d95c3b2b370d3ef" category="cell">启用了SnapCenter和VADP的备份软件、仅限Windows</block>
   <block id="ff9f148c8b974c820cc302f7190a7533" category="cell">支持SnapCenter和VADP的备份软件和第三方应用程序</block>
-  <block id="920ab17e6978a5f8b455022d3ec15080" category="paragraph">^1^* NetApp建议*对Microsoft集群使用子系统内iSCSI、而不是在VMFS数据存储库中使用启用了多写入程序的VMDK。这种方法完全受Microsoft和VMware的支持、可通过ONTAP (SnapMirror到内部或云中的ONTAP系统)提供极大的灵活性、易于配置和自动化、并可通过SnapCenter进行保护。vSphere 7增加了一个新的集群模式VMDK选项。这与启用了多写入程序的VMDK不同、后者需要启用了集群模式VMDK支持的VMFS 6数据存储库。其他限制适用。有关配置准则、请参见VMware<block ref="46658ede14d15d79e2a20c75a7b15bb2" category="inline-link-macro-rx"></block>文档。</block>
-  <block id="1c39c1dd8f654eedbd266d325b8b2bfe" category="paragraph">运行ONTAP的系统支持所有主要存储协议、因此客户可以根据现有和计划内的网络基础架构以及员工技能选择最适合其环境的协议。以往、NetApp测试通常显示、以相似线路速度运行的协议和连接数之间几乎没有差别。但是、NVMe-oF (NVMe/TCP和NVMe/FC)在IOPS、延迟以及存储IO的主机CPU消耗减少多达50%甚至更多方面表现出显著提升。另一方面、NFS可提供最大的灵活性和易管理性、尤其是对于大量VM。所有这些协议均可与适用于VMware vSphere的ONTAP工具结合使用和管理、该工具提供了一个简单的界面来创建和管理数据存储库。</block>
   <block id="a057cf188c3e7763e47d59ffd633784e" category="list-text">*当前操作环境。*虽然IT团队通常擅长管理以太网IP基础架构、但并非所有IT团队都擅长管理FC SAN网络结构。但是、如果使用的是不针对存储流量设计的通用IP网络、则可能效果不会很好。请考虑您已有的网络基础架构，任何计划内的改进，以及管理这些改进的人员的技能和可用性。</block>
-  <block id="03acb8fd56768c1827623c3c7e78f5ad" category="list-text">*易于管理。*对于SAN协议、如果需要更多空间、则需要执行多个步骤、包括增加LUN大小、重新扫描以发现新大小、然后增加文件系统大小。虽然可以增加LUN大小、但减小LUN大小却不可行。NFS 可以轻松地进行大小调整，存储系统可以自动调整大小。SAN可通过子操作系统DEALLOCATE/TRIM/UNMAP命令提供空间回收、从而将已删除文件中的空间返回到阵列。对于NFS数据存储库来说、这种类型的空间回收不难实现。</block>
   <block id="2153785b657110dbec7bac0a2931c4b0" category="paragraph">ONTAP 存储系统可以非常灵活地为 VM 和虚拟磁盘创建数据存储库。虽然在使用ONTAP工具为vSphere配置数据存储库时会应用许多ONTAP最佳实践(在一节中列出<block ref="2e24324ebf41be836715e1e0dd648f4f" category="inline-link-macro-rx"></block>)，但还需要考虑以下一些准则：</block>
-  <block id="4179f1498130aa878933f74dbe16642c" category="list-text">使用 ONTAP NFS 数据存储库部署 vSphere 可实现高性能，易于管理的实施，从而提供基于块的存储协议无法实现的虚拟机与数据存储库比率。此架构可将数据存储库密度提高十倍，并相应地减少数据存储库数量。尽管较大的数据存储库可以提高存储效率并提供运营优势、但请考虑在每个节点上至少使用四个数据存储库(FlexVol卷)将虚拟机存储在一个ONTAP控制器上、以便从硬件资源中获得最大性能。通过这种方法，您还可以使用不同的恢复策略建立数据存储库。根据业务需求、某些备份或复制的频率比其他备份或复制的频率要高。FlexGroup 卷不需要多个数据存储库来提高性能、因为它们可以根据设计进行扩展。</block>
-  <block id="1bce4f9db0fda9ee171dac82c454e8f5" category="list-text">* NetApp建议*对大多数NFS数据存储库使用FlexVol卷。从ONTAP 9.8开始、也支持将FlexGroup卷用作数据存储库、并且通常建议在某些使用情形下使用。通常不建议使用其他ONTAP存储容器、例如qtrees、因为适用于VMware vSphere的ONTAP工具或适用于VMware vSphere的NetApp SnapCenter插件目前均不支持这些存储容器。</block>
   <block id="6826e55696449edeff52e813c25cad54" category="list-text">对于 FlexVol 卷数据存储库，大小合适的数据存储库大约为 4 TB 到 8 TB 。这种大小可以很好地平衡性能，易管理性和数据保护。从小规模入手（例如 4 TB ），然后根据需要扩展数据存储库（最大 300 TB ）。较小的数据存储库可以更快地从备份中或发生灾难后进行恢复，并可在集群中快速移动。请考虑使用 ONTAP 自动调整大小功能在已用空间发生变化时自动增长和缩减卷。默认情况下、适用于VMware vSphere的ONTAP工具数据存储库配置向导会对新数据存储库使用自动调整大小。可以使用 System Manager 或命令行对增长和缩减阈值以及大小上限和下限进行其他自定义。</block>
   <block id="0546b812db9e807a7b499d48c3af08ef" category="list-text">或者、也可以为VMFS数据存储库配置可通过FC、iSCSI、NVMe/FC或NVMe/TCP访问的LUN或NVMe命名空间(在新ASA系统中称为存储单元)。VMFS允许集群中的每个ESX服务器同时访问数据存储库。VMFS 数据存储库的大小最多可达 64 TB ，并且最多可包含 32 个 2 TB LUN （ VMFS 3 ）或一个 64 TB LUN （ VMFS 5 ）。在AFF、ASA和FAS系统上、ONTAP的最大LUN大小为128 TB。NetApp始终建议对每个数据存储库使用一个大型LUN、而不是尝试使用块区。与NFS一样、请考虑使用多个数据存储库(卷或存储单元)、以最大程度地提高单个ONTAP控制器的性能。</block>
   <block id="69f31e71b4d944d0f4c405d0e6e39f7e" category="list-text">在某些情况下，您甚至可能不需要数据存储库。考虑子系统拥有的文件系统、例如由子系统管理的NFS、SMB、NVMe/TCP或iSCSI文件系统。有关具体的应用指南，请参见适用于您的应用程序的 NetApp 技术报告。例如、<block ref="cfa0393f870bc70fd8973ae18376facc" category="inline-link-macro-rx"></block>中有一节介绍虚拟化、并提供了有用的详细信息。</block>
-  <block id="bcc3251e9d72ed4c51a3b9557e4067c9" category="list-text">虽然您可以仔细规划迁移到适当的目标数据存储库，但批量迁移之后再根据需要进行组织往往会更简单。如果您有特定的数据保护需求(例如不同的Snapshot计划)、则可能需要使用此方法来指导您迁移到不同的数据存储库。此外、VM位于NetApp集群上后、Storage vMotion可以使用VAAI卸载在集群上的数据存储库之间移动VM、而无需基于主机的副本。请注意、NFS不会卸载已启动虚拟机的Storage vMotion、但VMFS会卸载。</block>
-  <block id="0ad05ff30fea1e84deaaa1ed7bee8fac" category="paragraph">在运行ONTAP的系统中使用vSphere时、最重要的最佳实践是安装和使用适用于VMware vSphere的ONTAP工具插件(以前称为虚拟存储控制台)。无论使用SAN或NAS、ASA、AFF、FAS还是ONTAP Select (在VMware或KVM VM中运行的软件定义版本ONTAP)、此vCenter插件均可简化存储管理、提高可用性并降低存储成本和运营开销。它使用最佳实践来配置数据存储库，并针对多路径和 HBA 超时优化 ESXi 主机设置（这些内容在附录 B 中进行了介绍）。由于它是vCenter插件、因此可供连接到vCenter Server的所有vSphere Web Client使用。</block>
-  <block id="e4aac7f3219a7f18dc97515d5997afad" category="admonition">在基于映像的vSphere集群上、您仍需要将NFS插件添加到映像中、以便在使用ONTAP工具安装时、这些插件不会不合规。</block>
   <block id="279b6091a0ac82b44d1b55974e5be84e" category="paragraph">ONTAP工具也是适用于ONTAP的VASA Provider的许多功能的管理界面、支持使用VVO尔 进行基于存储策略的管理。</block>
   <block id="56de38ee4f3cd70309ddc44c00acb1fb" category="list-text">NetApp仅建议在ONTAP集群中的集群互连端口上禁用网络流量控制。对于用于数据流量的其余网络端口， NetApp 不提供其他最佳实践建议。您应根据需要启用或禁用。有关流量控制的更多背景信息、请参见<block ref="3455dc2b3e7cd12a38e508bec690aa67" category="inline-link-rx"></block>。</block>
   <block id="3a04c6fe53e84b0859143746f9b8b3bc" category="paragraph">备份和快速恢复虚拟机(VM)是使用适用于vSphere的ONTAP的主要优势。可以通过适用于VMware vSphere的SnapCenter插件在vCenter中轻松管理此功能。许多客户通过SnapCenter增强了第三方备份解决方案、以利用ONTAP的快照技术、因为它提供了使用ONTAP恢复VM的最快、最直接的方式。拥有ONTAP One许可证的客户可以免费获得SnapCenter、也可以获得其他许可证包。</block>
@@ -6397,4 +6384,17 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="38e7ae928dc580caab650dc5df5d2fc1" category="sidebar">Oracle 数据库与ASA r2 系统的网络配置</block>
   <block id="8637dea0297332b772f83909e4341446" category="sidebar">Oracle 数据库与ASA r2 系统的存储配置</block>
   <block id="bf9da0db0cba95abeb9d604e28d6fae5" category="paragraph">在文件系统环境中，随着数据的删除，活动 LUN 的精简配置效率可能会随时间推移而降低。除非删除的数据被零覆盖（另请参阅链接：oracle-storage-san-config-asm ru.html[ASMRU]）或使用 TRIM/UNMAP 空间回收释放空间，否则“擦除”的数据会在文件系统中占用越来越多的未分配空白空间。此外，在许多数据库环境中，活动 LUN 的精简配置用途有限，因为数据文件在创建时会被初始化为全部大小。</block>
+  <block id="7480d85002c80775529fb882102aa005" category="paragraph">以下表格展示了 vSphere 支持的使用 ONTAP 的传统数据存储功能。此信息不适用于 vVols 数据存储区，但它通常适用于使用支持的 ONTAP 版本的 vSphere 6.x 及更高版本。您也可以查阅 <block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block> 有关特定 vSphere 版本的信息，以确认特定限制。</block>
+  <block id="ddb1172bf007ad0f2ed1cacb02d4e514" category="cell">每个 ESXi 主机 1024 个 LUN，每个 LUN 最多 32 个路径，每个主机最多 4096 个总路径，每个数据存储区最多 128 个主机</block>
+  <block id="9b7800ed77d69181c00d69ef4cfb7791" category="cell">每个 ESXi 主机 256 个命名空间，每个主机每个命名空间最多 32 个路径，每个主机总共 2048 个路径，每个数据存储区最多 16 个主机</block>
+  <block id="0a641de3c5aee9292ec225ff0adbda6b" category="paragraph">^1^ *NetApp 建议*对 Microsoft 群集使用来宾内 iSCSI，而不是在 VMFS 数据存储中使用启用了多写入器的 VMDK。这种方法得到了 Microsoft 和 VMware 的充分支持，通过 ONTAP 提供了极大的灵活性（SnapMirror 到本地或云中的 ONTAP 系统），易于配置和自动化，并且可以使用 SnapCenter 进行保护。vSphere 7 添加了新的群集 VMDK 选项。这与启用了多写入器的 VMDK 不同，后者需要启用了群集 VMDK 支持的 VMFS 6 数据存储。其他限制适用。有关配置指南，请参阅 VMware 的 <block ref="46658ede14d15d79e2a20c75a7b15bb2" category="inline-link-macro-rx"></block> 文档。</block>
+  <block id="5df3e39fb1e7cba1bc1a344b60b18988" category="paragraph">运行 ONTAP 的系统支持所有主要的存储协议，因此客户可以根据现有和计划的网络基础设施和员工技能选择最适合其环境的存储协议。从历史上看，NetApp 测试通常显示以相似线速和连接数量运行的协议之间几乎没有差异。但是，NVMe-oF（NVMe/TCP 和 NVMe/FC）在 IOPS 方面显示出显著的增益，延迟减少，并且存储 IO 的主机 CPU 消耗减少了 50% 或更多。另一方面，NFS 提供了最大的灵活性和易管理性，特别是对于大量的虚拟机。所有这些协议都可以使用 ONTAP tools for VMware vSphere 进行使用和管理，该工具提供了一个简单的界面来创建和管理数据存储。</block>
+  <block id="fd4beb5113e7bcd3cae5e508ffdaab1c" category="list-text">*易于管理。*对于 SAN 协议，如果需要更多空间，则需要执行几个步骤，包括扩展 LUN、重新扫描以发现新的大小，然后扩展文件系统。虽然可以增加 LUN，但减小 LUN 的大小则不可能。NFS 允许轻松调整大小，并且可以由存储系统自动调整大小。SAN 通过来宾操作系统 DEALLOCATE/TRIM/UNMAP 命令提供空间回收，允许将已删除文件的空间返回到阵列。这种类型的空间回收对于 NFS 数据存储区是不可能的。</block>
+  <block id="4d589d42c0cdda3b4d03f10a00b86329" category="list-text">使用 ONTAP NFS 数据存储部署 vSphere 可实现高性能、易于管理的实施，提供基于块的存储协议无法获得的 VM 与数据存储比率。这种架构可以使数据存储密度增加十倍，并相应地减少数据存储的数量。虽然较大的数据存储可以提高存储效率并提供运营优势，但请考虑每个节点至少使用四个数据存储（FlexVol 卷）将 VM 存储在单个 ONTAP 控制器上，以从硬件资源中获得最大性能。这种方法还允许您建立具有不同恢复策略的数据存储。根据业务需求，某些数据存储可以比其他数据存储更频繁地备份或复制。对于性能而言，FlexGroup 卷不需要多个数据存储，因为它们通过设计进行扩展。</block>
+  <block id="a8f9967b3e0e8625b66e19b13ace6044" category="list-text">*NetApp 建议*对大多数 NFS 数据存储使用 FlexVol 卷。从 ONTAP 9.8 开始，FlexGroup 卷也支持用作数据存储，通常建议用于某些用例。一般不建议使用其他 ONTAP 存储容器，例如 qtree，因为目前 ONTAP tools for VMware vSphere 或 NetApp SnapCenter plugin for VMware vSphere 都不支持这些容器。</block>
+  <block id="bd5bddd5cc6638121df48ad83c0190e5" category="list-text">虽然您可以仔细规划迁移到适当的目标数据存储，但批量迁移后再根据需要进行组织通常更简单。如果您有特定的数据保护需求，例如不同的 Snapshot 计划，您可能需要使用此方法来指导您迁移到不同的数据存储。此外，一旦 VM 在 NetApp 集群上，存储 vMotion 可以使用 VAAI 卸载在集群上的数据存储之间移动 VM，而无需基于主机的副本。请注意，NFS 不会卸载已开机 VM 的存储 vMotion；但是，VMFS 会。</block>
+  <block id="d1cd356f535429944cab2b93e83c8b6e" category="paragraph">在使用运行 ONTAP 的系统与 vSphere 时，最重要的最佳实践是安装并使用 ONTAP tools for VMware vSphere 插件（以前称为 Virtual Storage Console）。这个 vCenter 插件简化了存储管理，提高了可用性，并降低了存储成本和运维开销，无论是在 ASA、AFF、FAS 还是 ONTAP Select（在 VMware 或 KVM 虚拟机中运行的 ONTAP 软件定义版本）上使用 SAN 或 NAS。它采用了为数据存储配置制定的最佳实践，并针对多路径和 HBA 超时优化了 ESXi 主机设置（这些内容在附录 B 中有描述）。由于它是一个 vCenter 插件，所有连接到 vCenter 服务器的 vSphere Web 客户端都可以使用它。</block>
+  <block id="b93377fb4bda41543174fb8ecd3cb919" category="admonition">在基于映像的 vSphere 群集上，仍要将 NFS 插件添加到映像中，以便在使用 ONTAP tools 安装时不会出现合规性问题。</block>
+  <block id="1c4918b7146682fe9d3aa87a0931f802" category="paragraph">在运行 ONTAP 的系统中使用 vSphere 时配置网络设置非常简单，与其他网络配置类似。以下是一些需要考虑的事项：</block>
+  <block id="8889f7d5ff12388c0709bd9da619557b" category="list-text">使用支持使用多机箱链路聚合组方法（例如 Cisco 的 Virtual PortChannel (vPC)）在两个独立交换机机箱上进行端口链路聚合的交换机。</block>
 </blocks>
