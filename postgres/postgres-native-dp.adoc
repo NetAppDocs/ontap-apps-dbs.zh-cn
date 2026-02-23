@@ -5,7 +5,7 @@ keywords: PostgreSQL,database,postgres
 summary: PostgreSQL数据保护 
 searchtitle: PostgreSQL本机数据保护 
 ---
-= 本机Ddta保护
+= 本机数据保护
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
