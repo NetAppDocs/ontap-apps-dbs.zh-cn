@@ -1,0 +1,64 @@
+---
+sidebar: sidebar 
+permalink: vmware/vmware-vsphere-datastores-fp.html 
+keywords: vSphere, datastore, FabricPool 
+summary: 本页介绍了针对 VMware 数据存储库实施 FabricPool 的最佳实践。 
+---
+= FabricPool 适用于 VMware 数据存储库
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+虚拟机存储从访客操作系统和虚拟机监控程序层向下流动到 ONTAP，其中 FabricPool 分层和 WAFL 提供性能、效率和成本优化。
+
+从 ONTAP 9.6 版本开始，FabricPool 已支持虚拟化工作负载，包括 VMware 数据存储。现在，您可以将冷块从支持 VMware 数据存储（VM 模板、断电 VM、快照、备份等）的 FlexVol 卷分层到对象存储，同时将热数据保留在本地。
+
+尽管如此，您需要注意一些细微差别。
+
+image:vmware-vsphere-datastores-fp-1.png["alt=虚拟机监控程序存储堆栈与 FabricPool,width=525,height=500"]
+
+
+
+== 计算和虚拟磁盘层
+
+来宾操作系统在 VMDK、QCOW2 或 VHDX 等虚拟磁盘格式上运行，这些格式创建了应用程序和用户可访问的计算层和块设备层。
+
+请注意，来宾操作系统将虚拟磁盘视为块设备；因此，在规划无中断升级、硬件故障或其他计划外事件期间的容错时，必须考虑来宾内块设备超时。
+
+
+TIP: 遵循link:https://www.netapp.com/pdf.html?item=/media/17239-tr-4598.pdf["FabricPool 最佳实践"]，您应该将托管虚拟机数据存储的FlexVol卷视为SAN存储，即使在使用NAS协议时，由于虚拟磁盘文件的块性质，因为它们与来宾操作系统相关。因此，NetApp建议使用仅快照分层策略。自动策略可用于非关键数据，但请注意，与云层的断开连接可能导致计算机崩溃或进入只读状态。
+
+
+
+== 虚拟机监控程序角色
+
+虚拟机监控程序在其运行的虚拟机和物理资源（如 CPU、内存和存储）之间进行中介。在 NAS 用例中，虚拟机监控程序装载 NAS 共享并将虚拟磁盘文件作为块设备呈现给虚拟机。
+
+虚拟机管理程序文件系统路径涉及通过 iSCSI/FCP 连接的 LUN 或由虚拟机管理程序特定文件系统（如 VMFS、NTFS、EXT4 等）格式化的 NVMe 命名空间进行 VM 存储。
+
+NAS 文件系统路径使用 NFS 或 SMB 协议提供对用于虚拟机存储的 ONTAP 卷的直接文件级访问。
+
+两条路径都融合在 ONTAP 的 WAFL 层，实现快照和元数据管理等一致的数据服务。
+
+
+
+== FabricPool 分层集成
+
+FabricPool 智能管理高性能本地存储和低成本云对象层之间的数据放置。
+
+FabricPool 根据应用于数据集的 FabricPool 分层策略，在本地高性能存储和可扩展云对象存储之间自动分层数据。
+
+ONTAP 的 FabricPool 集成可实现跨混合云环境的高效数据放置，而不会牺牲本地读取的性能。
+
+
+
+== 存储效率和管理
+
+在启用之前，请务必了解 FabricPool 的工作方式。正确的配置可将正确的数据存储在正确的层中，从而帮助您提高性能、降低风险并优化 TCO。
+
+SAN/NVMe 和 NAS 文件协议路径都融合在 WAFL 层。WAFL 文件系统确保元数据的一致性，支持快照、克隆，并优化 SSD、HDD 和对象存储介质的写入。

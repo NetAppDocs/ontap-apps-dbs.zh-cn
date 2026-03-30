@@ -2403,7 +2403,6 @@
   <block id="4157f0c23fc104508f492dc846f187f3" category="list-text">默认情况下， SLM 处于启用状态。除非使用端口集，否则不需要进行其他配置。</block>
   <block id="ed0e76ed86e852bd7317a09d856ec4e8" category="paragraph">要考虑的其他最佳实践：</block>
   <block id="93586ad57931e0f16fff61cdba9d77df" category="list-text">确保为 ONTAP 集群中每个节点上的每个 SVM 创建一个逻辑接口（ LIF ），以最大程度地提高可用性和移动性。ONTAP SAN 最佳实践是，每个节点使用两个物理端口和 LIF ，每个网络结构使用一个。ALUA 用于解析路径并识别活动优化（直接）路径与活动非优化路径。ALUA 用于 FC ， FCoE 和 iSCSI 。</block>
-  <block id="b3cebb7381bddbabb1e950a46d264190" category="list-text">对于 iSCSI 网络，如果存在多个虚拟交换机，请在采用 NIC 绑定的不同网络子网上使用多个 VMkernel 网络接口。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 并提高吞吐量。下图提供了多路径连接的示例。在 ONTAP 中，使用连接到两个或更多交换机的两个或更多链路配置一个单模式接口组以进行故障转移，或者使用 LACP 或其他具有多模式接口组的链路聚合技术来提供 HA 和链路聚合的优势。</block>
   <block id="2968b9f3c141bf23bc73d0e6e15a174a" category="list-text">如果在ESXi中使用质询握手身份验证协议(Challenge-Handshake Authentication Protocol、CHAP)进行目标身份验证、则还必须在ONTAP中使用命令行界面配置此协议 <block ref="199c9b970eacf1c35d84a383b7ceb210" prefix="(" category="inline-code"></block>)或使用System Manager (在"Storage"&gt;"SVM"&gt;"SVM Settings"(SVM设置)&gt;"Protocols"(协议)&gt;"iSCSI"下编辑"Initiator Security"(启动程序安全性)。</block>
   <block id="d31f2e075df4ca75ca0874fa08f74b12" category="list-text">使用适用于 VMware vSphere 的 ONTAP 工具创建和管理 LUN 和 igroup 。此插件会自动确定服务器的 WWPN 并创建适当的 igroup 。它还会根据最佳实践配置 LUN 并将其映射到正确的 igroup 。</block>
   <block id="de78559e8aed2cd62fbf852f73dc58c2" category="inline-link">物理和虚拟兼容模式</block>
@@ -2422,7 +2421,6 @@
   <block id="4c571520a8128d1692fc709ffbfb2b1e" category="list-text">使用适用于 VMware vSphere 的 ONTAP 工具（最重要的最佳实践）：</block>
   <block id="23aa7b9aeed3fba2a1ec43e630313af7" category="list-text">使用此插件为VMware集群创建数据存储库时、请选择集群、而不是单个ESX服务器。选择此选项会将数据存储库自动挂载到集群中的所有主机。</block>
   <block id="928562eb576ed6ae31cb1a149d3e751a" category="list-text">如果不对 VMware vSphere 使用 ONTAP 工具，请对所有服务器或需要额外访问控制的每个服务器集群使用一个导出策略。</block>
-  <block id="7bccab0fa4c0864835c645c9fde7ebf6" category="list-text">虽然 ONTAP 提供了一个灵活的卷命名空间结构，可以使用接合在树中排列卷，但这种方法对于 vSphere 来说毫无价值。无论存储的命名空间层次结构如何，它都会在数据存储库的根目录下为每个 VM 创建一个目录。因此，最佳实践是，只需将 vSphere 卷的接合路径挂载到 SVM 的根卷，即适用于 VMware vSphere 的 ONTAP 工具如何配置数据存储库。如果没有嵌套的接合路径，也意味着任何卷都不依赖于根卷以外的任何卷，即使有意使某个卷脱机或销毁该卷，也不会影响指向其他卷的路径。</block>
   <block id="ea6fc1288f1d3b21238d29ff28cb867a" category="list-text">对于 NFS 数据存储库上的 NTFS 分区，块大小为 4k 是可以的。下图显示了从 vSphere 主机到 ONTAP NFS 数据存储库的连接。</block>
   <block id="e54433644e830ed1503561b778e9ded4" category="paragraph">下表列出了 NFS 版本和支持的功能。</block>
   <block id="9fb9dac7513c7ef8452aade8a52ad40d" category="cell">vSphere 功能</block>
@@ -4074,7 +4072,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="570bfadf5783125790b6c87f55842fb2" category="inline-image-macro">SnapCenter部署</block>
   <block id="71ca4878111d253f9883f471e5de9594" category="paragraph"><block ref="71ca4878111d253f9883f471e5de9594" category="inline-image-macro-rx" type="image"></block></block>
   <block id="bd90e11d4c9fc73f37adda8029276215" category="summary">此页面介绍了在VMware vSphere环境中实施ONTAP存储解决方案的最佳实践。</block>
-  <block id="ab906277df9ce070b1e11724f8ccf589" category="list-text">为 ONTAP 集群中每个节点上的每个 SVM 使用一个逻辑接口（ LIF ）。不再需要以往为每个数据存储库建议的 LIF 。虽然直接访问(LIF和同一节点上的数据存储库)是最佳选择、但无需担心间接访问、因为对性能的影响通常很小(微秒)。</block>
   <block id="8dc90de75c19a4114217f443b0ca2866" category="inline-image-macro">从vSphere主机连接到ONTAP NFS数据存储库</block>
   <block id="36b9a8da16a1d2fad06b788e662b7c4a" category="paragraph"><block ref="36b9a8da16a1d2fad06b788e662b7c4a" category="inline-image-macro-rx" type="image"></block></block>
   <block id="bb6d2d52dfe07f9662232c444256aece" category="paragraph">使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会导致数据流有两条独立的路径。丢失路径、端口或控制器不会阻止使用另一个路径。</block>
@@ -4099,7 +4096,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="2fa76de41291847c8d191ea664c53395" category="summary">了解采用ONTAP的vSphere Metro Storage Cluster</block>
   <block id="0ecd760f5e697e57a60b2f1597be9d54" category="admonition">有关 VMware vSphere 虚拟卷， SPBM 和 ONTAP 的详细信息，请参见 <block ref="2e6ec19fbf81081d6cc68364fb2fb656" category="inline-link-macro-rx"></block>。</block>
   <block id="7dbbfa4d228c6ffe9a64c938bc057b0d" category="inline-image-macro">多路径连接</block>
-  <block id="4525956d57ef52f4b2a4f341fbeec28e" category="paragraph"><block ref="4525956d57ef52f4b2a4f341fbeec28e" category="inline-image-macro-rx" type="image"></block></block>
   <block id="8692ff2ea8c35b5c4c7cea90481e416c" category="summary">本文档对建议的存储和网络设置进行了分类和列举。</block>
   <block id="ff6fdc6e7749c69219fc26d54c625bd5" category="paragraph">NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提供了有关多路径和HBA超时设置的特定指导、以便根据NetApp和VMware内部测试在ONTAP中正常运行。</block>
   <block id="baee97fad9d55c529dc7a7eb07fd1ba4" category="cell">vSphere 6.0或更高版本、请设置为256
@@ -5224,7 +5220,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="bf5f70c9080724ef27b09203705b1abc" category="doc">完整文件层</block>
   <block id="acf5662e9defb6f8df644e0d8b4caa28" category="doc">初始化参数</block>
   <block id="03095e209912bbf8e40f883c88befe49" category="searchtitle">PostgreSQL本机数据保护</block>
-  <block id="300e5ea4a0c7d02b8a4efeba5a1f6faf" category="doc">本机Ddta保护</block>
   <block id="1c3ee6977dcad0709502549dd7b111f3" category="sidebar">使用MetroCluster进行Oracle灾难恢复</block>
   <block id="662637dadb14be675de52ed993629bcd" category="paragraph">要考虑服务器操作系统队列深度、请为一个数据库至少使用八个LUN (每个卷一个LUN)。按ONTAP集群中的节点数增加LUN数量。例如、如果使用4节点(2个HA对)集群、请添加4个LUN。对于较大的环境、可能需要更多的LUN；使用相同数量的卷(总共八个、分布在存储节点上)、并在集群节点和卷之间添加LUN (以两的倍数)。通过这种方法、您可以轻松扩展Epic环境。</block>
   <block id="f73f987e4ea887ccfd1bf297bad46e22" category="paragraph">*示例1：2节点ONTAP集群*</block>
@@ -5269,10 +5264,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="4ac7ffa40244bc8345591768f8411745" category="list-text">使用插件挂载功能将现有数据存储库应用于新服务器。</block>
   <block id="adf5380025d4004543deef73a471bbd5" category="inline-link-macro">NetApp和VMware的NFSv3 nconnect功能</block>
   <block id="f9f508df0fe89d92476e598965812f69" category="list-text">当前支持的所有VMware vSphere版本均可同时使用NFS v3和v4.1。vSphere 8.0 Update 2 (适用于NFS v3)和Update 3 (适用于NFS v4.1)新增了对nconnect的官方支持。对于NFS v4.1、vSphere仍支持会话中继、Kerberos身份验证和具有完整性的Kerberos身份验证。请务必注意、会话中继需要ONTAP 9.14.1或更高版本。有关nconnect功能及其如何提高性能的详细信息，请访问<block ref="8bbf9cc2e5403eec56b8cc2f4bd74d68" category="inline-link-macro-rx"></block>。</block>
-  <block id="81439479f2f4c0fa8c28668334fa82bd" category="list-text">在vSphere 8中、nconnect的最大值为4、默认值为1。可以通过高级设置按主机提高vSphere中的最大值限制、但通常不需要。</block>
   <block id="b279126f58fd7f43a55f5efc8596bcea" category="list-text">对于需要比单个TCP连接所能提供的性能更高的环境、建议将值设置为4。</block>
-  <block id="9d676095b7ff8ea1b1779bc58fb32a92" category="list-text">请注意、ESXi的NFS连接数限制为256个、每个nconnect连接数均计入此总数。例如、两个nconnect = 4的数据存储库总共会计入八个连接。</block>
-  <block id="efdc45c7bd15d84f5bcb4df0560d6d3a" category="list-text">在生产环境中实施大规模更改之前、必须测试nconnect对环境的性能影响。</block>
   <block id="d1801a2d87a0325c6c691a74f5d1ffef" category="list-text">值得注意的是、NFSv3和NFSv4.1使用不同的锁定机制。NFSv3使用客户端锁定、而NFSv4.1使用服务器端锁定。虽然ONTAP卷可以通过这两种协议导出、但ESXi只能通过一种协议挂载数据存储库。但是、这并不意味着其他ESXi主机不能通过其他版本挂载同一数据存储库。为了避免出现任何问题、请务必指定挂载时要使用的协议版本、以确保所有主机使用相同版本、从而使用相同的锁定模式。请务必避免在主机之间混用NFS版本。如果可能、请使用主机配置文件检查合规性。</block>
   <block id="c17658fd7af3bb19a0f047cb1e006186" category="list-text">NFS导出策略规则用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于NFS、ESXi会使用sys (UNIX)安全模式、并需要根挂载选项来执行VM。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、对于和<block ref="df809a941c1287d18c08bb5927b639dc" prefix=" " category="inline-code"></block>使用不同值的导出策略规则<block ref="ea72d12ecaa06afdb0c8a3b15e485e95" prefix=" " category="inline-code"></block>可能会导致ONTAP工具出现SVM发现问题。IP地址应是一个逗号分隔列表、挂载数据存储库的vmkernel端口地址不含空格。下面是一个策略规则示例：</block>
   <block id="a001b05a0a70d03d708c133c88072a2b" category="list-text">客户端匹配主机名、IP地址、网络组或域列表：192.168.42.21、192.168.42.22</block>
@@ -5287,7 +5279,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="4d6306be791d29381011bb901e0351d5" category="list-text">客户端匹配规范：192.168.42.21、192.168.42.22</block>
   <block id="62297138e048f9159339e4709b23cd2f" category="list-text">作为iSCSI连接的LUN或NVMe/TCP连接的命名空间、由软件启动程序从VM子操作系统访问和控制</block>
   <block id="7eae63bf83e6298ab64a2dd5e2544df9" category="inline-link-macro">VMware配置最大值工具</block>
-  <block id="ee1c3928454779ec08bd2d50271b6621" category="admonition">有关ESXi中支持的最新限制、请参见<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>。</block>
   <block id="387b349695476180bf90cc1891288318" category="list-text">检查<block ref="1f38ac07598dbb4b06912539aafa4211" category="inline-link-macro-rx"></block>NetApp与VMware合作建议的设置。</block>
   <block id="27071f484b59aa9ce5f5cffcefefd481" category="paragraph">^2^使用NVMe-oF和NFS v4.1的数据存储库需要vSphere复制。SRM目前不支持对NFS v4.1执行基于阵列的复制。适用于VMware vSphere Storage Replication Adapter (SRA)的ONTAP工具目前不支持使用NVMe-oF进行基于阵列的复制。</block>
   <block id="f992800e6b8aa5ca675e5d1c9fd9950c" category="summary">使用 SnapCenter ，您可以创建可应用于多个作业的备份策略。这些策略可以定义计划，保留，复制和其他功能。它们仍然允许选择虚拟机一致的快照、从而利用虚拟机管理程序在创建VMware快照之前将I/O置于静修状态的功能。</block>
@@ -5827,11 +5818,9 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="d76b03755162bf8402fea0ef97d95c2b" category="list-text">有关支持所需的特定ESXi修补程序级别、请参见中的NFS v4.1互操作性表说明<block ref="aaa18d9ccb38f09094f0c241a8585efd" category="inline-link-macro-rx"></block>。</block>
   <block id="2e5d8aa3dfa8ef34ca5131d20f9dad51" category="inline-link-macro">设置</block>
   <block id="428a818039f2f00961fdd9e4de07b721" category="inline-link">VMware 知识库 386364</block>
-  <block id="e43e8e9d4a1f6f9dbd56154ac2df4c6a" category="list-text">如中所述<block ref="5c427f7294fd54c254262776a96b148a" category="inline-link-macro-rx"></block>，如果您不使用适用于Kubnetes的vSphere CSI，则应将newSyncInterval设置为<block ref="e3529737a3b4eef7cff2c05dcd47fcdc" category="inline-link-rx"></block></block>
   <block id="686d950560445531708a511e6ad1567c" category="paragraph">在vSphere中、可以通过四种方式使用块存储设备：</block>
   <block id="8f3179360beae87966e6fc5f46edfb7b" category="list-text">作为一个卷数据存储库</block>
   <block id="041c0652f0218403d2721d2ddd9260df" category="admonition">块区是一个vSphere存储概念、您可以将多个LUN "拼接"在一起、以创建一个更大的数据存储库。切勿使用块区来达到所需的数据存储库大小。对于VMFS数据存储库、最佳做法是使用一个LUN。</block>
-  <block id="9d6605bbb339340832866d8bab7bf7e5" category="paragraph">vSphere内置了对存储设备的多个路径的支持。vSphere可以检测受支持存储系统的存储设备类型、并自动配置多路径堆栈以支持所使用存储系统的功能、无论所使用的协议如何、也无论使用的是ASA、AFF、FAS还是软件定义的ONTAP。</block>
   <block id="4dbfcd0fae38bf4e35602557a83d9ea3" category="paragraph">vSphere和ONTAP均支持使用NVMe/FC和NVMe/TCP为光纤通道和iSCSI建立主动/优化和主动/非优化路径、并为NVMe命名空间建立非对称命名空间访问(ANA）。在ONTAP中、AUA或ANA优化的路径遵循直接数据路径、使用托管要访问的LUN或命名空间的节点上的目标端口。默认情况下、vSphere和ONTAP均会启用ALOA/ANA。vSphere中的多路径软件会将ONTAP集群识别为AUA或ANA、并使用适当的本机插件和轮叫负载平衡策略。</block>
   <block id="c35f72eea36b7f94209ed29c1e457501" category="paragraph">在NetApp的ASA系统中、LUN和名称库会通过对称路径提供给ESXi主机。表示所有路径均处于活动状态并已进行优化。vSphere中的多路径软件会将ASA系统识别为对称系统、并使用适当的本机插件和循环负载平衡策略。</block>
   <block id="719d3c21fd388bea9bc6e0ae1f7aead3" category="admonition">有关优化的多路径设置、请参见<block ref="1f38ac07598dbb4b06912539aafa4211" category="inline-link-macro-rx"></block>。</block>
@@ -6397,4 +6386,38 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="b93377fb4bda41543174fb8ecd3cb919" category="admonition">在基于映像的 vSphere 群集上，仍要将 NFS 插件添加到映像中，以便在使用 ONTAP tools 安装时不会出现合规性问题。</block>
   <block id="1c4918b7146682fe9d3aa87a0931f802" category="paragraph">在运行 ONTAP 的系统中使用 vSphere 时配置网络设置非常简单，与其他网络配置类似。以下是一些需要考虑的事项：</block>
   <block id="8889f7d5ff12388c0709bd9da619557b" category="list-text">使用支持使用多机箱链路聚合组方法（例如 Cisco 的 Virtual PortChannel (vPC)）在两个独立交换机机箱上进行端口链路聚合的交换机。</block>
+  <block id="4e245e798376a5b37ffc5db716f3b086" category="summary">本页介绍了针对 VMware 数据存储库实施 FabricPool 的最佳实践。</block>
+  <block id="7ab22e2f2de052af5cee5bca000e441f" category="doc">FabricPool 适用于 VMware 数据存储库</block>
+  <block id="71a60e2e5410bf56dbceeb8098874aa7" category="paragraph">虚拟机存储从访客操作系统和虚拟机监控程序层向下流动到 ONTAP，其中 FabricPool 分层和 WAFL 提供性能、效率和成本优化。</block>
+  <block id="5af5e565ac31c45c517d497c227544e3" category="paragraph">从 ONTAP 9.6 版本开始，FabricPool 已支持虚拟化工作负载，包括 VMware 数据存储。现在，您可以将冷块从支持 VMware 数据存储（VM 模板、断电 VM、快照、备份等）的 FlexVol 卷分层到对象存储，同时将热数据保留在本地。</block>
+  <block id="b6fdb64fc9d75f582d6368d2766c14b9" category="paragraph">尽管如此，您需要注意一些细微差别。</block>
+  <block id="a885cb68eb11c4e7a0497f0905ed2f92" category="inline-image-macro">alt=虚拟机监控程序存储堆栈与 FabricPool,width=525,height=500</block>
+  <block id="177876afc9e936972ca9e8c000a1165a" category="paragraph"><block ref="177876afc9e936972ca9e8c000a1165a" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="35d56aae7cd91e9e8193f6d49d885b58" category="section-title">计算和虚拟磁盘层</block>
+  <block id="449f5490ffe1384e4cde9e34cc50c386" category="paragraph">来宾操作系统在 VMDK、QCOW2 或 VHDX 等虚拟磁盘格式上运行，这些格式创建了应用程序和用户可访问的计算层和块设备层。</block>
+  <block id="63fc0b6c5a6af18fda47bab943be77bf" category="paragraph">请注意，来宾操作系统将虚拟磁盘视为块设备；因此，在规划无中断升级、硬件故障或其他计划外事件期间的容错时，必须考虑来宾内块设备超时。</block>
+  <block id="6dc00e1bbdeea3ffaca45fe746b95325" category="inline-link-macro">FabricPool 最佳实践</block>
+  <block id="ed1555304c325bb1f664bcd0573e1e86" category="admonition">遵循<block ref="00f9967175c7057dcbe3073e12bc4bf7" category="inline-link-macro-rx"></block>，您应该将托管虚拟机数据存储的FlexVol卷视为SAN存储，即使在使用NAS协议时，由于虚拟磁盘文件的块性质，因为它们与来宾操作系统相关。因此，NetApp建议使用仅快照分层策略。自动策略可用于非关键数据，但请注意，与云层的断开连接可能导致计算机崩溃或进入只读状态。</block>
+  <block id="228ae3437e4e29519984be18be0754ba" category="section-title">虚拟机监控程序角色</block>
+  <block id="4676d7f0ba935d0fbf86fe98cefe1b95" category="paragraph">虚拟机监控程序在其运行的虚拟机和物理资源（如 CPU、内存和存储）之间进行中介。在 NAS 用例中，虚拟机监控程序装载 NAS 共享并将虚拟磁盘文件作为块设备呈现给虚拟机。</block>
+  <block id="3cb9f5f31bf25c1ca21080d336c175ee" category="paragraph">虚拟机管理程序文件系统路径涉及通过 iSCSI/FCP 连接的 LUN 或由虚拟机管理程序特定文件系统（如 VMFS、NTFS、EXT4 等）格式化的 NVMe 命名空间进行 VM 存储。</block>
+  <block id="c8be919dfb48a8947d7df8bb8a4c1d91" category="paragraph">NAS 文件系统路径使用 NFS 或 SMB 协议提供对用于虚拟机存储的 ONTAP 卷的直接文件级访问。</block>
+  <block id="47b501c121acfe4b5b80ddcc842d68fc" category="paragraph">两条路径都融合在 ONTAP 的 WAFL 层，实现快照和元数据管理等一致的数据服务。</block>
+  <block id="4f5968e18493ed4e7cd091f3b40b58fb" category="section-title">FabricPool 分层集成</block>
+  <block id="3dfb44517de28f576cb07c1acf28cae0" category="paragraph">FabricPool 智能管理高性能本地存储和低成本云对象层之间的数据放置。</block>
+  <block id="3ea06724bb52333ff274532b9b8177c0" category="paragraph">FabricPool 根据应用于数据集的 FabricPool 分层策略，在本地高性能存储和可扩展云对象存储之间自动分层数据。</block>
+  <block id="8b5a4af68c39a8bf71e5de79be732d27" category="paragraph">ONTAP 的 FabricPool 集成可实现跨混合云环境的高效数据放置，而不会牺牲本地读取的性能。</block>
+  <block id="4d5141ae08b6592ee7977f0b4bf6639e" category="section-title">存储效率和管理</block>
+  <block id="87a99c1e6517a3242abe29be11c0c63a" category="paragraph">在启用之前，请务必了解 FabricPool 的工作方式。正确的配置可将正确的数据存储在正确的层中，从而帮助您提高性能、降低风险并优化 TCO。</block>
+  <block id="f7de91a0c588f1007997811f78f62033" category="paragraph">SAN/NVMe 和 NAS 文件协议路径都融合在 WAFL 层。WAFL 文件系统确保元数据的一致性，支持快照、克隆，并优化 SSD、HDD 和对象存储介质的写入。</block>
+  <block id="433b8ed0ceac00d5f9cf64b906915ce3" category="list-text">在 ONTAP 集群中每个节点上的每个 SVM 使用单个逻辑接口 (LIF)。过去推荐的每个数据存储区一个 LIF 不再是必要的。虽然直接访问（同一节点上的 LIF 和数据存储区）是最好的，但不要担心间接访问，因为性能影响通常很小（微秒）。</block>
+  <block id="9fe81acff7fb8895c38d1841c4b911be" category="list-text">nconnect 在 vSphere 8 中的最大值为 4，默认值为 1。vSphere 中的最大值限制可以通过高级设置在每个主机基础上提高，尽管通常不需要这样做。</block>
+  <block id="76324e8deda86b52136d14ec0de2958c" category="list-text">请注意，ESXi 限制为 256 个 NFS 连接，每个 nconnect 连接都计入该总数。例如，nconnect=4 的两个数据存储区将计为总共八个连接。</block>
+  <block id="c36803c3f7afe8f4e847f86bb28eeedb" category="list-text">在生产环境中实施大规模更改之前，请务必测试 nconnect 对环境的性能影响。</block>
+  <block id="01e2d9b910b8e5a36373f31296c1c1d3" category="list-text">如 <block ref="3e0c9147a1a4f5c9489f3907f576c0bf" category="inline-link-macro-rx"></block> 中所述，如果您不将 vSphere CSI 用于 Kubernetes，则应按 <block ref="e3529737a3b4eef7cff2c05dcd47fcdc" category="inline-link-rx"></block> 设置 newSyncInterval</block>
+  <block id="ddea579695eb36fd924c9d3a8c5bb5bf" category="list-text">虽然 ONTAP 提供了一个灵活的卷命名空间结构，可以使用连接点在树中排列卷，但这种方法对 vSphere 没有价值。无论存储的命名空间层次结构如何，它都会在数据存储的根目录下为每个 VM 创建一个目录。因此，最佳做法是简单地在 SVM 的根卷上挂载 vSphere 卷的连接路径，这就是 ONTAP tools for VMware vSphere 配置数据存储的方式。没有嵌套的连接路径也意味着没有卷依赖于根卷以外的任何卷，并且使卷离线或销毁卷（即使是有意销毁）不会影响到其他卷的路径。</block>
+  <block id="3980a1d1c9ccdad9d36206a7457e9643" category="paragraph">vSphere 包括对存储设备的多个路径的内置支持。vSphere 可以检测受支持的存储系统的存储设备类型，并自动配置多路径堆栈以支持正在使用的存储系统的功能，无论使用哪种协议，或者是否使用 ASA、AFF、FAS 或软件定义的 ONTAP。</block>
+  <block id="24e63af66b386fd7126b59dd7fe341db" category="admonition">有关 ESXi 中最新支持限制的信息，请参见<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>。</block>
+  <block id="a0f1d2336326e29837b7fc7cada7a377" category="list-text">对于 iSCSI 或 NVMe/TCP 网络，当存在多个虚拟交换机时，请在不同的未路由网络子网上使用多个 VMkernel 网络接口，并使用 NIC 组。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 和增加的吞吐量。在 ONTAP 中，配置单模接口组进行故障转移，其中两个或多个链路连接到两个或多个交换机，或者使用 LACP 或其他具有多模接口组的链路聚合技术来提供 HA 和链路聚合的好处。请记住，必须在每个 VMkernel 端口和每个物理接口上启用 NVMe/TCP，并且必须对它们进行对齐，以便 NVMe/TCP VMkernel 端口可以访问启用了 NVMe/TCP 的物理 NIC。下图说明了基于 IP 的 SAN 协议的多路径连接。<block ref="4525956d57ef52f4b2a4f341fbeec28e" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="58826bba5b6c0010e4915ab23035b67d" category="doc">VMware vSphere with ONTAP 最佳实践指南</block>
 </blocks>

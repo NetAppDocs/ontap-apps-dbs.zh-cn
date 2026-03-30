@@ -2,7 +2,7 @@
 section: vmware
 title: VMware
 entries:
-- title: 采用ONTAP的VMware vSphere
+- title: VMware vSphere with ONTAP 最佳实践指南
   entries:
   - title: 概述
     url: "/vmware/vmware-vsphere-overview.html"
@@ -24,6 +24,8 @@ entries:
       url: "/vmware/vmware-vsphere-datastores-nfs.html"
     - title: FlexGroup 卷
       url: "/vmware/vmware-vsphere-datastores-fg.html"
+    - title: FabricPool 适用于 VMware 数据存储库
+      url: "/vmware/vmware-vsphere-datastores-fp.html"
   - title: 网络配置：
     url: "/vmware/vmware-vsphere-network.html"
   - title: 克隆
