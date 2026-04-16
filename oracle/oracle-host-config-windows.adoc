@@ -16,7 +16,7 @@ searchtitle: 使用Microsoft Windows的Oracle数据库
 
 == NFS
 
-Oracle支持将Microsoft Windows与Direct NFS客户端结合使用。此功能提供了一条实现NFS管理优势的途径、其中包括跨环境查看文件、动态调整卷大小以及利用成本较低的IP协议。有关使用DNFS在Microsoft Windows上安装和配置数据库的信息、请参见Oracle官方文档。没有特别的最佳做法。
+Oracle 支持将 Microsoft Windows 与直接 NFS 客户端结合使用。此功能提供了实现 NFS 管理优势的途径，包括跨环境查看文件、动态调整 NFS 卷大小以及利用成本较低的 IP 协议。有关使用 DNFS 在 Microsoft Windows 上安装和配置数据库的信息，请参阅 Oracle 官方文档。不存在任何特殊的最佳实践。
 
 
 

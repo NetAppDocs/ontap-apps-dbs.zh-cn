@@ -6,4 +6,4 @@
 
 日志记录会使用不同大小的写入顺序写入日志文件。不与4 KB边界对齐的日志写入操作通常不会出现发生原因性能问题、因为下一个日志写入操作会完成块。因此、ONTAP几乎能够将所有写入作为完整的4 KB块进行处理、即使某些4 KB块中的数据是在两个单独的操作中写入的。
 
-使用等实用程序验证对齐情况 `sio` 或 `dd` 可以按定义的块大小生成I/O。可以使用查看存储系统上的I/O对齐统计信息 `stats` 命令：请参见 link:../notes/wafl_alignment_verification.html["WAFL对齐验证"] 有关详细信息 ...
+使用  `sio` 或  `dd` 等实用程序验证对齐情况，这些实用程序可以按定义的块大小生成 I/O。可以使用  `stats` 命令查看存储系统上的 I/O 对齐统计信息。有关更多信息，请参阅 link:../oracle/oracle-notes-wafl-alignment-verification.html["WAFL对齐验证"]。

@@ -104,9 +104,9 @@ nointr,actimeo=0`
 
 === Linux Direct NFS
 
-一个额外的挂载选项、称为 `nosharecache`如果(a)启用了DNFS、并且(b)在单个服务器上多次挂载源卷(c)并使用嵌套NFS挂载、则需要使用此选项。此配置主要出现在支持SAP应用程序的环境中。例如、NetApp系统上的单个卷的目录可能位于 `/vol/oracle/base` 然后、再按 `/vol/oracle/home`。条件 `/vol/oracle/base` 挂载于 `/oracle` 和 `/vol/oracle/home` 挂载于 `/oracle/home`的结果是来自同一源的嵌套NFS挂载。
+当 (a) 启用了 DNFS 且 (b) 在单个服务器上多次挂载源 NFS 共享 (c) 并使用嵌套 NFS 挂载时，需要一个额外的挂载选项，称为 `nosharecache`。这种配置主要出现在支持 SAP 应用程序的环境中。例如，NetApp 系统上的单个 NFS 共享可能有一个目录位于 `/vol/oracle/base`，另一个目录位于 `/vol/oracle/home`。如果 `/vol/oracle/base`挂载在 `/oracle`， `/vol/oracle/home`挂载在 `/oracle/home`，则会形成源自同一源的嵌套 NFS 挂载。
 
-操作系统可以检测到 `/oracle`和 `/oracle/home`位于同一个卷上、即同一个源文件系统。然后、操作系统会使用相同的设备句柄来访问数据。这样做可以改进操作系统缓存和某些其他操作的使用、但会干扰DNFS。如果DNFS必须访问文件(如上的 `/oracle/home`) `spfile`，它可能会错误地尝试使用错误的数据路径。结果是I/O操作失败。在这些配置中、请将挂载选项添加 `nosharecache`到与该主机上的另一个NFS文件系统共享源卷的任何NFS文件系统。这样做会强制Linux操作系统为该文件系统分配独立的设备句柄。
+操作系统可以检测到 `/oracle`和 `/oracle/home`位于同一个 NFS 共享上，即同一个源文件系统。然后，操作系统会使用相同的设备句柄来访问这些数据。这样做可以提升操作系统缓存和某些其他操作的效率，但会干扰 DNFS。如果 DNFS 必须访问 `spfile`等文件，位于 `/oracle/home`上，可能会错误地尝试使用错误的数据路径。其结果是 I/O 操作失败。在这些配置中，请为与主机上其他 NFS 文件系统共享源 NFS 共享的任何 NFS 文件系统添加 `nosharecache`挂载选项。这样做会强制 Linux 操作系统为该文件系统分配独立的设备句柄。
 
 
 

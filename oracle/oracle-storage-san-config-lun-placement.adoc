@@ -15,8 +15,15 @@ searchtitle: Oracle数据库LUN放置
 
 
 [role="lead"]
-数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。
+数据库 LUN 在 AFF 和 FAS 系统上的 ONTAP 卷中的最佳位置主要取决于如何使用各种 ONTAP 功能。
 
+[]
+====
+* 本节适用于 AFF 和 FAS 系统。
+* ASA 是一个简化的 SAN 平台，不会暴露卷抽象层，
+
+
+====
 
 
 == Volumes

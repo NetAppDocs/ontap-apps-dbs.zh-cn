@@ -128,8 +128,6 @@
   <block id="0e10f2715884f3538282397d69b2cd00" category="list-text">开发组的SVM、该开发组拥有完全的管理控制权、因此可以独立管理自己的存储</block>
   <block id="7624156e307247e4ea1ec8bf574136a1" category="list-text">用于敏感业务数据(例如人力资源或财务报告数据)的SVM、必须限制管理团队</block>
   <block id="e5e09031843479ef9ef8cbbd4c2f404c" category="inline-link-macro">NetApp Hardware Universe</block>
-  <block id="fb012f1e7970d8285bd5d6c5a7f7d523" category="doc">SSD聚合、包括AFF系统</block>
-  <block id="cb8e4651c457f71d5788f38eac01471f" category="paragraph">可用空间是指未用于实际数据的任何空间、其中包括聚合本身上的未分配空间以及成分卷中的未使用空间。此外、还必须考虑精简配置。例如、卷可能包含1 TB的LUN、其中实际数据仅利用了50%的空间。在精简配置环境中、这将正确地显示为占用500 GB的空间。但是、在完全配置的环境中、1 TB的全部容量似乎正在使用中。500 GB的未分配空间将被隐藏。实际数据未使用此空间、因此应将此空间计入总可用空间。</block>
   <block id="d3487661d9a0702bd5915d49070f62dc" category="paragraph">对于用于企业级应用程序的存储系统、NetApp建议如下：</block>
   <block id="678e476783bceae80094bcb4c1f32969" category="admonition">* NetApp建议*至少留出10%的可用空间。这包括所有未使用的空间、包括聚合或卷中的可用空间、以及由于使用完全配置而分配但实际数据未使用的任何可用空间。逻辑空间并不重要、问题是可用于数据存储的实际可用物理空间有多少。</block>
   <block id="2171d172d184f1202a686849c85dce91" category="paragraph">建议10%的可用空间非常保守。SSD聚合可以支持利用率更高的工作负载、而不会对性能产生任何影响。但是、随着聚合利用率的提高、如果不仔细监控利用率、用尽空间的风险也会增加。此外、在以99%的容量运行系统时、可能不会影响性能、但可能会导致管理工作、试图在订购额外硬件时阻止系统完全填满、并且可能需要一些时间来采购和安装额外的驱动器。</block>
@@ -216,7 +214,6 @@
   <block id="0c99cedb6f39d8ac16d5b4c01c162c23" category="paragraph">数据库重做/事务日志记录通常会生成未对齐的I/O、此I/O可能会导致发生原因发出有关ONTAP上LUN错位的警告、从而使人产生误解。</block>
   <block id="b2f7bb8e75b21ee3e883141c6ac1defe" category="paragraph">日志记录会使用不同大小的写入顺序写入日志文件。不与4 KB边界对齐的日志写入操作通常不会出现发生原因性能问题、因为下一个日志写入操作会完成块。因此、ONTAP几乎能够将所有写入作为完整的4 KB块进行处理、即使某些4 KB块中的数据是在两个单独的操作中写入的。</block>
   <block id="0e635e1f8ffad809203304cf41ed45c4" category="inline-link-macro">WAFL对齐验证</block>
-  <block id="bf837d24f10c904e697e3c0092da43b9" category="paragraph">使用等实用程序验证对齐情况<block ref="40883add63f1fbabc7fe6158f93c1246" prefix=" " category="inline-code"></block> 或<block ref="1aabac6d068eef6a7bad3fdf50a05cc8" prefix=" " category="inline-code"></block> 可以按定义的块大小生成I/O。可以使用查看存储系统上的I/O对齐统计信息<block ref="446501053769c06c565094b26d26e8ef" prefix=" " category="inline-code"></block> 命令：请参见 <block ref="ebccec7997af507c87f985ec4ccec634" category="inline-link-macro-rx"></block> 有关详细信息 ...</block>
   <block id="b5ffbfb0c082804ad41d0f61c87525ed" category="paragraph">许多应用程序数据集都按日期进行组织、随着数据老化、访问这些数据的可能性通常越来越小。例如、银行可能有一个PDF文件存储库、其中包含五年的客户对账单、但只有最近几个月处于活动状态。FabricPool可用于将旧数据文件重新定位到容量层。冷却期为14天、可确保最近14天的PDF文件仍保留在性能层上。此外、至少每14天读取一次的文件将保持热状态、因此仍保留在性能层上。</block>
   <block id="ed7e2cc7ff107d4b2032fe65cf4e756a" category="paragraph">要实施基于文件的分层方法、您必须拥有已写入且随后未修改的文件。。<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 策略应设置得足够高、以便可能需要的文件仍保留在性能层上。例如、如果某个数据集需要最近60天的数据且性能最佳、则需要设置<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 期限为60。根据文件访问模式、也可以实现类似的结果。例如、如果需要最近90天的数据、而应用程序正在访问这90天的数据、则数据将保留在性能层上。通过设置<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 从2开始、当数据变得不太活跃后、您会收到分层提示。</block>
   <block id="8a467b35326e4738b1bd39865c3b21a0" category="admonition">任何类型的数据访问都会重置热图数据。病毒扫描、索引编制甚至是读取源文件的备份活动会阻止分层、因为需要分层<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 从未达到阈值。</block>
@@ -267,7 +264,6 @@
   <block id="3381946611f34fb44ad8a38a0c44e0a8" category="paragraph">效率功能是精简配置的一种形式。例如、占用100 GB卷的100 GB LUN可能会压缩到50 GB。由于卷仍为100 GB、因此尚未实现实际节省。必须先减小卷大小、以便节省的空间可用于系统上的其他位置。如果稍后更改100 GB LUN会导致数据的可压缩性降低、则LUN大小会增大、卷可能会填满。</block>
   <block id="38ef8b6f2fc332958c293d93c61d7756" category="paragraph">有些客户更喜欢对特定工作负载使用厚配置、或者通常根据既定的运营和采购实践使用厚配置。</block>
   <block id="0e7c78164adb6d4650ea685a79d8e99e" category="section-title">效率最佳实践</block>
-  <block id="ec499ad25fa5a765ba43ec2c87819623" category="section-title">AFF默认值</block>
   <block id="9f7127e69d50bf7b844ff3723b86fbd1" category="section-title">一般建议</block>
   <block id="4922fe547c351d6a121465da036d478e" category="list-text">如果数据不会被覆盖(例如使用备份或数据库事务日志)、则可以通过在较低的冷却期启用TSSE来提高效率。</block>
   <block id="e75fd383e4106eb78482b18896975daf" category="list-text">某些文件可能包含大量不可压缩数据、例如、在应用程序级别已启用数据压缩时、文件已加密。如果出现上述任一情况、请考虑禁用数据压缩、以便在包含可压缩数据的其他卷上执行更高效的操作。</block>
@@ -280,8 +276,6 @@
   <block id="639e481de0ffe002bd83251b26a2540a" category="paragraph">如果复制的数据也要用于克隆、则<block ref="9df22f196a33acd0b372fe502de51211" prefix=" " category="inline-code"></block> 策略更合适、使用<block ref="e5e88684921dd21f3f86c28343a3082f" prefix=" " category="inline-code"></block> 包含预计在克隆环境中定期使用的数据的价值。例如、数据库的活动工作集可能包括前三天读取或写入的数据、但也可能包括另外6个月的历史数据。如果是、则<block ref="9df22f196a33acd0b372fe502de51211" prefix=" " category="inline-code"></block> SnapMirror目标上的策略可使工作集在性能层上可用。</block>
   <block id="ace0bd0c1be3a9e17d9736d93e7a1da2" category="doc">IOPS QoS</block>
   <block id="786ee59e0cdaa09335e12fea3a168653" category="paragraph">具体而言、随着全闪存存储的采用率不断提高、工作负载得以整合。由于旧旋转驱动器技术的IOPS功能有限、依赖旋转介质的存储阵列往往仅支持数量有限的I/O密集型工作负载。早在存储控制器达到其限制之前、一两个高度活跃的数据库就会使底层驱动器饱和。这种情况已经改变。即使是功能最强大的存储控制器、数量相对较少的SSD驱动器的性能也可能会饱和。这意味着、可以充分利用控制器的全部功能、而不必担心随着旋转介质延迟峰值而导致性能突然崩溃。</block>
-  <block id="270d79669200ef485add1ecc1833cc94" category="paragraph">作为一个参考示例、一个简单的双节点HA AFF A800系统能够在延迟超过1秒之前提供高达100万次随机IOPS。只有极少数单个工作负载才能达到此级别。要充分利用此AFF A800系统阵列、需要托管多个工作负载、而安全地执行此操作、同时确保可预测性、则需要QoS控制。</block>
-  <block id="4dca0c3547523a2e5bd1b8d0e2ff8de5" category="paragraph">ONTAP中有两种类型的服务质量(QoS)：IOPS和带宽。QoS控制可应用于SVM、卷、LUN和文件。</block>
   <block id="3ea539ed2021ba46a3658039e8af419f" category="paragraph">IOPS QoS控制显然基于给定资源的总IOPS、但IOPS QoS的许多方面可能并不直观。最初、一些客户对达到IOPS阈值时延迟明显增加感到很不明白。限制IOPS自然会导致延迟增加。从逻辑上讲、它的功能类似于令牌系统。例如、如果包含数据文件的给定卷具有10000 IOPS限制、则到达的每个I/O都必须先接收令牌才能继续处理。只要在给定的一秒内使用的令牌不超过10000个、就不会出现延迟。如果IO操作必须等待接收其令牌、则此等待将显示为额外的延迟。工作负载越难超过QoS限制、每个IO在队列中等待处理的时间就越长、这在用户看来是延迟越高。</block>
   <block id="34a96885dd7f4501920b13026e7f2cab" category="admonition">对数据库事务/重做日志数据应用QoS控制时要小心。虽然重做日志记录的性能需求通常要比数据文件低很多、但重做日志活动会变得突发。IO会以短暂的脉冲发生、并且似乎适合平均重做IO级别的QoS限制对于实际要求可能过低。结果可能会造成严重的性能限制、因为QoS会与每个重做日志突发事件结合使用。通常、重做和归档日志记录不应受QoS的限制。</block>
   <block id="c79dc76371299e08f4b4ebd609314ca4" category="section-title">带宽QoS</block>
@@ -340,10 +334,8 @@
   <block id="e10d46632bc86306cf4c22633ee930ab" category="paragraph">仔细规划LVM配置可以提高效率、并最大限度地减少存储配置和LUN大小调整的需求。使用Veritas VLVM或Oracle ASM等LVM时、底层LUN会划分为仅在需要时才使用的块区。例如、如果数据集的大小从2 TB开始、但随着时间的推移可能会增长到10 TB、则可以将此数据集放置在LVM磁盘组中组织的10 TB精简配置LUN上。在创建时、它只会占用2 TB的空间、并且只会在为满足数据增长而分配块区时占用额外空间。只要空间受到监控、此过程就会很安全。</block>
   <block id="66a41fd6fc38c454973e91d92cf0e291" category="section-title">预留百分比</block>
   <block id="e8a206fe65814e0ea465e32487544751" category="paragraph">预留百分比是指卷中LUN在空间效率方面的行为。选项<block ref="c1acac5c4332e37ec1f281fcbaf0765a" prefix=" " category="inline-code"></block> 设置为100%时、卷中的所有数据在使用任何数据模式时均可实现100%的周转率、而不会耗尽卷上的空间。</block>
-  <block id="a3cd28aef7d0becd57b60187fdc4a24e" category="paragraph">例如、假设数据库位于1 TB卷中的一个250 GB LUN上。创建快照会立即在卷中预留额外的250 GB空间、以保证卷不会因任何原因用尽空间。使用预留百分比通常会造成浪费、因为数据库卷中的每个字节极不可能需要覆盖。没有理由为从未发生的事件预留空间。但是、如果客户无法监控存储系统中的空间消耗、并且必须确保空间永远不会用尽、则需要100%预留百分比才能使用快照。</block>
   <block id="e30fbe8981929fb070a820a213381bab" category="section-title">数据压缩和重复数据删除</block>
   <block id="1b6e4e9a2be031edc6f3da1f559ef884" category="paragraph">数据压缩和重复数据删除都是精简配置的两种形式。例如、50 TB的数据占用空间可能会压缩为30 TB、从而节省20 TB的空间。要使数据压缩产生任何优势、必须将这20 TB中的一部分用于其他数据、或者购买的存储系统必须小于50 TB。这样、存储的数据就会超过存储系统上的技术可用数据。从数据角度来看、数据容量为50 TB、尽管它在驱动器上仅占用30 TB。</block>
-  <block id="dbca4bb791f36eac2c11c32f73f2b4ec" category="paragraph">数据集的可压缩性总是有可能发生变化、从而导致实际空间消耗增加。这种消耗量的增加意味着、在监控和使用方面、必须像其他形式的精简配置一样管理数据压缩<block ref="f9e1f2ea1a2becbaf82dd54e55a12e6b" prefix=" " category="inline-code"></block> 和<block ref="24d554277b3513bb6cef3f0a336725a9" prefix=" " category="inline-code"></block>。</block>
   <block id="ad241666a88b5414e8c2fe6d1cc1edb0" category="paragraph">有关数据压缩和重复数据删除的详细信息、请参见链接efficiency.html</block>
   <block id="8ecfcadfebb472a089481e8554ebed87" category="section-title">数据压缩和预留百分比</block>
   <block id="4f8fcc146d2e8e712dcd8c56b1684fcc" category="paragraph">数据压缩是一种精简配置形式。预留百分比会影响数据压缩的使用、但需要注意的一点是、空间是在创建快照之前预留的。通常、只有当存在快照时、预留百分比才重要。如果没有快照、则预留百分比并不重要。而数据压缩则不是这种情况。如果在已进行数据压缩的卷上创建了LUN、则ONTAP会保留空间以容纳快照。此行为在配置期间可能会令人困惑、但这是预期行为。</block>
@@ -352,7 +344,6 @@
   <block id="1d07b8e7c92488a55301ea201328cf35" category="list-text">预留百分比= 0会导致利用率达到2.5 GB</block>
   <block id="aa410d0e46ec94b6efcf344f0d870c1a" category="paragraph">第一种情形包括：当前数据占用2.5 GB空间、而源在预计快照使用时的周转率为100%时占用5 GB空间。第二种情形不会预留任何额外空间。</block>
   <block id="e79414ad391b126cc9bd53af1624c8de" category="paragraph">虽然这种情况可能看起来令人困惑、但在实践中不太可能遇到。数据压缩意味着精简配置、而在LUN环境中进行精简配置需要预留百分比。压缩的数据始终可以被不可压缩的内容覆盖、这意味着必须对卷进行精简配置、才能进行压缩、从而节省空间。</block>
-  <block id="499a10b92cb9ca6b3412d4bf5a91a2b0" category="paragraph">* NetApp建议*采用以下预留配置：</block>
   <block id="7f26e875cee50c1b3baf71a014043794" category="list-text">设置<block ref="c1acac5c4332e37ec1f281fcbaf0765a" prefix=" " category="inline-code"></block> 如果已实施基本容量监控、则为0<block ref="f9e1f2ea1a2becbaf82dd54e55a12e6b" prefix=" " category="inline-code"></block> 和<block ref="24d554277b3513bb6cef3f0a336725a9" prefix=" " category="inline-code"></block>。</block>
   <block id="675996bd34ec0d8c134215f5be73fb3a" category="list-text">设置<block ref="c1acac5c4332e37ec1f281fcbaf0765a" prefix=" " category="inline-code"></block> 如果没有监控能力或在任何情况下都无法排空空间、则为100。</block>
   <block id="8ee38535add58992c14b23a6f7cf8d27" category="doc">LIF类型</block>
@@ -421,7 +412,6 @@
   <block id="df5855269b493a27a5565dfd9f2584f0" category="list-text">在正常情况下、传入给定控制器的写入会同步镜像到其配对控制器。在NetApp MetroCluster环境中、写入操作也会镜像到远程控制器。写入操作在所有位置的非易失性介质中存储之前、不会向主机应用程序确认。</block>
   <block id="05b60db315aa45e1524b7a6ffa242fa8" category="list-text">存储写入数据的介质称为非易失性内存或NVMEM。它有时也称为非易失性随机存取存储器(NVRAM)、尽管它充当日志、但也可视为写入缓存。在正常操作下、不会读取NVMEM中的数据；该数据仅用于在发生软件或硬件故障时保护数据。将数据写入驱动器后、数据将从系统中的RAM传输、而不是从NVMEM传输。</block>
   <block id="e6dd8b559da6e046f2043043a55faafc" category="list-text">在接管操作期间、高可用性(HA)对中的一个节点会从其配对节点接管操作。切换本质上是相同的、但在IT适用场景 MetroCluster配置中、远程节点接管本地节点的功能。</block>
-  <block id="33c0c466972aae7427262e3075a2ed07" category="paragraph">在日常维护操作期间、存储接管或切换操作应该是透明的、而不是在网络路径发生更改时可能会短暂暂停操作。但是、网络连接可能很复杂、容易出错、因此NetApp强烈建议在将存储系统投入生产之前对接管和切换操作进行全面测试。这样做是确保所有网络路径配置正确的唯一方法。在SAN环境中、请仔细检查命令的输出<block ref="41dc2c94e82e1c56ba876085acf5a974" prefix=" " category="inline-code"></block> 确保所有预期的主路径和辅助路径均可用。</block>
   <block id="d33ea1ad1493de23aafd480e95fea159" category="paragraph">发出强制接管或切换命令时必须小心。使用这些选项强制更改存储配置意味着、拥有驱动器的控制器的状态将被忽略、而备用节点将强制接管驱动器。不正确地强制执行接管可能会导致数据丢失或损坏。这是因为强制接管或切换可能会丢弃NVMEM的内容。接管或切换完成后、如果丢失这些数据、则从数据库的角度来看、存储在驱动器上的数据可能会还原到稍旧的状态。</block>
   <block id="c226371d96b605ccff84ad23db0069b8" category="paragraph">很少需要使用普通HA对强制接管。在几乎所有故障情形下、节点都会关闭并通知配对节点、以便进行自动故障转移。在某些边缘情况下、例如、发生滚动故障时、节点之间的互连断开、然后一个控制器断开、此时需要强制接管。在这种情况下、节点之间的镜像会在控制器发生故障之前丢失、这意味着无故障控制器将不再具有正在进行的写入的副本。然后、需要强制执行接管、这意味着数据可能会丢失。</block>
   <block id="418f81f529a577cb711b44adece1376f" category="paragraph">相同的逻辑适用场景会执行MetroCluster切换。在正常情况下、切换几乎是透明的。但是、灾难可能会导致运行正常的站点与灾难站点之间的连接断开。从运行正常的站点的角度来看、问题可能只是站点之间的连接中断、而原始站点可能仍在处理数据。如果节点无法验证主控制器的状态、则只能执行强制切换。</block>
@@ -669,7 +659,6 @@
   <block id="6c06455cad171d61eac3593147bd71d6" category="list-text">运行<block ref="3062dc928daa4d85f6e34b6dea110a00" prefix=" " category="inline-code"></block> 实用程序以更新<block ref="d5416d340f5bec1fcb3addb6ae7d059e" prefix=" " category="inline-code"></block> 文件这样可以使SCSI驱动器正确发现ONTAP LUN。</block>
   <block id="7ec6668202fa9a677238143b0445102f" category="list-text">按照提供的说明进行操作<block ref="3062dc928daa4d85f6e34b6dea110a00" prefix=" " category="inline-code"></block> 用于启用多路径输入/输出(MPIO)的实用程序。</block>
   <block id="b53abe6c0013125abea171427b351ccc" category="list-text">重新启动。要在整个系统中识别任何更改、必须执行此步骤。</block>
-  <block id="b88caedbe9708683eed783eb534ae5f6" category="list-text">对LUN进行分区并验证它们是否已正确对齐。有关如何直接测试和确认对齐的说明，请参阅“附录B：WAFL对齐验证”。</block>
   <block id="a0c1c26e783204cf713b2e1f0823aab3" category="section-title">zpools</block>
   <block id="c81b8fe4a368c32102406e65fc41a227" category="inline-link-macro">LUN配置</block>
   <block id="869dc3a8daf591c7f33e5bb32a4a63c9" category="paragraph">的值<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 默认为9、表示2^9或512字节。为了获得最佳性能、<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 值必须为12 (2^12=4k)。此值在创建zpool时设置、并且无法更改、这意味着具有的zpool中的数据<block ref="81df978a8e3da4bee74b135548f390f3" prefix=" " category="inline-code"></block> 应通过将数据复制到新创建的zpool来迁移12以外的文件。</block>
@@ -757,7 +746,6 @@
   <block id="e1f651debac4f720c13ae930ff3ca14a" category="cell">ORACLE_HOME</block>
   <block id="27a7ffa293f5a4d2a5bb54354486dece" category="paragraph">使用AIX之前<block ref="b7cc91287fc99a8937a55e79376c6f54" prefix=" " category="inline-code"></block> 在任何环境(包括数据库)中、设备都应检查参数<block ref="9d51746070ef554ad4e93a16de4aed0f" prefix=" " category="inline-code"></block>。此参数不是HBA队列深度、而是与各个的SCSI队列深度相关<block ref="66ad66c6ace8456eae4ca6807552e54b" prefix=" " category="inline-code"></block> 可能太低、无法获得良好性能。测试表明、最佳值为64。</block>
   <block id="bb79f96acbff544ded541446c9c7c894" category="doc">Microsoft Windows</block>
-  <block id="14ce2582c2080a7f08fe9249f6565f40" category="paragraph">Oracle支持将Microsoft Windows与Direct NFS客户端结合使用。此功能提供了一条实现NFS管理优势的途径、其中包括跨环境查看文件、动态调整卷大小以及利用成本较低的IP协议。有关使用DNFS在Microsoft Windows上安装和配置数据库的信息、请参见Oracle官方文档。没有特别的最佳做法。</block>
   <block id="f854b764258138b512f30be71e1c7908" category="paragraph">为了获得最佳压缩效率、请确保NTFS文件系统使用8K或更大的分配单元。使用4K分配单元(通常为默认分配单元)会对压缩效率产生负面影响。</block>
   <block id="edc9f0a5a5d57797bf68e37364743831" category="doc">Linux</block>
   <block id="dfc95ed5e895617bbd0d4b1a8bfba8ca" category="paragraph">特定于Linux操作系统的配置主题。</block>
@@ -775,7 +763,6 @@
   <block id="243de27c01fea05cc58186d2e5ad1ce5" category="section-title">access和getattr</block>
   <block id="59dcf78e97c197a0f240067da57a248f" category="paragraph">一些客户注意到、极高级别的其他IOPS (如访问和getATTR)可能会主导其工作负载。在极端情况下、读取和写入等操作可能只占总数的10%。这是包含使用的任何数据库的正常行为<block ref="3504e2b0e7c968444314433be465518d" prefix=" " category="inline-code"></block> 和 / 或<block ref="79fea224ffd9e8111e4e87cab732464b" prefix=" " category="inline-code"></block> 在Linux上、因为这些选项会对Linux操作系统执行发生原因操作、以便不断地从存储系统中重新加载文件元数据。访问和getattr等操作是低影响操作、可通过数据库环境中的ONTAP缓存进行处理。不应将其视为真正的IOPS、例如读取和写入、因为它们会对存储系统产生真正的需求。但是、其他这些IOPS确实会产生一些负载、尤其是在RAC环境中。要解决这种情况、请启用DNFS、它会绕过操作系统缓冲区缓存并避免执行这些不必要的元数据操作。</block>
   <block id="041f371e212c70407e145ae9f752a8b4" category="section-title">Linux Direct NFS</block>
-  <block id="dd2f3f344f14ae5daf12cb0a817a72e0" category="paragraph">一个额外的挂载选项、称为<block ref="4740c034d97ca90a96b8050082816605" prefix=" " category="inline-code"></block>如果(a)启用了DNFS、并且(b)在单个服务器上多次挂载源卷(c)并使用嵌套NFS挂载、则需要使用此选项。此配置主要出现在支持SAP应用程序的环境中。例如、NetApp系统上的单个卷的目录可能位于<block ref="9f9f4ccb1fc3afcbfe0cc3f5eac4332c" prefix=" " category="inline-code"></block> 然后、再按<block ref="ac2f9bbcd397d8f6b39e6713658051ea" prefix=" " category="inline-code"></block>。条件<block ref="9f9f4ccb1fc3afcbfe0cc3f5eac4332c" prefix=" " category="inline-code"></block> 挂载于<block ref="9ad16912cc0ba54a259b1a15d233c264" prefix=" " category="inline-code"></block> 和<block ref="ac2f9bbcd397d8f6b39e6713658051ea" prefix=" " category="inline-code"></block> 挂载于<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>的结果是来自同一源的嵌套NFS挂载。</block>
   <block id="14dd7af30f62ec838445a1e167d2aff6" category="section-title">Linux Direct NFS和Oracle RAC</block>
   <block id="c6a209e4ad702c6424efb7d63d76feca" category="paragraph">使用DNFS对于Linux操作系统上的Oracle RAC具有特殊的性能优势、因为Linux没有强制执行直接I/O的方法、而RAC需要执行直接I/O才能在节点间保持一致。作为临时解决策、Linux需要使用<block ref="3504e2b0e7c968444314433be465518d" prefix=" " category="inline-code"></block> 挂载选项、此选项会导致操作系统缓存中的文件数据立即过期。而此选项又会强制Linux NFS客户端不断重新读取属性数据、从而会损害延迟并增加存储控制器上的负载。</block>
   <block id="3070cb366c38db327b0cf057d63792c1" category="paragraph">启用DNFS会绕过主机NFS客户端并避免这种损坏。多家客户报告说、在启用DNFS时、RAC集群的性能显著提高、ONTAP负载显著降低(尤其是与其他IOPS相关的负载)。</block>
@@ -1570,7 +1557,6 @@
   <block id="87d83a0406ac6622efcdf91c42784ecd" category="paragraph">数据库现在可以恢复了。如果是SAN环境、则可以激活卷组并挂载文件系统、这是一个轻松自动化的过程。但是、此示例使用的是NFS、因此文件系统已挂载并变为读写状态、不再需要在镜像中断后挂载或激活。</block>
   <block id="7a2e97f17454be76b7e522ce612ff961" category="paragraph">现在、可以将数据库恢复到所需的时间点、也可以根据所复制的重做日志副本将其完全恢复。此示例说明了归档日志、控制文件和重做日志卷的组合值。恢复过程显著简化、因为不需要依赖备份控制文件或重置日志文件。</block>
   <block id="5eda890cc07e4b7cd409730d8af8ddc3" category="paragraph">一致性组复制可以像通过SnapMirror计划复制单个卷一样简单。这包括数据文件、控制文件、归档日志和重做日志。每次SnapMirror更新都会在目标站点生成一个新的数据库副本、该副本保持一致、并可通过中断镜像来激活。</block>
-  <block id="89cb1432594ce7c25dadf229401874e7" category="paragraph">如果数据库必须跨越多个卷、则需要一致性组快照(CG快照)。</block>
   <block id="f96b125d1bacc785389957041be148e9" category="paragraph">在块级复制模式下与SnapMirror结合使用时、此策略的另一个优势是、可以完全复制源存储系统上的所有快照。除了灾难恢复副本之外、还会复制完整的备份副本。</block>
   <block id="77fda44088666155052f9d4224878cbc" category="summary">Oracle归档日志层</block>
   <block id="8625af69ad0b5f76799d87df777e3c86" category="paragraph">FabricPool最重要的用途或许是提高已知冷数据(如数据库事务日志)的效率。</block>
@@ -1706,24 +1692,13 @@
   <block id="162de6d405c04ce8f152f1d246ed9187" category="paragraph">在操作系统文件系统层使用缓存不太明显。装载的NFS文件系统中的块可能会缓存在操作系统中。或者、可以将基于主站点上LUN的集群文件系统挂载到远程站点的服务器上、然后再次缓存数据。在这些情况下、NVRAM故障、强制接管或强制切换可能会导致文件系统损坏。</block>
   <block id="04ca8d9ad570a3bdf1d76e23bc108ae5" category="paragraph">ONTAP通过NVFAIL及其关联设置、保护数据库和操作系统免受这种情况的影响。</block>
   <block id="82ef718f4ebe0c276814ee3d51e33361" category="doc">SnapRestore</block>
-  <block id="863696626734d6591db8be57b41c7eec" category="paragraph">NetApp SnapRestore技术可在ONTAP中从快照快速恢复数据。</block>
   <block id="9099b669f87419bc03914f11f5779c60" category="paragraph">当关键数据集不可用时、关键业务运营将中断。磁带可能会中断、甚至从基于磁盘的备份中恢复的速度也可能很慢、无法通过网络传输。SnapRestore通过近乎即时地还原数据集来避免这些问题。即使是PB级数据库、也只需几分钟的时间即可完全还原。</block>
-  <block id="b02fb7dec22d0e276ca01cc60b9efb48" category="paragraph">SnapRestore有两种形式：基于文件/LUN和基于卷。</block>
-  <block id="520e4b70b10aa2755a82b77e438a510f" category="list-text">单个文件或LUN可以在几秒钟内还原、无论它是2 TB LUN还是4 KB文件。</block>
-  <block id="45e8a84fe4ac58c8b30a7bdaf17c0b7f" category="list-text">文件或LUN容器可以在几秒钟内还原、无论数据大小是10 GB还是100 TB。</block>
-  <block id="4be4677be8cd434956b9b9af515b971a" category="paragraph">"文件或LUN容器"通常指FlexVol卷。例如、一个卷中可能有10个LUN构成一个LVM磁盘组、或者一个卷可能会存储包含1000个用户的NFS主目录。您可以将整个卷作为一个操作来还原、而不是对每个文件或LUN执行还原操作。此过程还适用于包含多个卷的横向扩展容器、例如FlexGroup或ONTAP一致性组。</block>
-  <block id="55abea92d64d6738f9e0ed48799696e7" category="paragraph">ONTAP仅允许对快照数据进行只读访问、但可以使用SnapRestore重新激活这些数据。快照将重新启用为数据的读写视图、从而将数据恢复到先前的状态。SnapRestore可以在卷或文件级别运行。该技术本质上是相同的、但行为略有不同。</block>
-  <block id="f10f2af75e2770a8ed3c2fde594e986d" category="section-title">Volume SnapRestore</block>
-  <block id="ca9846346bc3b03cdec10f9fff456866" category="paragraph">基于卷的SnapRestore会将整个数据卷返回到先前的状态。此操作不需要移动数据、这意味着还原过程基本上是瞬时的、尽管处理API或CLI操作可能需要几秒钟时间。还原1 GB的数据并不比还原1 PB的数据更复杂、也不会更耗时。这一功能是许多企业客户迁移到ONTAP存储系统的主要原因。即使是最大的数据集、它也能以秒为单位提供一个RTO。</block>
   <block id="627436e77bb011a6a312ae87b12f98ea" category="paragraph">基于卷的SnapRestore的一个缺点是、卷内的更改会随着时间的推移而累积。因此、每个快照和活动文件数据都取决于到那时为止所做的更改。将卷还原到早期状态意味着、系统将会先对数据进行所有后续更改、然后再进行相应的更改。但是、不太明显的是、这包括随后创建的快照。这并不总是可取的。</block>
   <block id="5c956f2c1cfc5b9e5bac32ad1acba314" category="paragraph">例如、数据保留SLA可能指定30天的夜间备份。如果将数据集还原到五天前使用卷SnapRestore创建的快照、则会丢弃前五天创建的所有快照、从而违反SLA。</block>
   <block id="8bf9e697004f47ed6133aef724a8a42c" category="paragraph">有许多选项可用于解决此限制：</block>
   <block id="ad3b75456e625de5fe347fb918f59a22" category="list-text">可以从先前的快照复制数据、而不是对整个卷执行SnapRestore。此方法最适合较小的数据集。</block>
   <block id="90541eb74c7c56cadc2f90ec6fb6f0c0" category="list-text">快照可以克隆、而不是还原。此方法的限制是、源快照是克隆的依赖项。因此、除非同时删除克隆或将其拆分成独立的卷、否则无法将其删除。</block>
   <block id="ab6045d3463c0f68ce2fa405dce9d554" category="list-text">使用基于文件的SnapRestore。</block>
-  <block id="7f7599a8b92846b691484dc91e090164" category="section-title">File SnapRestore</block>
-  <block id="f03eebe4f07d362dbfe4c1d4e76c724d" category="paragraph">基于文件的SnapRestore是一种基于快照的更精细还原过程。系统会还原单个文件或LUN的状态、而不是还原整个卷的状态。无需删除任何快照、此操作也不会对先前的快照创建任何依赖关系。文件或LUN将立即在活动卷中可用。</block>
-  <block id="e432fdcc277fc74a1b2b94cfeec8a7d2" category="paragraph">在对文件或LUN执行SnapRestore还原期间、不需要移动数据。但是、需要进行一些内部元数据更新、以反映文件或LUN中的底层块现在同时位于快照和活动卷中这一事实。此过程不会对性能产生任何影响、但会阻止创建快照、直到创建完成为止。根据所还原文件的总大小、处理速率约为5 Gbps (18 TB/小时)。</block>
   <block id="45c46768a1cb073f0d13245a0dc816f2" category="paragraph">正确的企业级数据保护架构取决于数据保留、可恢复性以及在各种事件期间对中断的承受能力方面的业务要求。</block>
   <block id="46e1b2893bdb002c0ede448cbfe1cb14" category="paragraph">例如、考虑范围内的应用程序、数据库和重要数据集的数量。为单个数据集构建备份策略以确保符合典型SLA要求相当简单、因为无需管理太多对象。随着数据集数量的增加、监控变得更加复杂、管理员可能不得不花费越来越多的时间来解决备份故障。随着环境达到云和服务提供商规模、需要采用完全不同的方法。</block>
   <block id="b70d233428e03d072b1134a97d853ab2" category="paragraph">数据集大小也会影响策略。例如、由于数据集非常小、因此对于使用100 GB数据库进行备份和恢复、有许多选项可供选择。只需使用传统工具从备份介质中复制数据、通常就能提供足够的恢复回路(Recovery)。100 TB数据库通常需要完全不同的策略、除非RTO允许发生多天中断、在这种情况下、可以使用基于副本的传统备份和恢复操作步骤。</block>
@@ -1733,38 +1708,24 @@
   <block id="12d1adb01d24027626b2a47660fb5b81" category="paragraph">这是一个合理的问题。本地快照用于满足日常备份和恢复需求、在这方面、快照是备份。在NetApp环境中、几乎99%的恢复方案都依靠快照来满足最苛刻的恢复时间要求。</block>
   <block id="fc34c9966c8ecb7307468637d9e79933" category="paragraph">但是、本地快照绝不是唯一的备份策略、这就是NetApp提供SnapMirror复制等技术来快速高效地将快照复制到一组独立驱动器的原因。在采用快照和快照复制功能且架构合理的解决方案中、磁带的使用量可以降至最低、甚至可以每季度归档一次、也可以完全避免。</block>
   <block id="1ea948130a9dbbc02e3a80648a99ff57" category="section-title">一致性组备份</block>
-  <block id="9b234a126e57777ab83807827d4e7078" category="paragraph">一致性组备份涉及捕获一个或多个数据集在一个原子时间点的状态。作为数据库示例、这包括所有数据库组件、例如数据文件、日志文件以及与数据库直接关联的其他文件。这几乎适用于所有关系数据库产品、包括Oracle RDBMS、Microsoft SQL Server、SAP HANA、PostgreSQL、 MySQL和MariaDB。使用一致性组备份保护VMware配置的方法与此类似、即在一个原子时间点捕获所有数据存储库、并可能捕获ESX启动LUN。</block>
-  <block id="5a1f7038c74e54c08669efa6722f1091" category="paragraph">创建此类一致性组快照本质上是模拟崩溃、因此、此类备份经常称为崩溃状态一致的备份。有时、对恢复方案的支持存在顾虑、但请务必了解、通常不需要恢复操作步骤。当应用程序在还原一致性组备份后启动时、它会执行常规日志恢复过程、文件系统日志重放以及其他任务、以重放备份时传输中的任何I/O。然后、应用程序将照常启动。</block>
   <block id="aebdbddec25f7eba6434244a989fb659" category="paragraph">从本质上说、可以通过这种方式保护任何能够承受电源故障或服务器崩溃而不会损坏数据的应用程序。许多不同供应商提供的同步和异步镜像产品所保护的大量应用程序也证明了这一点。如果主站点突然发生灾难、则副本站点将包含发生灾难时原始环境的一致映像。同样、不需要特殊的恢复操作步骤。</block>
-  <block id="e085ffefd89f8fb66260a9720e3fb6f8" category="paragraph">此方法的RPO通常仅限于备份点。一般来说、单卷快照的最小RPO为一小时。例如、48个每小时快照加上另外30天的每晚快照是合理的、不需要保留过多的快照。低于一小时的RPO将更难实现、因此、如果事先未咨询NetApp专业服务以了解环境、扩展和数据保护要求、则不建议这样做。</block>
-  <block id="1fe119a790b393b7dd7e79b63f15f52b" category="paragraph">通常、可以以秒为单位测量RTO。应用程序关闭、卷还原、应用程序重新启动。</block>
-  <block id="444cd304758b7607c8f7a3f627a5bc1f" category="paragraph">最简单的方法是将所有文件或LUN放在一个卷一致性组中、这样便可直接在ONTAP中计划快照创建。如果数据集必须跨越多个卷、则需要一致性组快照(CG快照)。这可以使用System Manager或还原API调用进行配置、此外、SnapCenter还能够在定义的卷列表上创建简单的一致性组快照。</block>
   <block id="689b0155b42a554594a44cddc736eb67" category="section-title">复制和灾难恢复架构</block>
   <block id="1749d12df3df2319d3eee218a277ff83" category="inline-link-macro">MetroCluster</block>
   <block id="f443592081a2b3ddc55b94abe49ba128" category="paragraph">灾难恢复RPO受可用网络带宽和所保护数据的总大小限制。创建初始基线传输后、更新仅基于更改后的数据、尽管存在例外情况、但更改后的数据在总数据占用空间中所占的百分比通常很低。</block>
   <block id="89e87a831dae60244ba34496d70fd45d" category="paragraph">例如、一个每周变更率为10%的10 TB数据库平均每小时总变更大约为6 GB。如果使用10 Gb连接、则此数据库需要大约6分钟的传输时间。更改率随数据库更改率的波动而变化、但整体更新间隔为15分钟、因此应可实现15分钟RPO。如果有100个此类数据库、则需要600分钟来传输数据。因此、无法实现1小时的RPO。同样、一个大小为100 TB且每周变更率为10%的数据库的副本无法在一小时内可靠地更新。</block>
-  <block id="3c886a803aef21f5ac9f7bcea7408cbb" category="paragraph">其他因素可能会影响复制、例如复制开销和并发复制操作数限制。但是、单卷复制策略的整体规划可以基于可用带宽、通常可以实现一小时的复制RPO。低于一小时的RPO将更难实现、只能在咨询NetApp专业服务后执行。在某些情况下、如果站点间网络连接良好、则15分钟是可行的。但是、总体而言、如果需要的RPO低于一小时、则多卷日志重放架构可以获得更好的结果。</block>
   <block id="5e2cbdd214e7a73bca1af8ed5cc04626" category="paragraph">在灾难恢复场景中、具有一致性组复制的恢复时间(从存储角度来看、通常以秒为单位)非常出色。最直接的方法是简单地中断镜像、数据库已准备就绪、可以启动。数据库启动时间通常约为10秒、但包含大量记录事务的大型数据库可能需要几分钟的时间。</block>
   <block id="1c18c939e73ddb1ceee34e8a33079d1a" category="paragraph">确定ROTO的更重要因素不是存储系统、而是运行它的应用程序和主机操作系统。例如、复制的数据可以在一两秒钟内提供、但这仅表示数据。此外、还必须有一个配置正确的操作系统、其中包含可用于数据的应用程序二进制文件。</block>
   <block id="6fab898feea25b9d7fd4477911b90b31" category="paragraph">在某些情况下、客户会提前准备灾难恢复实例、并在操作系统上预先发现存储。在这些情况下、激活灾难恢复方案只需要中断镜像并启动应用程序即可。在其他情况下、操作系统和关联应用程序可能会作为ESX虚拟机磁盘(VMDK)与数据库一起镜像。在这些情况下、RPO取决于客户在自动化方面的投入、以快速启动VMDK、从而可以启动应用程序。</block>
-  <block id="c7d5d755b896edf43189fbb020202913" category="paragraph">保留时间部分由快照限制控制。例如、ONTAP中的卷限制为1024个快照。在某些情况下、客户会通过多路复用复制来增加限制。例如、如果需要2000天的备份、则可以将一个源复制到两个卷、并在备用日期进行更新。这需要增加初始所需空间、但与涉及多个完整备份的传统备份系统相比、这种方法的效率要高得多。</block>
-  <block id="7ec0f114b69016879106b5018cdf10b9" category="section-title">单卷一致性组</block>
-  <block id="cd70f3e596e275fe80fbbe5d7858ce1a" category="paragraph">最简单的方法是将所有文件或LUN放在一个卷一致性组中、这样可以直接在存储系统上计划SnapMirror和SnapVault更新。不需要外部软件。</block>
   <block id="909e8df57072d0b3c6d7d64b11acb571" category="section-title">多卷一致性组</block>
-  <block id="c7371eded617935ace6c71a33cfbf3fd" category="paragraph">如果数据库必须跨越多个卷、则需要一致性组快照(CG快照)。如上所述、可以使用System Manager或还原API调用来配置此功能、此外、SnapCenter还能够在定义的卷列表上创建简单的一致性组快照。</block>
-  <block id="9c991b38c054d7bec0632efd6667540c" category="paragraph">此外、还需要考虑将多卷一致快照用于灾难恢复的问题。在更新多个卷时、可能会在传输过程中发生灾难。结果将是一组彼此不一致的卷。如果发生这种情况、则必须将某些卷还原到先前的快照状态、以提供崩溃状态一致且可供使用的数据库映像。</block>
   <block id="fad8a5f46ebd89f74383b461e32dd6b9" category="section-title">灾难恢复：激活</block>
   <block id="5ac319591298468b0af89c2c469201f8" category="paragraph">激活灾难恢复副本的过程取决于存储类型。通过NFS、可以在灾难恢复服务器上预挂载文件系统。它们处于只读状态、并在镜像中断后变为读写状态。这样可实现极低的RPO、而且由于需要管理的部件较少、因此整个灾难恢复过程更可靠。</block>
   <block id="b829fc11ff11b57af8d4632d38d7d7e8" category="paragraph">在发生灾难恢复时激活SAN配置会变得更加复杂。最简单的方法通常是临时中断镜像并挂载SAN资源、包括发现LVM配置(包括Oracle自动存储管理[ASM]等应用程序专用功能)以及向/etc/fstab中添加条目等步骤。</block>
   <block id="335a5796fb106a877544d121062534be" category="paragraph">这样、目标服务器就可以识别LUN设备路径、卷组名称和其他设备路径。然后、可以关闭这些资源、然后还原镜像。这样、服务器就会处于可以快速使应用程序联机的状态。激活卷组、挂载文件系统或启动数据库和应用程序的步骤可以轻松实现自动化。</block>
   <block id="b1a175c5f42da29f6c27f4ea29684b63" category="paragraph">必须注意确保灾难恢复环境是最新的。例如、可能会向源服务器添加新的LUN、这意味着必须在目标上预先发现新的LUN、以确保灾难恢复计划按预期运行。</block>
   <block id="90426ba53f908049843b3ea392578d04" category="doc">Oracle灾难恢复</block>
-  <block id="2a4fa9d9434561574119e3086112023f" category="paragraph">使用单个快照保护数据文件、归档日志、重做日志和控制文件是一种有效的备份、还原和复制方法。  但是、RPO仅限于备份本身的时间点。它适用于一小时或更长时间的RPO。如果数据库跨越多个卷、则需要使用前面讨论的工具之一创建CG快照。</block>
-  <block id="93310f4cebc752304c164f00d67e0bca" category="paragraph">例如、整个数据库可以位于具有以下快照计划的单个卷中：</block>
   <block id="a33821be4b3522d65daed1ec317299f6" category="list-text">72个每小时快照</block>
   <block id="0eea0679ac7bf43c19d603cd78e81de9" category="list-text">30个夜间快照</block>
   <block id="c4546c401776d279c5577011584577fa" category="list-text">12个月快照</block>
-  <block id="b63db1b650d128c342617b377baf928a" category="paragraph">这样、在前72小时的滚动期间便可实现1小时的RPO、并可提供额外的每晚和每月备份。还可以在单个卷或一组CG快照中包含多个数据库或应用程序文件、以便在更大的环境中提供一致的备份。</block>
   <block id="686540783626106489734a1990d4930d" category="paragraph">ONTAP旨在最大程度地提高Oracle数据库的可用性。本文档不会介绍完整的ONTAP高可用性功能问题描述。但是、与数据保护一样、在设计数据库基础架构时、基本了解此功能非常重要。</block>
   <block id="b049fcbe8198301adc6bf87634a02845" category="section-title">HA 对</block>
   <block id="1a7c11d1e2d03d3d1b57cff284ebd761" category="paragraph">高可用性的基本单位是HA对。每个对都包含冗余链路、以支持将数据复制到NVRAM。NVRAM不是写入缓存。控制器中的RAM用作写入缓存。NVRAM的用途是临时记录数据、以防止发生意外系统故障。在这方面、它类似于数据库重做日志。</block>
@@ -1832,7 +1793,6 @@
   <block id="307b6d3e63c12ada7fbcf75cdda0b574" category="paragraph">如果本地NVRAM报告错误、则此节点将关闭。此关闭会导致故障转移到HA配对控制器。由于发生故障的控制器尚未确认写入操作、因此不会丢失任何数据。</block>
   <block id="6e0c6c8fe69a50581a4ac18acb2c04dd" category="paragraph">除非强制执行故障转移、否则ONTAP不允许在数据不同步时进行故障转移。以这种方式强制更改条件即表示数据可能会留在原始控制器中、并且数据丢失是可以接受的。</block>
   <block id="a3961862ed464a06ef6fa4e23935fef2" category="paragraph">如果强制执行故障转移、数据库尤其容易受到损坏的影响、因为数据库会在磁盘上保留大量内部数据缓存。如果发生强制故障转移、先前确认的更改将被有效丢弃。存储阵列的内容会及时有效地向后跳转、数据库缓存的状态不再反映磁盘上数据的状态。</block>
-  <block id="b46ce3019d702ee3ece327e5df990be0" category="paragraph">为了保护数据免受这种情况的影响、ONTAP允许对卷进行配置、以便针对NVRAM故障提供特殊保护。触发此保护机制后、卷将进入名为NVFAIL的状态。此状态会导致I/O错误、即发生原因A应用程序会关闭、以使其不使用陈旧数据。数据不应丢失、因为存储阵列上应存在任何已确认的写入。</block>
   <block id="322e1f85910dfc206274f8bd58a54a9d" category="list-text">给定站点上的每组驱动器都会自动配置为一个或多个完全冗余的RAID-DP或RAID-TEC组、而与镜像的使用无关。这样可以提供持续的数据保护、即使在站点丢失后也是如此。</block>
   <block id="dee2dfce5ab0c47301b3c12970a57aa6" category="paragraph">上图显示了一个示例SyncMirror配置。在控制器上创建了一个包含24个驱动器的聚合、其中12个驱动器来自站点A上分配的磁盘架、12个驱动器来自站点B上分配的磁盘架这些驱动器被分组为两个镜像RAID组。RAID组0在站点A上包含一个6驱动器丛、该丛镜像到站点B上的6驱动器丛同样、RAID组1在站点A上包含一个6驱动器丛、该丛镜像到站点B上的6驱动器丛</block>
   <block id="4fbc0abe91c0c1381d0a742f58b4e537" category="paragraph">SyncMirror通常用于为MetroCluster系统提供远程镜像、每个站点有一个数据副本。有时、它会用于在单个系统中提供额外的冗余级别。尤其是、它可以提供磁盘架级冗余。驱动器架已包含双电源和控制器、总体比金属板稍多、但在某些情况下、可能需要额外保护。例如、一家NetApp客户为汽车测试期间使用的移动实时分析平台部署了SyncMirror。该系统分为两个物理机架、由独立UPS系统的独立电源供电。</block>
@@ -1852,21 +1812,14 @@
   <block id="604432b50055c69f34df17a8ed5befb5" category="paragraph">在恢复期间、数据库会从数据文件中读取元数据、以确定所需的最早归档日志。可以执行完全恢复或时间点恢复。执行时间点恢复时、了解数据文件快照的时间至关重要。指定恢复点必须在快照创建时间之后。NetApp建议为快照时间至少添加几分钟、以考虑时钟变化。</block>
   <block id="08bfe39c49a2dc07b08bd2ccd77d8281" category="paragraph">有关完整的详细信息、请参见Oracle 12c文档各个版本中有关"使用存储Snapshot优化进行恢复"主题的Oracle文档。另请参见Oracle文档ID 604683.1、了解有关Oracle第三方快照支持的信息。</block>
   <block id="d22a890163762fcf7a4cb7605c29b7e6" category="section-title">数据布局</block>
-  <block id="6a7fc1f74262f6973420f4fc849ba7f7" category="paragraph">最简单的布局是将数据文件隔离到一个或多个专用卷中。它们必须未受任何其他文件类型的污染。这是为了确保数据文件卷可以通过SnapRestore操作快速还原、而不会销毁重要的重做日志、控制文件或归档日志。</block>
-  <block id="ff6fb5d2136ab516e182f4b23f45886d" category="paragraph">SAN对专用卷中的数据文件隔离具有类似要求。对于Microsoft Windows等操作系统、一个卷可能包含多个数据文件LUN、每个LUN都具有一个NTFS文件系统。对于其他操作系统、通常也会有一个逻辑卷管理器。例如、对于Oracle ASM、最简单的选择是将磁盘组限制为一个卷、该卷可以作为一个单元进行备份和还原。如果出于性能或容量管理原因需要更多卷、则在新卷上创建更多磁盘组可简化管理。</block>
-  <block id="a06956ba6de69aec2dc2b015074e5821" category="paragraph">如果遵循这些准则、则可以直接在ONTAP上计划快照、而无需执行一致性组快照。原因是针对快照优化的备份不需要同时备份数据文件。</block>
-  <block id="9e422c12420f1bd8c73e3c0f63da55e9" category="paragraph">如果ASM磁盘组分布在多个卷中、则会出现复杂情况。在这些情况下、必须执行cG-Snapshot、以确保ASM元数据在所有成分卷之间保持一致。</block>
-  <block id="7a7969d6a47ed242c25f6a38f2da0e36" category="paragraph">[注]验证ASM spfile和passwd文件是否不在托管数据文件的磁盘组中。这会影响有选择地还原数据文件和仅还原数据文件的能力。</block>
   <block id="12eb3ceede91a01c74368e0fab03dbe4" category="section-title">本地恢复过程—NFS</block>
   <block id="e1a03fcc478ae212f07b5044b11ff369" category="paragraph">此操作步骤可以手动驱动、也可以通过SnapCenter等应用程序驱动。基本操作步骤如下所示：</block>
-  <block id="abb0083d6ab87bbe9d906632fea121ae" category="list-text">将数据文件卷恢复到所需还原点之前的快照。</block>
   <block id="3450fe1e1eea00fa55cfb5cb835a3d80" category="paragraph">此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须还原归档日志、或<block ref="075b7d3bd3bbe7767f7ef62f430bc22b" prefix=" " category="inline-code"></block> 或<block ref="a84f4f3da79386c29ab6dfa560af786e" prefix=" " category="inline-code"></block> 可以定向到中的数据<block ref="a15da8cecb1f1192c4d913b8ba676121" prefix=" " category="inline-code"></block> 目录。</block>
   <block id="e43e33171833b26f6b024d28cb8b1afd" category="paragraph">此外、对于较小的数据库、最终用户可以直接从中恢复数据文件<block ref="a15da8cecb1f1192c4d913b8ba676121" prefix=" " category="inline-code"></block> 目录、而无需借助自动化工具或存储管理员来执行SnapRestore命令。</block>
   <block id="097230f6ad5345abbe261eabbf533a68" category="section-title">本地恢复过程—SAN</block>
   <block id="4e3110543ebf2a771c16b3b2101f1f88" category="list-text">将托管数据文件的磁盘组静置。操作步骤因所选的逻辑卷管理器而异。使用ASM时、此过程需要卸载磁盘组。对于Linux、必须卸载文件系统、并停用逻辑卷和卷组。目标是停止要还原的目标卷组上的所有更新。</block>
   <block id="1d0ecd206531f96737f8e8002be4a047" category="list-text">将数据文件磁盘组还原到所需还原点之前的快照。</block>
   <block id="946fe41f610ab658e270a1844c992bcc" category="list-text">重新激活新还原的磁盘组。</block>
-  <block id="c21d8f41541fc2a0259e7ea5e51edac3" category="paragraph">此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须通过使归档日志LUN脱机并执行还原来还原归档日志。这也是一个将归档日志划分为专用卷非常有用的示例。如果归档日志与重做日志共享一个卷组、则必须在还原整个LUN集之前将重做日志复制到其他位置、以避免丢失最终记录的事务。</block>
   <block id="3fd5b2a08b3d7c4db29da8590ef6013f" category="section-title">完全恢复示例</block>
   <block id="31679daa394b7091acfd728d940b7322" category="paragraph">假设数据文件已损坏或销毁、需要完全恢复。要执行此操作的操作步骤如下所示：</block>
   <block id="aa09ca247daac25fc18c2633124ca9b6" category="section-title">时间点恢复示例</block>
@@ -1887,16 +1840,11 @@
   <block id="7c11b244c2549a2cc477c134ec4c5635" category="list-text">一组当前的重做日志</block>
   <block id="8522faf14bc9d4ab497945bb48adc870" category="paragraph">可以通过多种方法恢复联机备份。许多客户使用ONTAP命令行界面还原快照、然后使用Oracle RMAN或sqlplus完成恢复。在大型生产环境中、这种情况尤为常见、在这些环境中、数据库还原的概率和频率极低、任何还原操作步骤都由技能娴熟的数据库管理人员来处理。为了实现完全自动化、NetApp SnapCenter等解决方案包括一个具有命令行和图形界面的Oracle插件。</block>
   <block id="f88f41d4801183a5d53a4b71f383d144" category="paragraph">一些大型客户采用了一种更简单的方法、即在主机上配置基本脚本、以便在特定时间将数据库置于备份模式、以便为计划的快照做准备。例如、计划命令<block ref="56f72994c4cc84b13a4c20dab49fea35" prefix=" " category="inline-code"></block> 23：58时、<block ref="84c8391d82cbfe300a9615844e0a167f" prefix=" " category="inline-code"></block> 00：02、然后将快照直接计划在午夜在存储系统上。这样、便形成了一个简单、高度可扩展的备份策略、无需外部软件或许可证。</block>
-  <block id="719fbeb74939b8c065321f175de3d222" category="paragraph">最简单的布局是将数据文件隔离到一个或多个专用卷中。它们必须未受任何其他文件类型的污染。这是为了确保数据文件卷可以通过SnapRestore操作快速还原、而不会销毁重要的重做日志、控制文件或归档日志。</block>
-  <block id="19156bdcbf322e8e3189909bbb7a69e8" category="paragraph">SAN对专用卷中的数据文件隔离具有类似要求。对于Microsoft Windows等操作系统、一个卷可能包含多个数据文件LUN、每个LUN都具有一个NTFS文件系统。对于其他操作系统、通常会有一个逻辑卷管理器。例如、对于Oracle ASM、最简单的选择是将ASM磁盘组的LUN限制为一个可作为一个单元进行备份和还原的卷。如果出于性能或容量管理原因需要更多卷、则在新卷上创建更多磁盘组可简化管理。</block>
-  <block id="993afa8643b7200c5c9e527c24c1d8b2" category="paragraph">如果遵循这些准则、则可以直接在存储系统上计划快照、而无需执行一致性组快照。原因是Oracle备份不需要同时备份数据文件。联机备份操作步骤旨在使数据文件能够持续更新、因为它们会在数小时内缓慢流式传输到磁带。</block>
-  <block id="a2ea5ea024e4a68e4d7f4abeca3441a1" category="paragraph">如果使用分布在卷之间的ASM磁盘组、则会出现复杂情况。在这些情况下、必须执行cG-Snapshot、以确保ASM元数据在所有成分卷之间保持一致。</block>
   <block id="0a3ecb97c1b7c97e5075bae0daaa45aa" category="paragraph">*注意：*验证ASM<block ref="1737629d60b511cf45957529a8f046e2" prefix=" " category="inline-code"></block> 和<block ref="76a2173be6393254e72ffa4d6df1030a" prefix=" " category="inline-code"></block> 文件不在托管数据文件的磁盘组中。这会影响有选择地还原数据文件和仅还原数据文件的能力。</block>
   <block id="2f8a5e254c86a42ebcc8b7d3c84cd22e" category="paragraph">此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须还原归档日志、或者可以将RMAN/sqlplus定向到快照目录中的数据。</block>
   <block id="a67a69f712a877950e94edd27310b40e" category="paragraph">此外、对于较小的数据库、最终用户可以直接从中恢复数据文件<block ref="a15da8cecb1f1192c4d913b8ba676121" prefix=" " category="inline-code"></block> 目录、而无需自动化工具或存储管理员协助即可执行<block ref="a4c0ce4da6fb04943b499690fb3afd6e" prefix=" " category="inline-code"></block> 命令：</block>
   <block id="6da8ebf3245e4fbe4654e7f92f0330d7" category="list-text">将托管数据文件的磁盘组静置。操作步骤因所选的逻辑卷管理器而异。使用ASM时、此过程需要卸载磁盘组。对于Linux、必须卸载文件系统、并且必须停用逻辑卷和卷组。目标是停止要还原的目标卷组上的所有更新。</block>
   <block id="931ab211ac6773d20c03a998f9f921ce" category="list-text">如果需要完全恢复、请重放所有重做日志。</block>
-  <block id="b6575c3fca5eaaa56eeb8e9ce8867f05" category="paragraph">此操作步骤假定所需的归档日志仍存在于活动文件系统中。否则、必须通过使归档日志LUN脱机并执行还原来还原归档日志。这也是一个将归档日志划分为专用卷非常有用的示例。如果归档日志与重做日志共享一个卷组、则必须先将重做日志复制到其他位置、然后才能还原整个一组LUN。此步骤可防止丢失这些最终记录的事务。</block>
   <block id="65fd6f7f97414140b4d6060b743dc645" category="paragraph">这些要求包括恢复速度、允许的最大数据丢失量以及备份保留需求等因素。数据保护计划还必须考虑数据保留和还原方面的各种法规要求。最后、必须考虑不同的数据恢复场景、从因用户或应用程序错误而导致的典型和可预见的恢复到包括站点完全丢失在内的灾难恢复场景。</block>
   <block id="2bd1d35ff88de136066c33905c0fd677" category="paragraph">对数据保护和恢复策略进行微小更改可能会对存储、备份和恢复的整体架构产生显著影响。在开始设计工作之前、必须定义并记录标准、以避免使数据保护架构复杂化。不必要的功能或保护级别会导致不必要的成本和管理开销、而最初被忽视的要求可能会导致项目方向错误或需要在最后一刻更改设计。</block>
   <block id="a60e6b87ede45aef49d8d095435db22b" category="section-title">恢复时间目标</block>
@@ -1936,12 +1884,9 @@
   <block id="175888ba89c31a851f719bdd271cae9c" category="list-text">*效率。*创建快照时不需要任何空间。只有在数据发生更改时才会占用空间。</block>
   <block id="d853e9e275a6e58b3a9a56fa641cbb9f" category="list-text">*易管理性。*基于快照的备份策略易于配置和管理、因为快照是存储操作系统的本机部分。如果存储系统已启动、则它可以随时创建备份。</block>
   <block id="b564e5fbab71af776ed54a19d09b268c" category="list-text">*可扩展性。*一个文件和LUN容器最多可保留1024个备份。对于复杂的数据集、可以通过一组一致的快照来保护多个数据容器。</block>
-  <block id="7159872a568b97a971b9ea182fb23b7c" category="list-text">无论卷包含1024个快照还是无快照、性能都不受影响。</block>
   <block id="1a54f7e14e6e652bb32b12df22faf387" category="paragraph">虽然许多存储供应商都提供快照技术、但ONTAP中的快照技术是独一无二的、可为企业级应用程序和数据库环境带来显著优势：</block>
   <block id="d77b23e355dc2f65b90fb52ed9a90f9c" category="list-text">Snapshot副本是底层任意位置写入文件布局(Write-Anywhere File Layout、WAFL)的一部分。它们不是附加技术或外部技术。由于存储系统是备份系统、因此可简化管理。</block>
   <block id="8b888e6a2d883c0111428c101532294a" category="list-text">Snapshot副本不会影响性能、但某些边缘情形除外、例如、快照中存储的数据量如此之多、以致于底层存储系统会填满。</block>
-  <block id="2283ea50a243a5d1ad551f7d21f39895" category="list-text">术语"一致性组"通常用于指作为一致的数据集合进行管理的一组存储对象。特定ONTAP卷的快照构成一致性组备份。</block>
-  <block id="ac72c83a8204d600d567261b41c5488c" category="paragraph">ONTAP快照的扩展能力也优于竞争技术。客户可以存储5个、50个或500个快照、而不会影响性能。卷中当前允许的最大快照数为1024。如果需要额外保留快照、可以选择将快照级联到其他卷。</block>
   <block id="3b7ff39ba50f1bc3f56d38c41ba51855" category="paragraph">因此、保护ONTAP上托管的数据集非常简单、并且具有高度可扩展性。备份不需要移动数据、因此可以根据业务需求定制备份策略、而不是网络传输速率、大量磁带驱动器或磁盘暂存区的限制。</block>
   <block id="55c5bbb3aad88266600eaa1a526406d4" category="paragraph">有关将快照用作数据保护策略的一个常见问题是、"实际"数据和快照数据位于同一个驱动器上。丢失这些驱动器将导致主数据和备份均丢失。</block>
   <block id="68870deb35eeb53373325a314030bd11" category="paragraph">但是、本地快照绝不是唯一的备份策略、这就是NetApp提供SnapMirror和SnapVault复制等技术来快速高效地将快照复制到一组独立驱动器的原因。在采用快照和快照复制功能且架构合理的解决方案中、磁带的使用量可以降至最低、甚至可以每季度归档一次、也可以完全避免。</block>
@@ -1952,41 +1897,20 @@
   <block id="32561979f55bc68c4f028fd26a9975f6" category="paragraph">当备份点恢复足以满足要求时、主要使用崩溃状态一致的备份。当需要更精细的恢复时、通常需要应用程序一致的备份。</block>
   <block id="367735591e5e6e04c17b7930acb29b7d" category="paragraph">"应用程序一致"中的"一致"一词通常用词不当。例如、将Oracle数据库置于备份模式称为应用程序一致的备份、但数据不会以任何方式保持一致或处于静态。数据在整个备份过程中持续更改。相比之下、大多数MySQL和Microsoft SQL Server备份确实会在执行备份之前将数据置于静噪状态。VMware可能会使某些文件保持一致、也可能不会使其保持一致。</block>
   <block id="ebf90723e7659cb5381545104b618612" category="paragraph">术语"一致性组"是指存储阵列能够将多个存储资源作为一个映像进行管理。例如、一个数据库可能包含10个LUN。阵列必须能够以一致的方式备份、还原和复制这10个LUN。如果LUN的映像在备份时不一致、则无法还原。复制这10个LUN要求所有副本之间完全同步。</block>
-  <block id="3f8a43f1defaa984435092f616876545" category="paragraph">在讨论ONTAP时、不经常使用术语"一致性组"、因为一致性一直是ONTAP中卷和聚合架构的基本功能。许多其他存储阵列将LUN或文件系统作为单独的单元进行管理。然后、可以选择将其配置为"一致性组"以实现数据保护、但这是配置中的一个额外步骤。</block>
-  <block id="74e816c3c784f5c30c79dca4590d7f59" category="paragraph">ONTAP始终能够捕获一致的本地和复制数据映像。虽然ONTAP系统上的各种卷通常不会正式描述为一致性组、但它们就是一致性组。该卷的快照是一致性组映像、该快照的还原是一致性组还原、SnapMirror和SnapVault均提供一致性组复制。</block>
   <block id="15cc4389a08c3f4748e98622e630ad3e" category="section-title">一致性组快照</block>
-  <block id="d286b747757ef3d8d3abac27bfae65f9" category="paragraph">一致性组快照(CG快照)是基本ONTAP快照技术的扩展。标准快照操作会为单个卷中的所有数据创建一致的映像、但有时需要在多个卷甚至多个存储系统之间创建一组一致的快照。这样就会生成一组快照、这些快照的使用方式与仅包含一个卷的快照相同。它们可用于本地数据恢复、为灾难恢复目的进行复制或作为一个一致的单元进行克隆。</block>
-  <block id="7c199465bc6344e648e2f73c88131605" category="paragraph">已知的最大CG-Snapsh图 用途是用于大小约为1 PB且跨越12个控制器的数据库环境。在此系统上创建的CG快照已用于备份、恢复和克隆。</block>
-  <block id="e5c199b4a97409f33d5caae984957744" category="paragraph">大多数情况下、如果数据集跨越多个卷且必须保留写入顺序、则选定管理软件会自动使用CG快照。在这种情况下、无需了解CG快照的技术详细信息。但是、在某些情况下、复杂的数据保护要求需要对数据保护和复制过程进行详细控制。可以选择自动化工作流或使用自定义脚本来调用CG-Snapshot API。要了解cG-Snapshot的最佳选项和角色、需要对该技术进行更详细的说明。</block>
-  <block id="cf3c30ea5c240a8aef02d240f42cdff7" category="paragraph">创建一组CG快照的过程分为两步：</block>
-  <block id="f30455406a91bd776afbc88e60b9697e" category="list-text">在所有目标卷上建立写入隔离。</block>
-  <block id="c7afe45d94f2fd172a01e851d7f92a2f" category="list-text">在隔离状态下创建这些卷的快照。</block>
-  <block id="c464d4671e489eaad9a8cbf0a8086ea9" category="paragraph">写入隔离是按序列建立的。这意味着、在多个卷之间设置隔离过程时、写入I/O会冻结在序列中的第一个卷上、因为它会继续提交到稍后显示的卷。最初、这可能看起来违反了保留写入顺序的要求、但只有在主机上异步发出的适用场景I/O、而不依赖于任何其他写入。</block>
   <block id="688656b1f8644ee299edf7be87a8fc75" category="paragraph">例如、数据库可能会对大量异步数据文件更新进行问题描述、并允许操作系统重新排列I/O、然后根据自己的计划程序配置完成这些更新。无法保证此类I/O的顺序、因为应用程序和操作系统已释放保留写入顺序的要求。</block>
-  <block id="599ce07d1bae0fa6169959e2bdb97ada" category="paragraph">作为一个计数器示例、大多数数据库日志记录活动都是同步的。在确认I/O并保留这些写入顺序之前、数据库不会继续进行日志写入。如果日志I/O到达隔离的卷、则不会进行确认、应用程序会阻止进一步写入。同样、文件系统元数据I/O通常是同步的。例如、文件删除操作不能丢失。如果带有xfs文件系统的操作系统删除了某个文件、而更新了xfs文件系统元数据以删除对该文件的引用的I/O则会登录到隔离的卷上、则文件系统活动将暂停。这样可以保证CG快照操作期间文件系统的完整性。</block>
-  <block id="0f0c0f05310f9cf257d65bfd936f15c5" category="paragraph">在目标卷之间设置写入隔离后、这些卷便可创建快照了。无需同时创建快照、因为从依赖写入的角度来看、卷的状态是冻结的。为了防止创建CG快照的应用程序出现缺陷、初始写入隔离包括一个可配置的超时时间、在此超时时间内、ONTAP会自动释放隔离并在定义的秒数后恢复写入处理。如果所有快照都是在超时期限到期之前创建的、则生成的一组快照是有效的一致性组。</block>
   <block id="df4925d1c6c3f3258e80ff35ce62b17d" category="section-title">从属写入顺序</block>
   <block id="6c78ee478b93fbb573157b85fb1114db" category="paragraph">从技术角度来看、一致性组的关键在于保留写入顺序、尤其是依赖写入顺序。例如、向10个LUN写入数据的数据库会同时向所有LUN写入数据。许多写入操作是异步发出的、这意味着它们的完成顺序并不重要、实际完成顺序会因操作系统和网络行为而异。</block>
   <block id="69d87c00869001f3f06ad4a1494eac21" category="paragraph">在数据库继续执行其他写入操作之前、磁盘上必须存在某些写入操作。这些关键写入操作称为依赖写入。后续写入I/O取决于磁盘上是否存在这些写入。对这10个LUN执行任何快照、恢复或复制操作都必须确保依赖写入顺序得到保证。文件系统更新是依赖写入顺序写入的另一个示例。必须保留文件系统更改的顺序、否则整个文件系统可能会损坏。</block>
   <block id="74fbae5d0b3c16e1774c5f4dce2c1c36" category="section-title">战略</block>
   <block id="53e858edb9bd9ff3f9ead52cebf5731d" category="paragraph">基于快照的备份有两种主要方法：</block>
-  <block id="f87f61f625a005bd32c53f808d235eea" category="list-text">受Snapshot保护的热备份</block>
-  <block id="c32eba270db95747b471fd53e203a47b" category="paragraph">崩溃状态一致的Snapshot备份主要在备份点恢复已足够时使用。在某些情况下、可以应用归档日志、但在需要更精细的时间点恢复时、最好使用联机备份。</block>
   <block id="82cc23cd5dc667cc9fb78ff6e76ac15b" category="paragraph">基于快照的联机备份的基本操作步骤如下所示：</block>
   <block id="dbaf4855045e45fbcf678fa4cd1ab2db" category="list-text">将数据库放置在中<block ref="402051f4be0cc3aad33bcf3ac3d6532b" prefix=" " category="inline-code"></block> 模式。</block>
-  <block id="c3e07fb8aef84ef3d94e3f9d5376c091" category="list-text">为托管数据文件的所有卷创建快照。</block>
   <block id="2d0e58ff1a25bd9fd8a85ad8ce6f2665" category="list-text">退出<block ref="402051f4be0cc3aad33bcf3ac3d6532b" prefix=" " category="inline-code"></block> 模式。</block>
   <block id="4196c5674aaa9e4317b2b4c54f94a905" category="list-text">运行命令<block ref="9d2840394bc37850da4e360dbf60c0dc" prefix=" " category="inline-code"></block> 强制日志归档。</block>
-  <block id="f2736e795871e2fc2d36addb9436f337" category="list-text">为托管归档日志的所有卷创建快照。</block>
   <block id="f24880a3fe8b242fdd1aba5a2d11196f" category="paragraph">此操作步骤将生成一组快照、其中包含处于备份模式的数据文件以及处于备份模式时生成的关键归档日志。这是恢复数据库的两项要求。为方便起见、还应保护控制文件等文件、但唯一的绝对要求是保护数据文件和归档日志。</block>
   <block id="0c32649da44277db19fcfa3fe4dac28f" category="paragraph">虽然不同的客户可能有非常不同的策略、但几乎所有这些策略最终都基于下面所述的相同原则。</block>
   <block id="88f451afed04f47352987f617f805826" category="section-title">基于Snapshot的恢复</block>
-  <block id="c092a9763068c8382be82f9c77bb9658" category="paragraph">在为Oracle数据库设计卷布局时、首先要决定是否使用基于卷的NetApp SnapRestore (VBSR)技术。</block>
-  <block id="15a0b8dc4d1b340d403bf6515f7e61b8" category="paragraph">基于卷的SnapRestore可以将卷几乎即时还原到较早的时间点。由于卷上的所有数据均已还原、因此VBSR可能并不适用于所有使用情形。例如、如果整个数据库(包括数据文件、重做日志和归档日志)存储在单个卷上、而此卷通过VBSR还原、则数据会丢失、因为较新的归档日志和重做数据会被丢弃。</block>
-  <block id="e63c0ca12b07a654ccadd92527a95c47" category="paragraph">还原不需要VBSR。许多数据库都可以通过使用基于文件的单文件文件系统(Single File SnapRestore、SFSR)进行还原、或者只需将文件从快照复制回活动文件系统即可。</block>
-  <block id="b38bd603a952c93872eae2ea858cb15f" category="paragraph">通过以这种方式隔离数据文件、可以将其还原到早期状态、而不会损坏其他文件系统。</block>
-  <block id="5755a6275c3ecd99e8159efc58a8ff6c" category="section-title">Snapshot 预留</block>
-  <block id="957abb72f2db3a20e0b570a5fa3a1dcc" category="paragraph">对于SAN环境中包含Oracle数据的每个卷、<block ref="9ca25b30dcc119f9115aad6d85fd12ce" prefix=" " category="inline-code"></block> 应设置为零、因为在LUN环境中为快照预留空间没有用处。如果预留百分比设置为100、则包含LUN的卷的快照需要该卷中具有足够的可用空间(不包括快照预留)来吸收所有数据的100%周转率。如果预留百分比设置为较低的值、则所需的可用空间量相应较少、但始终不包括Snapshot预留。这意味着会浪费LUN环境中的快照预留空间。</block>
   <block id="d5a06adf11e69f265f3ee3277212764e" category="paragraph">在NFS环境中、有两种选择：</block>
   <block id="7631336a8e2e03f6ac500c145445b2d7" category="list-text">设置<block ref="9ca25b30dcc119f9115aad6d85fd12ce" prefix=" " category="inline-code"></block> 基于预期的Snapshot空间消耗。</block>
   <block id="acc4c5d06fc4a9ac93880c9c2d0a6e76" category="list-text">设置<block ref="9ca25b30dcc119f9115aad6d85fd12ce" prefix=" " category="inline-code"></block> 将活动空间和快照空间占用情况统一置零并进行管理。</block>
@@ -3334,7 +3258,6 @@
   <block id="422956aac4f76239935ded6a492144f2" category="summary">ONTAP专为Oracle数据库而设计。了解详情！</block>
   <block id="795da6575a33e265d7d9a5774cd10e6f" category="summary">基于ONTAP的Oracle数据库的一致性组备份</block>
   <block id="33c729820ffa60f55745fa3c259e273c" category="doc">Oracle数据库一致性组备份</block>
-  <block id="56abf0735f338713ce53e8cdecd6994e" category="paragraph">要进行最简单的备份、只需将整个Oracle数据库放在一个ONTAP卷中即可</block>
   <block id="190d2bad1c6e231bc18c33e002e663c7" category="summary">Oracle数据库和直连ONTAP连接</block>
   <block id="4a3f422632f7d08bf0e6c05affea24e4" category="summary">采用SyncMirror的Oracle数据库</block>
   <block id="5bbdf1e19bb3f7b70de51a3764fc5f19" category="doc">Oracle数据库存储Snapshot优化备份</block>
@@ -3343,7 +3266,6 @@
   <block id="d3c8171a7167ce43c547aac8fdd86cfb" category="doc">Oracle数据文件迁移</block>
   <block id="9718528cb14225785c79e3afc4152efc" category="doc">Oracle数据库LUN大小调整和LUN计数</block>
   <block id="ea7df930bd6bec6222e23d2b3af02a50" category="paragraph">SnapMirror主动同步支持两种类型的存储故障转移操作：计划内和计划外、其工作方式略有不同。管理员手动启动计划内故障转移、以便快速切换到远程站点、而计划外故障转移则由第三个站点上的调解器自动启动。计划内故障转移的主要目的是执行增量修补和升级、执行灾难恢复测试或采用一种正式策略、全年在站点之间切换操作、以证明完全的活动同步功能。</block>
-  <block id="f7c8b0ba16967990d91c2ca78d655eaa" category="paragraph">这些图显示了在正常操作、故障转移和故障恢复操作期间发生的情况。为便于说明、它们显示了一个复制的LUN。在实际的SnapMirror活动同步配置中、复制基于卷、其中每个卷包含一个或多个LUN、但为了简化情况、卷层已被删除。</block>
   <block id="cfa86460b638615878bbee89b1b6d4c7" category="paragraph">绿线是活动路径、但可能会产生较长的延迟、因为该路径上的IO需要通过SnapMirror活动同步路径传递。额外的延迟取决于用于SnapMirror活动同步的站点之间的互连速度。</block>
   <block id="22ea45ef5d49a1b807d571799d80613d" category="paragraph">源系统恢复使用后、SnapMirror活动同步可以重新同步复制、但运行的方向相反。现在、配置与起始点基本相同、只是已翻转主动镜像站点。</block>
   <block id="2702e101c97ce9a58738b1a4089319df" category="summary">MetroCluster逻辑架构和Oracle数据库</block>
@@ -3362,7 +3284,6 @@
   <block id="ba5a23e78f51c1bcb1b82efbe1797502" category="summary">Oracle数据库参数—db_file_multiblock_read_count</block>
   <block id="ea84db84607112a0d40fca3ff45dfffa" category="summary">使用ONTAP QoS进行Oracle数据库性能管理</block>
   <block id="0af83eb081b1a831789867d7f0867610" category="summary">Oracle数据库管理和自动化工具</block>
-  <block id="7c58d5a62a9c29d2a846b210deea95f2" category="paragraph">ONTAP在Oracle数据库环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制以及高效创建FlexClone卷。</block>
   <block id="591b3149d6cb247a04883c411dab3e24" category="summary">校验和和和和Oracle数据库完整性</block>
   <block id="56f014c6fc8fac3e242c9d2e42c654c0" category="paragraph">ONTAP及其支持的协议包括多项功能、可保护Oracle数据库完整性、包括空闲数据和通过网络传输的数据。</block>
   <block id="31b3368edcb737b712ee02926409c837" category="doc">Oracle数据库、MetroCluster和NVFAIL</block>
@@ -3376,7 +3297,6 @@
   <block id="7aa93b5fc17b83fc9e4816155f8f59ab" category="summary">Oracle数据库性能测试</block>
   <block id="0b3a030b64747fb3830c79e1ffbef7ee" category="summary">Oracle数据库和对象存储访问中断</block>
   <block id="99a1755be2504777b7e266ed14b33168" category="doc">Oracle数据库和ONTAP控制器故障转移/切换</block>
-  <block id="8dbb58cb7fbd4c7db3f14b9674e7d4e6" category="summary">借助SnapRestore快速恢复Oracle数据库</block>
   <block id="fd0d4a1100bcbce28e8252537f7c4ef4" category="summary">Oracle数据库数据保护SLA</block>
   <block id="48130805e35d0c7ab5afbcb71abb1ad0" category="doc">Oracle数据库RTO、RPO和SLA规划</block>
   <block id="f359cd007fda575e70269cac76fab4af" category="paragraph">借助ONTAP、您可以根据业务需求轻松定制Oracle数据库数据保护策略。</block>
@@ -3429,7 +3349,6 @@
   <block id="82116b39cd4d0d1920fab1ab4515603b" category="paragraph">节省的资金数额各不相同。已压缩或加密的数据通常无法进一步压缩、因此、数据集无法从数据缩减中受益。相比之下、新初始化的数据文件包含的块元数据和零数据略多、数据压缩率高达80：1。</block>
   <block id="2608473fa5767385d01f256eccbc1cc4" category="paragraph">许多争用资源的阵列都声称可以根据数据库被复制多次的假设对数据库进行重复数据删除。在这方面、也可以使用NetApp重复数据删除、但ONTAP提供了一个更好的选择：NetApp FlexClone技术。最终结果是相同的；系统会为一个数据库创建多个副本、这些副本共享大多数底层物理块。与花时间复制数据库文件并对其进行重复数据删除相比、使用FlexClone的效率要高得多。实际上、它是无重复数据删除、而不是重复数据删除、因为从一开始就不会创建重复数据。</block>
   <block id="7e96c1b651af3f28c27b78807f0310e2" category="paragraph">强烈建议使用精简配置、因为它可以简化管理、同时显著提高可用容量并节省相关成本。原因很简单—数据库环境通常包含大量空空间、大量卷和LUN以及可压缩数据。厚配置会为卷和LUN预留存储空间、以防它们最终达到100%全满并包含100%不可压缩数据。这种情况不大可能发生。通过精简配置、可以回收这些空间并将其用于其他位置、并可以基于存储系统本身进行容量管理、而不是基于许多较小的卷和LUN。</block>
-  <block id="f67b854e2d644480b0ec40d7de2b773d" category="paragraph">在纯闪存AFF系统上运行的ONTAP上创建的卷经过精简配置、并启用了所有实时效率功能。尽管数据库通常不会从重复数据删除中受益、并且可能包含不可压缩的数据、但默认设置适用于几乎所有工作负载。ONTAP旨在高效处理所有类型的数据和I/O模式、无论它们是否可节省空间。只有在完全了解原因且有优势的情况下、才应更改默认值。</block>
   <block id="649141c6b8267ea3df10949a853d22cb" category="list-text">不要在数据库备份中同时使用32 KB数据压缩和重复数据删除。请参见一节 <block ref="57ee2712afc5e59236f86db0537b05dc" category="inline-xref-macro-rx"></block> 了解详细信息。</block>
   <block id="5059ada12bae6c7e7fac9338d88301b5" category="doc">Oracle数据库归档日志层</block>
   <block id="4abda684ecc952239d7800547dcf2995" category="sidebar">基于MetroCluster的Oracle SI</block>
@@ -3468,7 +3387,6 @@
   <block id="8a3aceb6ed4b21af2f2c00ecb032f75f" category="paragraph">在SQL Server 2022中、Microsoft引入了T-SQL快照、可通过它编写脚本并自动执行备份操作。您可以为快照准备数据库、而不是执行全尺寸副本。数据库备份就绪后、您可以利用ONTAP REST API创建快照。</block>
   <block id="eeeb4e610a7896c1b1f2e2ea9b3f52a0" category="list-text">使用alter命令冻结数据库。这样可以使数据库在底层存储上为一致的快照做好准备。冻结后、您可以解冻数据库并使用backup命令记录快照。</block>
   <block id="fd95362fecccbbb7b017317e8bede3b5" category="admonition">此ONTAP和MySQL数据库文档将取代先前发布的_TR-4722：《基于ONTAP的MySQL数据库最佳实践》。_</block>
-  <block id="887757e2405372a0b9e17cc054ab38f3" category="paragraph">SnapRestore之所以能够如此快速高效地工作、是因为快照的性质、从本质上说、快照是一个在特定时间点卷内容的并行只读视图。活动块是可以更改的实际块、而快照是创建快照时构成文件和LUN的块的状态的只读视图。</block>
   <block id="f9b673452d1da030fef3f976bbbbb103" category="paragraph">在此示例中、源数据库位于ONTAP系统上。创建数据库备份的最简单方法是使用快照。数据库将处于热备份模式几秒钟、而处于<block ref="252ce13e6c150af4d3e7eea5fca266bc" prefix=" " category="inline-code"></block> 在托管数据文件的卷上执行此操作。</block>
   <block id="630a571b99791968d41f9caba4a3e39c" category="paragraph">结果是在磁盘上生成一个名为的快照<block ref="a8b3bc9f12cd194b80d404c30e9015ee" prefix=" " category="inline-code"></block> 该映像包含处于热备份模式时的数据文件映像。如果将此快照中的数据与相应的归档日志结合使用以使数据文件保持一致、则可以将此快照中的数据用作还原或克隆的基础。在这种情况下、它会复制到新服务器。</block>
   <block id="96a1129a5a4b32943286cafd5e0ca2e1" category="paragraph">在此示例中、使用SnapMirror将快照热备份复制到新位置。</block>
@@ -4202,7 +4120,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="64e5a77897fe6326f14436eaaaf5432b" category="section-title">可用空间和LVM空间分配</block>
   <block id="ceb8ec6ec593174c2c6f33be2ca966eb" category="summary">Oracle和ONTAP卷以及LUN放置</block>
   <block id="0724b56ced27e0a66fb4692a57fb1436" category="doc">Oracle数据库LUN放置</block>
-  <block id="f595bf3bf71ab0c91a5503ba4efb8ea4" category="paragraph">数据库LUN在ONTAP卷中的最佳放置位置主要取决于各种ONTAP功能的使用方式。</block>
   <block id="05a1ffdb277b8c7ac1dca78adae0017e" category="sidebar">LUN放置</block>
   <block id="9d5c13d45bbf74999764cfe8d4798562" category="summary">适用于VMware vSphere的ONTAP工具安全增强指南、HTTPS证书管理。</block>
   <block id="d6a1787b51b08315bfcc44f3a9bb4b2f" category="paragraph">默认情况下、ONTAP工具会使用安装期间自动创建的自签名证书来保护对Web UI的HTTPS访问。ONTAP工具提供以下功能：</block>
@@ -4939,8 +4856,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="6f80e9146e2184b9ec3c46b6d7dd903f" category="paragraph">如果SQL Server必须向特殊系统页面写入数据以分配新对象、则全局分配映射(GAM)、共享全局分配映射(SGAM)或页面可用空间(PFS)页面可能会发生页面争用。闩锁将这些页面锁定在内存中。在繁忙的SQL Server实例上、可能需要很长时间才能在tempdb中的系统页面上获得锁定。这会导致查询运行时间变慢、并称为闩锁争用。请参见以下创建tempdb数据文件的最佳实践：</block>
   <block id="255bd5c00b8de4b2f998369f766b2b5e" category="paragraph">本节将介绍远程数据保护、即将数据复制到远程站点以实现安全异地存储和灾难恢复。请注意、这些表不涉及同步镜像数据保护。有关此要求、请参见NetApp MetroCluster文档、包括<block ref="06d0604733fc7f7e3f9befaa1239278d" category="inline-link-macro-rx"></block>和<block ref="87f167af2516b222ddeec7405581e8b8" category="inline-link-macro-rx"></block></block>
   <block id="ad8d77efdce72d372a83929b50a127d1" category="paragraph">崩溃状态一致的数据集备份是指在一个时间点捕获整个数据集结构。如果数据集存储在单个卷中、则此过程非常简单；可以随时创建Snapshot。如果数据集跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</block>
-  <block id="3c27a8d13352bda1e272615270d5faba" category="paragraph">崩溃状态一致的数据库备份是指在一个时间点捕获整个数据库结构、包括数据文件、重做日志和控制文件。如果数据库存储在单个卷中、则此过程非常简单；可以随时创建Snapshot。如果数据库跨越多个卷、则必须创建一致性组(CG)快照。创建CG快照的选项有多种、包括NetApp SnapCenter软件、本机ONTAP一致性组功能以及用户维护的脚本。</block>
-  <block id="7589d3d0b42e170fc0a459aba0b87fd6" category="paragraph">当数据库非常大或必须尽快恢复时、最好使用VBSR、而使用VBSR需要隔离数据文件。在NFS环境中、给定数据库的数据文件必须存储在未受任何其他类型文件污染的专用卷中。在SAN环境中、数据文件必须存储在专用卷上的专用LUN中。如果使用卷管理器(包括Oracle自动存储管理[ASM])、则磁盘组还必须专用于数据文件。</block>
   <block id="d8c4de538bee7abe14d3527c343afee7" category="paragraph">如果需要双主动扩展RAC、则应考虑使用SnapMirror主动同步代替MetroCluster。SM-AS复制允许首选使用数据的特定副本。因此、可以构建一个扩展RAC集群、在该集群中、所有读取操作都在本地进行。读取I/O不会跨越站点、从而尽可能地降低延迟。所有写入活动仍必须传输站点间连接、但使用任何同步镜像解决方案时、此类流量都是不可避免的。</block>
   <block id="be6001fc2ab5bfaacf123c0267e58a0a" category="admonition">如果在Oracle RAC中使用启动LUN (包括虚拟化启动磁盘)、则可能需要更改此<block ref="7c13d022c9fda6e792c4349a043a6c74" prefix=" " category="inline-code"></block>参数。有关RAC超时参数的详细信息，请参阅<block ref="1d616ba7dc3776fc2ecabd1cd20f420f" category="inline-link-macro-rx"></block>。</block>
   <block id="2bd32004298994cdcbc5a1672f2b8c95" category="summary">具有SnapMirror活动同步的Oracle单实例</block>
@@ -5066,8 +4981,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="72f31f711b37dc7ce7b34e00dd56b5ae" category="paragraph">ONTAP调解器是从NetApp支持下载的软件应用程序、通常部署在小型虚拟机上。与SnapMirror活动同步结合使用时、ONTAP调解器不是Tieb破碎 器。它是参与SnapMirror活动同步复制的两个集群的备用通信通道。ONTAP根据通过直接连接和调解器从合作伙伴处收到的响应来推动自动化操作。</block>
   <block id="b06e5b68abe4f23a716133f1fa1a4472" category="summary">Oracle和SM-AS首选站点</block>
   <block id="6d14548094c3b2a5b0a69049f8497fa8" category="doc">Oracle和SM-AS统一访问</block>
-  <block id="36ba939f32969ddc6751427944e3569d" category="paragraph">最重要的要求是将数据文件隔离到一个或多个专用卷中。它们必须未受任何其他文件类型的污染。其原因是、要确保数据文件复制完全独立于其他数据类型(如归档日志)的复制。有关文件布局的其他信息以及有关确保存储布局便于快照的重要详细信息，请参见<block ref="c87a7212960b8cc2aca49adb1795e291" category="inline-link-macro-rx"></block>。</block>
-  <block id="64c93f87be857cf43f66e341a377693a" category="paragraph">操作系统可以检测到<block ref="9ad16912cc0ba54a259b1a15d233c264" prefix=" " category="inline-code"></block>和<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>位于同一个卷上、即同一个源文件系统。然后、操作系统会使用相同的设备句柄来访问数据。这样做可以改进操作系统缓存和某些其他操作的使用、但会干扰DNFS。如果DNFS必须访问文件(如上的<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>)<block ref="1737629d60b511cf45957529a8f046e2" prefix=" " category="inline-code"></block>，它可能会错误地尝试使用错误的数据路径。结果是I/O操作失败。在这些配置中、请将挂载选项添加<block ref="4740c034d97ca90a96b8050082816605" prefix=" " category="inline-code"></block>到与该主机上的另一个NFS文件系统共享源卷的任何NFS文件系统。这样做会强制Linux操作系统为该文件系统分配独立的设备句柄。</block>
   <block id="30d0582d4c5a0b280454304dcff9c28f" category="paragraph">Solaris 11对其处理大型I/O操作的方式进行了更改、这可能会导致SAN存储阵列出现严重的性能问题。此问题已记录在NetApp跟踪错误报告“Solaris 11 ZFS性能回归”中。</block>
   <block id="c041cd46ed4caba0947ab494ac5bb1d9" category="paragraph">这不是ONTAP错误。这是Solaris缺陷、根据Solaris缺陷7199305和7082975进行跟踪。</block>
   <block id="a83650b3549679a1591275f0f9cd38e0" category="paragraph">您可以咨询Oracle支持部门、了解您的Solaris 11版本是否受到影响、也可以更改为较小的值来测试解决方法<block ref="954f82599f7db0212a28fd448e03bdf3" prefix=" " category="inline-code"></block>。</block>
@@ -5533,7 +5446,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="57d3154f4afcd986d4f30b4e06c1c434" category="paragraph">ONTAP灵活卷或更简单地说、卷与LUN并不同义。卷是文件或LUN等数据的管理容器。例如、数据库可能位于一个8 LUN条带集上、所有LUN都包含在一个卷中。</block>
   <block id="05ef9b22209f0e35efc9b6f875ad3c55" category="inline-link-macro">ONTAP文档。</block>
   <block id="a9f5ed6c3fb24e75b9bbfde2801f43c5" category="paragraph">有关快照的详细信息、请参见<block ref="8f47a9b0ccec19c7f5d940ab138ea0b4" category="inline-link-macro-rx"></block></block>
-  <block id="7509bd2cfd7821f433d962315cc50a57" category="paragraph">从ONTAP 9.12.1开始、快照不仅是只读的、还可以防止意外或故意删除。此功能称为防篡改快照。可以通过Snapshot策略设置和实施保留期限。生成的快照在达到到期日期之前无法删除。不会覆盖管理或支持中心。</block>
   <block id="287130f9ebd13d6ed68dd04d8d2a295e" category="admonition">不能使用光纤池对防篡改快照进行分层。</block>
   <block id="c2f55c662895ff4fac4100a2a0852e43" category="paragraph">有关防篡改快照的详细信息、请参见<block ref="fd5bfd16d2f3d4d67a500529a5ee8cad" category="inline-link-macro-rx"></block></block>
   <block id="be7dc70d98bcb6099a5c94c0eb263502" category="paragraph">也可以将快照复制到远程系统。这包括防篡改快照、即在远程系统上应用和实施保留期限。结果是、数据保护优势与本地快照相同、但数据位于另一个存储阵列上。这样可以确保销毁原始阵列不会影响备份。</block>
@@ -5670,7 +5582,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="120f8cb87e8ceb36804a526419a5803a" category="sidebar">基于Microsoft/SQL系统的AFF FAS</block>
   <block id="fc5b2b3c5350dcd6f3cc1cc3cdf1a13f" category="sidebar">ASA R2系统上的存储配置</block>
   <block id="8bdbdec629db36efc1c9bdbf743dd56a" category="sidebar">ASA系统上的Microsoft SQL Server</block>
-  <block id="3e2b4674c9afc41f9c3a0311b458ed23" category="list-text">如果卷和(或) LUN未进行精简配置、则必须禁用所有效率设置、因为使用这些功能不会节省空间、并且将厚配置与空间效率结合使用可能会导致意外行为、包括空间不足错误。</block>
   <block id="c2dc7d465f4be5df7a663820063fe07c" category="summary">使用SnapCenter的Microsoft SQL Server可用性组</block>
   <block id="b474dc2fb6ce60c11ecdfbe0a373bf34" category="doc">使用SnapCenter的SQL Server可用性组</block>
   <block id="0a1151b962e7b34ea7fa78538961cc63" category="paragraph">SnapCenter支持备份使用Windows故障转移集群配置的SQL Server可用性组数据库。</block>
@@ -6066,312 +5977,7 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="7fce4a8e4d875aacc44e3d2ed8580a5d" category="paragraph">您可以为 vSphere HA 故障转移行为指定两种类型的规则：</block>
   <block id="26cc6fc2decc1bcfa2c0a112114e3acc" category="paragraph">服务的可用性应始终优先于服务的性能。如果整个数据中心发生故障，“必须”规则必须从 VM 主机亲缘性组中选择主机，并且当数据中心不可用时，虚拟机将不会重新启动。</block>
   <block id="81430f9750a817293c793dd7958f44fa" category="list-text">如果您正在使用ONTAP快照，则存储 vMotion 会在快照中留下 VM 的副本，这可能会增加存储利用率，并可能影响NetApp SnapCenter等备份应用程序，这些应用程序会跟踪 VM 及其ONTAP快照。</block>
-  <block id="f51e6cb0023f640f3e441b33ea6d90b2" category="summary">使用ASA r2 的 Oracle 数据库块大小</block>
-  <block id="b74e31875db8b4ffb64a32f6af8a00c3" category="paragraph">ONTAP内部使用可变块大小，这意味着 Oracle 数据库可以配置为所需的任何块大小。然而，文件系统块大小会影响性能，在某些情况下，更大的重做块大小可以提高性能。</block>
-  <block id="25efcd88d2bb8d1c51866688d59b6df0" category="paragraph">与AFF/ FAS系统相比， ASA r2 对 Oracle 块大小建议没有任何改变。ONTAP在所有平台上的行为保持一致。</block>
-  <block id="45dfed63ad9cfaef8f16e45163f1ddcb" category="summary">Oracle 数据库参数 - filesystemio_options（ ASA r2）</block>
-  <block id="29967c867552a538cee57e0fefdb1612" category="paragraph">ASA r2 上的 filesystemio_options 的行为和建议与AFF/ FAS系统相同，因为该参数是 Oracle 特有的，与存储平台无关。ASA r2 和AFF/ FAS一样使用ONTAP ，因此相同的最佳实践也适用。</block>
-  <block id="4725bcfd9454b799bd0d8edf9880b9c6" category="admonition">在 ASM 环境中，Oracle 会自动对 ASM 管理的磁盘使用直接 I/O 和异步 I/O，因此<block ref="f1110589be196c2310808482067fce1b" prefix=" " category="inline-code"></block> 对 ASM 磁盘组没有影响。对于非 ASM 部署（例如，SAN LUN 上的文件系统），请设置：<block ref="6a1623be7d673ed665d6446f22dbb37c" prefix=" " category="inline-code"></block>。这样既可以实现异步 I/O，也可以实现直接 I/O，从而获得最佳性能。</block>
-  <block id="11277a7f8d508b5b546ee39af32e9b34" category="paragraph">一些较旧的操作系统在异步 I/O 方面存在问题，导致一些过时的建议认为应该避免使用异步 I/O。但是，异步 I/O 稳定可靠，并且在所有当前的操作系统上都得到全面支持。除非发现特定的操作系统漏洞，否则没有理由禁用它。</block>
-  <block id="3d1060d19355a79188cebceddfe20cac" category="admonition">NetApp建议设置<block ref="f1110589be196c2310808482067fce1b" prefix=" " category="inline-code"></block> 到<block ref="aef8f91b1e026cc1bb55e8b08c491d35" prefix=" " category="inline-code"></block>但请注意，在某些情况下，主机缓冲区缓存的丢失可能需要增加 Oracle SGA。ASA r2 系统针对低延迟的 SAN 工作负载进行了优化，因此使用 setall 与 ASA 的高性能 Oracle 部署设计完美契合。</block>
-  <block id="cc9bafe604d9f828f9e50b888b5af83a" category="summary">Oracle 数据库参数 - db_file_multiblock_read_count（ ASA r2）</block>
-  <block id="77da25139302fac7c4678c7feff95328" category="paragraph">与AFF/ FAS系统相比，建议没有变化。ONTAP 的行为和 Oracle 最佳实践在ASA r2、 AFF和FAS平台上保持不变。</block>
-  <block id="7a6b7a0812fd796dcb806fd5b0c2b6c7" category="summary">Oracle RAC 超时与ASA r2</block>
-  <block id="f034ddba34805dbfe68b7f48ca895681" category="searchtitle">Oracle Real Application Clusters 与ASA r2 出现超时问题</block>
-  <block id="6ee77b798f308781373f865ac29cba09" category="paragraph">ASA r2 系统使用ONTAP，就像AFF/ FAS一样，因此相同的原则也适用于 Oracle RAC 超时参数。ASA没有针对磁盘超时或错误计数建议的特定更改。然而， ASA r2 针对 SAN 工作负载和低延迟故障转移进行了优化，这使得这些最佳实践变得更加重要。</block>
-  <block id="9f7a41723dc84c90511cb0c3007557cc" category="admonition">信息中 <block ref="9cd17d807316d35ef47b12cbecab4ec8" category="inline-link-macro-rx"></block> 本节包含使用网络存储的 Oracle RAC 环境的关键信息，在许多情况下，需要更改默认的 Oracle RAC 设置，以确保 RAC 集群在网络路径更改和存储故障转移操作后仍能正常运行。</block>
-  <block id="c03d1b47221ed5a173395512ed362d44" category="list-text"><block ref="ff4a008470319a22d9cf3d14af485977" prefix="" category="inline-code"></block> 二进制文件位于网络附加驱动器上，包括 iSCSI、FC 和基于数据存储的驱动器。</block>
-  <block id="543df3f730045fd30ce4af77abea11e1" category="list-text">ASA r2 的 SAN 优化设计降低了故障转移延迟，但对于网络启动或网格二进制文件，超时时间仍需进行调整。</block>
-  <block id="82106d3b2ed91a254d7c6d4d5342cbc1" category="list-text">对于扩展的 RAC 或主动-主动设置（例如， SnapMirror主动同步），超时调整对于零 RPO 架构仍然至关重要。</block>
-  <block id="6c7de758773bd93ee212e9116ff23b70" category="summary">数据库和ASA r2 ONTAP存储容量以及ASA r2 上的可用空间</block>
-  <block id="0ba26eed20c7a72b7557b1dca31463f8" category="searchtitle">ASA r2 上的 Oracle 数据库和存储容量管理</block>
-  <block id="fec46d85c88737d5c6bc3c8fb9d31d07" category="paragraph">ASA r2 使用存储可用区 (SAZ) 而不是聚合，但原理仍然相同：可用空间包括未被实际数据、快照或系统开销占用的任何物理容量。还必须考虑精简配置——逻辑分配并不能反映真实的物理使用情况。</block>
-  <block id="fd3c3ddb6afa0f19ccd103893bdfff01" category="paragraph">NetApp对用于企业应用的ASA r2 存储系统的建议如下：</block>
-  <block id="b117f27a635613ecfcbec6e1b094b82f" category="section-title">ASA r2 系统中的 SSD 池</block>
-  <block id="286282b47dd388584f0b47bb531e0c18" category="admonition">NetApp建议在ASA r2 环境中保持至少 10% 的可用物理空间。本指南适用于ASA r2 系统使用的仅限 SSD 的存储池，包括 SAZ 和存储单元内的所有未使用空间。逻辑空间并不重要；重点在于可用于数据存储的实际物理空间。</block>
-  <block id="e44f572dc67206f5fe79649b7a71ea39" category="paragraph">虽然ASA r2 可以维持高利用率而不降低性能，但在接近满负荷运行时，扩展存储时会增加空间耗尽和管理开销的风险。驱动器利用率超过 90% 可能不会影响性能，但会使管理复杂化并延迟额外驱动器的配置。</block>
-  <block id="0d0fe41e4cffbd1cbbfd0ff604e5847a" category="paragraph">ASA r2 系统支持高达 128TB 的存储单元和高达 2PB 的 SAZ 大小（每个 HA 对）， ONTAP会自动在节点之间平衡容量。监控集群、SAZ 和存储单元级别的利用率对于确保快照、精简配置工作负载和未来增长有足够的可用空间至关重要。如果容量接近临界阈值（~90% 利用率），则应分组（至少六个驱动器）添加额外的 SSD，以保持性能和弹性。</block>
-  <block id="9c4d6eff4aaa2da2a41a618d4e6308e6" category="summary">使用ASA r2 提升 Oracle 数据库和存储效率</block>
-  <block id="eaad7dcfc067b66ed2d62d108f314eaa" category="searchtitle">Oracle 数据库和ONTAP与ASA r2 的效率特性</block>
-  <block id="97c9a5fb8d9dca6d787d486fae38909e" category="paragraph">ONTAP 的空间效率功能已得到全面支持，并针对ASA r2 系统进行了优化。在几乎所有情况下，最佳做法是保留默认设置并启用所有效率功能。</block>
-  <block id="29e5740ae1265e0ae9ddc367075a430d" category="paragraph">ASA r2 系统是全闪存 SAN 平台，因此压缩、精简和重复数据删除等效率技术对于最大限度地提高可用容量和降低成本至关重要。</block>
-  <block id="0e607e6969928c8f0be851b17df35b7c" category="paragraph">压缩通过对数据中的模式进行编码来减少空间需求。采用基于 SSD 的ASA r2 系统，压缩可显著节省成本，因为闪存消除了为提高性能而过度配置的需要。ONTAP自适应压缩默认启用，并已使用企业工作负载（包括 Oracle 数据库）进行了全面测试，即使在延迟以微秒为单位测量的环境中，也没有可衡量的性能影响。在某些情况下，由于压缩数据占用更少的缓存空间，性能会得到提升。</block>
-  <block id="acf1c3f0880b3b517ae9c08198c3313c" category="admonition">温度敏感存储效率 (TSSE) 不适用于ASA r2 系统。在ASA r2 系统中，压缩不是基于热数据（经常访问的数据）或冷数据（不经常访问的数据）。压缩无需等待数据冷却即可开始。</block>
-  <block id="c9359b028210c16d749a4ad44ceef2fe" category="paragraph">自适应压缩默认使用 8KB 的块大小，与关系数据库常用的块大小相匹配。较大的块大小（16KB 或 32KB）可以提高顺序数据（如事务日志或备份）的效率，但对于活动数据库应谨慎使用，以避免在覆盖期间产生开销。</block>
-  <block id="47e17029663cd0a26bc74c23a15916f1" category="admonition">对于日志或备份等静止文件，块大小可以增加到 32KB。更改默认设置前，请先查阅NetApp指南。</block>
-  <block id="fb88d498aeb61ef7dc46cf0183899e05" category="admonition">不要对流式备份使用 32KB 压缩和去重功能。使用 8KB 压缩以保持去重效率。</block>
-  <block id="fce01c72f00048fc766f0b547b80b0c1" category="paragraph">对于随机覆盖，压缩对齐很重要。确保 LUN 类型正确、分区偏移量（8KB 的倍数）以及文件系统块大小与数据库块大小一致。备份或日志等顺序数据不需要考虑对齐问题。</block>
-  <block id="2f096f341d922649f5787ac9dc67736f" category="paragraph">压缩是对压缩的补充，它允许多个压缩块共享同一个物理块。例如，如果一个 8KB 的数据块压缩到 1KB，压缩可以确保剩余空间不会被浪费。此功能为内联功能，不会造成性能损失。</block>
-  <block id="6d6c415da1e0bfc92ede47ea457bacfe" category="paragraph">去重操作会移除数据集中的重复数据块。虽然 Oracle 数据库由于具有独特的块头和块尾，通常只能节省极少的重复数据，但ONTAP重复数据删除仍然可以从零块和重复模式中回收空间。</block>
-  <block id="afe06725d3e8e69f957d42e07a4d2ac6" category="paragraph">ASA r2 系统默认使用精简配置。效率特性与精简配置相辅相成，可最大限度地利用可用容量。</block>
-  <block id="3ae7feb5d9cb2335f10922aa1130319d" category="admonition">在ASA r2 存储系统上，存储单元始终采用精简配置。不支持厚配置。</block>
-  <block id="b562c9523a15796f6734824c6906ea4b" category="section-title">快速辅助技术（QAT）</block>
-  <block id="9d501bcd94601848e35a4581445c16ae" category="paragraph">在NetApp ASA r2 平台上，Intel QuickAssist 技术 (QAT) 提供硬件加速的效率，这与没有 QAT 的基于软件的温度敏感存储效率 (TSSE) 有很大不同。</block>
-  <block id="a5b1922762277348e395a0f5bb63a066" category="paragraph">*支持硬件加速的快速访问终端 (QAT)：*</block>
-  <block id="7f061561c79fda3cf285f802ab1df9dd" category="list-text">将压缩和加密任务从 CPU 核心卸载。</block>
-  <block id="daf76bc97dc262e8534a7d1b39c594b8" category="list-text">能够立即提高热数据（频繁访问的数据）和冷数据（不频繁访问的数据）的在线处理效率。</block>
-  <block id="e0f81090ab3cc33731ea0afa51ad04be" category="list-text">显著降低CPU占用率。</block>
-  <block id="ea763c657dce8d1d285478f80caeaa58" category="list-text">提供更高的吞吐量和更低的延迟。</block>
-  <block id="96458f7ac4191be2139fef330262c1f1" category="list-text">提高了对性能要求较高的操作（例如 TLS 和 VPN 加密）的可扩展性。</block>
-  <block id="1121032714cb05a8acd4182211a3d959" category="paragraph">*不含QAT的TSSE：*</block>
-  <block id="87dd7a76029eb48dc4829ef2fb0998f1" category="list-text">依靠CPU驱动的进程来实现高效运行。</block>
-  <block id="cc16c02975ac3a8fc5a6760ee8b59086" category="list-text">仅对延迟后的冷数据应用效率优化。</block>
-  <block id="dbb9a4d9b6afe5a22a188b05e2c55aca" category="list-text">消耗更多CPU资源。</block>
-  <block id="15c9489f22847ad34cca043b0d3781d9" category="list-text">与 QAT 加速系统相比，整体性能受到限制。</block>
-  <block id="7f0fa9ea3b1bfd8171845c4fd64b045b" category="paragraph">因此，现代ASA r2 系统比旧式的仅支持 TSSE 的平台具有更快的硬件加速效率和更好的系统利用率。</block>
-  <block id="17d46209898416a0271a7a40a040fa62" category="section-title">ASA r2 的效率最佳实践</block>
-  <block id="52101fec2ca49d6ad57b390b63e72b67" category="section-title">ASA r2 默认值</block>
-  <block id="1dc9bf51a5f61b552c5fb6db7bd754ab" category="paragraph">在ASA r2 系统上运行的ONTAP上创建的存储单元采用精简配置，默认情况下启用所有内联效率功能，包括压缩、精简和重复数据删除。尽管 Oracle 数据库通常不会从重复数据删除中获益匪浅，并且可能包含不可压缩的数据，但这些默认设置几乎适用于所有工作负载。ONTAP旨在高效处理所有类型的数据和 I/O 模式，无论它们是否能带来节省。只有在完全了解原因并且偏离默认设置有明显好处的情况下，才应该更改默认设置。</block>
-  <block id="db430188d143b5480822ddee760e1628" category="list-text">禁用加密或应用程序压缩数据的压缩：如果文件已经在应用程序级别压缩或加密，请禁用压缩以优化性能并允许在其他存储单元上更高效地运行。</block>
-  <block id="629e6580aba1cbe6cff5a2d11fd73f2b" category="list-text">避免将大压缩块与重复数据删除结合使用：不要在数据库备份中同时使用 32KB 压缩和重复数据删除。对于流式备份，请使用 8KB 压缩以保持去重效率。</block>
-  <block id="339bd8b6442c9bc710297e62b92fe61c" category="list-text">监控效率节省：使用ONTAP工具（系统管理器、 Active IQ）跟踪实际的空间节省情况，并在需要时调整策略。</block>
-  <block id="5e9589652c75095a75909065d8a0d93f" category="summary">要确保 Oracle 数据库操作不会因这些操作而中断，就需要了解存储接管功能。此外，收购操作中使用的论据如果使用不当，可能会影响数据完整性。</block>
-  <block id="73561d6c3983a6b603417a787cf17ce9" category="searchtitle">ASA r2 中的 Oracle 数据库和ONTAP控制器故障转移</block>
-  <block id="817dbb89ea186ed07c38e66cc3f11ad2" category="doc">ONTAP故障转移</block>
-  <block id="6217c84a6fec75785f109083aaaa4617" category="paragraph">要确保 Oracle 数据库操作在这些操作期间不会中断，就需要了解存储接管功能。此外，收购操作中使用的论点如果使用不当，可能会影响数据完整性。</block>
-  <block id="0ee72c88d56aef3026c4fb8a22263fb4" category="paragraph">正常情况下，写入给定控制器的传入数据会同步镜像到其高可用性伙伴。在具有SnapMirror Active Sync (SM-as) 的ASA r2 环境中，写入操作也会镜像到辅助站点的远程控制器。只有当写入操作在所有位置都存储在非易失性介质中时，主机应用程序才能收到确认。</block>
-  <block id="8729e9a956b08f3fe788c6d911ba78fa" category="paragraph">存储写入数据的介质称为非易失性存储器（NVMEM）。它有时被称为非易失性随机存取存储器（NVRAM），可以将其视为写入日志而不是缓存。正常运行期间，不会读取NVMEM中的数据；它仅用于在软件或硬件发生故障时保护数据。当数据写入驱动器时，数据是从系统 RAM 传输的，而不是从NVMEM传输的。</block>
-  <block id="3b95fd9bb9e3f2ccc9cb80f0a533d06e" category="paragraph">在接管操作期间，HA 对中的一个节点会接管其伙伴节点的操作。在ASA r2 中，由于不支持MetroCluster ，因此无法进行切换；取而代之的是， SnapMirror Active Sync 提供站点级冗余。例行维护期间的存储接管操作应该是透明的，除了网络路径改变时操作会短暂暂停之外。网络可能很复杂，而且很容易出错，因此NetApp强烈建议在将存储系统投入生产之前彻底测试接管操作。这样做是确保所有网络路径都正确配置的唯一方法。在 SAN 环境中，使用以下命令验证路径状态<block ref="41dc2c94e82e1c56ba876085acf5a974" prefix=" " category="inline-code"></block> 或者使用操作系统自带的多路径工具，以确保所有预期路径都可用。ASA r2 系统为 LUN 提供所有活动的优化路径，使用 NVMe 命名空间的客户应依赖操作系统原生工具，因为 sanlun 不涵盖 NVMe 路径。</block>
-  <block id="fbd1162054dfcc75279eb74994c81fc2" category="paragraph">强制收购时必须谨慎行事。强制更改存储配置意味着忽略拥有驱动器的控制器的状态，备用节点强制接管驱动器的控制权。强制接管操作不当可能导致数据丢失或损坏，因为强制接管操作可能会丢弃NVMEM的内容。接管完成后，数据丢失意味着从数据库的角度来看，存储在驱动器上的数据可能会恢复到稍旧的状态。</block>
-  <block id="417180065e1db56271a50819dfc8d77a" category="paragraph">使用普通HA对进行强制接管的情况应该很少发生。在几乎所有故障情况下，节点都会关闭并通知合作伙伴，以便进行自动故障转移。有些极端情况，例如滚动故障，其中节点之间的互连丢失，然后一个控制器发生故障，在这种情况下需要强制接管。在这种情况下，节点之间的镜像会在控制器发生故障之前丢失，这意味着幸存的控制器不再拥有正在进行的写入操作的副本。收购必须强制执行，这意味着数据可能会丢失。</block>
-  <block id="eac9e01dcafe5df31549db862e4b5e12" category="paragraph">NetApp 建议采取以下预防措施：</block>
-  <block id="a0033c4526f3231e5c7e8c2c6461cbe2" category="list-text">务必小心，不要意外地促成收购。通常情况下，不应该强制执行更改，强制更改可能会导致数据丢失。</block>
-  <block id="9215c7ac58dee80cff52c5d5fa62a977" category="list-text">如果需要强制接管，请确保应用程序已关闭，所有文件系统已卸载，并且逻辑卷管理器 (LVM) 卷组已关闭。必须卸载 ASM 磁盘组。</block>
-  <block id="5ebade231442483b3d9dd2848baa6ccc" category="inline-link">ASA r2 系统上的SnapMirror主动同步</block>
-  <block id="fd360c79cec2c6ecdbf2a17c6ad2be7f" category="list-text">在使用 SM-as 时，如果发生站点级故障， ONTAP Mediator 辅助的自动非计划故障转移将在幸存集群上启动，这将导致短暂的 I/O 暂停，然后数据库转换将从幸存集群继续进行。更多信息请参见<block ref="e60237ff925f4fb2924a96cecb00f215" category="inline-link-rx"></block> 详细配置步骤请见下文。</block>
-  <block id="20b465cc6f734e64de0fc141d799a08b" category="summary">在ASA r2 上使用ONTAP QoS 进行 Oracle 数据库性能管理</block>
-  <block id="2579c376f51f8f990ad0da35fad7b27f" category="doc">在ASA r2 系统上使用ONTAP QoS 进行性能管理</block>
-  <block id="f35a95ecdbc736cf5efbd3ffed0758e4" category="paragraph">在ASA r2 上安全高效地管理多个 Oracle 数据库需要有效的 QoS 策略。这一点尤其重要，因为ASA r2 系统是全闪存 SAN 平台，专为极高的性能和工作负载整合而设计。</block>
-  <block id="fb0f677afb501d6e6b186ff048005ff0" category="paragraph">即使是最强大的控制器，相对较少的 SSD 也可能会使其达到饱和，因此 QoS 控制对于确保跨多个工作负载的可预测性能至关重要。作为参考， ASA r2 系统（例如ASA A1K 或 A90）可以提供数十万到超过一百万的 IOPS，延迟低于毫秒级。很少有单个工作负载会消耗如此高的性能，因此要充分利用性能通常需要托管多个数据库或应用程序。安全地执行此操作需要 QoS 策略来防止资源争用。</block>
-  <block id="56f97482820208f3d16d39528cfb6570" category="paragraph">ONTAP QoS 在ASA r2 上的工作原理与在AFF/ FAS系统上相同，主要有两种类型的控制：IOPS 和带宽。QoS 控制可以应用于 SVM 和 LUN。</block>
-  <block id="2e6032fca80b51e97df45f1a5170bd68" category="paragraph">基于 IOPS 的 QoS 限制了给定资源的总 IOPS。在ASA r2 中，QoS 策略可以应用于 SVM 级别和单个存储对象（例如 LUN）。当工作负载达到其 IOPS 限制时，额外的 I/O 请求会排队等待令牌，从而引入延迟。这是预期行为，可以防止任何单一工作负载垄断系统资源。</block>
-  <block id="3edd2c44fe87d2162de06be373a31a13" category="admonition">将 QoS 控制应用于数据库事务/重做日志数据时要谨慎。这些工作负载具有突发性，对于平均活动而言看似合理的 QoS 限制可能对于峰值突发而言过低，从而导致严重的性能问题。一般而言，重做日志和归档日志不应受服务质量 (QoS) 的限制。</block>
-  <block id="31aa78c338ede606cfe715629f639a6b" category="paragraph">基于带宽的服务质量限制吞吐量（以Mbps为单位）。当工作负载执行大块读取或写入操作（例如全表扫描或备份操作）时，这非常有用，因为这些操作会消耗大量带宽，但 IOPS 相对较少。结合 IOPS 和带宽限制可以提供更精细的控制。</block>
-  <block id="d7800d36c7fddb11c98fb31a8c1d5d50" category="paragraph">最低服务质量策略将性能保留给关键工作负载。例如，在生产数据库和开发数据库混合的环境中，对开发工作负载应用最大 QoS，对生产工作负载应用最小 QoS，以确保性能可预测。</block>
-  <block id="4602ec11783dd2c5a8ddc1a6a89c04f9" category="paragraph">自适应 QoS 会根据存储对象的大小调整限制。虽然很少用于数据库（因为大小与性能需求不相关），但对于性能要求随容量扩展的虚拟化工作负载来说，它可能很有用。</block>
-  <block id="6edda6968105d6954b5256694e3649bb" category="summary">RAID 和 Oracle 数据库与ASA r2</block>
-  <block id="fce02cd425679718f604302e0d536227" category="searchtitle">RAID 和 Oracle 数据库与ASA r2</block>
-  <block id="a939d6e21a6c89c72af6e1899ba41b70" category="paragraph">RAID 指的是利用基于奇偶校验的冗余技术来保护数据免受硬盘故障的影响。ASA r2 使用与AFF和FAS系统相同的ONTAP RAID 技术，可有效防止多块磁盘故障。</block>
-  <block id="a4769c5e44f0e97f11cb16b39f1a1a0a" category="paragraph">ONTAP会自动为ASA r2 系统执行 RAID 配置。这是ASA r2 特性引入的简化存储管理体验的核心组成部分。</block>
-  <block id="747e44d761ad33b2eb88ebaad70815e6" category="paragraph">ASA r2 自动 RAID 配置的关键细节包括：</block>
-  <block id="86b1e9f406f275d55d8bdbd97ba561d9" category="list-text">存储可用区 (SAZ)： ASA r2 使用存储可用区 (SAZ) 来代替手动管理传统的聚合和 RAID 组。这些是 HA 对共享的、受 RAID 保护的磁盘池，其中两个节点可以完全访问相同的存储。</block>
-  <block id="ff90b3e28ca02df77a6681a0efbd5741" category="list-text">自动放置：创建存储单元（LUN 或 NVMe 命名空间）时， ONTAP会自动在 SAZ 内创建一个卷，并将其放置在最佳性能和容量平衡的位置。</block>
-  <block id="27712ac508d43c6818eadfc8acc10e0e" category="list-text">不支持手动聚合管理： ASA r2 不支持传统的聚合和 RAID 组管理命令。这样就无需管理员手动规划 RAID 组大小、奇偶校验盘或节点分配了。</block>
-  <block id="070b455242b96e245be06bac031a00b6" category="list-text">简化配置：配置通过系统管理器或简化的 CLI 命令进行处理，这些命令侧重于存储单元，而不是底层的物理 RAID 布局。</block>
-  <block id="27c8bb95e41f4dcc96c3db322fd90359" category="list-text">工作负载重新平衡：从 2025 年版本（ONTAP 9.17.1）开始， ONTAP会自动在 HA 对中的节点之间重新平衡工作负载，以确保性能和空间利用率保持平衡，而无需人工干预。</block>
-  <block id="156a4db35771b9cfbf2f3357b9e08916" category="paragraph">ASA r2 会自动使用 ONTAP 的默认 RAID 技术：大多数配置使用RAID DP ，非常大的 SSD 池使用RAID-TEC 。这样就省去了手动选择 RAID 的麻烦。这些基于奇偶校验的 RAID 级别比镜像提供更好的存储效率和可靠性，虽然旧的 Oracle 最佳实践通常推荐镜像，但镜像与ASA r2 无关。ONTAP通过WAFL集成避免了传统的 RAID 写入惩罚，从而确保 Oracle 工作负载（例如重做日志记录和随机数据文件写入）的最佳性能。结合自动化 RAID 管理和存储可用区， ASA r2 为 Oracle 数据库提供高可用性和企业级保护。</block>
-  <block id="7ba55adf8707a9ea679db22769a025ca" category="summary">使用ASA r2 为 Oracle 数据库配置 SVM</block>
-  <block id="d4aa9e950ef36e360271594778cbca0b" category="searchtitle">Oracle 数据库和存储虚拟机与ASA r2</block>
-  <block id="2f715c6e6aa91757f50ff512d56b2a12" category="paragraph">ASA r2 系统上的 Oracle 数据库存储管理也集中在存储虚拟机 (SVM) 上，在ONTAP CLI 中称为 vserver。</block>
-  <block id="fb6310455e0908df1c6dd824a7609791" category="paragraph">SVM 是ONTAP中存储配置和安全的基本单元，类似于 VMware ESX 服务器上的客户虚拟机。当ONTAP首次安装在ASA r2 上时，在创建 SVM 之前，它不具备数据服务能力。SVM 定义了 SAN 环境的个性和数据服务。</block>
-  <block id="ef7aca175aba92d84bbc0ea32b9f26da" category="paragraph">ASA r2 系统采用仅限 SAN 的ONTAP特性，该特性经过简化，支持块协议（FC、iSCSI、NVMe/FC、NVMe/TCP），并移除了与 NAS 相关的功能。这简化了管理，并确保所有 SVM 配置都针对 SAN 工作负载进行了优化。与AFF/ FAS系统不同， ASA r2 不提供 NAS 服务选项，例如主目录或 NFS 共享。</block>
-  <block id="146a5691df8cfb757d7eda2981b3b7f3" category="paragraph">创建集群时， ASA r2 会自动配置一个名为 svm1 的默认数据 SVM，并启用 SAN 协议。该SVM无需手动配置协议服务即可进行块存储操作。默认情况下，此 SVM 中的 IP 数据 LIF 支持 iSCSI 和 NVMe/TCP 协议，并使用默认数据块服务策略，从而简化了 SAN 工作负载的初始设置。管理员之后可以根据性能、安全性或多租户要求创建额外的 SVM 或自定义 LIF 配置。</block>
-  <block id="5e8ecb21f02df615400fabb622919767" category="inline-link">仅支持 iSCSI 的 LIF</block>
-  <block id="fcfc982506d2f40ecc714c466f201d61" category="admonition">SAN 协议的逻辑接口 (LIF) 应根据性能和可用性要求进行设计。ASA r2 支持 iSCSI、FC 和 NVMe LIF，但请注意，默认情况下未启用自动 iSCSI LIF 故障转移，因为ASA r2 对 NVMe 和 SCSI 主机使用共享网络。要启用自动故障转移，请创建<block ref="dd448f10ba2739ef2cba9a955f730acc" category="inline-link-rx"></block>。</block>
-  <block id="01991e7e8fe0103fe2e08fb4a06fbb42" category="paragraph">与其他ONTAP平台一样，对于要创建的 SVM 数量没有官方的最佳实践；该决定取决于管理和安全要求。</block>
-  <block id="c9b46b0decb2ff8d931995e958aac2fa" category="paragraph">大多数客户日常运营只使用一台主SVM，并根据特殊需求创建额外的SVM，例如：</block>
-  <block id="7296e471f26dfae6081a67aab939b8eb" category="list-text">由专业团队管理的专用支持虚拟机，用于关键业务数据库。</block>
-  <block id="e3c2829fad1bbce26c8d52d257268905" category="list-text">具有委托管理控制权的开发小组的支持向量机</block>
-  <block id="1a8aadbbefcd940de4217d51d39c26b0" category="list-text">用于处理需要受限管理访问权限的敏感数据的 SVM</block>
-  <block id="83993ee11718fbb27918bc9918e00456" category="paragraph">在多租户环境中，每个租户都可以分配一个专用的 SVM。每个集群、HA 对和节点的 SVM 和 LIF 数量的限制取决于所使用的协议、节点模型和ONTAP版本。请咨询 <block ref="41f66f34b3a905f864500c9319fdff8f" category="inline-link-macro-rx"></block> 在这些限制条件下。</block>
-  <block id="9166ee55eb1a0be8fa4f050e48a01084" category="admonition">从ONTAP 9.18.1 开始， ASA r2 每个集群和每个 HA 对最多支持 256 个 SVM（早期版本中为 32 个）。</block>
-  <block id="d60202b60a3d35c578e974e24bb90e86" category="summary">Oracle 和ONTAP与ASA r2 的精简配置</block>
-  <block id="0382550e451d7d7be20bbfe79e2675ff" category="searchtitle">在ASA r2 上使用 Oracle 数据库进行精简配置</block>
-  <block id="5db8916695aa627be657a119d435e622" category="paragraph">在ASA r2 上对 Oracle 数据库进行精简配置需要仔细规划，因为它涉及配置比物理可用空间更多的逻辑空间。如果实施得当，精简配置可以显著节省成本并提高可管理性。</block>
-  <block id="67e76662b290c7bb7ddf8c8a381fc486" category="paragraph">精简配置是ASA r2 的组成部分，并且与ONTAP效率技术密切相关，因为两者都允许存储比系统物理容量更多的逻辑数据。ASA r2 系统仅限 SAN，精简配置适用于存储可用区 (SAZ) 内的存储单元和 LUN。</block>
-  <block id="3d54b31e7b15e5ca1f9174de08508c48" category="admonition">ASA r2 存储单元默认采用精简配置。</block>
-  <block id="e95dcb4757cac01a8bf2901588dcfc87" category="paragraph">几乎所有快照的使用都涉及精简配置。例如，一个典型的 10 TiB 数据库，包含 30 天的快照，可能会显示为 310 TiB 的逻辑数据，但实际上只占用 12 TiB 到 15 TiB 的物理空间，因为快照只存储已更改的数据块。</block>
-  <block id="70f4fe0bb63801388d4cd14e6d6bbf05" category="paragraph">同样，克隆也是精简配置的另一种形式。一个开发环境，如果完全写入一个 80 TiB 数据库的 40 个克隆，则需要 3.2 PiB 的空间，但实际上消耗的空间要少得多，因为只存储更改。</block>
-  <block id="05472458ee0330f07697b2632e7a917a" category="paragraph">在应用环境中采用精简配置时必须格外小心，因为数据变更率可能会意外增加。例如，如果对数据库表进行重新索引，或者对 VMware 客户机进行大规模修补，则快照导致的空间消耗可能会迅速增长。备份文件丢失可能会在很短的时间内写入大量数据。最后，如果 LUN 意外耗尽可用空间，则某些应用程序可能难以恢复。</block>
-  <block id="5db9d3525c3598e18d4bb1ea2db8cc18" category="paragraph">在ASA r2 中，这些风险是通过精简配置、主动监控和 LUN 调整大小策略来缓解的，而不是通过ONTAP 的卷自动增长或快照自动删除等功能来缓解的。管理员应该：</block>
-  <block id="9609344ef7cd19a1a5460b6f51e139c4" category="list-text">启用 LUN 上的精简配置 <block ref="fa1fdc365b74d5b14cab89cd4c2cc7cc" prefix="(" category="inline-code"></block>这是ASA r2 中的默认设置。</block>
-  <block id="ac53c0ea3204288de3a2c2522bb85398" category="list-text">使用系统管理器警报或基于 API 的自动化方式监控容量</block>
-  <block id="d07ab9395151c8b26ab66a9772523f52" category="list-text">使用计划或脚本化的 LUN 调整大小来适应增长</block>
-  <block id="cd8bb089e11224111755a57f499c8ea5" category="list-text">通过系统管理器（图形用户界面）配置快照保留和自动快照删除</block>
-  <block id="224e45482a3dbc2d7cadd78a8463e91a" category="admonition">由于ASA r2 不支持自动卷增长或 CLI 驱动的快照删除，因此仔细规划空间阈值和自动化脚本至关重要。</block>
-  <block id="d53a5e27c9f806298b719e63b60e4d4d" category="paragraph">ASA r2 不使用部分储备设置，因为它是一个仅支持 SAN 的架构，抽象了基于WAFL 的卷选项。相反，空间效率和覆盖保护是在 LUN 级别进行管理的。例如，如果您从存储单元配置了一个 250 GiB 的 LUN，快照会根据实际块更改消耗空间，而不是预先预留等量的空间。这样就无需进行大量的静态预留，而这种预留在传统的ONTAP环境中使用部分预留时很常见。</block>
-  <block id="141cd2097fb78575737b1bfd31b06f02" category="admonition">如果需要保证覆盖保护且监控不可行，管理员应在存储单元中提供足够的容量并适当设置快照保留。然而， ASA r2 的设计使得大多数工作负载不需要部分备用容量。</block>
-  <block id="351f6ae6656f0bf997a0922ec06a6218" category="paragraph">ASA r2 中的压缩和去重是空间效率技术，而不是传统的精简配置机制。这些特性通过消除冗余数据和压缩数据块来减少物理存储占用空间，从而允许存储比原始容量所允许的更多的逻辑数据。</block>
-  <block id="5ef42f934d63cddc5a96f971a94b7429" category="paragraph">例如，一个 50 TiB 的数据集可以压缩到 30 TiB，从而节省 20 TiB 的物理空间。从应用程序的角度来看，虽然磁盘上只占用 30 TiB，但仍然有 50 TiB 的数据。</block>
-  <block id="5ebf328c9cae7faff1019b087db64713" category="admonition">数据集的可压缩性会随时间变化，这可能会增加物理空间的消耗。因此，必须通过监控和容量规划来主动管理压缩和去重。</block>
-  <block id="8fecfb85db5fdf8ae66c3e9a061aa518" category="paragraph">在ASA r2 环境中，如果删除的数据块没有被回收，精简配置的效率会随着时间的推移而降低。除非使用 TRIM/UNMAP 释放空间或用零覆盖（通过 ASMRU - 自动空间管理和回收实用程序），否则已删除的数据将继续占用物理容量。在许多 Oracle 数据库环境中，精简配置的优势有限，因为数据文件通常在创建时就被预先分配到其全部大小。</block>
-  <block id="374b240506a11f9564274703d9a9aaa6" category="paragraph">精心规划 LVM 配置可以提高效率，并最大限度地减少存储配置和 LUN 调整大小的需求。当使用 Veritas VxVM 或 Oracle ASM 等 LVM 时，底层 LUN 被划分为仅在需要时才使用的扩展区。例如，如果一个数据集最初大小为 2 TiB，但随着时间的推移可能会增长到 10 TiB，则可以将此数据集放置在 10 TiB 的精简配置 LUN 上，这些 LUN 组织成一个 LVM 磁盘组。创建时仅占用 2 TiB 的空间，并且只有在分配扩展区以适应数据增长时才会占用额外的空间。只要对空间进行监控，这个过程就是安全的。</block>
-  <block id="aba3acce9bf977db783a1f3a099fd0a2" category="summary">配置 NVFAIL 以保护ASA r2 上的 Oracle 数据库</block>
-  <block id="5510f46c151cfb15d45e4ba8a9a86738" category="searchtitle">Oracle 数据库和ASA r2 上的 NVFAIL</block>
-  <block id="5726149f7f17e93d987e963b1a9815aa" category="paragraph">NVFAIL 是ONTAP 的一项功能，可在灾难性故障转移情况下确保数据完整性。</block>
-  <block id="5b44cc6bdb59c7fcd5800e8ca4e8de88" category="paragraph">即使ASA r2 系统采用简化的 SAN 架构（SAZ 和存储单元而不是卷），此功能仍然适用于ASA r2 系统。</block>
-  <block id="b7a2b4c7beb39acbf30964be233d43b6" category="paragraph">由于数据库维护着大量的内部缓存，因此在存储故障转移事件期间容易发生数据损坏。如果发生灾难性事件需要强制ONTAP故障转移，无论整体配置的健康状况如何，结果都是先前已确认的更改可能会被有效地丢弃。存储阵列的内容向前跳跃，数据库缓存的状态不再反映磁盘上的数据状态。这种不一致会导致数据损坏。</block>
-  <block id="d529f1699059fd775d38daec404c9709" category="paragraph">缓存可以在应用层或服务器层进行。例如，Oracle Real Application Cluster (RAC) 配置中，服务器在主站点和远程站点上都处于活动状态，并将数据缓存在 Oracle SGA 中。强制故障转移操作导致数据丢失，会使数据库面临损坏的风险，因为存储在 SGA 中的数据块可能与磁盘上的数据块不匹配。</block>
-  <block id="ad67299b81080b42995c6a5aa870ca24" category="paragraph">缓存还有一个不太明显的用途，那就是在操作系统文件系统层。基于位于主站点的 LUN 的集群文件系统可以挂载到远程站点的服务器上，并且可以再次缓存数据。在这些情况下， NVRAM故障或强制接管可能会导致文件系统损坏。</block>
-  <block id="3ddb6c813a50856a003faa943d94ca24" category="paragraph">ONTAP使用 NVFAIL 及其相关设置来保护数据库和操作系统免受此情况的影响，这些设置会向主机发出信号，使缓存数据失效，并在故障转移后重新挂载受影响的文件系统。该机制适用于ASA r2 LUN 和命名空间，就像适用于AFF/ FAS一样。</block>
-  <block id="cb43a7910131c4a9b54ee4527f41584a" category="paragraph">ASA r2 的关键考虑因素：</block>
-  <block id="760178473b2704cd5e111e8ac1c4ae81" category="list-text">NVFAIL 在 LUN 级别（存储单元）运行，而不是在 SAZ 级别运行。</block>
-  <block id="c87084320a0d119d921d77b65b487a40" category="list-text">对于 Oracle 数据库，应在所有托管关键组件（数据文件、重做日志、控制文件）的 LUN 上启用 NVFAIL。</block>
-  <block id="2619eb12ebcaa2f4223907a04c8b3e6a" category="list-text">ASA r2 不支持MetroCluster ，因此 NVFAIL 主要适用于本地 HA 故障转移场景。</block>
-  <block id="ed28739e6688c1c56caa21d8f4e83fa0" category="list-text">ASA r2 不支持 NFS，因此 NVFAIL 注意事项仅适用于基于 SAN 的工作负载（FC/iSCSI/NVMe）。</block>
-  <block id="e519d6eb34dfc47edf5072f1a0a920e0" category="summary">在ASA r2 上使用 AIX 的 Oracle 数据库</block>
-  <block id="fcb9fe371de92b4141a475f18125a2e7" category="searchtitle">在ASA r2 上使用 IBM AIX 的 Oracle 数据库</block>
-  <block id="14590776a7ec5f76f6c0dbaf12aea82d" category="paragraph">IBM AIX 上 Oracle 数据库与ASA r2 ONTAP的配置主题。</block>
-  <block id="e21c6d7d6ce64b744e1b3dfc9f3dbb12" category="paragraph">AIX 支持使用NetApp ASA r2 托管 Oracle 数据库，前提是：</block>
-  <block id="61cc31cc32fc76833bf9b697fedcd7b5" category="list-text">您已正确配置 Oracle 以支持并发 I/O。</block>
-  <block id="9dfe407ff2ee9c174cce1d9f12a01c51" category="list-text">您使用受支持的 SAN 协议（FC/iSCSI/NVMe）。</block>
-  <block id="5dbad350303c2f9f6c54a25478f708e6" category="list-text">您在ASA r2 上运行ONTAP 9.16.x 或更高版本。</block>
-  <block id="ef37a2ddad88a2a152b9948feb73bc4b" category="paragraph">在 IBM AIX 上使用ASA r2 实现最佳性能需要使用并发 I/O。如果没有并发 I/O，性能可能会受到限制，因为 AIX 执行的是串行原子 I/O，这会产生很大的开销。</block>
-  <block id="6edb8857a5df843ec36fc2b3a863d730" category="paragraph">最初， NetApp建议使用<block ref="4482571a249db31b3abed938e4567a15" prefix=" " category="inline-code"></block> 挂载选项可以强制文件系统进行并发 I/O，但此过程存在缺点，现在已不再需要。自 AIX 5.2 和 Oracle 10gR1 推出以来，AIX 上的 Oracle 可以打开单个文件进行并发 I/O，而不是强制对整个文件系统进行并发 I/O。</block>
-  <block id="eda28eaca3dbfe13d6de344928f25e81" category="paragraph">使用 cio 作为挂载选项会强制使用并发 I/O，这可能会产生负面影响。例如，强制并发 I/O 会禁用文件系统上的预读功能，这可能会损害 Oracle 数据库软件外部发生的 I/O 的性能，例如复制文件和执行磁带备份。此外，Oracle GoldenGate 和 SAP BR*Tools 等产品与某些版本的 Oracle 使用 cio mount 选项不兼容。</block>
-  <block id="c3fcaa918acdb778a4e2f846c030c0a9" category="list-text">仅使用<block ref="4482571a249db31b3abed938e4567a15" prefix=" " category="inline-code"></block> 如果无法设置挂载选项，则进行设置<block ref="b6a2b868e8bebfc19497b406a12a1071" prefix=" " category="inline-code"></block>。</block>
-  <block id="4ad5c7879e9856926d647b1c4108aa1a" category="admonition">由于ASA r2 不支持 NAS，因此 AIX 上的所有 Oracle 部署都必须使用块协议。</block>
-  <block id="8ae7510e454410710230296d25e27ce1" category="cell">控制文件、</block>
-  <block id="d41de13d4f13727ba8bcfa0e4b6f43d3" category="cell">数据文件</block>
-  <block id="823272d72b3248694e3df021ef8cf5d4" category="cell">重做日志</block>
-  <block id="36287b7fc9193c5febdd31bfd37adb9e" category="paragraph">在使用 AIX 之前<block ref="b7cc91287fc99a8937a55e79376c6f54" prefix=" " category="inline-code"></block> 在任何环境（包括数据库）中的设备，检查参数<block ref="9d51746070ef554ad4e93a16de4aed0f" prefix=" " category="inline-code"></block>。此参数并非HBA队列深度；而是与单个SCSI卡的队列深度相关。<block ref="b1835b2bc8fe4eebb5093da8087b01e9" prefix=" " category="inline-code"></block>。根据ASA r2 LUN 的配置方式，该值会有所不同。<block ref="9d51746070ef554ad4e93a16de4aed0f" prefix=" " category="inline-code"></block> 可能太低，无法获得良好的性能。测试表明最佳值为 64。</block>
-  <block id="d79502074cc6e7e5a364f270a466f90a" category="summary">在ASA r2 上使用 Linux 和 ASMlib/ASM 过滤器驱动程序的 Oracle 数据库</block>
-  <block id="1b8322dc9ddcf0f0884dea2005af98a4" category="searchtitle">在ASA r2 上使用 ASMLib/AFD（ASM 过滤器驱动程序）的 Oracle 数据库</block>
-  <block id="3488d46993d5a8378c20ef8680693299" category="paragraph">使用 AFD 和 ASMlib 的ASA r2 ONTAP的 Linux 操作系统特有的配置主题。</block>
-  <block id="d096e0a6df0924614163a540b2214971" category="paragraph">ASMlib 是一个可选的 ASM 管理库和相关实用程序。它的主要价值在于能够将 LUN 标记为 ASM 资源，并带有人类可读的标签。</block>
-  <block id="d19e24337b54fcc70e96e05114ad22a2" category="summary">在ASA r2 上使用 HP-UX 的 Oracle 数据库</block>
-  <block id="20c8ba6aea292789ef2e6f1b4b89ae77" category="paragraph">HP-UX 上 Oracle 数据库与ASA r2 ONTAP的配置主题。</block>
-  <block id="e9b7342441652011904ff65fb1193d74" category="paragraph">HP-UX 支持与NetApp ASA r2 配合使用，用于托管 Oracle 数据库，前提是：</block>
-  <block id="4f24e0afbf75599b5597e3a2be666094" category="list-text">ONTAP版本为 9.16.x 或更高版本。</block>
-  <block id="3b97f328d0018662389a71edcacbc5a0" category="list-text">使用 SAN 协议（FC/iSCSI/NVMe）。ASA r2 不支持 NAS。</block>
-  <block id="36995f50a8bb9428c17eabad17a9e21e" category="list-text">应用HP-UX特有的挂载和I/O调优最佳实践。</block>
-  <block id="b6c1b0f6914791454ede96b6820e724b" category="summary">在ASA r2 上使用 Linux 的 Oracle 数据库</block>
-  <block id="735da48e08399aff4389f7645ad63008" category="paragraph">针对 Linux 操作系统和ASA r2 ONTAP 的配置主题。</block>
-  <block id="cc72f8ba70e23d17e4898b2d817c7775" category="paragraph">ASA r2 支持 Oracle 数据库，并兼容 Linux（Oracle Linux、RHEL、SUSE）。使用 SAN 协议，正确配置多路径，并应用 Oracle 最佳实践进行 ASM 和 I/O 调优。</block>
-  <block id="1f0e7d8c686c998d847b6b6b0524d0db" category="paragraph">例如，RHEL 9.7 上的多路径守护进程的默认配置可能如下所示：</block>
-  <block id="17d641ba9ac890f75d4c292b06bb7b94" category="section-title">队列深度</block>
-  <block id="409778175ac5dff7ebc33d3a237112c3" category="paragraph">为 SAN 设备设置合适的队列深度，以避免 I/O 瓶颈。Linux 上的默认队列深度通常设置为 128，这可能会导致 Oracle 数据库出现性能问题。队列深度设置过高会导致 I/O 排队过多，从而导致延迟增加和吞吐量降低。设置得太低会限制未完成的 I/O 请求数量，从而降低整体性能。对于ASA r2 上的 Oracle 数据库工作负载，队列深度 64 通常是一个不错的起点，但可能需要根据具体的工作负载特性和性能测试进行调整。</block>
-  <block id="af911470a92a15ef9be3fd8bf911b56d" category="paragraph">对于支持主动-主动多路径的ASA r2 系统，应调整这些多路径设置。由于所有路径都处于活动状态并进行了负载均衡，因此不需要无限期排队。相反，多路径参数应优先考虑性能和快速故障恢复。这种行为对于 ASM 镜像很重要，因为 ASM 必须收到 I/O 失败才能在备用 LUN 上重试 I/O。如果 I/O 无限期地排队，ASM 无法触发故障转移。</block>
-  <block id="a202cf3983184d1ce3e7056d7305d01f" category="admonition">NetApp建议使用默认挂载选项。在 LUN 上创建文件系统时，请确保正确对齐。</block>
-  <block id="0fc668638a672a7d830afec06b27d782" category="summary">在ASA r2 上使用 Solaris 的 Oracle 数据库</block>
-  <block id="40dff793103aa25077d6225eb96d92b6" category="paragraph">适用于 Solaris 操作系统和ASA r2 ONTAP 的配置主题。</block>
-  <block id="5979a32a9c62ecee74c171ed5cc2d6e7" category="summary">在ASA r2 上使用 Microsoft Windows 的 Oracle 数据库</block>
-  <block id="59c2890ecd2c8d54b1be7b5075c7d55a" category="paragraph">在 Microsoft Windows 上使用ASA r2 ONTAP 的Oracle 数据库配置主题。</block>
-  <block id="41dc5a1bfa78463990313337562fc0a9" category="summary">Oracle 数据库和ONTAP直连与ASA r2 的连接</block>
-  <block id="e7e1bbfbb8e743a965e762dfa3e234f9" category="paragraph">使用 iSCSI 或 NVMe/TCP 的主机可以直接连接到ASA r2 存储系统并正常运行。原因在于路径规划。直接连接到两个不同的存储控制器，会产生两条独立的数据流路径。只要多路径配置正确，路径、端口或控制器的丢失并不会阻止使用其他路径。</block>
-  <block id="35a14cf200b3e6049eeb29738ad4711e" category="paragraph">使用 FC 协议无法将主机直接连接到ASA r2 存储系统。原因与AFF/ FAS系统相同，即使用 NPIV。用于识别 FC 网络中ONTAP FC 端口的 WWN 使用一种称为 NPIV 的虚拟化类型。任何连接到ONTAP系统的设备都必须能够识别 NPIV WWN。目前还没有任何 HBA 供应商提供可以安装在能够支持 N​​PIV 目标的宿主机上的 HBA。</block>
-  <block id="4d2361ac0de1401ab0ff03a54ff4a137" category="summary">ASA r2 系统上的 Oracle、TCP/IP 和以太网配置</block>
-  <block id="3c80c484426036630d6eb8389c2ac11d" category="searchtitle">使用ASA r2 配置 Oracle 数据库的 TCP/IP 和以太网</block>
-  <block id="5db9438e726eacde259e400997b7ad50" category="paragraph">许多 Oracle on ASA r2 ONTAP客户使用以太网、iSCSI 网络协议和 NVMe/TCP。</block>
-  <block id="b9859abe854650d97cc9443efe8bacae" category="paragraph">对于仅限 SAN 的ASA r2 系统，以太网流控制考虑因素主要适用于 iSCSI 和 NVMe/TCP 流量。</block>
-  <block id="391bb22eb81aa6a08c067e17fdc19f3a" category="admonition">NetApp建议确保NetApp ASA r2 存储控制器不接收以太网流控制数据包。这通常可以通过设置控制器所连接的交换机端口来实现，但某些交换机硬件存在限制，可能需要进行客户端更改。</block>
-  <block id="208fb28dae4318ca1f947bab31f1c824" category="paragraph">对于仅限 SAN 的ASA r2 系统，巨型帧仅适用于基于以太网的 SAN 协议（iSCSI 和 NVMe/TCP）。</block>
-  <block id="d65d3c32ef266ba55e2378bbd9a6b317" category="paragraph">NetApp建议在ASA r2 SAN 环境中配置以下内容：</block>
-  <block id="84519fb5c01a2679ca254670c9be6802" category="list-text">对于 1GbE 来说，巨型帧是可取的，但并非必需。</block>
-  <block id="db7fb2373c0f2187e6de7e956e29cfed" category="list-text">对于 10GbE 而言，巨型帧是实现最佳性能的必要条件；对于 iSCSI 和 NVMe/TCP 流量而言，巨型帧的速度更快。</block>
-  <block id="1ce271de40e24ab8a63800ce42e0a92a" category="summary">使用ASA r2 配置 Oracle 数据库的 FC 网络</block>
-  <block id="8a0dcf3ef73899d99ab6e7a82434404d" category="searchtitle">使用ASA r2 配置 Oracle 数据库的 FC SAN</block>
-  <block id="d2bdcae397f14f23d178639b4a3449f1" category="paragraph">在ASA r2 系统上为 Oracle 数据库配置 FC SAN 主要在于遵循标准的 SAN 最佳实践。</block>
-  <block id="e731c4d7f31dd741c0d10f0333c324be" category="paragraph">ASA r2 针对仅限 SAN 的工作负载进行了优化，因此其原理与AFF/ FAS相同，重点在于性能、弹性和简单性。这包括典型的规划措施，例如确保主机和存储系统之间的 SAN 有足够的带宽，检查所有必需设备之间是否存在所有 SAN 路径，使用 FC 交换机供应商要求的 FC 端口设置，避免 ISL 争用，以及使用适当的 SAN 结构监控。</block>
-  <block id="517d60dbcaa0d6b23a9f47fbd0edaa39" category="list-text">ASA r2 使用存储可用区而不是聚合，但这并不会改变 FC 分区原则。</block>
-  <block id="c39ca1d0b43d0baae5362c1cde3ee38c" category="list-text">多路径 (MPIO) 仍然是主要的弹性机制；然而，对于支持对称主动-主动多路径的ASA r2 系统，到 LUN 的所有路径都是活动的，并同时用于 I/O。</block>
-  <block id="2209a1d9b2ca24fe83599efabcbffce1" category="summary">使用ASA r2 的 Oracle 数据库逻辑接口设计</block>
-  <block id="3af46ba2ee5090e4c4e7846e7b132945" category="paragraph">本节概述了ASA r2 系统的关键 LIF 设计原则，该系统针对仅限 SAN 环境进行了优化。如需更全面的文档，请参阅 <block ref="a3e6361e1a52d384f542a2f2d8bc9bb1" category="inline-link-macro-rx"></block>。与数据库架构的其他方面一样，存储虚拟机 (SVM，在 CLI 中称为 vserver) 和逻辑接口 (LIF) 设计的最佳选择很大程度上取决于扩展要求和业务需求。</block>
-  <block id="21799093fc4cfb791dfe32dc663f4f8b" category="list-text">*表现。*网络带宽是否足以满足Oracle工作负载的需求？</block>
-  <block id="111dbd10ee2308ce64978a8e5e7d7304" category="list-text">*数据 LIF。*仅支持 SAN 协议的接口：FC、iSCSI、NVMe/FC、NVMe/TCP。ASA r2 系统不支持 NAS 协议（NFS、SMB/CIFS）。</block>
-  <block id="eb7b64f9138ff27678062103f7c70882" category="admonition">尽管 iSCSI（或 NVMe/TCP）和管理流量都使用 IP 协议，但无法为两者配置同一个接口。在 iSCSI 或 NVMe/TCP 环境中，需要单独的管理 LIF。为了提高弹性和性能，每个节点每个协议配置多个 SAN 数据 LIF，并将它们分布在不同的物理端口和结构上。与AFF/ FAS系统不同， ASA r2 不允许 NFS 或 SMB 流量，因此无法将 NAS 数据 LIF 重新用于管理。</block>
-  <block id="fbd9cbd3f29c4cfd273ea6e2c6e2ea2e" category="paragraph">在 SAN 环境中，影响 LIF 性能的最重要因素是带宽。例如，一个双节点ASA r2 集群，每个节点有两个 32Gb FC 端口，每个节点最多可提供 64Gb 的带宽。同样，对于 NVMe/TCP 或 iSCSI，要确保 Oracle 工作负载有足够的 25GbE 或 100GbE 连接。</block>
-  <block id="df8a61f03f4995a39442d2a271415832" category="paragraph">SAN LIF 的故障转移方式与ASA LIF 不同。ASA r2 系统依靠主机多路径（MPIO/ALUA）来实现弹性恢复。如果由于控制器故障转移导致 SAN LIF 不可用，客户端的多路径软件会检测到路径丢失，并将 I/O 重定向到备用路径。ASA r2 可能会在短暂延迟后执行 LIF 重定位以恢复完整路径的可用性，但这不会中断 I/O，因为伙伴节点上已经存在活动路径。故障转移过程是为了恢复所有已定义端口上的主机访问权限。</block>
-  <block id="a16d6c41318f3de1eb13c1844f304422" category="paragraph">在 SAN 环境中，当 HA 对内的卷被重新定位时，无需迁移 LIF。这是因为，卷迁移完成后， ONTAP会向 SAN 发送路径变更通知，SAN 客户端会自动重新优化。使用 SAN 进行 LIF 迁移主要与重大的物理硬件变更相关。例如，如果需要对控制器进行无中断升级，则 SAN LIF 会迁移到新硬件。如果发现 FC 端口出现故障，可以将 LIF 迁移到未使用的端口。</block>
-  <block id="9828810f7fcace78de1d1de0e576c84e" category="paragraph">NetApp针对ASA r2 SAN环境提出以下建议：</block>
-  <block id="f83001332c7becf3e61981f64091d862" category="list-text">使用选择性 LUN 映射 (SLM) 功能，该功能默认启用。使用 SLM，任何新的 LUN 都会从拥有底层聚合的节点和该节点的 HA 伙伴自动发布。这种安排避免了创建端口集或配置区域来限制端口访问权限的需要。每个 LUN 都部署在满足最佳性能和弹性所需的最少节点上。</block>
-  <block id="9bd683ce8a75eb3cef3454ed97d056e9" category="list-text">如果需要将 LUN 迁移到两个控制器之外，则可以使用以下方式添加额外的节点：<block ref="02d0bbdc14988c85bbd7994723f4dd7f" prefix=" " category="inline-code"></block> 命令将 LUN 通告到新节点上。这样做会为 LUN 迁移创建额外的 SAN 路径。但是，主机必须执行发现操作才能使用新路径。</block>
-  <block id="90f4c30336e9921dc9f790199b80a26c" category="summary">在ASA r2 上使用ONTAP零块检测的 ASM 回收实用程序</block>
-  <block id="68b277e79eb0e18f7699090c7f597833" category="searchtitle">ASM 回收实用程序 (ASRU) 与ASA r2 上的ONTAP</block>
-  <block id="bfbea40daf6eff16b91d4b7d3bd13b21" category="doc">ASM 回收实用程序 (ASRU)</block>
-  <block id="8c18218e2429b3c0e71cfb77a5486907" category="paragraph">当启用在线压缩时， ONTAP on ASA r2 可以有效地删除写入 LUN（存储单元）的零块。Oracle ASM 回收实用程序 (ASRU) 等实用程序的工作原理是将零写入未使用的 ASM 区段。</block>
-  <block id="9dc9cfea7e02e83a3b766a99a9b3b25c" category="paragraph">这样，数据库管理员就可以在数据删除后回收存储阵列上的空间。ONTAP拦截零值并从 LUN 中释放空间。由于存储系统中没有实际写入任何数据，因此回收过程非常快。</block>
-  <block id="96564d0673d8b56c565c6c6ef3de2ca7" category="paragraph">使用ASA r2 ONTAP需要考虑的关键 ASRU 因素：</block>
-  <block id="c6455a89096acca814d31fecbec23bf9" category="list-text">由于ASA r2 仅支持块存储，因此其工作方式与AFF/ FAS相同，适用于 SAN 工作负载。</block>
-  <block id="ce11aa3271c53b3bab6765e2d48951ac" category="list-text">适用于在 SAZ 内配置的 LUN 和 NVMe 命名空间。</block>
-  <block id="5c9e99714e3d57e5572281b0e41e2cc6" category="list-text">FlexVol卷不存在，但零块回收行为是相同的。</block>
-  <block id="203be0c11c79d2c1a42df2c5bab9a460" category="summary">在ASA r2 上与 Oracle 数据库进行 LUN 对齐</block>
-  <block id="7b349eb0f9d2f474d9ab9cc5118eb5d6" category="searchtitle">使用ASA r2 进行 Oracle 数据库 I/O 的 LUN 对齐</block>
-  <block id="93f6837f6081de07a7906f5c0941bc8d" category="paragraph">ASA r2 系统使用与AFF/ FAS相同的ONTAP架构，但配置模型更简化。ASA r2 系统使用存储可用区 (SAZ) 而不是聚合，但对齐原则保持不变，因为ONTAP跨平台一致地管理块布局。但是，请注意以下ASA特有的几点：</block>
-  <block id="8a19d2cf9991d8821095e34703361c32" category="list-text">ASA r2 系统为所有 LUN 提供主动-主动对称路​​径，从而消除了对齐期间的路径不对称问题。</block>
-  <block id="95c89bde38b17ca0c2652e49f027682e" category="list-text">存储单元 (LUN) 默认采用精简配置；对齐方式不会改变此行为。</block>
-  <block id="4c58090f7a610a39283889bddaa74a38" category="list-text">在创建 LUN 期间可以配置快照保留和自动快照删除（ONTAP 9.18.1 及更高版本）。</block>
-  <block id="1734f57e94713f0a032bc6c907c9bdcb" category="paragraph">使用诸如此类的工具来验证对齐情况。<block ref="40883add63f1fbabc7fe6158f93c1246" prefix=" " category="inline-code"></block> 或者<block ref="1aabac6d068eef6a7bad3fdf50a05cc8" prefix=" " category="inline-code"></block> 能够以规定的块大小生成 I/O。可以使用以下命令查看存储系统的 I/O 对齐统计信息：<block ref="446501053769c06c565094b26d26e8ef" prefix=" " category="inline-code"></block> 命令。看 <block ref="ebccec7997af507c87f985ec4ccec634" category="inline-link-macro-rx"></block> 了解更多信息。</block>
-  <block id="05a449cce434ca63ba5e47373b9d1f49" category="paragraph">其他最佳实践：</block>
-  <block id="fcfa58ba93830f78edfcf9fa0d9fc8f0" category="list-text">使用NetApp互操作性矩阵工具 (IMT) 验证 HBA 固件和操作系统设置。</block>
-  <block id="a169b081fb2875694e9e5e4fc00c909c" category="list-text">使用 sanlun 工具确认路径健康状况和对齐情况。</block>
-  <block id="cc8928f2af9f0fae6ef3d8017126cfc4" category="list-text">对于 Oracle ASM 和 LVM，请确保配置文件（/etc/lvm/lvm.conf、/etc/sysconfig/oracleasm）设置正确，以避免出现对齐问题。</block>
-  <block id="f12a09107ad4162f57baf9c752a518f2" category="summary">使用ASA r2 进行 Oracle 和ONTAP LUN 部署</block>
-  <block id="aaa76fde2acba4d974e5e81148765b08" category="searchtitle">使用ASA r2 进行 Oracle 数据库 LUN 部署</block>
-  <block id="92ed1004aa7bc12d2dc43469c67ca8cd" category="paragraph">ASA r2 系统中数据库 LUN 的最佳放置位置主要取决于ONTAP 的各种功能将如何使用。</block>
-  <block id="e3908755a901bd8b390fca0586e5d01b" category="paragraph">在ASA r2 系统中，存储单元（LUN 或 NVMe 命名空间）由称为存储可用性区域 (SAZ) 的简化存储层创建，SAZ 充当 HA 对的公共存储池。</block>
-  <block id="4882324a7fb3b029e3afbfa4ea1996f7" category="admonition">通常每个 HA 对只有一个存储可用区 (SAZ)。</block>
-  <block id="90015b4a4947685eab609edee413af64" category="section-title">存储可用区 (SAZ)</block>
-  <block id="95eeff3469b684d29e14c8c7ed95c6e1" category="paragraph">在ASA r2 系统中，卷仍然存在，但它们会在创建存储单元时自动创建。存储单元（LUN 或 NVMe 命名空间）直接在存储可用区 (SAZ) 中自动创建的卷内进行配置。这种设计消除了手动卷管理的需要，使 Oracle 数据库等块工作负载的配置更加直接和精简。</block>
-  <block id="20ccc13be8bc94c50c99ae571eabbf3d" category="section-title">安全区域区和存储单元</block>
-  <block id="c8e0228d7d981590c271f1ebd7928f14" category="paragraph">相关存储单元（LUN 或 NVMe 命名空间）通常位于同一个存储可用区 (SAZ) 内。例如，一个需要 10 个存储单元 (LUN) 的数据库，通常会将所有 10 个单元放置在同一个 SAZ 中，以简化操作并提高性能。</block>
-  <block id="0c6b3219675d75f631c2a5c116fc5051" category="list-text">使用 1:1 的存储单元与卷的比例，即每个卷对应一个存储单元 (LUN)，是ASA r2 的默认行为。</block>
-  <block id="4e198a8d880a904a00df60812b1e1b01" category="list-text">如果ASA r2 系统中存在多个 HA 对，则给定数据库的存储单元 (LUN) 可以分布在多个 SAZ 中，以优化控制器利用率和性能。</block>
-  <block id="4cdd51ddfeccf85bb8dd182e9f83f00d" category="admonition">在 FC SAN 的上下文中，存储单元指的是 LUN。</block>
-  <block id="cd57cb5c212b19d23633017bc53cc4e7" category="section-title">一致性组 (CG)、LUN 和快照</block>
-  <block id="ef7a7d977f1a63e641a7fce414bb7e47" category="paragraph">在ASA r2 中，快照策略和计划是在一致性组级别应用的，一致性组是一个逻辑结构，它将多个 LUN 或 NVMe 命名空间分组，以实现协调的数据保护。由 10 个 LUN 组成的数据集只需要一个快照策略，前提是这些 LUN 属于同一个一致性组。</block>
-  <block id="7d17b1c72d96ef2be6eb824b79d17c09" category="paragraph">一致性组确保所有包含的 LUN 上的原子快照操作。例如，如果将底层 LUN 分组到同一个一致性组中，则可以将驻留在 10 个 LUN 上的数据库或由 10 个不同操作系统组成的基于 VMware 的应用程序环境作为单个一致的对象进行保护。如果快照被放置在不同的一致性组中，即使在同一时间安排，快照也可能无法完全同步。</block>
-  <block id="893cac1ea1cce31311a3726c0d553033" category="paragraph">在某些情况下，由于恢复要求，可能需要将一组相关的 LUN 分成两个不同的一致性组。例如，一个数据库可能有四个 LUN 用于数据文件，两个 LUN 用于日志。在这种情况下，包含 4 个 LUN 的数据文件一致性组和包含 2 个 LUN 的日志一致性组可能是最佳选择。原因在于独立可恢复性：数据文件一致性组可以有选择地恢复到较早的状态，这意味着所有四个 LUN 都将恢复到快照的状态，而包含关键数据的日志一致性组将不受影响。</block>
-  <block id="c630ef12bf3956117cddb1064fc3d361" category="section-title">CG、LUN 和SnapMirror</block>
-  <block id="6a824f9a12117a2a6895290867e086df" category="paragraph">SnapMirror策略和操作与快照操作一样，是在一致性组上执行的，而不是在 LUN 上执行的。</block>
-  <block id="13fa8b6e8b3be69f7fe58ff3630ccb35" category="paragraph">将相关的 LUN 放在同一个一致性组中，可以创建单个SnapMirror关系，并通过一次更新更新所有包含的数据。与快照一样，此次更新也将是一个原子操作。SnapMirror目标位置将保证拥有源 LUN 的单一时间点副本。如果 LUN 分布在多个一致性组中，则副本之间可能一致，也可能不一致。</block>
-  <block id="403e3c031b4cfa6e3fe3dae9c8c5fe13" category="paragraph">在ASA r2 系统上使用SnapMirror进行复制存在以下限制：</block>
-  <block id="387dae8bc04454e56a9780e8507821e5" category="list-text">不支持SnapMirror同步复制。</block>
-  <block id="74618c54a0d6a05f0dbccbfa9f4bc480" category="list-text">SnapMirror主动同步仅支持在两个ASA r2 系统之间进行。</block>
-  <block id="b24c01ad6773e01500470565f30e6c7e" category="list-text">SnapMirror异步复制仅支持在两个ASA r2系统之间进行。</block>
-  <block id="760e533cef4cb07e928f9667b4337a91" category="list-text">SnapMirror异步复制不支持在ASA r2 系统与ASA、 AFF或FAS系统或云之间进行。</block>
-  <block id="91986d95992f1ad825d4163f8cc66a27" category="inline-link">ASA r2 系统支持SnapMirror复制策略</block>
-  <block id="2280c599c5e817601b252f1594e3c4b2" category="paragraph">了解更多<block ref="2475b888e80612096ae52a0122ee018c" category="inline-link-rx"></block>。</block>
-  <block id="8ca2b03f914c6e1c468a2cd13b3c8b3d" category="section-title">CG、LUN 和 QoS</block>
-  <block id="7f2da44f6bd7c9356e63d179a440809d" category="paragraph">虽然 QoS 可以有选择地应用于单个 LUN，但通常在一致性组级别设置 QoS 更容易。例如，可以将给定 ESX 服务器中所有客户机使用的所有 LUN 放在一个一致性组中，然后应用ONTAP自适应 QoS 策略。最终结果是，每 TiB 的 IOPS 具有自扩展性，并且适用于所有 LUN。</block>
-  <block id="9a463c1574f65dcc765615800d99e581" category="paragraph">同样地，如果一个数据库需要 100K IOPS 并占用 10 个 LUN，那么在单个一致性组上设置一个 100K IOPS 限制比在每个 LUN 上设置 10 个单独的 10K IOPS 限制要容易得多。</block>
-  <block id="410329240fb2d429a85eaa5a8949cc3d" category="section-title">多种CG布局</block>
-  <block id="5d754c13781487993a2059f802f22ba4" category="paragraph">在某些情况下，将 LUN 分布到多个一致性组中可能是有益的。主要原因是控制器条带化。例如，HA ASA r2 存储系统可能托管单个 Oracle 数据库，此时需要每个控制器的全部处理和缓存能力。在这种情况下，典型的设计是将一半的 LUN 放在控制器 1 上的一个一致性组中，将另一半 LUN 放在控制器 2 上的一个一致性组中。</block>
-  <block id="7f8f628b8a7fd8f111de2978da131f9d" category="paragraph">同样地，对于托管多个数据库的环境，将 LUN 分布在多个一致性组中可以确保控制器利用率的均衡。例如，一个 HA 系统托管 100 个数据库，每个数据库有 10 个 LUN，则每个数据库可能将 5 个 LUN 分配给控制器 1 上的一个一致性组，将 5 个 LUN 分配给控制器 2 上的一个一致性组。这样可以保证在配置更多数据库时实现对称加载。</block>
-  <block id="ae306759adf36251b055c76a41fa02d8" category="paragraph">不过，这些例子都不涉及 1:1 LUN 与一致性组的比例。目标仍然是通过将相关的 LUN 在逻辑上分组到一致性组中来优化可管理性。</block>
-  <block id="09ff91a9a7ddab76a6eac2cd43acf9a1" category="paragraph">1:1 LUN 与一致性组比例的一个合理例子是容器化工作负载，其中每个 LUN 实际上可能代表一个单独的工作负载，需要单独的快照和复制策略，因此需要单独管理。在这种情况下，1:1 的比例可能是最佳选择。</block>
-  <block id="ef2e36dfa6fb12cf1c8a7a0ae0c88d52" category="summary">在ASA r2 上使用 Oracle 数据库调整 LUN 和 LVM 大小</block>
-  <block id="aea1f5a276c7b54d6172243c8b548bb2" category="searchtitle">使用ASA r2 调整 Oracle 数据库 LUN 和 LVM 的大小</block>
-  <block id="70092e467b0294964d44a44d52d770f2" category="paragraph">当基于 SAN 的文件系统或 Oracle ASM 磁盘组在ASA r2 上达到容量限制时，有两种方法可以增加可用空间：</block>
-  <block id="8abbd05e0a227c599291f20b646a134d" category="list-text">增加现有 LUN（存储单元）的容量</block>
-  <block id="735f16a4a3b88e32076ada50e5286ae7" category="list-text">向现有 ASM 磁盘组或 LVM 卷组添加新的 LUN，并扩展其包含的逻辑卷。</block>
-  <block id="40ad3147cef36b9d1a82d15d59687f65" category="paragraph">虽然ASA r2 支持 LUN 调整大小，但通常最好使用逻辑卷管理器 (LVM)，例如 Oracle ASM。LVM 存在的主要原因之一是避免频繁调整 LUN 大小。使用 LVM，可以将多个 LUN 组合成一个虚拟存储池。从该存储池中划分出的逻辑卷可以轻松调整大小，而不会影响底层存储配置。</block>
-  <block id="be47566c8372059834f1fc8385d4ac38" category="paragraph">使用 LVM 或 ASM 的其他好处包括：</block>
-  <block id="f04f7fcd9aefa6cc6cfcacbeef712d68" category="list-text">性能优化：将 I/O 分布到多个 LUN 上，减少热点。</block>
-  <block id="1abd7acfc8d1a1b656234e216fc629f5" category="list-text">灵活性：添加新的 LUN 而不会中断现有工作负载。</block>
-  <block id="dc417c507b436d9dcf6e3dbb977f40b7" category="list-text">透明迁移：ASM 或 LVM 可以将扩展区迁移到新的 LUN 以进行均衡或分层，而无需主机停机。</block>
-  <block id="c73b873ea9167a593bee299b16d12b06" category="list-text">LUN 调整大小是在存储虚拟机 (SVM) 内的存储单元级别执行的，使用来自存储可用区 (SAZ) 的容量。</block>
-  <block id="1b691366b4a3ac901464c48c9d4d8bff" category="list-text">对于 Oracle 而言，最佳实践是将 LUN 添加到 ASM 磁盘组，而不是调整现有 LUN 的大小，以保持条带化和并行性。</block>
-  <block id="58cb14b122b3d785a1a321856cc92c3f" category="summary">Oracle 数据库 LUN 大小调整和 LUN 数量指南（ ASA r2）</block>
-  <block id="cf15b0ae7bdc6d8834b7e6418ffef6cf" category="searchtitle">使用ASA r2 进行 Oracle 数据库 LUN 大小调整和 LUN 计数</block>
-  <block id="49521166939155a64490ecd7f6957360" category="paragraph">LUN 是ONTAP上的虚拟化对象，它存在于ASA r2 系统上托管存储可用区 (SAZ) 的所有驱动器中。因此，LUN 的性能不受其大小的影响，因为无论选择什么大小，LUN 都能充分利用 SAZ 的全部性能潜力。</block>
-  <block id="d25613c7fbbaea4aab9e21e2b21ad490" category="paragraph">* ASA r2 注意事项：*</block>
-  <block id="5f929ae9afccf8d55896b9978ea77cf9" category="list-text">ASA r2 的最大 LUN 大小为 128TB，这允许使用更少但更大的 LUN，而不会影响性能。</block>
-  <block id="717d9e18e5ee8ee018a606f9bdf7aef7" category="list-text">ASA r2 使用存储可用区 (SAZ) 而不是聚合，但这并不会改变 Oracle 工作负载的 LUN 大小调整逻辑。</block>
-  <block id="8dd6202dd76a4a6b4230a20ff09f6fac" category="list-text">默认情况下启用精简配置；调整 LUN 大小不会造成中断，也不需要将其脱机。</block>
-  <block id="cc7c6c6a526f7d2cb13c2fd2a0b9e839" category="paragraph">对于ASA r2，LUN 计数的原则与AFF/ FAS相同，因为ONTAP在跨平台处理并行 I/O 的方式类似。然而， ASA r2 的 SAN 专用架构和主动-主动对称路​​径确保了所有 LUN 的一致性能。</block>
-  <block id="1b3bc440bdc4148abaecc010852b3e48" category="paragraph">一般来说，4 到 16 个 LUN 足以满足任何给定 Oracle 数据库工作负载的 I/O 需求。由于主机 SCSI 实现方面的限制，少于四个 LUN 可能会造成性能限制。除了极端情况（例如非常高的随机 I/O SSD 工作负载）之外，将 LUN 数量增加到 16 个以上很少能提高性能。</block>
-  <block id="32a9cc09d7b28dad1bdac19dfa8defca" category="summary">适用于配备ASA r2 的 Oracle 数据库的 LVM 条带化配置</block>
-  <block id="84337c2f0bd3b367c079858b351c1519" category="searchtitle">在ASA r2 上使用 Oracle 数据库进行 LVM 条带化</block>
-  <block id="9dc44bcf4c4a65f757ee2d4f417fb802" category="paragraph">使用旋转硬盘进行条带化更加困难，因为必须预先知道 I/O 模式。如果条带化没有针对真实的 I/O 模式进行正确调整，则条带化配置可能会损害性能。对于 Oracle 数据库，尤其是全闪存存储配置，条带化配置起来要容易得多，并且已被证明可以显著提高性能。</block>
-  <block id="3fcb47409d533bbc0f1dedd640536c4e" category="paragraph">Oracle 数据库 LVM 条带化的最佳实践：</block>
-  <block id="1ee9d08de424307c5b0c68e2cae8b964" category="list-text">条带大小≥数据库块大小。</block>
-  <block id="fb7356b0e5eebd52996145ea92edb38c" category="list-text">条带大小 * LUN 数量 ≈ 1MB，以实现最佳并行性。</block>
-  <block id="77ad8db55bb3aef8186b8f78c53a25b3" category="list-text">每个 ASM 磁盘组使用多个 LUN 以最大限度地提高吞吐量并避免热点。</block>
-  <block id="e9846a743cf48ba63b998c13227ca620" category="sidebar">AFF/ FAS系统上的ONTAP配置</block>
   <block id="a5cbfd8d8aee880e78887fb902e5c440" category="sidebar">Oracle 数据库的ONTAP配置</block>
-  <block id="19dcc7d0feb41b8b247042f6b5c839cb" category="sidebar">ASA r2 系统上的ONTAP配置</block>
-  <block id="4239635e98cf1c9aade3e99963b47f3e" category="sidebar">适用于配备ASA r2 系统的 Oracle 数据库的ONTAP配置</block>
-  <block id="83059bc9b08eac1413f80049818a551a" category="sidebar">使用AFF/ FAS系统进行数据库配置</block>
-  <block id="9cbfcdc7f6207e881eb9efa080cb634a" category="sidebar">使用ASA r2 系统进行数据库配置</block>
-  <block id="3072f08a47d3ebf5a6bb93d196fc3d0c" category="sidebar">适用于ASA r2 系统的 Oracle 数据库配置</block>
-  <block id="cf3d30b3a2769e5a42ca691fedc13a7a" category="sidebar">主机配置与AFF/ FAS系统</block>
-  <block id="dc224317c322fd5cc85a7517df62ebbd" category="sidebar">使用ASA r2 系统的主机配置</block>
-  <block id="67e9cfbd67f63687103cc996b36d89a3" category="sidebar">适用于配备ASA r2 系统的 Oracle 数据库主机配置</block>
-  <block id="7f63d60cb330bfa4e266460c2678e3e5" category="sidebar">AFF/ FAS系统的网络配置</block>
-  <block id="d9c561cf68fdc77bb1da849869a07f1c" category="sidebar">ASA r2 系统上的网络配置</block>
-  <block id="38e7ae928dc580caab650dc5df5d2fc1" category="sidebar">Oracle 数据库与ASA r2 系统的网络配置</block>
-  <block id="8637dea0297332b772f83909e4341446" category="sidebar">Oracle 数据库与ASA r2 系统的存储配置</block>
   <block id="bf9da0db0cba95abeb9d604e28d6fae5" category="paragraph">在文件系统环境中，随着数据的删除，活动 LUN 的精简配置效率可能会随时间推移而降低。除非删除的数据被零覆盖（另请参阅链接：oracle-storage-san-config-asm ru.html[ASMRU]）或使用 TRIM/UNMAP 空间回收释放空间，否则“擦除”的数据会在文件系统中占用越来越多的未分配空白空间。此外，在许多数据库环境中，活动 LUN 的精简配置用途有限，因为数据文件在创建时会被初始化为全部大小。</block>
   <block id="7480d85002c80775529fb882102aa005" category="paragraph">以下表格展示了 vSphere 支持的使用 ONTAP 的传统数据存储功能。此信息不适用于 vVols 数据存储区，但它通常适用于使用支持的 ONTAP 版本的 vSphere 6.x 及更高版本。您也可以查阅 <block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block> 有关特定 vSphere 版本的信息，以确认特定限制。</block>
   <block id="ddb1172bf007ad0f2ed1cacb02d4e514" category="cell">每个 ESXi 主机 1024 个 LUN，每个 LUN 最多 32 个路径，每个主机最多 4096 个总路径，每个数据存储区最多 128 个主机</block>
@@ -6420,4 +6026,111 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="24e63af66b386fd7126b59dd7fe341db" category="admonition">有关 ESXi 中最新支持限制的信息，请参见<block ref="ca32979bcc653e1966d3624ee8d76604" category="inline-link-macro-rx"></block>。</block>
   <block id="a0f1d2336326e29837b7fc7cada7a377" category="list-text">对于 iSCSI 或 NVMe/TCP 网络，当存在多个虚拟交换机时，请在不同的未路由网络子网上使用多个 VMkernel 网络接口，并使用 NIC 组。您还可以使用连接到多个物理交换机的多个物理 NIC 来提供 HA 和增加的吞吐量。在 ONTAP 中，配置单模接口组进行故障转移，其中两个或多个链路连接到两个或多个交换机，或者使用 LACP 或其他具有多模接口组的链路聚合技术来提供 HA 和链路聚合的好处。请记住，必须在每个 VMkernel 端口和每个物理接口上启用 NVMe/TCP，并且必须对它们进行对齐，以便 NVMe/TCP VMkernel 端口可以访问启用了 NVMe/TCP 的物理 NIC。下图说明了基于 IP 的 SAN 协议的多路径连接。<block ref="4525956d57ef52f4b2a4f341fbeec28e" category="inline-image-macro-rx" type="image"></block></block>
   <block id="58826bba5b6c0010e4915ab23035b67d" category="doc">VMware vSphere with ONTAP 最佳实践指南</block>
+  <block id="3ad7975840522feaa220a8d42072104b" category="doc">AFF SSD 聚合和 ASA 存储可用区</block>
+  <block id="1a81993642c7d159cbbb0827eb194462" category="paragraph">可用空间是指不用于实际数据的任何空间，其中包括聚合本身上未分配的空间以及成分卷中未使用的空间。还必须考虑精简配置。例如，AFF 卷可能包含 1TB LUN，其中只有 50% 被真实数据利用。在精简配置环境中，这将正确地显示为占用 500GB 的空间。但是，在完全配置的环境中，1TB 的全部容量似乎都在使用中。500GB 的未分配空间将被隐藏。实际数据并未使用这一空间，因此在计算总可用空间时应将其计算在内。</block>
+  <block id="2640cc37350786b1ad4b529e4df9f777" category="paragraph">使用 <block ref="40883add63f1fbabc7fe6158f93c1246" prefix=" " category="inline-code"></block> 或 <block ref="1aabac6d068eef6a7bad3fdf50a05cc8" prefix=" " category="inline-code"></block> 等实用程序验证对齐情况，这些实用程序可以按定义的块大小生成 I/O。可以使用 <block ref="446501053769c06c565094b26d26e8ef" prefix=" " category="inline-code"></block> 命令查看存储系统上的 I/O 对齐统计信息。有关更多信息，请参阅 <block ref="b7498ea5c206c99f04afee4896f7d5a0" category="inline-link-macro-rx"></block>。</block>
+  <block id="a3139f5fadef36bbb33e728d99383021" category="section-title">AFF 和 ASA 默认值</block>
+  <block id="0d96b0c1c7110fc96c201594d7ba6042" category="paragraph">在 AFF 系统上运行的 ONTAP 上创建的卷以及 ASA 系统上的 LUN/ 命名空间在启用所有内联效率功能的情况下进行精简配置。虽然数据库通常不会从重复数据删除中获益，并且可能包含不可压缩的数据，但默认设置仍然适用于几乎所有工作负载。ONTAP 旨在高效处理所有类型的数据和 I/O 模式，无论它们是否会节省空间。只有在充分了解原因且确定变动可以带来好处的情况下，才应更改默认值。</block>
+  <block id="729bdcd7db7dec13470e046c49863fee" category="list-text">如果 AFF 卷、LUN 或命名空间未采用精简配置，则必须禁用所有效率设置，因为使用这些功能不会节省任何空间，并且厚配置与启用空间效率的组合可能会导致意外行为，包括空间不足错误。</block>
+  <block id="9fe84b29b11ced8200856d396732b0d2" category="paragraph">在日常维护操作期间，存储接管或 MetroCluster 切换操作应是透明的，除非随着网络路径的变化，操作可能短暂暂停。但是，网络可能很复杂，并且很容易出错，因此 NetApp 强烈建议在将存储系统投入生产之前，彻底测试接管和切换操作。这是确保所有网络路径均已正确配置的唯一方法。在 SAN 环境中，请仔细检查命令<block ref="41dc2c94e82e1c56ba876085acf5a974" prefix=" " category="inline-code"></block>的输出，以确保所有预期的主路径和辅助路径均可用。</block>
+  <block id="f77d4feab6de8a6645ea266925b8d31f" category="paragraph">作为参考示例，较旧的双节点 HA AFF A800 系统能够在延迟超过 1 毫秒之前处理多达 100 万次随机 IOPS。预计很少有单个工作负载能达到这样的水平。充分利用这种 AFF A800 系统阵列将涉及托管多个工作负载，并且在确保可预测性的同时安全地执行此操作需要 QoS 控制。</block>
+  <block id="83653b71fec0e17474910021da8a70fb" category="paragraph">ONTAP 中有两种类型的服务质量 (QoS)：IOPS 和带宽。QoS 控制可以应用于 AFF SVM、AFF 卷、AFF 文件以及 AFF/ASA LUN 和命名空间。</block>
+  <block id="257ac6ab520168ad153ca092586c6b3d" category="paragraph">从 ONTAP 9.12.1 开始，快照不仅是只读的，还可以防止意外或故意删除。该功能称为防篡改快照。可以通过快照策略设置和实施保留期。在到期日期之前，无法删除生成的快照。没有管理或支持中心覆盖。</block>
+  <block id="07a1aeac0c6dbe15fcb9d1cc594bbf2f" category="paragraph">这些图表显示了在正常、故障转移和故障恢复操作期间发生的情况。为便于说明，它们描绘了复制的 LUN。在实际 SnapMirror active sync 配置中，复制基于 AFF 卷，其中每个卷包含一个或多个 LUN，但为了使图像更简单，卷层已被删除。</block>
+  <block id="7b14f7ca247852bfa8e061903f31b6c9" category="paragraph">例如，假设数据库位于 AFF 系统上 1TB 卷中的单个 250GB LUN 上。创建快照会立即在卷中预留额外的 250GB 空间，以确保卷不会因任何原因用尽空间。使用分数预留通常是浪费的，因为极不可能需要覆盖数据库卷中的每个字节。没有理由为永远不会发生的事件预留空间。尽管如此，如果客户无法监控存储系统中的空间消耗，并且必须确保空间永远不会用尽，则需要 100% 的分数预留才能使用快照。</block>
+  <block id="253c4de9a5e38194aa9ea89516ae9dba" category="admonition">卷抽象在仅 SAN 的 ASA 上不存在，因此该平台不使用分数预留。</block>
+  <block id="e3432d1db6f138b955c9139e6050b843" category="paragraph">数据集的压缩率始终可能发生变化，从而导致实际空间的占用量增加。占用量的增加意味着，在监控方面，压缩必须与其他形式的精简配置一样进行管理，并在 AFF 系统上使用<block ref="f9e1f2ea1a2becbaf82dd54e55a12e6b" prefix=" " category="inline-code"></block>和<block ref="24d554277b3513bb6cef3f0a336725a9" prefix=" " category="inline-code"></block>。</block>
+  <block id="62cd655270f5859b50226b5a440b8348" category="paragraph">*NetApp 建议*在 AFF 和 FAS 平台上使用以下预留配置：</block>
+  <block id="11d7cca16eff769edbe66712d8df8a95" category="paragraph">在 Oracle 数据库环境中，ONTAP 的主要价值来自核心 ONTAP 技术，例如即时 Snapshot 副本、简单 SnapMirror 复制以及高效创建克隆的卷、LUN 和命名空间。</block>
+  <block id="a88fd133fd3b47f8999d690986418477" category="paragraph">为了获得最简单的备份，只需将整个 Oracle 数据库放在单个 ONTAP 卷、LUN 或 NVMe 命名空间中。</block>
+  <block id="c8fe57731776bea23dbe6284837d744b" category="paragraph">使用单个快照保护数据文件、存档日志、重做日志和控制文件是一种有效的备份、还原和复制方法。但是，RPO 仅限于备份本身的时间点。它适用于 1 小时或更长时间的 RPO。如果数据库跨 AFF 卷或 ASA 存储单元，则需要使用前面讨论的其中一种工具进行一致性组。</block>
+  <block id="75b5aeaff20278660015b9985f58d09c" category="paragraph">例如，整个数据库可以位于具有以下快照计划的单个 AFF 卷中：</block>
+  <block id="9bdf5a34cd9dcb05b9c5480472dfbc05" category="paragraph">此操作可在前 72 小时的滚动期间提供一小时的 RPO，并额外提供每晚和每月备份。您可以在单个卷或一组一致性组快照中包含多个数据库或应用程序文件，以便在更大的环境中执行一致的备份。</block>
+  <block id="04c19e5289344d368378d63366e3fb30" category="paragraph">为了保护数据免受这种情况的影响，ONTAP 允许将卷、LUN 或 NVMe 命名空间配置为针对 NVRAM 故障的特殊保护。当触发时，此保护机制将导致存储资源进入称为 NVFAIL 的状态。此状态会导致 I/O 错误，从而导致应用程序关闭，这样它们就不会使用过时的数据。不应丢失数据，因为存储阵列上应存在任何已确认的写入。</block>
+  <block id="36b67bf27e49b0fe8b8a43fcb5e1ba73" category="paragraph">通常的后续步骤是管理员在手动将 LUN、命名空间或 NFS 卷重新联机之前完全关闭主机。虽然这些步骤可能涉及一些工作，但这种方法是确保数据完整性的最安全方法。并非所有数据都需要此保护，这就是为什么可以在细粒度级别配置 NVFAIL 行为的原因。</block>
+  <block id="bbf8a5378a46782a1ae5ae30d13259e2" category="list-text">Oracle 数据库，NVFAIL 应在托管关键组件（数据文件、重做日志、控制文件）的所有 LUN 上启用。</block>
+  <block id="d03e63241f5bfc42adedfa4ed80927ae" category="list-text">在 AFF 系统上，NVFAIL 在卷层运行，并适用于所有包含的数据。</block>
+  <block id="60b4b02c67a59443d6be7d99017e0cc9" category="list-text">在 ASA 上，NVFAIL 在 LUN 或命名空间层运行。</block>
+  <block id="179cb95eac13084fa36c81508486bd39" category="paragraph">最简单的布局是在一个或多个专用卷、LUN 或 NVMe 命名空间中隔离数据文件。存储资源不得受到任何其他文件类型的影响。这是为了确保可以通过 SnapRestore 操作快速恢复数据文件，而不会破坏重要的重做日志、控制文件或存档日志。</block>
+  <block id="f340baa09bbe04f25fafe370cbcdd0ba" category="paragraph">SAN 对专用资源内的数据文件隔离有类似的要求。对于使用 AFF 存储的 Microsoft Windows 等操作系统，单个卷可能包含多个数据文件 LUN，每个 LUN 都具有一个 NTFS 文件系统。对于其他操作系统，通常有一个逻辑卷管理器。例如，对于 Oracle ASM，最简单的选项是将 ASM 磁盘组的 LUN 限制在可以作为一个单元进行备份和恢复的单个卷上。如果出于性能或容量管理原因需要额外卷，则在新卷上创建一个额外的磁盘组可以简化管理。</block>
+  <block id="3c43f9cbb671ac6dee099d8ca8c238aa" category="paragraph">ASA 没有 AFF 系统可以托管多个 LUN 的卷级抽象。相反，ASA 使用一致性组。在许多情况下，单个 LUN 或 NVMe 命名空间可能满足数据库的管理和性能要求。如果需要多个 LUN 或命名空间，则可以添加其他资源并将其绑定在一起，作为成为数据文件容器的一致性组。</block>
+  <block id="736114eaec26280323ae190e33dcc5b5" category="paragraph">如果遵循这些准则，则可以直接在存储系统上计划快照。</block>
+  <block id="01022276c0c64496fe2932facd012da2" category="list-text">将数据文件 NFS 卷恢复到所需还原点之前的快照。</block>
+  <block id="5a86f8dc5e7803c5898055a51a354add" category="list-text">将托管数据文件磁盘组的 LUN 还原到所需还原点之前的快照。</block>
+  <block id="1c0018f9e90ce27dd1f9d34d7dae24ff" category="paragraph">此过程假定所需的归档日志仍位于活动文件系统中。如果不是，则必须通过使归档日志 LUN/命名空间完全脱机并执行还原来还原归档日志（或通过创建先前快照的克隆，由于在同一主机上创建重复的 UUID 或 LVM 名称，这可能很困难）。这也是一个将归档日志分成专用存储资源有用的示例。如果归档日志与重做日志共享一个卷组，则必须先将重做日志复制到其他位置，然后才能还原整个 LUN 集。此步骤可防止丢失最终记录的事务。</block>
+  <block id="05eb428160b57ae4bca7fa01d020c602" category="paragraph">崩溃一致性备份涉及在单个原子时间点捕获数据集（或多个数据集）的状态。作为数据库示例，这包括所有数据库组件，例如数据文件、日志文件以及与数据库直接关联的其他文件。这适用于几乎所有的关系数据库产品，包括 Oracle RDBMS、Microsoft SQL Server、SAP HANA、PostgreSQL、MySQL 和 MariaDB。使用一致性组备份保护 VMware 配置类似 - 在单个原子时间点捕获所有数据存储和可能的 ESX 启动 LUN。</block>
+  <block id="a803e58b59625d4e38ca0f5f28408e12" category="paragraph">创建这样的备份本质上是模拟崩溃，这就是为什么这样的备份被称为崩溃一致性备份。有时，会对恢复方案的支持产生顾虑，但请务必了解，通常不需要任何恢复过程。当应用程序在恢复一致性组备份后启动时，它会执行通常的日志恢复过程、文件系统日志重放和其他任务，以重放备份时正在进行的任何 I/O。然后，应用程序会像往常一样启动。</block>
+  <block id="b7d3655d85a4bde01582bbd8bdd266cc" category="paragraph">此方法的 RPO 通常仅限于备份点。通常，崩溃一致性备份的最低 RPO 为 1 小时。例如，48 个每小时快照加上 30 天的每晚快照是合理的，不需要保留过多的快照。低于一小时的 RPO 变得更难实现，不建议在未事先咨询 NetApp 专业服务以了解环境、规模和数据保护要求的情况下实现。</block>
+  <block id="cf2962ed6af29f3c1cfd5f7bdb2513cc" category="paragraph">RTO 通常以秒为单位进行衡量。应用程序关闭后，NFS 卷、LUN 或 NVMe 命名空间会得到恢复，然后应用程序重新启动。</block>
+  <block id="3b002eba619ff25e36e76b82129420db" category="paragraph">最简单的方法是将所有文件或 LUN 都放在单个 AFF 卷或 ASA LUN/命名空间中。如果数据集必须跨越多个存储资源，则需要一致性组。这可以使用 System Manager 或 RESTful API 调用进行配置，此外 SnapCenter 能够创建简单的一致性组快照。</block>
+  <block id="3d4e10c59e72ef959591be3013a86b70" category="paragraph">其他因素会影响复制，例如复制开销和并发复制操作数量的限制。但是，单资源复制策略的总体规划可以基于可用带宽，并且通常可以实现一小时的复制 RPO。低于一小时的 RPO 变得更加难以实现，只有在咨询 NetApp 专业服务后才能执行。在某些情况下，如果站点之间的网络连接非常好，15 分钟是可行的。但是，总体来说，如果需要低于一小时的 RPO，多资源日志重放架构会产生更好的结果。</block>
+  <block id="58fbeffe1216add640a1fb6b76fdd41b" category="paragraph">保留时间部分由快照限制控制。例如，ONTAP 中的 AFF 卷和 ASA LUN 具有 1024 个快照的限制。在某些情况下，客户使用多路复制来增加限制。例如，如果需要 2000 天的备份，则可以将源复制到两个不同的目标，并隔天进行更新。这需要增加所需的初始空间，但它仍然是一种比传统备份系统（包括多个完整备份）更高效的方法。</block>
+  <block id="73c86e600f3c0e068822617503714dcc" category="section-title">单卷一致性组 (AFF)</block>
+  <block id="3f9591fa86bbd9e365635e052e665a63" category="paragraph">最简单的方法是将所有文件或 LUN 都放入单个卷中。卷本身就是一致性组，这意味着可以直接在存储系统上计划 SnapMirror 和 SnapVault 更新。不需要外部软件。</block>
+  <block id="0abc2a6787b86b479949e99fe026b3f1" category="section-title">单 LUN/命名空间一致性组 (ASA)</block>
+  <block id="ce83f56d01ad6f5ff80977791eaadb44" category="paragraph">虽然将整个数据库放置在单个 LUN/命名空间上可能看起来很奇怪，但它正变得越来越普遍。最初创建卷管理器的原因是为了克服物理驱动器的性能和容量限制。对于现代阵列，向主机呈现的单个块设备已经跨多个驱动器抽象化。大小可以动态调整，性能远远超过单个驱动器。</block>
+  <block id="82ad57ee9d867d999bef1173228831f0" category="paragraph">其结果是，从 ESX 数据存储到 Oracle 数据库的工作负载通常可以托管在单个块设备上。这不仅极大地简化了数据管理，而且还带来了有益的副作用，例如由于需要发现的设备数量减少，主机重新启动时间更快。</block>
+  <block id="504cbc529c0b7dd8a9babcaedfaeced6" category="paragraph">如果数据库必须跨越 AFF 卷或 ASA LUN/命名空间，则需要一致性组快照。如上所述，这可以使用 System Manager 或 RESTful API 调用进行配置，此外 SnapCenter 能够创建简单的一致性组快照。</block>
+  <block id="eb31818b62198057d49ba50f3dad1c4d" category="paragraph">此外，还需要考虑使用 AFF 多卷或 ASA 多 LUN 一致性快照进行灾难恢复的问题。当更新多个 SnapMirror 关系时，可能会在传输仍在进行期间发生灾难。结果将是一组卷、LUN 或命名空间彼此不一致。如果发生这种情况，则必须将某些卷还原到较早的快照状态，才能提供崩溃一致且随时可用的数据库映像。</block>
+  <block id="69c9ecffcfa91f6fc4721e45a66149d2" category="summary">使用快照快速恢复 Oracle 数据库</block>
+  <block id="38a72b3b5e25e3dc731c3317ad245d60" category="paragraph">通过 NetApp SnapRestore 技术从快照中快速还原 ONTAP 数据，可以即时还原 AFF 卷或 ASA LUN 的状态。</block>
+  <block id="00d412b98341f121bf9f6cbf76c48ef3" category="paragraph">虽然基本技术在 AFF 和 ASA 平台上是相同的，但它们的使用略有不同。</block>
+  <block id="5fdb42eea17aa97abecbc73a50914a3b" category="section-title">AFF 概述</block>
+  <block id="c49011663fbeb9adc0fec91a890cab4d" category="paragraph">AFF 系统上有两种形式的 SnapRestore - 基于文件和基于卷：</block>
+  <block id="7e25b57710b3d1e04538511a94d9f12f" category="list-text">无论是 2TB LUN 还是 4KB 文件，各个 AFF 文件、LUN 和命名空间以及各个 ASA LUN 和命名空间都可以在几秒钟内恢复。</block>
+  <block id="cc3ec32c43208d2aec922109a58ae2f2" category="list-text">无论是 10GB 还是 100TB 的数据，AFF 卷的完整内容都可以在数秒内还原。</block>
+  <block id="5667824f68707824d28a406055d7d48e" category="paragraph">SnapRestore 之所以能够如此快速高效地工作，是因为快照的性质，它本质上是特定时间点上卷、LUN 或命名空间内容的并行只读视图。活动块是可以更改的真实块，而快照是创建快照时组成文件和 LUN 的块状态的只读视图。</block>
+  <block id="bc09e121f03c81d70b459cbd4d0f9e60" category="paragraph">ONTAP 仅允许对快照数据进行只读访问，但可以使用 SnapRestore 重新激活数据。快照将作为数据的读写视图重新启用，从而将数据返回到先前的状态。SnapRestore 可以在卷、文件、LUN 或命名空间级别操作。该技术本质上是相同的，但行为略有不同。</block>
+  <block id="0ab73141132c6275cc1496aa810ce1ac" category="section-title">AFF 卷 SnapRestore</block>
+  <block id="6f8b7df7d88c354241d2a369b8222c5d" category="paragraph">基于卷的 SnapRestore 将整个卷的内容返回到早期状态。此操作不需要数据移动，这意味着还原过程基本上是即时的，尽管 API 或 CLI 操作可能需要几秒钟才能处理。还原 1GB 数据并不比还原 1PB 数据更复杂或耗时。此功能是许多企业客户迁移到 ONTAP 存储系统的主要原因。即使是最大的数据集，它也能提供以秒为单位的 RTO。</block>
+  <block id="a8e8c5b944966a24442b2fdf9d203a64" category="section-title">AFF 文件 SnapRestore</block>
+  <block id="915b89a151af5ba629a43ffa04085968" category="paragraph">基于文件的 SnapRestore 是一种更精细的基于快照的还原过程，用于 AFF 卷。而不是还原整个卷的状态，还原单个文件、LUN 或命名空间的状态。无需删除任何快照，此操作也不会对先前的快照创建任何依赖关系。文件或 LUN 将立即在活动卷中可用。</block>
+  <block id="10ddaefaadec4ed6c1b70f07d064a0e0" category="paragraph">在文件或 LUN 的 SnapRestore 恢复期间无需进行数据移动。但是，需要进行一些内部元数据更新，以反映还原数据中的底层块现在同时位于快照和活动卷中这一事实。不会对性能产生任何影响，但此流程会阻止创建快照，直到流程完毕为止。根据恢复的文件总大小，处理速率约为 5GBps（18TB/小时）。</block>
+  <block id="b6e8a420db886906ad335458514ed574" category="section-title">ASA LUN/命名空间恢复</block>
+  <block id="57ebbba8069c9611d64d70040f6d1015" category="paragraph">在 ASA 上恢复数据类似于 AFF SnapRestore。只需将数据还原到早期状态。此过程几乎是即时的，不需要数据移动。它还具有相同的限制，包括恢复快照导致删除随后删除的快照的要求。如果这有问题，有两种选择。首先，可以从较早的快照克隆 LUN/命名空间，同时保持源卷不变。这是一个即时且节省空间的过程。它本质上对快照中的块创建只读指针的读写副本。第二个选项是通过 REST API，它可以使用 AFF 系统中使用的相同的单文件 SnapRestore 逻辑。结果是使用快照中的数据即时恢复 LUN/命名空间，并保留所有快照。</block>
+  <block id="7c658e207e3fd38a1e92c058cbd8f006" category="list-text">无论数据受到 1024 个快照保护还是不受保护，性能均不受影响。</block>
+  <block id="b7d88fc4df615575cb0fe95b8487a293" category="list-text">术语"一致性组"通常指作为一致的数据集合进行管理的一组存储对象。特定 AFF 卷的快照构成一致性组备份。</block>
+  <block id="955e1959b45d4f3e815e27470c6e9771" category="list-text">此外，多个 AFF 卷或 ASA LUN/命名空间可轻松绑定到一个一致性组中，数据保护策略可作为一个单位应用。</block>
+  <block id="e9c6d69beceea2b15679b91ce965b0ad" category="paragraph">ONTAP 快照的扩展能力也优于竞争对手的技术。客户可以存储 5 个、50 个或 500 个快照，而不会影响性能。AFF 卷或 ASA LUN/命名空间中当前允许的最大快照数为 1024 个。如果需要额外的快照保留，可以选择级联快照。</block>
+  <block id="a8248f13e8b16c9f7d21fc9bc7c2a6b2" category="paragraph">ONTAP 始终能够捕获一致的本地和复制的数据映像。虽然 ONTAP AFF/FAS 系统上的各种卷通常不被正式描述为一致性组，但这就是它们的本质。该卷的快照是一致性组映像，该快照的恢复是一致性组恢复，SnapMirror 和 SnapVault 都提供一致性组复制。</block>
+  <block id="3532af5054dd6652313f1563c860352c" category="paragraph">AFF 系统还包括更广泛类型的一致性组。多个卷可以定义为 ONTAP 中的 CG。然后可以在 CG 级别配置快照、克隆和复制。这简化了数据保护策略，因为它允许在数据集上设置策略，而不仅仅是单个卷或 LUN。ASA 系统中也存在 CG。可以将多个 LUN 或命名空间绑定在一起作为 CG，然后可以使用快照、复制、还原或克隆来保护该 CG。</block>
+  <block id="947cad003aa856c0d05b1c932d885bbe" category="paragraph">一致性组（CG）快照是基本 ONTAP Snapshot 技术的扩展。标准快照操作会为单个 AFF/FAS 卷或 ASA LUN/命名空间中的所有数据创建一致的映像，但有时需要跨多个存储资源甚至跨多个存储系统创建一组一致的快照。这样就会生成一组快照，这些快照的使用方式与仅一个卷的快照的使用方式相同。它们可以用于本地数据恢复，出于灾难恢复目的进行复制，或作为一个一致的单元进行克隆。</block>
+  <block id="79892138f02025e1b9a51ac9903f1420" category="paragraph">CG 快照的扩展性非常好。已知 CG 快照的最大使用案例是用于跨越 12 个控制器、大约 1PB 大小的数据库环境。在此系统上创建的 CG 快照已用于备份、恢复和克隆。</block>
+  <block id="b943c4c59977436d649176e68b52eaf8" category="paragraph">大多数情况下，当数据集跨越多个 AFF 卷或 ASA LUN/命名空间且必须保留写入顺序时，可以简单地定义 ONTAP 一致性组，并且可以本地管理该组卷、LUN 或命名空间以创建快照。如果使用管理软件，则应检测对 CG 快照的需求并调用所需的 API。</block>
+  <block id="9e3b1c34ec2e0de2f3c2b364d4ae8aa5" category="paragraph">在这种情况下，无需了解 CG snapshot 的技术细节。但是，在某些情况下，复杂的数据保护要求需要详细控制数据保护和复制过程。自动化工作流或使用自定义脚本调用 CG snapshot API 是一些选项。要了解最佳选项和 CG snapshot 的作用，需要对该技术进行更详细的解释。</block>
+  <block id="a9b5f1fbe18831d962accee9d67c476d" category="paragraph">创建一组一致性组快照分为两步：</block>
+  <block id="3efc632582a1ae5b55afcb1be05b4e60" category="list-text">在所有目标 AFF 卷或 ASA LUN/命名空间上建立写入隔离。</block>
+  <block id="8c6bdbc130423b419a852fd0f618e558" category="list-text">在隔离状态下为这些卷、LUN 或命名空间创建快照。</block>
+  <block id="67c58ec14374d7bdd2a7fd67c96c17bb" category="paragraph">串行建立写隔离。这意味着当隔离流程跨多个存储目标设置时，写入 I/O 会冻结在序列中的第一个对象上，因为它会继续冻结在列表中稍后出现的目标上。这最初似乎会违反保留写入顺序的要求，但它仅应用于主机上异步发出的 I/O 且不依赖于任何其他写入。</block>
+  <block id="e693afb249950dfa2b2c0cd9fe5bd3f3" category="paragraph">作为反例，大多数数据库日志记录活动都是同步的。在 I/O 被确认之前，数据库不会继续进行日志写入，并且必须保留这些写入顺序。如果日志 I/O 到达隔离的 LUN，则不会进行确认，应用程序会阻止进一步写入。同样，文件系统元数据 I/O 通常是同步的。例如，不得丢失文件删除操作。如果具有 xfs 文件系统的操作系统删除了文件，并且更新 xfs 文件系统元数据以删除对该文件的引用的 I/O 落在隔离的 LUN 上，则文件系统活动将暂停。这保证了 CG 操作期间文件系统的完整性。</block>
+  <block id="bd0bf1fa9eb1a661c581d7af39175603" category="paragraph">在目标上设置写入隔离后，它们就可以用于创建快照了。无需精确地同时创建快照，因为从依赖写入的角度来看，目标的状态是冻结的。为了防止创建 CG 快照的应用程序出现缺陷，初始写入隔离包括一个可配置的超时时间，在此时间内，ONTAP 会自动释放隔离并在定义的秒数后恢复写入处理。如果所有快照都是在超时期限结束之前创建的，则生成的一组快照将是有效的一致性组。</block>
+  <block id="b4160bb38a1df9fa70bb22375200d936" category="list-text">受 Snapshot 保护的在线备份</block>
+  <block id="22c3a705ca76f2105c8c472240290621" category="paragraph">崩溃状态一致的数据库备份是指在单个时间点捕获整个数据库结构，包括数据文件、重做日志和控制文件。如果数据库存储在单个卷、LUN 或命名空间中，则过程很简单；可以随时创建快照。如果数据库跨越 AFF 卷或 ASA LUN/命名空间，则必须创建一致性组 (CG) 快照。有几个选项可用于创建 CG 快照，包括 NetApp SnapCenter software、本机 ONTAP 一致性组功能和用户维护的脚本。</block>
+  <block id="677bd24c6bea784ee8744890cf6c1182" category="paragraph">在备份点恢复即可满足要求的情况下，主要使用崩溃一致的快照备份。在某些情况下可以应用存档日志，但当需要更精细的时间点恢复时，最好使用在线备份。</block>
+  <block id="e57f0cf358dbf33ac1f1f57c34ccf1d6" category="list-text">创建托管数据文件的所有存储资源（NFS 导出、LUN 或 NVMe 命名空间）的快照。</block>
+  <block id="19468f5025c26aba5b6f174cb2beb6ad" category="list-text">为托管归档日志的所有存储资源创建快照。</block>
+  <block id="a5109eee3ecada8a9e595c89a9813f0e" category="paragraph">在设计 Oracle 数据库的存储布局时，第一个决定是是否使用基于卷的 NetApp SnapRestore (VBSR) 技术，这是用于还原 AFF 卷和 ASA LUN/命名空间的底层技术。</block>
+  <block id="1e99502f47ce86be0107e2b782c0eaa6" category="paragraph">VBSR 允许数据几乎立即还原到更早的时间点。由于还原时会影响所有数据，VBSR 可能不适合所有用例。例如，如果包括数据文件、重做日志和归档日志在内的整个数据库都存储在单个 AFF 卷上，并且此卷通过 VBSR 还原，则数据会丢失，因为更新的归档日志和重做数据会被丢弃。这也适用于 ASA 数据。如果整个数据库都存储在单个 ASA 一致性组中，并且该 CG 还原到较早的状态，则会丢失一些较晚的归档日志和重做数据。</block>
+  <block id="2a9b6ee69dc628753429c11335d26121" category="paragraph">还原不需要 VBSR。许多数据库可以通过使用基于文件的单文件 SnapRestore (SFSR) 或简单地将文件从快照克隆回活动文件系统来恢复。</block>
+  <block id="befd08230a8b67af23e6cc86ab68311b" category="paragraph">如果数据库非常大或必须尽快恢复，最好使用 VBSR，且使用 VBSR 需要隔离数据文件。在 NFS 环境中，给定数据库的数据文件必须存储在未受任何其他类型文件影响的专用卷中。在 SAN 环境中，数据文件必须存储在专用 LUN 或命名空间中。如果使用卷管理器（包括 Oracle Automatic Storage Management [ASM]），磁盘组也必须专用于数据文件。</block>
+  <block id="6f1b805fc8753a1365710700291e6df1" category="paragraph">以这种方式隔离数据文件可以将其还原到早期状态，而不会损坏其他文件系统。</block>
+  <block id="f60ff004e852f49b2838c63fb209b633" category="section-title">AFF Snapshot 预留</block>
+  <block id="fe9c8793781de60c81315ec829dc8f84" category="paragraph">对于 AFF SAN 环境中包含 Oracle 数据的每个卷，<block ref="9ca25b30dcc119f9115aad6d85fd12ce" prefix=" " category="inline-code"></block> 应设置为零，因为在 LUN 环境中为 Snapshot 预留空间是没有用的。如果分数预留设置为 100，则包含 LUN 的卷的 Snapshot 需要卷中足够的可用空间（不包括 Snapshot 预留）来吸收所有数据的 100% 周转。如果分数预留设置为较低的值，则需要相应较小的可用空间量，但它始终排除 Snapshot 预留。这意味着 LUN 环境中的 Snapshot 预留空间被浪费。</block>
+  <block id="59aebe92fc551de46ca0794f934e5bc8" category="admonition">Snapshot 预留不适用于 ASA 存储。</block>
+  <block id="1254f51b373ccd41bf685ec87bc5d68e" category="paragraph">最简单的布局是将数据文件隔离在专用卷、LUN 或 NVMe 命名空间中。存储资源不得受到任何其他文件类型的影响。这是为了确保可以通过 SnapRestore 操作快速恢复数据文件，而不会破坏重要的重做日志、控制文件或存档日志。</block>
+  <block id="097daca3ca12238584b696f8c73fa814" category="paragraph">ASA 不具有卷级抽象。相反，它使用一致性组。在许多情况下，单个 LUN 或 NVMe 命名空间可能满足数据库的管理和性能要求。如果需要多个 LUN 或命名空间，则可以添加其他资源并将其绑定在一起，作为成为数据文件容器的一致性组。</block>
+  <block id="241ce9f30b2db1015f51f67701e797f5" category="list-text">将数据文件卷、LUN 或命名空间恢复到所需还原点之前的快照。</block>
+  <block id="a3cf048feddbd56987ac89a2e785cc40" category="paragraph">此过程假定所需的归档日志仍位于活动文件系统中。如果不是，则必须通过使归档日志 LUN 脱机并执行还原来还原归档日志。这也是一个将归档日志分成专用卷、LUN 或命名空间有用的示例。如果归档日志与重做日志共享一个卷组，则必须先将重做日志复制到其他位置，然后才能还原整个 LUN 集，以避免丢失最终记录的事务。</block>
+  <block id="8d2c1d4edd3fbf01c94b8a7e49de1e9d" category="paragraph">如果数据库必须跨越卷，则需要一致性组快照（CG 快照）。</block>
+  <block id="df4fb0525f0cefd87855853a356c7676" category="paragraph">最重要的要求是将数据文件隔离到一个或多个专用容器中。这可以通过几种方式完成，包括将所有数据文件放置在单个 LUN/namespace、单个 AFF NFS 卷内或放置在多卷或多 LUN/namespace ONTAP 一致性组中。关键是数据文件不得受到任何其他文件类型的影响。原因是为了确保数据文件复制完全独立于其他数据类型（如存档日志）的复制。有关文件布局的其他信息以及有关确保存储布局对 Snapshot 友好的重要详细信息，请参阅<block ref="c87a7212960b8cc2aca49adb1795e291" category="inline-link-macro-rx"></block>。</block>
+  <block id="6080ea352d8f3c275b55f666b09073b5" category="paragraph">当 (a) 启用了 DNFS 且 (b) 在单个服务器上多次挂载源 NFS 共享 (c) 并使用嵌套 NFS 挂载时，需要一个额外的挂载选项，称为<block ref="4740c034d97ca90a96b8050082816605" prefix=" " category="inline-code"></block>。这种配置主要出现在支持 SAP 应用程序的环境中。例如，NetApp 系统上的单个 NFS 共享可能有一个目录位于<block ref="9f9f4ccb1fc3afcbfe0cc3f5eac4332c" prefix=" " category="inline-code"></block>，另一个目录位于<block ref="ac2f9bbcd397d8f6b39e6713658051ea" prefix=" " category="inline-code"></block>。如果<block ref="9f9f4ccb1fc3afcbfe0cc3f5eac4332c" prefix=" " category="inline-code"></block>挂载在<block ref="9ad16912cc0ba54a259b1a15d233c264" prefix=" " category="inline-code"></block>，<block ref="ac2f9bbcd397d8f6b39e6713658051ea" prefix=" " category="inline-code"></block>挂载在<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>，则会形成源自同一源的嵌套 NFS 挂载。</block>
+  <block id="936d46e56a7c836060ae638ad30b113a" category="paragraph">操作系统可以检测到<block ref="9ad16912cc0ba54a259b1a15d233c264" prefix=" " category="inline-code"></block>和<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>位于同一个 NFS 共享上，即同一个源文件系统。然后，操作系统会使用相同的设备句柄来访问这些数据。这样做可以提升操作系统缓存和某些其他操作的效率，但会干扰 DNFS。如果 DNFS 必须访问<block ref="1737629d60b511cf45957529a8f046e2" prefix=" " category="inline-code"></block>等文件，位于<block ref="1da707b60c3b55bd01cb7df7c171a368" prefix=" " category="inline-code"></block>上，可能会错误地尝试使用错误的数据路径。其结果是 I/O 操作失败。在这些配置中，请为与主机上其他 NFS 文件系统共享源 NFS 共享的任何 NFS 文件系统添加<block ref="4740c034d97ca90a96b8050082816605" prefix=" " category="inline-code"></block>挂载选项。这样做会强制 Linux 操作系统为该文件系统分配独立的设备句柄。</block>
+  <block id="cdcac9f87f34f858fd0a5ffe221c47b8" category="inline-link-macro">WAFL 对齐</block>
+  <block id="f1ced7a4c9fa011dc91755c91062bef7" category="list-text">对 LUN 进行分区并验证它们是否正确对齐。有关如何直接测试和确认对齐的说明，请参阅 <block ref="bdffc59ffc48026b15735c217f1aa286" category="inline-link-macro-rx"></block>。</block>
+  <block id="ab4437814bf873ff5cd8f4af9be50c99" category="paragraph">Oracle 支持将 Microsoft Windows 与直接 NFS 客户端结合使用。此功能提供了实现 NFS 管理优势的途径，包括跨环境查看文件、动态调整 NFS 卷大小以及利用成本较低的 IP 协议。有关使用 DNFS 在 Microsoft Windows 上安装和配置数据库的信息，请参阅 Oracle 官方文档。不存在任何特殊的最佳实践。</block>
+  <block id="885a17cc09ffc32b7e4db7dd62b9647d" category="paragraph">数据库 LUN 在 AFF 和 FAS 系统上的 ONTAP 卷中的最佳位置主要取决于如何使用各种 ONTAP 功能。</block>
+  <block id="c530e06a5e5a18e2409a4fe92ba3dd3a" category="list-text">本节适用于 AFF 和 FAS 系统。</block>
+  <block id="ae397ec197cb58371b1b3989962259cc" category="list-text">ASA 是一个简化的 SAN 平台，不会暴露卷抽象层，</block>
+  <block id="0353522b39b87d54d40d3f09ec668851" category="sidebar">ONTAP 配置</block>
+  <block id="92d9160e034a5ffdafcb6f34b87a7fa6" category="sidebar">Snapshot 恢复</block>
 </blocks>

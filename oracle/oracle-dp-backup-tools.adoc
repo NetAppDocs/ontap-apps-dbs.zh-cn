@@ -15,7 +15,7 @@ searchtitle: Oracle数据库管理和自动化工具
 
 
 [role="lead"]
-ONTAP在Oracle数据库环境中的主要价值来自核心ONTAP技术、例如即时Snapshot副本、简单的SnapMirror复制以及高效创建FlexClone卷。
+在 Oracle 数据库环境中，ONTAP 的主要价值来自核心 ONTAP 技术，例如即时 Snapshot 副本、简单 SnapMirror 复制以及高效创建克隆的卷、LUN 和命名空间。
 
 在某些情况下、直接在ONTAP上配置这些核心功能即可满足要求、但更复杂的需求则需要一个业务流程层。
 
