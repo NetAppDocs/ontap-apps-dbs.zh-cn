@@ -1,44 +1,9 @@
 ---
 sidebar: sidebar 
 permalink: mssql/mssql-dr-smas-uniform-ASA.html 
-keywords: MSSQL,SQL Server, SnapMirror active sync, SMBC, overview 
-summary: Microsoft SQL Server和SM-AS统一访问 
-searchtitle: Microsoft SQL Server和SM-AS统一访问 
+redirect: mssql/mssql-dr-smas-uniform.html 
 ---
-= 统一访问
+= 
 :allow-uri-read: 
-:imagesdir: ../media/
 
 
-[role="lead"]
-统一访问网络意味着主机能够访问两个站点(或同一站点中的故障域)上的路径。
-
-SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道主机所在的位置。将LUN映射到给定主机时、您可以指示它们是否接近给定存储系统。
-
-NetApp ASA系统可在集群上的所有路径之间提供主动-主动多路径功能。这也适用于SM-AS配置。
-
-image:smas-uniform-SQL-ASA.png["SnapMirror主动同步ASA统一网络"]
-
-使用统一访问时、IO将跨越WAN。这是一个全网状网络集群、在所有使用情形中、这可能是可取的、也可能不理想。
-
-如果两个站点之间相距100米且具有光纤连接、则WAN上不会出现可检测到的额外延迟、但如果两个站点相距较远、则两个站点上的读取性能都会受到影响。使用非一致访问网络的ASA可以获得ASA的成本和功能优势、而不会造成跨站点延迟访问损失、也不会使用主机邻近功能允许两个站点进行站点本地读/写访问。
-
-在低延迟配置中使用SM-A的ASA具有两个有趣的优势。首先、从本质上说、它可以将任何一台主机的性能提高一倍、因为使用两倍路径的控制器可以为IO提供服务。其次、在单站点环境中、它可以提供极高的可用性、因为整个存储系统可能会丢失、而不会中断主机访问。
-
-
-
-== 邻近设置
-
-接近是指每个集群的配置、表示特定主机WWN或iSCSI启动程序ID属于本地主机。这是配置LUN访问的第二个可选步骤。
-
-第一步是常规的igrop配置。每个LUN都必须映射到一个igrop、该igrop包含需要访问该LUN的主机的wwn/iSCSI ID。此选项用于控制哪个主机对LUN具有_access_访问权限。
-
-第二个可选步骤是配置主机邻近性。这不控制访问、而是控制_priority_。
-
-例如、可以将站点A的主机配置为访问受SnapMirror活动同步保护的LUN、并且由于SAN跨站点扩展、因此可以使用站点A上的存储或站点B上的存储为该LUN提供路径
-
-如果没有邻近设置、则该主机将平等使用这两个存储系统、因为这两个存储系统都会公布主动/优化路径。如果站点之间的SAN延迟和/或带宽有限、则可能无法实现这一点、您可能希望确保在正常操作期间、每个主机优先使用指向本地存储系统的路径。这可通过将主机的wwn/iSCSI ID作为近端主机添加到本地集群来配置。可通过命令行界面或SystemManager完成此操作。
-
-配置主机邻近性后、路径将如下所示。
-
-image:smas-uniform-SQL-ASA-Proximity.png["SnapMirror主动同步ASA统一邻近网络"]

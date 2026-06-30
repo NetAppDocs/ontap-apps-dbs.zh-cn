@@ -15,8 +15,8 @@ entries:
     url: "/mssql/mssql-shared-vs-dedicated.html"
   - title: tempdb文件
     url: "/mssql/mssql-tempdb.html"
-- title: AFF或FAS系统上的存储配置
-  pdf-filename: 基于Microsoft/SQL系统的AFF FAS
+- title: 存储配置
+  pdf-filename: Microsoft SQL Server 的存储配置
   entries:
   - title: 概述
     url: "/mssql/mssql-storage-considerations.html"
@@ -25,8 +25,9 @@ entries:
   - title: 存储效率
     url: "/mssql/mssql-storage-efficiency.html"
   - title: 数据保护
-    url: "/mssql/mssql-data-protection.html"
     entries:
+    - title: 概述
+      url: "/mssql/mssql-data-protection.html"
     - title: 使用SnapCenter的SQL Server可用性组
       url: "/mssql/mssql-ag-snapcenter.html"
   - title: 灾难恢复
@@ -49,48 +50,13 @@ entries:
         url: "/mssql/mssql-dr-smas-mediator.html"
       - title: 首选站点
         url: "/mssql/mssql-dr-smas-preferred-site.html"
-      - title: 网络拓扑
-        entries:
-        - title: 统一访问
-          url: "/mssql/mssql-dr-smas-uniform.html"
-        - title: 非一致访问
-          url: "/mssql/mssql-dr-smas-nonuniform.html"
+      - title: 统一的网络访问
+        url: "/mssql/mssql-dr-smas-uniform.html"
+      - title: 非均匀网络访问
+        url: "/mssql/mssql-dr-smas-nonuniform.html"
       - title: 使用SM-AS的SQL Server
         url: "/mssql/mssql-dr-smas-sql.html"
       - title: 故障情形
         url: "/mssql/mssql-dr-smas-failure-scenarios.html"
-- title: ASA R2系统上的存储配置
-  pdf-filename: ASA系统上的Microsoft SQL Server
-  entries:
-  - title: 概述
-    url: "/mssql/mssql-storage-considerations-ASA.html"
-  - title: 数据库文件和文件组
-    url: "/mssql/mssql-files-and-filegroups-ASA.html"
-  - title: 数据保护
-    url: "/mssql/mssql-data-protection-ASA.html"
-  - title: 灾难恢复
-    entries:
-    - title: 概述
-      url: "/mssql/mssql-disaster-recovery-ASA.html"
-    - title: SnapMirror
-      url: "/mssql/mssql-dr-snapmirror-ASA.html"
-    - title: SnapMirror活动同步
-      entries:
-      - title: 概述
-        url: "/mssql/mssql-dr-smas-overview-ASA.html"
-      - title: ONTAP 调解器
-        url: "/mssql/mssql-dr-smas-mediator-ASA.html"
-      - title: 首选站点
-        url: "/mssql/mssql-dr-smas-preferred-site-ASA.html"
-      - title: 网络拓扑
-        entries:
-        - title: 统一访问
-          url: "/mssql/mssql-dr-smas-uniform-ASA.html"
-        - title: 非一致访问
-          url: "/mssql/mssql-dr-smas-nonuniform-ASA.html"
-      - title: 使用SM-AS的SQL Server
-        url: "/mssql/mssql-dr-smas-sql-ASA.html"
-      - title: 故障情形
-        url: "/mssql/mssql-dr-smas-failure-scenarios-ASA.html"
 - title: 数据安全性
   url: "/mssql/mssql-data-security.html"

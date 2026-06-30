@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: oracle/oracle-overview.html 
 keywords: oracle, database, ontap, TR-3633 
-summary: ONTAP专为Oracle数据库而设计。了解详情！ 
+summary: ONTAP 专为 Oracle 数据库而设计。 
 ---
 = 基于ONTAP的Oracle数据库
 :allow-uri-read: 
