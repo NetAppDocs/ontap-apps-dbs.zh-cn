@@ -17,6 +17,7 @@ summary: 经典架构
 
 
 
+[[intersystems-iris]]
 == 系统间的可转性
 
 系统间的系统间的信息库是Epic应用程序使用的数据库。在此数据库中、数据服务器是持久存储数据的访问点。应用程序服务器管理数据库查询并向数据服务器发出数据请求。对于大多数Epic软件环境、在单个数据库服务器中使用对称多处理器(SMP)架构足以满足Epic应用程序的数据库请求。在大型部署中、可以使用InterSystems的企业Cach é Protocol (企业Cach é 协议、InterSystems)来支持分布式模型。
@@ -33,6 +34,7 @@ summary: 经典架构
 
 
 
+[[cach-database-servers-and-storage-usage]]
 == Cach é 数据库服务器和存储使用量
 
 * *生产*在Epic软件环境中，部署了一个以患者为中心的数据库。在Epic的硬件要求中、托管主读/写IERIS数据服务器的物理服务器称为生产数据库服务器。对于属于主数据库实例的文件、此服务器需要高性能全闪存存储。为了实现高可用性、Epic支持使用可访问相同文件的故障转移数据库服务器。IRC使用Epic Mirror复制到只读报告、灾难恢复并支持只读副本。出于业务连续性的原因、每种类型的数据库服务器都可以切换到读/写模式。
@@ -66,6 +68,7 @@ image:epic-databases.png["EPIC数据库"]
 
 
 
+[[operational-database-workloads]]
 == 运行数据库工作负载
 
 每个Epic数据库服务器都会对以下类型的文件执行I/O：

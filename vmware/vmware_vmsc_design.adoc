@@ -18,6 +18,7 @@ summary: 《VMSC设计和实施准则》。
 
 
 
+[[netapp-storage-configuration]]
 == NetApp存储配置
 
 有关NetApp MetroCluster的设置说明，请访问 https://docs.netapp.com/us-en/ontap-metrocluster/["MetroCluster 文档"]。有关SnapMirror活动同步(SMA)的说明，请参见 https://docs.netapp.com/us-en/ontap/smbc/index.html["SnapMirror 业务连续性概述"]。
@@ -30,16 +31,19 @@ summary: 《VMSC设计和实施准则》。
 
 
 
+[[using-the-ontap-tools-vcenter-plugin-for-snapmirror-active-sync]]
 == 使用适用于SnapMirror活动同步的ONTAP工具vCenter插件
 
 ONTAP工具vCenter插件提供了一种简单直观的方法来为VMSC配置SnapMirror活动同步。您可以使用ONTAP工具vCenter插件在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。此插件提供了一个易于使用的界面、用于高效地建立和管理这些关系。有关ONTAP工具vCenter插件的详细信息，请访问 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用于 VMware vSphere 的 ONTAP 工具"]，或者直接跳转到 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/protect-cluster.html["使用主机集群保护进行保护"]。
 
 
 
+[[vmware-vsphere-configuration]]
 == VMware vSphere配置
 
 
 
+[[create-a-vsphere-ha-cluster]]
 === 创建vSphere HA集群
 
 创建vSphere HA集群是一个多步骤过程、有关详细信息、请参见 https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-vcenter-esxi-management/GUID-F7818000-26E3-4E2A-93D2-FCDCE7114508.html["如何在docs.vmware.com上的vSphere Client中创建和配置集群"]。简而言之、您必须先创建一个空集群、然后使用vCenter添加主机并指定集群的vSphere HA和其他设置。
@@ -125,6 +129,7 @@ image::../media/vmsc_3_5.png[VMSC 3 5.,624,336]
 |===
 
 
+[[configure-datastores-for-heartbeating]]
 === 配置用于检测信号的存储库
 
 当管理网络出现故障时、vSphere HA使用数据存储库监控主机和虚拟机。您可以配置vCenter选择检测信号数据存储库的方式。要为数据存储库配置检测信号、请完成以下步骤：
@@ -137,6 +142,7 @@ image::../media/vmsc_3_6.png[自动生成的计算机问题描述的屏幕截图
 
 
 
+[[configure-advanced-options]]
 === 配置高级选项
 
 如果HA集群中的主机与网络或集群中的其他主机断开连接、则会发生隔离事件。默认情况下、vSphere HA将使用其管理网络的默认网关作为默认隔离地址。但是、您可以为要执行ping操作的主机指定其他隔离地址、以确定是否应触发隔离响应。添加两个可执行ping操作的隔离IP、每个站点一个。请勿使用网关IP。使用的vSphere HA高级设置为"as.isolationaddress"。为此、您可以使用ONTAP或调解器IP地址。
@@ -162,6 +168,7 @@ image::../media/vmsc_3_7.png[自动生成的计算机问题描述的屏幕截图
 ====
 
 
+[[create-drs-host-groups]]
 === 创建DRS主机组
 
 要创建特定于站点A和站点B的DRS主机组、请完成以下步骤：
@@ -178,6 +185,7 @@ image::../media/vmsc_3_7.png[自动生成的计算机问题描述的屏幕截图
 
 
 
+[[create-drs-vm-groups]]
 === 创建DRS VM组
 
 要创建特定于站点A和站点B的DRS VM组、请完成以下步骤：
@@ -196,6 +204,7 @@ image::../media/vmsc_3_7.png[自动生成的计算机问题描述的屏幕截图
 
 
 
+[[create-vm-host-rules]]
 === 创建VM主机规则
 
 要创建特定于站点A和站点B的DRS相关性规则、请完成以下步骤：
@@ -218,6 +227,7 @@ image::../media/vmsc_3_8.png[自动生成的计算机问题描述的屏幕截图
 
 
 
+[[create-datastore-clusters-if-needed]]
 == 根据需要创建数据存储库集群
 
 要为每个站点配置数据存储库集群、请完成以下步骤：
@@ -254,6 +264,7 @@ image::../media/vmsc_3_12.png[数据存储库,624,134]
 
 
 
+[[vcenter-server-availability]]
 === vCenter Server可用性
 
 您的vCenter Server设备(VCSA)应通过vCenter HA进行保护。通过vCenter HA、您可以在一个主动-被动HA对中部署两个VCSA。每个故障域一个。您可以在上阅读有关vCenter HA的更多信息 https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-availability/GUID-4A626993-A829-495C-9659-F64BA8B560BD.html["docs.vmware.com"]。

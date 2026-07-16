@@ -4,6 +4,7 @@
 
 
 
+[[metrocluster-is-avialable-in-3-different-configurations]]
 == MetroCluster可用于3种不同的配置
 
 * 具有IP连接的HA对
@@ -16,6 +17,7 @@ NOTE: 术语"连接"是指用于跨站点复制的集群连接。它不是指主
 
 
 
+[[metrocluster-ip]]
 == MetroCluster IP
 
 HA对MetroCluster IP配置会在每个站点上使用两个或四个节点。与双节点选项相比、此配置选项会增加复杂性和成本、但它具有一个重要优势：站点内冗余。简单的控制器故障不需要通过WAN访问数据。数据访问仍通过备用本地控制器保持在本地。
@@ -30,6 +32,7 @@ image:../media/mccip.png["MetroCluster IP架构"]
 
 
 
+[[ha-pair-fc-san-attached-metrocluster]]
 == HA对FC SAN连接的MetroCluster
 
 HA对MetroCluster FC配置会在每个站点上使用两个或四个节点。与双节点选项相比、此配置选项会增加复杂性和成本、但它具有一个重要优势：站点内冗余。简单的控制器故障不需要通过WAN访问数据。数据访问仍通过备用本地控制器保持在本地。
@@ -45,6 +48,7 @@ image:../media/mcc-4-node.png["四节点MetroCluster"]
 
 
 
+[[two-node-fc-san-attached-metrocluster]]
 == 双节点FC SAN连接MetroCluster
 
 双节点MetroCluster配置仅为每个站点使用一个节点。这种设计比HA对选项更简单、因为需要配置和维护的组件更少。此外、它还降低了布线和FC交换方面的基础架构需求。最后、它还可以降低成本。
@@ -55,6 +59,7 @@ image:../media/mcc-2-node.png["双节点MetroCluster"]
 
 
 
+[[metrocluster-resiliency-features]]
 == MetroCluster故障恢复能力功能
 
 MetroCluster 解决方案 中没有单点故障：

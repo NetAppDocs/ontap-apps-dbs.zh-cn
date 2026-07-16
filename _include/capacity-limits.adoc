@@ -8,6 +8,7 @@
 
 
 
+[[aff-ssd-aggregates-and-asa-storage-availability-zones]]
 == AFF SSD 聚合和 ASA 存储可用区
 
 
@@ -17,6 +18,7 @@ TIP: * NetApp建议*至少留出10%的可用空间。这包括所有未使用的
 
 
 
+[[hdd-aggregates-including-flash-pool-aggregates]]
 == HDD聚合、包括Flash Pool聚合
 
 

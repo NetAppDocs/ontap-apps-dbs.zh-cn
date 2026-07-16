@@ -17,6 +17,7 @@ EPIC认识到、与基于文件的传统备份相比、基于存储节点的NetA
 
 
 
+[[data-management]]
 == 数据管理
 
 作为该解决方案的一部分、NetApp通过使用本机ONTAP工具提供完全自动化的备份和测试更新解决方案。此解决方案旨在专门为大型Epic数据库管理员(Database Administrator、Database Administrator、数据库管理员)社区简化Epic数据管理：
@@ -38,6 +39,7 @@ EPIC认识到、与基于文件的传统备份相比、基于存储节点的NetA
 
 
 
+[[configuring-consistency-groups-for-epic]]
 == 为Epic配置一致性组
 
 按照本文档前面几节所述配置卷和LUN后、可以将其配置为一组CGS。建议的最佳实践是按照下图所示进行设置：
@@ -46,6 +48,7 @@ image:epic-cg-layout.png["经典和一致性组"]
 
 
 
+[[consistency-group-snapshots]]
 == 一致性组快照
 
 应在与为生产数据库提供存储的卷关联的每个子CG上设置每晚CG快照计划。这样就会在每晚为这些GS创建一组全新的一致备份。然后、可以使用这些副本克隆生产数据库、以便在开发和测试等非生产环境中使用。NetApp为Epic开发了基于CG的专有自动化Ans得 工作流、用于自动备份生产数据库、同时还可以自动执行刷新和测试环境。

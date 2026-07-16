@@ -37,6 +37,7 @@ NetApp假定读者具备以下方面的实践知识：
 
 
 
+[[microsoft-sql-server-workloads]]
 == Microsoft SQL Server工作负载
 
 在部署SQL Server之前、您必须了解SQL Server数据库实例支持的应用程序的工作负载要求。每个应用程序对容量、性能和可用性有不同的要求、因此每个数据库的设计都应以最佳方式支持这些要求。许多组织使用应用程序要求定义SLA、将数据库分为多个管理层。SQL Server工作负载通常按如下所述进行分类：

@@ -14,12 +14,14 @@ searchtitle: 使用Microsoft Windows的Oracle数据库
 
 
 
+[[nfs]]
 == NFS
 
 Oracle 支持将 Microsoft Windows 与直接 NFS 客户端结合使用。此功能提供了实现 NFS 管理优势的途径，包括跨环境查看文件、动态调整 NFS 卷大小以及利用成本较低的 IP 协议。有关使用 DNFS 在 Microsoft Windows 上安装和配置数据库的信息，请参阅 Oracle 官方文档。不存在任何特殊的最佳实践。
 
 
 
+[[san]]
 == SAN
 
 为了获得最佳压缩效率、请确保NTFS文件系统使用8K或更大的分配单元。使用4K分配单元(通常为默认分配单元)会对压缩效率产生负面影响。

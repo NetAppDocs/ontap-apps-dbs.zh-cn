@@ -27,6 +27,7 @@ NOTE: 本文档取代了之前发布的技术报告《TR-4900：使用 ONTAP 的
 
 
 
+[[why-use-ontap-with-vlsr-or-srm]]
 == 为什么要将ONTAP与甚量卷请求或SRM结合使用？
 
 由ONTAP提供支持的NetApp数据管理平台是 VLSR 最广泛采用的存储解决方案之一。原因有很多：一个安全、高性能、统一协议（NAS 和 SAN 结合）的数据管理平台，提供行业定义的存储效率、多租户、服务质量控制、使用空间高效快照的数据保护以及使用SnapMirror的复制。所有这些都利用原生混合多云集成来保护 VMware 工作负载，并提供大量自动化和编排工具。
@@ -37,6 +38,7 @@ NOTE: 本文档取代了之前发布的技术报告《TR-4900：使用 ONTAP 的
 
 
 
+[[how-vlsr-leverages-ontap-9]]
 == VLSR 如何利用 ONTAP 9
 
 VLSR 可通过与适用于 VMware vSphere 的 ONTAP 工具集成来利用 ONTAP 系统的高级数据管理技术， VMware vSphere 是一种虚拟设备，其中包括三个主要组件：
@@ -59,6 +61,7 @@ NOTE: 虽然ONTAP系统允许您将同一集群中的SVM配对以进行SnapMirro
 
 
 
+[[vlsr-with-ontap-and-other-use-cases-hybrid-cloud-and-migration]]
 == 采用 ONTAP 的 VLSR 以及其他使用情形：混合云和迁移
 
 将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR https://www.equinix.com/partners/netapp["Equinix Metal 上的NetApp存储"^]或其他托管ONTAP服务。

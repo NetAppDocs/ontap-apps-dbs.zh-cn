@@ -15,12 +15,14 @@ summary: 经典的六节点架构
 
 
 
+[[six-node-architecture]]
 == 六节点架构
 
 image:epic-6node.png["EPIC 6节点架构"]
 
 
 
+[[six-node-workload-placement]]
 == 六节点工作负载放置
 
 image:epic-6node-design.png["EPIC 6节点放置"]

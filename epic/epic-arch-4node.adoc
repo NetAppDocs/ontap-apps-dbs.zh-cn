@@ -17,12 +17,14 @@ NetApp通过接受SLM建议的AQoS策略来保证最低楼层性能。EPIC支持
 
 
 
+[[four-node-architecture]]
 == 四节点架构
 
 image:epic-4node.png["EPIC 4节点架构"]
 
 
 
+[[four-node-workload-placement]]
 == 四节点工作负载放置
 
 image:epic-4node-design.png["EPIC 4节点放置"]

@@ -30,6 +30,7 @@ searchtitle: 使用FLI迁移Oracle—转换
 
 
 
+[[shut-down-database]]
 == 关闭数据库
 
 在此示例中、静音环境的第一步是关闭数据库。
@@ -53,6 +54,7 @@ SQL>
 ....
 
 
+[[shut-down-grid-services]]
 == 关闭网格服务
 
 要迁移的基于SAN的文件系统之一还包括Oracle ASM服务。暂停底层LUN需要卸载文件系统、这反过来意味着停止此文件系统上具有已打开文件的所有进程。
@@ -76,6 +78,7 @@ CRS-4133: Oracle High Availability Services has been stopped.
 ....
 
 
+[[dismount-file-systems]]
 == 卸载文件系统
 
 如果所有进程均已关闭、则卸载操作将成功。如果权限被拒绝、则文件系统上必须存在一个具有锁定的进程。。 `fuser` 命令有助于识别这些进程。
@@ -86,6 +89,7 @@ CRS-4133: Oracle High Availability Services has been stopped.
 ....
 
 
+[[deactivate-volume-groups]]
 == 停用卷组
 
 卸载给定卷组中的所有文件系统后、可以停用该卷组。
@@ -97,12 +101,14 @@ CRS-4133: Oracle High Availability Services has been stopped.
 ....
 
 
+[[fc-network-changes]]
 == FC网络更改
 
 现在、可以更新FC分区、以删除主机对外部阵列的所有访问权限、并建立对ONTAP的访问权限。
 
 
 
+[[start-import-process]]
 == 启动导入过程
 
 要启动LUN导入过程、请运行 `lun import start` 命令：
@@ -117,6 +123,7 @@ Cluster01::lun import*>
 ....
 
 
+[[monitor-import-progress]]
 == 监控导入进度
 
 可以使用监控导入操作 `lun import show` 命令：如下图所示、所有20个LUN的导入正在进行中、这意味着现在可以通过ONTAP访问数据、即使数据复制操作仍在进行。
@@ -153,6 +160,7 @@ vserver1  800DT$HuVWBo /vol/new_lvm/LUN9 2
 
 
 
+[[scan-for-scsi-device-changes]]
 == 扫描SCSI设备更改
 
 在大多数情况下、重新发现新LUN的最简单方法是重新启动主机。这样做会自动删除旧的陈旧设备、正确发现所有新LUN并构建关联的设备、例如多路径设备。此处的示例显示了一个完全联机的流程、用于演示目的。
@@ -203,6 +211,7 @@ OLD: Host: scsi9 Channel: 00 Id: 01 Lun: 19
 ....
 
 
+[[check-for-multipath-devices]]
 == 检查多路径设备
 
 LUN发现过程还会触发多路径设备的重新创建、但已知Linux多路径驱动程序偶尔会出现问题。的输出 `multipath - ll` 应进行检查、以验证输出是否如预期。例如、以下输出显示了与关联的多路径设备 `NETAPP` 供应商字符串。每个设备都有四个路径、其中两个路径的优先级为50、两个路径的优先级为10。尽管不同版本的Linux的确切输出可能会有所不同、但此输出看起来与预期一致。
@@ -248,6 +257,7 @@ size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_hand
 ....
 
 
+[[reactivate-lvm-volume-group]]
 == 重新激活LVM卷组
 
 如果已正确发现LVM LUN、则 `vgchange --activate y` 命令应成功。这是一个很好的逻辑卷管理器价值示例。更改LUN的WWN甚至序列号并不重要、因为卷组元数据会写入LUN本身。
@@ -262,6 +272,7 @@ size=10G features='4 queue_if_no_path pg_init_retries 50 retain_attached_hw_hand
 ....
 
 
+[[remount-file-systems]]
 == 重新挂载文件系统
 
 重新激活卷组后、可以在挂载文件系统时保持所有原始数据完好无损。如前文所述、即使数据复制在后端组中仍处于活动状态、文件系统也能完全正常运行。
@@ -286,6 +297,7 @@ tmpfs                             13179736         0  13179736   0% /run/user/0
 ....
 
 
+[[rescan-for-asm-devices]]
 == 重新扫描ASM设备
 
 重新扫描SCSI设备时、应已重新发现ASMlib设备。可以通过重新启动ASMlib并扫描磁盘来联机验证重新发现。
@@ -322,6 +334,7 @@ Instantiating disk "ASM9"
 ....
 
 
+[[restart-grid-services]]
 == 重新启动网格服务
 
 现在LVM和ASM设备已联机且可用、可以重新启动网格服务。
@@ -332,6 +345,7 @@ Instantiating disk "ASM9"
 ....
 
 
+[[restart-database]]
 == 重新启动数据库
 
 重新启动网格服务后、可以启动数据库。在尝试启动数据库之前、可能需要等待几分钟、以便ASM服务完全可用。

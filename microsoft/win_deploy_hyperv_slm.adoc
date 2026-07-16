@@ -18,6 +18,7 @@ summary: 如何配置Hyper-V存储实时迁移
 
 
 
+[[prerequisites]]
 == 前提条件
 
 * 您必须拥有一个独立的Hyper-V服务器、该服务器必须具有独立的存储(DAS或LUN)或SMB存储(本地或在其他Hyper-V服务器之间共享)。
@@ -26,6 +27,7 @@ summary: 如何配置Hyper-V存储实时迁移
 
 
 
+[[deployment]]
 == 部署
 
 . 打开Hyper-V Manager。

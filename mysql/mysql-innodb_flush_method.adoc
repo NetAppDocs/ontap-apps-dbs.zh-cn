@@ -18,6 +18,7 @@ InnoDB_flush_方法 参数用于指定InnoDB如何打开和刷新日志和数据
 
 
 
+[[optimizations]]
 == 优化
 
 在InnoDB优化中、如果适用、设置此参数会调整数据库性能。
@@ -32,6 +33,7 @@ InnoDB_flush_方法 参数用于指定InnoDB如何打开和刷新日志和数据
 
 
 
+[[observation]]
 == 观察结果
 
 在NetApp实验室测试中、 `fsync` NFS和SAN上使用了默认选项、与相比、这是一个非常好的性能提升 `O_DIRECT`。将刷新方法用作时 `O_DIRECT` 通过使用ONTAP、我们发现客户端会以串行方式在4096块的边界处写入大量单字节写入。这些写入会增加网络延迟并降低性能。

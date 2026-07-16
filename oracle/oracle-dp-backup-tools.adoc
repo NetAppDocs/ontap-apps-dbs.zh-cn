@@ -21,6 +21,7 @@ searchtitle: Oracle数据库管理和自动化工具
 
 
 
+[[snapcenter]]
 == SnapCenter
 
 SnapCenter是NetApp的旗舰级数据保护产品。从很低的层面来看、它在执行数据库备份的方式上与SnapManager产品类似、但它是从头开始构建的、用于在NetApp存储系统上提供单一管理平台来进行数据保护管理。
@@ -29,6 +30,7 @@ SnapCenter包括一些基本功能、例如基于快照的备份和还原、Snap
 
 
 
+[[rest]]
 == REST
 
 ONTAP还包含丰富的ESTful API集。这样、第三方供应商就可以创建与ONTAP深度集成的数据保护和其他管理应用程序。此外、希望创建自己的自动化工作流和实用程序的客户也可以轻松使用这种ESTful API。

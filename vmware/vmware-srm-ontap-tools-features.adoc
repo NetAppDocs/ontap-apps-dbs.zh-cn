@@ -18,12 +18,14 @@ summary: ONTAP工具支持的功能、限制和虚拟卷。
 
 
 
+[[latest-versions-of-vsphere-and-site-recovery-manager]]
 == 最新版本的 vSphere 和 Site Recovery Manager
 
 近二十年来， NetApp 与 VMware 建立了深厚的合作关系，并努力尽快为最新版本提供支持。请始终检查NetApp https://mysupport.netapp.com/matrix/imt.jsp?components=84943;&solution=1777&isHWU&src=IMT["互操作性表工具（ IMT ）"^]以了解最新的合格软件组合。
 
 
 
+[[support-for-ipv6]]
 == 支持 IPv6
 
 现在支持 IPv6 ，但有以下限制：
@@ -34,6 +36,7 @@ summary: ONTAP工具支持的功能、限制和虚拟卷。
 
 
 
+[[greater-scale]]
 == 扩展性更强
 
 ONTAP工具10.4 SRA现在可支持最大扩展范围的vr/SRM。
@@ -48,12 +51,14 @@ ONTAP工具10.4 SRA现在可支持最大扩展范围的vr/SRM。
 
 
 
+[[synchronous-replication]]
 == 同步复制
 
 期待已久的一项新功能是采用 ONTAP 9.5 及更高版本的 SnapMirror 同步（ SM-S ），该功能可为任务关键型应用程序提供卷粒度零 RPO 数据复制解决方案。SM-S 需要使用 ONTAP 工具 9.8 或更高版本。
 
 
 
+[[rest-api-support]]
 == REST API 支持
 
 现在， SRA 服务器配置可通过 REST API 进行管理。我们添加了Swagger UI来帮助您构建自动化工作流，您可以在ONTAP工具设备上找到该用户界面，网址为 `https://<appliance>:8443/`。

@@ -19,6 +19,7 @@ SnapCenter会发现Windows主机中的所有数据库、实例和可用性组、
 
 
 
+[[protecting-databases-in-always-on-availability-group]]
 == 保护始终可用性组中的数据库
 
 可用性组中的数据库可以通过多种方式进行保护。
@@ -35,6 +36,7 @@ TIP: * NetApp建议*使用可用性级别备份来备份在NetApp ONTAP存储上
 
 
 
+[[configuring-log-backup-in-snapcenter]]
 == 在SnapCenter中配置日志备份
 
 如果在独立SQL Server设置中设置了可用性组、则必须在Windows服务器故障转移集群的每个节点上挂载一个专用磁盘。应使用专用磁盘配置日志目录以保存事务日志备份。
@@ -43,6 +45,7 @@ TIP: * NetApp建议*使用可用性级别备份来备份在NetApp ONTAP存储上
 
 
 
+[[restoring-database-in-availability-group-setup-with-snapcenter]]
 == 使用SnapCenter在可用性组设置中还原数据库
 
 * SnapCenter提供了reeseed选项、可从二级副本上提供的最新快照自动恢复数据库。重新密封操作将自动还原数据库备份并将其加入可用性组。

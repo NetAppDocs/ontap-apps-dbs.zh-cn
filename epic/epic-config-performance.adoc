@@ -13,6 +13,7 @@ summary: 卓越的性能管理
 
 
 
+[[quality-of-service-qos]]
 == 服务质量(QoS)
 
 NetApp建议使用QoS。QoS的优势在于能够整合所有Epic工作负载。所有协议和存储池可以驻留在较少的硬件上。您无需分离存储池。

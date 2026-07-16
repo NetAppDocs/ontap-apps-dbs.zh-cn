@@ -4,20 +4,21 @@
 
 
 
+[[fiber-channel]]
 === 光纤通道
 
-从 ONTAP 9.19.1 开始，使用特定存储系统 FC 适配器的传统 FC-SAN (SCSI) 和 NVMe/FC 均支持直接连接 FC。HBA 将建立标准点对点 FC 连接。
-
-在 ONTAP 9.19.1 之前，ONTAP 存储系统需要 NPIV，这意味着存储系统必须连接到也支持 NPIV 的 FC 交换机。
+从 ONTAP 9.19.1 开始，使用特定存储系统 FC 适配器的传统 FC-SAN (SCSI) 和 NVMe/FC 均支持直接连接 FC。HBA 将建立标准点对点 FC 连接。在 ONTAP 9.19.1 之前，ONTAP 存储系统需要 NPIV，这意味着存储系统必须连接到也支持 NPIV 的 FC 交换机。
 
 
 
+[[iscsi-and-nvmetcp]]
 === iSCSI和NVMe/TCP
 
 使用iSCSI或NVMe/TCP的主机可以直接连接到存储系统并正常运行。原因是路径问题。直接连接到两个不同的存储控制器会产生两条独立的数据流路径。丢失路径、端口或控制器不会阻止使用另一个路径。
 
 
 
+[[nfs]]
 === NFS
 
 可以使用直连NFS存储、但有一个重大限制—如果没有大量的脚本编写工作、故障转移将无法正常工作、这是客户的责任。

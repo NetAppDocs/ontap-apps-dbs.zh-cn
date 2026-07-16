@@ -18,6 +18,7 @@ summary: 适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。
 
 
 
+[[virtual-appliance]]
 == *虚拟设备*
 
 您可以从虚拟设备的维护控制台配置NTP服务器。  用户可以在_System Configuration_=>_Add new NTP Server_选项下添加NTP服务器详细信息
@@ -26,6 +27,7 @@ summary: 适用于VMware vSphere的ONTAP工具安全增强指南、NTP配置。
 
 
 
+[[debian]]
 == *Debian
 
 在Debian上、用户可以访问/etc/ntp.conf文件以获取NTP服务器详细信息。

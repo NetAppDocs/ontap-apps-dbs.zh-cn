@@ -22,6 +22,7 @@ ONTAP 9.8以及适用于VMware vSphere的ONTAP工具9.8-9.13和适用于VMware 4
 
 
 
+[[copy-offload]]
 == 副本卸载
 
 除了对vSphere工作负载进行广泛的系统测试之外、ONTAP 9.8还为FlexGroup数据存储库添加了一种新的副本卸载机制。这一新系统使用经过改进的复制引擎在后台成分卷之间复制文件、同时允许访问源和目标。然后、可以使用此成分卷本地缓存根据需要快速例化VM克隆。
@@ -46,6 +47,7 @@ ONTAP 9.8以及适用于VMware vSphere的ONTAP工具9.8-9.13和适用于VMware 4
 
 
 
+[[qos-settings]]
 == QoS设置
 
 支持使用ONTAP系统管理器或集群Shell在FlexGroup级别配置QoS、但它不提供VM感知或vCenter集成。
@@ -56,12 +58,14 @@ ONTAP 9.8以及适用于VMware vSphere的ONTAP工具9.8-9.13和适用于VMware 4
 
 
 
+[[metrics]]
 == 指标
 
 ONTAP 9.8还为FlexGroup文件添加了新的基于文件的性能指标(IOPS、吞吐量和延迟)、您可以在适用于VMware vSphere的ONTAP工具信息板和VM报告中查看这些指标。适用于 VMware vSphere 的 ONTAP 工具插件还允许您结合使用最大和 / 或最小 IOPS 来设置服务质量（ QoS ）规则。可以在数据存储库中的所有 VM 之间设置这些值，也可以为特定 VM 单独设置这些值。
 
 
 
+[[best-practices]]
 == 最佳实践
 
 * 使用ONTAP工具创建FlexGroup数据存储库、以确保以最佳方式创建FlexGroup、并根据您的vSphere环境配置导出策略。但是、在使用ONTAP工具创建FlexGroup卷之后、您会发现vSphere集群中的所有节点都使用一个IP地址挂载数据存储库。这可能会导致网络端口出现瓶颈。要避免此问题、请卸载此数据存储库、然后使用标准vSphere数据存储库向导使用轮叫DNS名称重新挂载它、以便在SVM上的各个SVM之间平衡负载。重新挂载后、ONTAP工具将再次能够管理数据存储库。如果ONTAP工具不可用、请使用FlexGroup默认值并按照中的准则创建导出策略 link:vmware-vsphere-datastores-nfs.html["数据存储库和协议—NFS"]。

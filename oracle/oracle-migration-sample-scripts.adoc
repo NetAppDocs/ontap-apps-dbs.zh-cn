@@ -14,6 +14,7 @@ searchtitle: Oracle迁移操作步骤示例脚本
 
 
 
+[[database-shutdown]]
 == 数据库关闭
 
 以下Perl脚本仅使用Oracle SID的一个参数、并关闭数据库。它可以作为Oracle用户或root用户运行。
@@ -57,6 +58,7 @@ exit 1;}
 ....
 
 
+[[database-startup]]
 == 数据库启动
 
 以下Perl脚本仅使用Oracle SID的一个参数、并关闭数据库。它可以作为Oracle用户或root用户运行。
@@ -100,6 +102,7 @@ exit 1;}
 ....
 
 
+[[convert-file-system-to-read-only]]
 == 将文件系统转换为只读
 
 以下脚本采用文件系统参数、并尝试卸载它、然后将其重新挂载为只读。在迁移过程中、这样做非常有用、因为在迁移过程中、文件系统必须保持可用性以复制数据、同时必须防止意外损坏。
@@ -123,6 +126,7 @@ print @out;
 ....
 
 
+[[replace-file-system]]
 == 替换文件系统
 
 以下脚本示例用于将一个文件系统替换为另一个文件系统。由于它会编辑`/etc/fstab `文件、因此必须以root用户身份运行。它接受新旧文件系统的一个逗号分隔参数。
@@ -227,6 +231,7 @@ cluster01:/vol_newlogs /logs nfs rw,bg,vers=3,rsize=65536,wsize=65536 0 0
 
 
 
+[[automated-database-migration]]
 == 自动化数据库迁移
 
 此示例说明了如何使用关闭、启动和文件系统替换脚本来完全自动执行迁移。
@@ -280,6 +285,7 @@ print @out;
 ....
 
 
+[[display-file-locations]]
 == 显示文件位置
 
 此脚本会收集大量关键数据库参数、并以易于阅读的格式打印这些参数。此脚本在查看数据布局时非常有用。此外、还可以修改此脚本以供其他用途。
@@ -354,6 +360,7 @@ print "\n";
 ....
 
 
+[[asm-migration-cleanup]]
 == ASM迁移清理
 
 ....
@@ -416,6 +423,7 @@ print "\n";
 ....
 
 
+[[asm-to-file-system-name-conversion]]
 == ASM到文件系统名称转换
 
 ....
@@ -462,6 +470,7 @@ end;
 ....
 
 
+[[replay-logs-on-database]]
 == 重放数据库上的日志
 
 此脚本接受处于挂载模式的数据库的Oracle SID的一个参数、并尝试重放所有当前可用的归档日志。
@@ -498,6 +507,7 @@ print @out;
 ....
 
 
+[[replay-logs-on-standby-database]]
 == 重放备用数据库上的日志
 
 此脚本与前面的脚本相同、只是它是为备用数据库设计的。

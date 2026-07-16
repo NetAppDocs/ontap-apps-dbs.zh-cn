@@ -32,6 +32,7 @@ rw,hard,nointr,bg,vers=[3|4],proto=tcp,rsize=65536,wsize=65536
 
 
 
+[[nfs-transfer-sizes]]
 == NFS传输大小
 
 默认情况下、ONTAP会将NFS I/O大小限制为64K。
@@ -59,6 +60,7 @@ rw,hard,nointr,bg,vers=[3|4],proto=tcp,rsize=262144,wsize=262144
 ....
 
 
+[[nfsv3-tcp-slot-tables]]
 == NFSv3 TCP插槽表
 
 如果在Linux中使用NFSv3、则正确设置TCP插槽表至关重要。

@@ -26,6 +26,7 @@ summary: 本文档介绍适用于VMware的SnapCenter插件的安全方面。
 
 
 
+[[product-security-features]]
 == 产品安全功能
 
 适用于VMware vSphere的NetApp SnapCenter 插件在每个版本中都包含以下安全功能：

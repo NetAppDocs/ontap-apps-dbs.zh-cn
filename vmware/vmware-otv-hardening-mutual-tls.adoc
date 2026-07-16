@@ -18,6 +18,7 @@ ONTAP 9.7及更高版本支持相互TLS通信。从适用于VMware和vSphere 9.1
 
 
 
+[[ontap]]
 == ONTAP
 
 对于先前添加的所有存储系统：在升级期间、所有添加的存储系统都将获得自动信任、并配置基于证书的身份验证机制。
@@ -28,6 +29,7 @@ image:vmware-otv-hardening-mutual-tls-image2.png["图像2、宽度=468、高度=
 
 
 
+[[cluster-add]]
 === *集群添加*
 
 在集群添加工作流期间、如果要添加的集群支持MTLS、则默认情况下会配置MTLS。用户无需为此执行任何配置。以下屏幕截图显示了在添加集群期间向用户显示的屏幕。
@@ -42,6 +44,7 @@ image:vmware-otv-hardening-mutual-tls-image6.png["添加存储系统、宽度=46
 
 
 
+[[cluster-edit]]
 === 集群编辑
 
 在集群编辑操作期间、有两种情形：

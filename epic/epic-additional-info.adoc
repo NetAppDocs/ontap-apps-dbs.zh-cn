@@ -20,6 +20,7 @@ summary: ONTAP上Epic的其他信息
 
 
 
+[[epic-customer-guidance-documents]]
 == EPIC客户指导文档
 
 EPIC为客户提供以下文档、以提供有关服务器、存储和网络的指导。本技术报告引用了这些文档。

@@ -30,6 +30,7 @@ LUN是ONTAP上的一个虚拟化对象、位于托管聚合中的所有驱动器
 
 
 
+[[lun-count]]
 == LUN计数
 
 与LUN大小不同、LUN计数会影响性能。应用程序性能通常取决于通过SCSI层执行并行I/O的能力。因此、两个LUN的性能优于一个LUN。使用Veritas VLVM、Linux LVM2或Oracle ASM等LVM是提高并行性的最简单方法。

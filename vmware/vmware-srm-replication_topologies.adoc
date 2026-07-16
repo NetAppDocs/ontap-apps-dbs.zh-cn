@@ -32,6 +32,7 @@ summary: 将ONTAP与SnapMirror以及VMware vrSR和SRM结合使用的复制拓扑
 |===
 
 
+[[supported-snapmirror-layouts]]
 == 支持的 SnapMirror 布局
 
 下图显示了 VLSR 和 SRA 支持的 SnapMirror 关系布局方案。复制卷中的每个 VM 在每个站点上仅拥有一个 VLSR 阵列（ SVM ）上的数据。
@@ -46,6 +47,7 @@ image:vsrm-ontap9_image10.png["SnapMirror关系布局"]
 
 
 
+[[vmfs-support-with-snapmirror-active-sync]]
 == VMFS 支持SnapMirror主动同步
 
 ONTAP工具 10.3 及更高版本还支持使用SnapMirror主动同步 (SMas) 保护您的 VMFS 数据存储库。这使得两个相对较近的数据中心（称为故障域）之间的业务连续性能够实现透明的故障转移。然后可以通过带有 VLSR 的ONTAP工具 SRA 使用异步SnapMirror来协调远距离灾难恢复。
@@ -60,6 +62,7 @@ image:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-104/media/fan-out
 
 
 
+[[supported-array-manager-layouts]]
 == 支持的阵列管理器布局
 
 在 VLSR 中使用基于阵列的复制（ ABR ）时，保护组会隔离到一个阵列对中，如以下屏幕截图所示。在此场景中、 `SVM1`和 `SVM2`与恢复站点上的和 `SVM4`建立对等关系 `SVM3`。但是，在创建保护组时，您只能选择两个阵列对中的一个。
@@ -68,6 +71,7 @@ image:vsrm-ontap9_image11.png["阵列对"]
 
 
 
+[[unsupported-layouts]]
 == 不支持的布局
 
 不受支持的配置会在单个虚拟机所拥有的多个 SVM 上包含数据（ VMDK 或 RDM ）。在下图所示的示例中、 `VM1`无法使用VSR配置保护、因为 `VM1`数据位于两个SVM上。
@@ -82,6 +86,7 @@ image:vsrm-ontap9_image14.png["不支持的配置"]
 
 
 
+[[snapmirror-cascade]]
 == SnapMirror 级联
 
 VLSR 不支持 SnapMirror 关系的级联，即，将源卷复制到目标卷，同时使用 SnapMirror 将目标卷复制到另一个目标卷。在下图所示的情形中，不能使用 VLSR 在任何站点之间进行故障转移。
@@ -90,6 +95,7 @@ image:vsrm-ontap9_image15.png["SnapMirror关系的级联"]
 
 
 
+[[snapmirror-and-snapvault]]
 == SnapMirror 和 SnapVault
 
 NetApp SnapVault 软件支持在 NetApp 存储系统之间对企业数据进行基于磁盘的备份。SnapVault 和 SnapMirror 可以同时位于同一环境中；但是， VLSR 仅支持 SnapMirror 关系的故障转移。
@@ -127,12 +133,14 @@ image:vsrm-ontap9_image17.png["SnapMirror到SnapVault反向级联"]
 
 
 
+[[use-of-qtrees-in-site-recovery-manager-environments]]
 == 在 Site Recovery Manager 环境中使用 qtree
 
 qtrees是一种特殊目录、可用于为NAS应用文件系统配额。ONTAP 9 允许创建 qtree ，而 qtree 可以存在于使用 SnapMirror 复制的卷中。但是、SnapMirror不允许复制单个qtree或进行qtree级复制。所有 SnapMirror 复制仅在卷级别进行。因此， NetApp 不建议在 VLSR 中使用 qtree 。
 
 
 
+[[mixed-fc-and-iscsi-environments]]
 == FC 和 iSCSI 混合环境
 
 借助支持的 SAN 协议（ FC ， FCoE 和 iSCSI ）， ONTAP 9 可提供 LUN 服务，即创建 LUN 并将其映射到连接的主机。由于集群由多个控制器组成，因此，多路径 I/O 可管理多个逻辑路径，并将其连接到任何单个 LUN 。主机上使用非对称逻辑单元访问（ ALUA ），以便选择 LUN 的优化路径并使其处于活动状态以进行数据传输。如果指向任何 LUN 的优化路径发生变化（例如，由于移动了包含 LUN 的卷）， ONTAP 9 会自动识别此更改并无中断地进行调整。如果优化路径不可用， ONTAP 可以无中断地切换到任何其他可用路径。

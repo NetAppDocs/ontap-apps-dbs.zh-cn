@@ -19,6 +19,7 @@ searchtitle: Oracle数据库和FabricPool检索策略
 
 
 
+[[default]]
 == Default
 
 所有FabricPool卷的初始设置为 `default`，这意味着该行为由`云检索策略控制。`具体行为取决于所使用的层策略。
@@ -31,6 +32,7 @@ searchtitle: Oracle数据库和FabricPool检索策略
 
 
 
+[[on-read]]
 == 读取时
 
 正在设置 ... `cloud-retrieval-policy` 到读取时会覆盖默认行为、因此读取任何分层数据都会将该数据返回到性能层。
@@ -41,6 +43,7 @@ searchtitle: Oracle数据库和FabricPool检索策略
 
 
 
+[[promote]]
 == 提升
 
 提升策略的行为取决于层策略。如果此层策略为 `auto`，然后设置 `cloud-retrieval-policy `to `promote` 在下次分层扫描时从容量层恢复所有块。
@@ -51,6 +54,7 @@ searchtitle: Oracle数据库和FabricPool检索策略
 
 
 
+[[never]]
 == 从不
 
 请勿从容量层检索块。

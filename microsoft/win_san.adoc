@@ -18,10 +18,12 @@ ONTAP SVM支持块协议iSCSI和FC。使用块协议iSCSI或FC创建SVM时、SVM
 
 
 
+[[provisioning-netapp-lun-on-windows-server]]
 == 在Windows Server上配置NetApp LUN
 
 
 
+[[prerequisites]]
 === 前提条件
 
 在Windows Server的SAN环境中使用NetApp存储具有以下要求：
@@ -36,6 +38,7 @@ ONTAP SVM支持块协议iSCSI和FC。使用块协议iSCSI或FC创建SVM时、SVM
 
 
 
+[[deployment]]
 === 部署
 
 . 创建启用了块协议iSCSI和/或FC的新SVM。可以使用以下任一方法创建新的SVM：
@@ -77,6 +80,7 @@ Get-InitiatorPort | Where \{$_.ConnectionType -eq 'Fibre Channel'} | Select-Obje
 
 
 
+[[host-integration]]
 === 主机集成
 
 Windows Server使用非对称逻辑单元访问(ALUA)扩展MPIO来确定LUN的直接和间接路径。即使SVM拥有的每个LIF都接受其LUN的读/写请求、但在任何给定时刻、实际上只有一个集群节点拥有支持该LUN的磁盘。这会将LUN的可用路径划分为两种类型：直接路径或间接路径、如下图所示。
@@ -89,12 +93,14 @@ image:win_image3.png["SAN环境中的多个路径、宽度=624、高度=232"]
 
 
 
+[[mpio]]
 === MPIO
 
 ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows Server的多条路径。多路径是指从一台服务器到一个存储阵列具有多条数据路径的能力。多路径功能可防止出现硬件故障(缆线切断、交换机和主机总线适配器[HBA]故障等)、并可通过使用多个连接的聚合性能来提供更高的性能限制。当一个路径或连接不可用时、多路径软件会自动将负载转移到其他可用路径之一。MPIO功能将存储的多个物理路径组合为一个逻辑路径、用于数据访问、以提供存储故障恢复能力和负载平衡。要使用此功能、必须在Windows Server上启用MPIO功能。
 
 
 
+[[enable-mpio]]
 === 启用MPIO
 
 要在Windows Server上启用MPIO、请完成以下步骤：
@@ -109,6 +115,7 @@ ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows S
 
 
 
+[[configure-mpio]]
 === 配置MPIO
 
 使用iSCSI协议时、必须在MPIO属性中指示Windows Server对iSCSI设备应用多路径支持。
@@ -126,6 +133,7 @@ ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows S
 
 
 
+[[configure-iscsi]]
 === 配置iSCSI
 
 要在Windows Server上检测iSCSI块存储、请完成以下步骤：
@@ -151,6 +159,7 @@ ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows S
 
 
 
+[[detect-block-storage]]
 === 检测块存储
 
 要在Windows Server上检测iSCSI或FC块存储、请完成以下步骤：
@@ -162,6 +171,7 @@ ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows S
 
 
 
+[[best-practices]]
 === 最佳实践
 
 * NetApp建议在托管LUN的卷上启用精简配置。
@@ -172,16 +182,19 @@ ONTAP可提供高可用性存储、其中可存在从存储控制器到Windows S
 
 
 
+[[provisioning-netapp-luns-on-nano-server]]
 == 在NetApp服务器上配置LUN
 
 
 
+[[prerequisites]]
 === 前提条件
 
 除了上一节所述的前提条件之外、还必须从"纳 科服务器"端启用存储角色。例如、必须使用-Storage选项来部署到新服务器。若要部署到您的服务器、请参见"link:win_deploy_nano.html["部署一个存储管理器。"]"
 
 
 
+[[deployment]]
 === 部署
 
 要在一台NetApp服务器上配置LUN、请完成以下步骤：
@@ -298,12 +311,14 @@ Format-Volume -DriveLetter <DriveLetter> -FileSystem <FAT32 or NTFS or REFS>
 
 
 
+[[boot-from-san]]
 == 从SAN启动
 
 物理主机(服务器)或Hyper-V虚拟机可以直接从NetApp LUN (而不是其内部硬盘)启动Windows Server操作系统。在从SAN启动方法中、要从中启动的操作系统映像驻留在连接到物理主机或VM的NetApp LUN上。对于物理主机、物理主机的HBA会配置为使用NetApp LUN进行启动。对于VM、NetApp LUN作为直通磁盘连接以进行启动。
 
 
 
+[[netapp-flexclone-approach]]
 === NetApp FlexClone方法
 
 使用NetApp FlexClone技术、可以即时克隆具有操作系统映像的启动LUN并将其连接到服务器和VM、以快速提供干净的操作系统映像、如下图所示。
@@ -312,6 +327,7 @@ image:win_image4.png["使用NetApp FlexClone启动LUN、宽度=561、高度=357"
 
 
 
+[[boot-from-san-for-physical-host]]
 === 从SAN启动物理主机
 
 
@@ -345,6 +361,7 @@ image:win_image4.png["使用NetApp FlexClone启动LUN、宽度=561、高度=357"
 
 
 
+[[boot-from-san-for-virtual-machine]]
 === 从SAN启动虚拟机
 
 要为VM配置从SAN启动、请完成以下步骤：
@@ -370,6 +387,7 @@ image:win_image4.png["使用NetApp FlexClone启动LUN、宽度=561、高度=357"
 
 
 
+[[best-practices]]
 === 最佳实践
 
 * 确保LUN处于脱机状态。否则、无法将该磁盘作为直通磁盘添加到VM中。

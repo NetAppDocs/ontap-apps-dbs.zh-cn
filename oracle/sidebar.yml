@@ -133,8 +133,8 @@ entries:
       url: "/oracle/oracle-dp-snaprestore.html"
     - title: 基于Snapshot的联机备份
       url: "/oracle/oracle-dp-online-backup.html"
-    - title: Storage Snapshot优化的备份
-      url: "/oracle/oracle-dp-storage-snapshot-optimized-backups.html"
+    - title: 无快照自动恢复
+      url: "/oracle/oracle-dp-automatic-recovery.html"
     - title: SnapCenter和其他工具
       url: "/oracle/oracle-dp-backup-tools.html"
 - title: Oracle灾难恢复

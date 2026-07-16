@@ -17,6 +17,7 @@ SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道
 
 
 
+[[proximity-settings]]
 == 邻近设置
 
 接近是指每个集群的配置、表示特定主机WWN或iSCSI启动程序ID属于本地主机。这是配置LUN访问的第二个可选步骤。
@@ -31,6 +32,7 @@ SM-AS的一项重要功能是、可以对存储系统进行配置、使其知道
 
 
 
+[[aff]]
 == AFF
 
 对于AFF系统、配置主机邻近性后、路径将如下所示。
@@ -45,6 +47,7 @@ image:../media/smas-uniform-aff.png["SnapMirror主动同步AFF统一网络"]
 
 
 
+[[asa]]
 == ASA
 
 NetApp ASA系统可在集群上的所有路径之间提供主动-主动多路径功能。这也适用于SM-AS配置。

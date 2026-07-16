@@ -18,6 +18,7 @@ summary: 了解如何部署Microsoft Windows MicroServer
 
 
 
+[[deployment]]
 == 部署
 
 要将一个Hyper－V主机部署为一个Hyper－V主机，请完成以下步骤：
@@ -91,6 +92,7 @@ Invoke-Command -VMName $nanoserver -Credential $nanosecurecred -ArgumentList @($
 
 
 
+[[connect-to-nano-server]]
 == 连接到AO服务器
 
 要使用PowerShell远程连接到AO服务器、请完成以下步骤：

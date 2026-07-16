@@ -20,6 +20,7 @@ searchtitle: Microsoft SQL Server数据库文件放置
 
 
 
+[[database-files-filegroup]]
 == 数据库文件和文件组
 
 每个数据库由一个或多个数据文件和一个或多个事务日志文件组成。事务日志存储有关数据库事务以及每个会话所做的所有数据修改的信息。每次修改数据时、SQL Server都会在事务日志中存储足够的信息、以便撤消(回滚)或重做(重放)操作。SQL Server事务日志是SQL Server在数据完整性和稳定性方面声誉的重要组成部分。事务日志对于SQL Server的运行异常、一致性、隔离和持久性(ACID)功能至关重要。一旦对数据页面进行任何更改、SQL Server就会写入事务日志。每个数据操作语言(DML)语句(例如SELECT、INSERT、UPDATE-DELETE)都是一个完整的事务、事务日志可确保执行整个基于集合的操作、从而确保事务的正常运行。
@@ -39,6 +40,7 @@ TIP: * NetApp建议*避免将主文件组用于除系统对象之外的任何其
 
 
 
+[[database-instance-file-initialization]]
 == 数据库实例文件初始化
 
 您可以在创建数据库或向现有数据库添加新文件时指定初始文件大小和自动增长参数。SQL Server在选择应将数据写入哪个数据文件时使用比例填充算法。它会将大量数据按比例写入文件中的可用空间。文件中的可用空间越多、它处理的写入就越多。
@@ -82,6 +84,7 @@ image:mssql-maintenance.png["错误：缺少图形映像"]
 
 
 
+[[log-directory]]
 == 日志目录
 
 日志目录在SQL Server中指定、用于在主机级别存储事务日志备份数据。如果使用SnapCenter备份日志文件、则SnapCenter使用的每个SQL Server主机都必须配置一个主机日志目录、才能执行日志备份。SnapCenter 具有一个数据库存储库、因此与备份、还原或克隆操作相关的元数据存储在一个中央数据库存储库中。

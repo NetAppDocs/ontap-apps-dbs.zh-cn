@@ -18,6 +18,7 @@ searchtitle: Microsoft SQL Server和SnapMirror活动同步
 
 
 
+[[standalone-instance-of-sql-server]]
 == SQL Server的独立实例
 
 文件布局和服务器配置的最佳实践与文档中建议的相同link:mssql-storage-considerations.html["基于ONTAP的SQL Server"]。
@@ -36,6 +37,7 @@ link:mssql-dr-smas-nonuniform.html["非一致性"]也可以使用访问、但如
 
 
 
+[[sql-server-failover-cluster-instance]]
 == SQL Server故障转移集群实例
 
 SQL Server故障转移实例也可以托管在作为子操作系统运行在物理服务器或虚拟服务器上的Windows故障转移集群上。这种多主机架构可提供SQL Server实例和存储故障恢复能力。在需要在保持增强性能的同时实现强大故障转移流程的高需求环境中、此类部署非常有用。在故障转移集群设置中、当主机或主存储受到影响时、SQL服务将故障转移到二级主机、同时、二级存储将可用于提供IO。无需自动化脚本或管理员干预。

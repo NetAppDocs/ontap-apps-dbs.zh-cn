@@ -17,6 +17,7 @@ summary: 史诗般的快照和克隆
 
 
 
+[[flexclone]]
 == FlexClone
 
 NetApp ONTAP FlexClone卷是现有卷的克隆或现有卷的快照。在其他方面、它与任何其他卷一样是ONTAP卷、它本身可以进行克隆、使用快照进行保护、并使用QoS策略进行配置。

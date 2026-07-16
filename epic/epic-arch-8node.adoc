@@ -15,12 +15,14 @@ summary: 经典的八节点架构
 
 
 
+[[eight-node-architecture]]
 == 八节点架构
 
 image:epic-8node.png["EPIC 4节点架构"]
 
 
 
+[[eight-node-workload-placement]]
 == 八节点工作负载放置
 
 image:epic-8node-design.png["EPIC 8节点放置"]

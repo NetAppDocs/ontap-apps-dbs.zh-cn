@@ -15,12 +15,14 @@ searchtitle: SnapMirror active sync—SnapMirror通信失败
 
 
 
+[[site-a]]
 == 站点 A
 
 在站点A上、复制链路发生故障会导致写入IO处理暂停大约15秒、因为ONTAP会在确定复制链路确实无法运行之前尝试复制写入。15秒后、站点A上的ONTAP集群将恢复读写IO处理。SAN路径不会更改、LUN将保持联机状态。
 
 
 
+[[site-b]]
 == 站点 B
 
 由于站点B不是SnapMirror主动同步首选站点、因此其LUN路径将在大约15秒后变得不可用。

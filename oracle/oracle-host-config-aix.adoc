@@ -14,6 +14,7 @@ searchtitle: 使用IBM AIX的Oracle数据库
 
 
 
+[[concurrent-io]]
 == 并发I/O
 
 要在IBM AIX上实现最佳性能、需要使用并发I/O如果不使用并发I/O、则性能可能会受到限制、因为AIX会执行序列化的原子I/O、从而产生大量开销。
@@ -35,6 +36,7 @@ searchtitle: 使用IBM AIX的Oracle数据库
 ====
 
 
+[[aix-nfs-mount-options]]
 == AIX NFS挂载选项
 
 下表列出了Oracle单实例数据库的AIX NFS挂载选项。
@@ -93,6 +95,7 @@ nointr`
 
 
 
+[[aix-jfsjfs2-mount-options]]
 == AIX jfs/JFS2挂载选项
 
 下表列出了AIX jfs/jfs2挂载选项。
