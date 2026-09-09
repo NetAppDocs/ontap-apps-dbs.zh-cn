@@ -517,8 +517,6 @@
   <block id="beb3ca55ed0a53a38a2b97540b05d6e4" category="summary">基于ONTAP的Microsoft SQL Server</block>
   <block id="7636ae91f443b605f05bed59d7d57a02" category="doc">Microsoft SQL Server灾难恢复</block>
   <block id="18c6a681ea46e1ed394e092461bb53ef" category="list-text">将包含SQL Server数据的卷分布在集群中的不同节点上、以允许所有集群节点共享SnapMirror复制活动。此分布可优化节点资源的使用。</block>
-  <block id="0a01e6837f5c691536f0b6cbdd0232ec" category="inline-link-macro">TR-4015：《适用于ONTAP 9的SnapMirror配置和最佳实践指南》</block>
-  <block id="1cca1a3fad8c6dd7e2dadbd2aa08bf07" category="paragraph">有关SnapMirror的详细信息、请参见 <block ref="64b916f792bad525a069a243c092b62e" category="inline-link-macro-rx"></block>。</block>
   <block id="77641f4a3e4406855e878235cbd89b87" category="doc">CPU配置</block>
   <block id="cf0e2551e639758cc3c4d82df655eccd" category="inline-link-macro">SQL Server 2022：您的现代数据平台</block>
   <block id="809c9e1f6ce0bc82bf42fae361c6f43e" category="paragraph">因此、要使用所有CPU、应使用每个处理器的核心许可证。有关SQL Server许可的详细信息、请参见 <block ref="457abfaf1083b1cbfc49f2783069c6cd" category="inline-link-macro-rx"></block>。</block>
@@ -1572,8 +1570,6 @@
   <block id="3e00e4d28b17eedd6f6c2c38233e06a8" category="paragraph">LUN对齐是指针对底层文件系统布局优化I/O。</block>
   <block id="a6c7e85d51ae3b98197ceb3eafa3686a" category="inline-link-macro">效率</block>
   <block id="6e2524d5663b2bdc0c7985fa3e57cc55" category="section-title">未对齐警告</block>
-  <block id="79e721357e358d77c4700c25c863fc37" category="inline-link">ONTAP SAN 主机配置</block>
-  <block id="268b1da3f1ff11d32e385d0223101718" category="paragraph">Solaris环境中的对齐更为复杂。请参见<block ref="2d33e0364c07dc165b4079892340d4fe" category="inline-link-rx"></block> 有关详细信息 ...</block>
   <block id="6d017248f1e4f0ec7e2cd19d967b6bee" category="cell">在Solaris x86环境中，请格外注意正确对齐，因为大多数配置都有多个分区层。Solaris x86分区片通常位于标准主引导记录分区表之上。</block>
   <block id="b1230060a0220caf9d68d64b9dd85e6f" category="summary">使用Oracle时的NFS传输大小</block>
   <block id="fabe34ed4a5e432f4d1c4f6584956d8d" category="doc">Oracle数据库的NFS传输大小</block>
@@ -2413,7 +2409,6 @@
   <block id="883e69a285ae2d5fd23c80cd29285804" category="paragraph">SnapVault 是为 ONTAP 8.2 从头开始重建的。虽然以前的 Data ONTAP 7- 模式用户应该发现相似之处，但此版本的 SnapVault 已进行了重大改进。其中一项重大进步是，能够在 SnapVault 传输期间保持主数据的存储效率。</block>
   <block id="9bc21373e0e299579a7ac86dcd4f513d" category="paragraph">一个重要的架构变化是， ONTAP 9 中的 SnapVault 在卷级别进行复制，而不是像 7- 模式 SnapVault 那样在 qtree 级别进行复制。此设置意味着 SnapVault 关系的源必须为卷，并且该卷必须复制到 SnapVault 二级系统上其自身的卷。</block>
   <block id="d447048519c85a2fb3bea0790cd109fb" category="paragraph">在使用SnapVault的环境中、会在主存储系统上创建专门命名的快照。根据所实施的配置、可以通过SnapVault计划或NetApp Active IQ Unified Manager等应用程序在主系统上创建命名快照。然后、在主系统上创建的命名快照会复制到SnapMirror目标、并从该目标存储到SnapVault目标。</block>
-  <block id="5bc66b9c84b3f7cc0b375e729376b68d" category="inline-link">TR-4015 《适用于 ONTAP 9 的 SnapMirror 配置最佳实践指南》。</block>
   <block id="657a41cce55646ab17754ac1427970af" category="paragraph">下图显示了 SnapMirror 到 SnapVault 的级联配置。如果 SnapVault 目标位于灾难恢复站点或不受主站点中断影响的三级站点上，则可以重新配置环境，以便在故障转移后继续备份。</block>
   <block id="63fd1f18d5d53fa97fd05a7fd96090b4" category="section-title">在 Site Recovery Manager 环境中使用 qtree</block>
   <block id="345cb3f040f9f7f3f1a4261ed260aa79" category="section-title">FC 和 iSCSI 混合环境</block>
@@ -3445,9 +3440,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="b37ae3efea13417cff3fdb198db41274" category="list-text">ONTAP不支持Windows Server中的集群存储池。</block>
   <block id="436593f3429fec64588705fe44025823" category="list-text">NetApp支持在Windows SAN环境中使用共享虚拟硬盘格式(Virtual Hard Disk Format、VHDX)进行子系统集群。</block>
   <block id="a3a862b96d666cb7005617313f703378" category="list-text">Windows Server不支持使用iSCSI或FC LUN创建存储池。</block>
-  <block id="570d38aae09bbf84ba37f9219909a7cb" category="list-text">有关NetApp PowerShell工具包的详细信息、请访问<block ref="12f72d9ce1eab5b7cd58718fecdd145c" category="inline-link-rx"></block>。</block>
-  <block id="699f0a44719fb3de5404046fc6caa8af" category="inline-link">TR-4475：《NetApp PowerShell工具包最佳实践指南》</block>
-  <block id="532d077f114744273b1a7cd2a4794077" category="list-text">有关NetApp PowerShell工具包最佳实践的信息、请参见<block ref="87b47631a9123c9d2a382039a9ba503e" category="inline-link-rx"></block>。</block>
   <block id="64f3248fbae79dd41841377bf7dd37c6" category="paragraph">以太网网络可以大致分为以下几组：</block>
   <block id="0047d4a23ffec6d4afe912d0a2598e58" category="list-text">VM的客户端网络</block>
   <block id="d6cf6da705ce58c7b649fea1cd43c470" category="list-text">再添加一个存储网络(连接到存储系统的iSCSI或SMB)</block>
@@ -5726,9 +5718,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="fea612aa54d66a179c5538c5cd1b8525" category="paragraph">将 VLSR 部署与ONTAP高级数据管理功能相集成，与本地存储选项相比，可以大幅提高规模和性能。但更重要的是，它带来了混合云的灵活性。混合云可让您通过使用FabricPool将高性能阵列中未使用的数据块分层到您首选的超大规模器（可以是本地 S3 存储，例如NetApp StorageGRID）来节省资金。您还可以将SnapMirror用于基于边缘的系统，并使用软件定义的ONTAP Select或基于云的 DR<block ref="48f4ab00daadfbd5f3a95d2ba27ed047" category="inline-link-rx"></block>或其他托管ONTAP服务。</block>
   <block id="0fc9a0e7b30259b88ee28dc36905dc46" category="paragraph">灾难恢复 (DR) 是一种基于云的服务，可在发生灾难时提供保护您的数据和应用程序的全面解决方案。它提供了一系列功能，包括自动故障转移和故障恢复、多个时间点恢复点、应用程序一致的灾难恢复以及对本地和基于云的ONTAP系统的支持。NetApp Disaster Recovery旨在与ONTAP和您的 VMware vSphere 环境无缝协作，提供统一的灾难恢复解决方案。</block>
   <block id="b49008ff3ed6386e7b79c895a99dfda0" category="paragraph">调解员实际上并不是打破僵局的人，尽管它实际上发挥了这样的作用。中介器有助于确定集群节点的状态，并在站点发生故障时协助自动切换过程。在任何情况下，中介都不会传输数据。</block>
-  <block id="389aace802a4b9cc02f057be6b44af1e" category="inline-link-macro"><block ref="389aace802a4b9cc02f057be6b44af1e" category="inline-link-rx"></block></block>
-  <block id="3f5aed07b92e68d50c76da775ecd27e7" category="list-text">TR-4015 ONTAP 9 SnapMirror配置最佳实践指南 <block ref="2b18a9579e6e53dd966359ed48786df3" category="inline-link-macro-rx"></block></block>
-  <block id="af5901ed678cf3616d5e1dd4457d3301" category="paragraph">有关ONTAP 9 的SnapMirror和SnapVault的最新信息，请参阅<block ref="f0cb7261aff0b0ca14230d45000a9acc" category="inline-link-rx"></block></block>
   <block id="0aa1117bb089f8873e3b481abb0fc667" category="inline-link">ONTAP SnapMirror复制工作流程</block>
   <block id="c7d6bfcc1002f9443cf062da6e677452" category="paragraph">有关快照的更多信息，请参阅ONTAP文档。以下链接提供了更多详细信息： <block ref="8952dffd5c4f20d5268260325aabe39c" category="inline-link-rx"></block> <block ref="929e1122e30b57f1156728cb315c1ee3" category="inline-link-rx"></block></block>
   <block id="fa3baa666422f615ee0c858e2af05bb1" category="list-text">配置本地备份<block ref="0322cca7da8e1c0c74e3021d8f78b104" category="inline-link-rx"></block>。</block>
@@ -5965,4 +5954,6 @@ cluster：&gt; set -PRILEGE diagnostic</block>
   <block id="e3471495b791c74dadc31bb77a66a74c" category="paragraph">Oracle Snapshot Optimized Backups是一种时间点恢复方法，允许用户使用快照执行恢复，而无需将数据库置于热备份模式。</block>
   <block id="85ab689d474b14164558afa9923be42b" category="paragraph">用户仍然可以在不使用备份模式的情况下从快照中恢复，但仅支持使用 RECOVERY AUTOMATIC 进行完全恢复。使用 SNAPSHOT TIME 方法指示快照创建时间的不完整恢复。</block>
   <block id="17e12dfc833834d5b2e478641ef811d3" category="sidebar">无快照自动恢复</block>
+  <block id="74aeb32ca03a9503e64e32a2c6c54887" category="inline-link">如何识别 LUN 上未对齐的 IO</block>
+  <block id="0e399161325f240b090c8d3dbfd792b1" category="paragraph">在 Solaris 环境中，对齐更为复杂。请参阅 <block ref="55cb74ec239a32e3acdc528f25f2de7c" category="inline-link-rx"></block> 以了解更多信息。</block>
 </blocks>

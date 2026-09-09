@@ -22,7 +22,6 @@ summary: 要了解有关本文档中所述信息的更多信息，请查看以�
 link:vmware-vsphere-overview.html["https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vsphere-overview.html"]
 * TR-4400 ：采用 ONTAP 的 VMware vSphere 虚拟卷
 link:vmware-vvols-overview.html["https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vvols-overview.html"]
-* TR-4015 ONTAP 9 SnapMirror配置最佳实践指南 link:https://www.netapp.com/pdf.html?item=/media/17229-tr-4015-snapmirror-configuration-ontap.pdf["https://www.netapp.com/pdf.html?item=/media/17229-tr-4015-snapmirror-configuration-ontap.pdf"]
 * VMware Live Site Recovery文档link:https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0.html["https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0.html"]
 
 

@@ -97,15 +97,6 @@ NetApp PowerShell工具包(PSTK)是一个PowerShell模块、可提供端到端�
 
 
 
-[[further-reading]]
-=== 进一步阅读
-
-* 有关NetApp PowerShell工具包的详细信息、请访问 https://mysupport.netapp.com/site/tools/tool-eula/ontap-powershell-toolkit["NetApp 支持站点"]。
-* 有关NetApp PowerShell工具包最佳实践的信息、请参见 https://www.netapp.com/media/16861-tr-4475.pdf?v=93202073432AM["TR-4475：《NetApp PowerShell工具包最佳实践指南》"]。
-
-
-
-
 [[networking-best-practices]]
 == 网络最佳实践
 

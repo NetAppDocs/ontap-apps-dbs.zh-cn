@@ -36,7 +36,7 @@ LUN对齐是指针对底层文件系统布局优化I/O。
 
 使用  `sio` 或  `dd` 等实用程序验证对齐情况，这些实用程序可以按定义的块大小生成 I/O。可以使用  `stats` 命令查看存储系统上的 I/O 对齐统计信息。有关更多信息，请参阅 link:../oracle/oracle-notes-wafl-alignment-verification.html["WAFL对齐验证"]。
 
-Solaris环境中的对齐更为复杂。请参见 http://support.netapp.com/documentation/productlibrary/index.html?productID=61343["ONTAP SAN 主机配置"^] 有关详细信息 ...
+在 Solaris 环境中，对齐更为复杂。请参阅  https://kb.netapp.com/on-prem/ontap/da/SAN/SAN-KBs/How_to_identify_unaligned_IO_on_LUNs["如何识别 LUN 上未对齐的 IO"] 以了解更多信息。
 
 |===
 | 小心 
