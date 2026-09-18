@@ -87,7 +87,6 @@ https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用�
 
 ==== 保护和管理数据存储库
 
-* https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/protect-cluster.html["使用ONTAP工具和SnapMirror活动同步配置vSphere Metro Storage Cluster (VMSC)"^]
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/protect/enable-storage-replication-adapter.html["保护虚拟机"^]使用SRM
 * https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/manage/reports.html["监控集群、数据存储库和虚拟机"^]
 

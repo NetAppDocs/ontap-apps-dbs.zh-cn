@@ -34,7 +34,7 @@ summary: 《VMSC设计和实施准则》。
 [[using-the-ontap-tools-vcenter-plugin-for-snapmirror-active-sync]]
 == 使用适用于SnapMirror活动同步的ONTAP工具vCenter插件
 
-ONTAP工具vCenter插件提供了一种简单直观的方法来为VMSC配置SnapMirror活动同步。您可以使用ONTAP工具vCenter插件在两个ONTAP集群之间创建和管理SnapMirror活动同步关系。此插件提供了一个易于使用的界面、用于高效地建立和管理这些关系。有关ONTAP工具vCenter插件的详细信息，请访问 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用于 VMware vSphere 的 ONTAP 工具"]，或者直接跳转到 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/configure/protect-cluster.html["使用主机集群保护进行保护"]。
+ONTAP 工具 vCenter 插件提供了一种简单直观的方式来为 vMSC 配置 SnapMirror 活动同步。您可以使用 ONTAP 工具 vCenter 插件来创建和管理两个 ONTAP 集群之间的 SnapMirror 活动同步关系。此插件提供了一个易于使用的界面，用于高效地建立和管理这些关系。您可以在 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/index.html["适用于 VMware vSphere 的 ONTAP 工具"]了解有关 ONTAP 工具 vCenter 插件的更多信息，或直接跳转到 https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere-10/protect/granular-datastore-protection-concept.html["ONTAP 工具中的粒度数据存储保护资格标准"]。
 
 
 

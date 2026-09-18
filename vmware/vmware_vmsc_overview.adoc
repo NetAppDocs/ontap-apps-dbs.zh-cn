@@ -34,7 +34,7 @@ NetApp MetroCluster使用NetApp的HA (控制器故障转移或CFO)功能来防�
 
 要在两个站点之间创建VMware HA/DRS集群、需要使用vCenter Server Appliance (VCA)来管理ESXi主机。vSphere管理、vMotion®和虚拟机网络通过两个站点之间的冗余网络进行连接。管理HA/DRS集群的vCenter Server可以连接到两个站点上的ESXi主机、并且应使用vCenter HA进行配置。
 
-请参见 https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-vcenter-esxi-management/GUID-F7818000-26E3-4E2A-93D2-FCDCE7114508.html["如何在vSphere Client中创建和配置集群"] 配置vCenter HA。
+请参见 https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-availability/creating-and-using-vsphere-ha-clusters/creating-a-vsphere-ha-cluster/create-vsphere-ha-cluster.html["在 vSphere 客户端中创建 vSphere HA 集群"]以配置 vCenter HA。
 
 您还应参考 https://www.vmware.com/docs/vmw-vmware-vsphere-metro-storage-cluster-recommended-practices["VMware vSphere Metro Storage Cluster 建议的实践"]。
 
@@ -45,10 +45,11 @@ NetApp MetroCluster使用NetApp的HA (控制器故障转移或CFO)功能来防�
 
 vSphere Metro Storage Cluster (vMSC) 是一种经过认证的配置，可保护虚拟机 (VM) 和容器免受故障影响。这是通过使用延伸存储概念以及 ESXi 主机集群来实现的，这些集群分布在不同的故障域中，例如机架、建筑物、校园甚至城市。NetApp MetroCluster和SnapMirror主动同步存储技术用于为主机集群提供零恢复点目标 (RPO=0) 保护。vMSC 配置旨在确保即使整个物理或逻辑“站点”发生故障，数据也始终可用。作为 vMSC 配置一部分的存储设备必须在成功完成 vMSC 认证过程后进行认证。所有受支持的存储设备都可以在 https://compatibilityguide.broadcom.com/["《VMware存储兼容性指南》"]。
 
-如果您需要有关vSphere Metro Storage Cluster设计准则的详细信息、请参阅以下文档：
+如果您想了解有关 vSphere Metro Storage Cluster 设计指南的详细信息，请参阅以下解决方案指南：
 
-* https://kb.vmware.com/s/article/2031038["NetApp MetroCluster支持VMware vSphere"]
-* https://kb.vmware.com/s/article/83370["VMware vSphere支持NetApp SnapMirror业务连续性"] (现在称为SnapMirror活动同步)
+* https://docs.netapp.com/us-en/netapp-solutions-virtualization/vmware/vmw-vmsc-with-smas.html["VMware vSphere Metro Storage Cluster 与 SnapMirror 活动同步"]
+* https://docs.netapp.com/us-en/netapp-solutions-virtualization/vmware/vmw-vcf-vmsc-mgmt-mcc.html["使用 MetroCluster 为 VCF 管理域配置延伸集群"]
+* https://docs.netapp.com/us-en/netapp-solutions-virtualization/vmware/vmw-vcf-vmsc-viwld-mcc.html["使用 MetroCluster 为 VCF 工作负载域配置延伸集群"]
 
 
 NetApp MetroCluster可以部署在两种不同的配置中、以便与vSphere结合使用：

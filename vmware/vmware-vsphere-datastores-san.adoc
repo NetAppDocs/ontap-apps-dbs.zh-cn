@@ -57,5 +57,5 @@ SLM 会限制向给定 LUN 公布路径的节点。NetApp最佳实践是、每�
 * 如果在ESXi中使用质询握手身份验证协议(Challenge-Handshake Authentication Protocol、CHAP)进行目标身份验证、则还必须在ONTAP中使用命令行界面配置此协议 (`vserver iscsi security create`)或使用System Manager (在"Storage">"SVM">"SVM Settings"(SVM设置)>"Protocols"(协议)>"iSCSI"下编辑"Initiator Security"(启动程序安全性)。
 * 使用适用于 VMware vSphere 的 ONTAP 工具创建和管理 LUN 和 igroup 。此插件会自动确定服务器的 WWPN 并创建适当的 igroup 。它还会根据最佳实践配置 LUN 并将其映射到正确的 igroup 。
 * 请谨慎使用VMM、因为它们更难管理、而且它们还会使用路径、如前文所述、这些路径会受到限制。ONTAP LUN 支持这两者 https://kb.vmware.com/s/article/2009226["物理和虚拟兼容模式"^] RDM 。
-* 有关将 NVMe/FC 与 vSphere 7.0 结合使用的详细信息，请参见此部分 https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html["《 ONTAP NVMe/FC 主机配置指南》"^] 和 http://www.netapp.com/us/media/tr-4684.pdf["TR-4684."^]下图显示了从 vSphere 主机到 ONTAP LUN 的多路径连接。
+* 有关在 vSphere 7.0 中使用 NVMe/FC 的详细信息，请参见此 https://docs.netapp.com/us-en/ontap-sanhost/nvme_esxi_7.html["《 ONTAP NVMe/FC 主机配置指南》"^]和 https://www.netapp.com/pdf.html?item=/media/10681-tr4684.pdf["TR-4684."^]。下图描述了从 vSphere 主机到 ONTAP LUN 的多路径连接。
 

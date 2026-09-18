@@ -39,7 +39,7 @@ NetApp为NFS和块协议开发了一组最佳ESXi主机设置。此外、还提�
 3+| *NFS设置* 
 
 
-| newSyncInterval | 如果您不使用适用于Kubnetes的vSphere CSI、请按设置 https://knowledge.broadcom.com/external/article/386364/reducing-excessive-vsan-cnssync-warnings.html["VMware 知识库 386364"^] | 否 
+| newSyncInterval | 如果您没有为 Kubernetes 使用 vSphere CSI，请设置每个 https://knowledge.broadcom.com/external/article/415074/reducing-or-disabling-excessive-vsan-cns.html["VMware KB 415074"^] | 否 
 
 
 | Net.TcpipHeapSize | vSphere 6.0 或更高版本，设置为 32 。

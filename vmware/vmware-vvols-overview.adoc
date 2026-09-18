@@ -160,7 +160,7 @@ _有关ONTAP 和VMware vSphere最佳实践的详细信息、请参见 link:vmwar
 [[greater-storage-offload-capabilities]]
 === 更出色的存储卸载功能
 
-虽然 VAAI 提供各种卸载到存储的操作，但 VASA 提供商可以解决一些问题。SAN VAAI 无法将 VMware 管理的快照卸载到存储系统。NFS VAAI 可以卸载 VM 管理的快照，但对具有存储原生快照的 VM 存在一些限制。由于vVols使用单独的 LUN、命名空间或文件作为虚拟机磁盘， ONTAP可以快速高效地克隆文件或 LUN，从而创建 VM 粒度的快照，不再需要增量文件。NFS VAAI 也不支持热（通电）Storage vMotion 迁移的卸载克隆操作。当使用 VAAI 和传统 NFS 数据存储时，必须关闭虚拟机电源才能卸载迁移任务。ONTAP工具中的 VASA 提供程序可以实现近乎即时、存储高效的热迁移和冷迁移克隆，并且还支持对vVols进行近乎即时的跨卷迁移复制。由于这些显著的存储效率优势，您或许能够充分利用vVols工作负载。 https://www.netapp.com/pdf.html?item=/media/8207-flyer-efficiency-guaranteepdf.pdf["效率担保"] 程序。同样，如果使用 VAAI 进行跨卷克隆不能满足您的要求，那么借助vVols 的复制体验改进，您很可能能够解决您的业务难题。
+虽然 VAAI 提供了各种卸载到存储的操作，但 VASA Provider 解决了一些差距。SAN VAAI 无法将 VMware 管理的快照卸载到存储系统。NFS VAAI 可以卸载 VM 管理的快照，但在具有存储本机快照的 VM 上存在限制。由于 vVols 对虚拟机磁盘使用单独的 LUN、命名空间或文件，ONTAP 可以快速有效地克隆文件或 LUN，以创建不再需要增量文件的 VM 粒度快照。NFS VAAI 也不支持卸载热（通电）Storage vMotion 迁移的克隆操作。在将 VAAI 与传统 NFS 数据存储结合使用时，必须关闭 VM，以允许卸载迁移。ONTAP 工具中的 VASA Provider 支持近乎即时的、存储高效的克隆，适用于热迁移和冷迁移，同时还支持 vVols 跨卷迁移的近乎即时副本。由于这些显著的存储效率优势，您可以充分利用 https://www.netapp.com/pdf.html?item=/media/79014-ng-937-Efficiency-Guarantee-Customer-Flyer.pdf["效率担保"]计划下的 vVols 工作负载。同样，如果使用 VAAI 的跨卷克隆不符合您的要求，借助 vVols 复制体验的改进，您可能能够解决您的业务挑战。
 
 
 

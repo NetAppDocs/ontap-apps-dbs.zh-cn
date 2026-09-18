@@ -46,7 +46,7 @@ ONTAP是企业级横向扩展NAS阵列、其中包括许多功能。ONTAP支持V
 ** 有关支持所需的特定ESXi修补程序级别、请参见中的NFS v4.1互操作性表说明link:https://mysupport.netapp.com/matrix/["NetApp 互操作性表工具"^]。
 
 
-* 如 link:vmware-vsphere-settings.html["设置"] 中所述，如果您不将 vSphere CSI 用于 Kubernetes，则应按  https://knowledge.broadcom.com/external/article/386364/reducing-excessive-vsan-cnssync-warnings.html["VMware 知识库 386364"^] 设置 newSyncInterval
+* 如 link:vmware-vsphere-settings.html["设置"] 中所述，如果您不将 vSphere CSI 用于 Kubernetes，则应按  https://knowledge.broadcom.com/external/article/415074/reducing-or-disabling-excessive-vsan-cns.html["VMware KB 415074"^] 设置 newSyncInterval
 * NFS导出策略规则用于控制vSphere主机的访问。您可以对多个卷（数据存储库）使用一个策略。对于NFS、ESXi会使用sys (UNIX)安全模式、并需要根挂载选项来执行VM。在 ONTAP 中，此选项称为超级用户，使用超级用户选项时，无需指定匿名用户 ID 。请注意、对于和 `-allow-suid`使用不同值的导出策略规则 `-anon`可能会导致ONTAP工具出现SVM发现问题。IP地址应是一个逗号分隔列表、挂载数据存储库的vmkernel端口地址不含空格。下面是一个策略规则示例：
 +
 ** 访问协议：NFS (包括nfs3和nfs4)
