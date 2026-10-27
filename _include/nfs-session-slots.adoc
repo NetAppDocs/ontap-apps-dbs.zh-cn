@@ -1,0 +1,16 @@
+= 
+:allow-uri-read: 
+
+
+NFS 会话插槽相当于 NFSv4.X 的 NFSv3 插槽表。默认值通常为 64。值为 180 是最佳的，因为它与 ONTAP 中的会话限制相匹配。
+
+设置 max_session_slots 参数的示例：
+
+....
+# cat /etc/modprobe.d/nfsclient.conf
+ options nfs max_session_slots=180
+....
+此参数由启动时加载的内核模块使用。与 NFSv3 插槽表参数不同，它不是动态的。需要重新启动才能生效。
+
+
+CAUTION: 如果不设置此参数，可能会对性能产生显著影响。性能可能会受到显著限制，因为 Linux 操作系统发出的 I/O 不足。

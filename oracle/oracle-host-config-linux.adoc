@@ -35,6 +35,24 @@ CAUTION: 如果未设置这些参数、可能会对性能产生显著影响。�
 
 
 
+[[linux-nfsv4-x-session-slots]]
+== Linux NFSv4.X 会话插槽
+
+NFS 会话插槽相当于 NFSv4.X 的 NFSv3 插槽表。默认值通常为 64。值为 180 是最佳的，因为它与 ONTAP 中的会话限制相匹配。
+
+设置 max_session_slots 参数的示例：
+
+....
+# cat /etc/modprobe.d/nfsclient.conf
+ options nfs max_session_slots=180
+....
+此参数由启动时加载的内核模块使用。与 NFSv3 插槽表参数不同，它不是动态的。需要重新启动才能生效。
+
+
+CAUTION: 如果不设置此参数，可能会对性能产生显著影响。性能可能会受到显著限制，因为 Linux 操作系统发出的 I/O 不足。
+
+
+
 [[linux-nfs-mount-options]]
 == Linux NFS挂载选项
 
@@ -52,7 +70,7 @@ timeo=600,rsize=262144,wsize=262144`
 数据文件
 重做日志 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
 timeo=600,rsize=262144,wsize=262144,
-nointr` 
+nointr,[nconnect=]` 
 
 
 | ORACLE_HOME | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
@@ -74,7 +92,7 @@ actimeo=0`
 数据文件
 重做日志 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
 timeo=600,rsize=262144,wsize=262144,
-nointr,actimeo=0` 
+nointr,actimeo=0,[nconnect=]` 
 
 
 | CRS/表决 | `rw,bg,hard,[vers=3,vers=4.1],proto=tcp,
@@ -105,6 +123,15 @@ nointr,actimeo=0`
 
 
 
+[[nconnect]]
+=== nconnect
+
+nconnect 是一个相对较新的挂载选项。它允许 NFS 客户端为给定的挂载点打开多个独立的 TCP/IP 连接，然后复用 IO。结果是增加进行中的操作，从而提高性能，特别是在高带宽网络上。Linux 上支持的最大值为 16，但 NetApp 建议值为 4-8。结果是单实例性能可与配置为单路径的 dNFS 客户端相媲美。与 dNFS 不同，nconnect 无法配置为跨多个 IP 地址和 TCP/IP 链路进行多路复用。
+
+使用 RAC，由于额外的元数据流量，nconnect 比 dNFS 具有更多的性能开销。有关详细信息，请参见 link:#Linux%20Direct%20NFS%20and Oracle %20AC[Linux Direct NFS and Oracle RAC]。
+
+
+
 [[linux-direct-nfs]]
 === Linux Direct NFS
 
@@ -117,9 +144,9 @@ nointr,actimeo=0`
 [[linux-direct-nfs-and-oracle-rac]]
 === Linux Direct NFS和Oracle RAC
 
-使用DNFS对于Linux操作系统上的Oracle RAC具有特殊的性能优势、因为Linux没有强制执行直接I/O的方法、而RAC需要执行直接I/O才能在节点间保持一致。作为临时解决策、Linux需要使用 `actimeo=0` 挂载选项、此选项会导致操作系统缓存中的文件数据立即过期。而此选项又会强制Linux NFS客户端不断重新读取属性数据、从而会损害延迟并增加存储控制器上的负载。
+对于 Linux 操作系统上的 Oracle RAC 来说，使用 DNFS 具有特殊的性能优势，因为 Linux 没有强制直接 I/O 的方法，而 RAC 需要这种方法才能实现跨节点的一致性。作为一种解决方法，Linux 需要使用 `actimeo=0`挂载选项，这会导致操作系统缓存中的文件数据立即过期。此选项反过来会迫使 Linux NFS 客户端不断重新读取属性数据，从而增加存储控制器上的延迟和负载。
 
-启用DNFS会绕过主机NFS客户端并避免这种损坏。多家客户报告说、在启用DNFS时、RAC集群的性能显著提高、ONTAP负载显著降低(尤其是与其他IOPS相关的负载)。
+启用 DNFS 会绕过主机 NFS 客户端并避免此问题。多个客户报告称，启用 DNFS 时，RAC 集群的性能有了显著改善，ONTAP 负载（尤其是相对于其他 IOPS）显著降低。
 
 
 
