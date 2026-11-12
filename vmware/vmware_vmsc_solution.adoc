@@ -17,6 +17,9 @@ summary: VMware vSphere解决方案概述
 vCenter Server Appliance (VCSA) 是一个功能强大的集中式管理系统和 vSphere 的单一管理界面，使管理员能够有效地操作 ESXi 集群。它支持虚拟机配置、vMotion 操作、高可用性 (HA)、分布式资源调度器 (DRS)、VMware vSphere Kubernetes 服务 (VKS) 等关键功能。它是 VMware 云环境中的一个重要组成部分，在设计时应考虑到服务的可用性。
 
 
+NOTE: 本文档中的 vSphere Metro Storage Cluster （vMSC） 指南同样适用于 VMware Cloud Foundation （VCF） 和 VMware vSphere Foundation （VVF）。VCF 和 VVF 是不同的 Broadcom 许可模式，但 vMSC 的底层 vSphere 和 ONTAP 存储架构是相同的。
+
+
 
 [[vsphere-high-availability]]
 == vSphere高可用性

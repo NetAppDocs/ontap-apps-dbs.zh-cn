@@ -12,7 +12,7 @@ sidebar:
   entries:
   - title: 企业级应用程序
     url: "/index.html"
-  - section: Hyper-V
+  - section: hyperv
   - section: mssql
   - section: mysql
   - section: oracle

@@ -22,6 +22,9 @@ NetApp®MetroCluster™和SnapMirror主动同步(以前称为SnapMirror业务连
 NOTE: 本文档可替代先前发布的技术报告_TR-4128：《基于NetApp MetroCluster的vSphere》_
 
 
+NOTE: 本文档中的 vSphere Metro Storage Cluster （vMSC） 指南同样适用于 VMware Cloud Foundation （VCF） 和 VMware vSphere Foundation （VVF）。VCF 和 VVF 是不同的 Broadcom 许可模式，但 vMSC 的底层 vSphere 和 ONTAP 存储架构是相同的。
+
+
 
 [[continuous-availability-solutions-for-vsphere-environments]]
 == 适用于vSphere环境的持续可用性解决方案
