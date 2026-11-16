@@ -240,10 +240,7 @@ image::../media/vmsc_3_8.png[自动生成的计算机问题描述的屏幕截图
 ====
 *使用ONTAP存储时、建议禁用存储DRS。
 
-* 通常、不需要或不建议将存储DRS用于ONTAP存储系统。
-* ONTAP提供自己的存储效率功能、例如重复数据删除、数据压缩和数据缩减、这些功能可能会受到存储DRS的影响。
-* 如果您使用的是ONTAP快照、则Storage vMotion会在快照中保留VM副本、这可能会提高存储利用率、并可能影响NetApp SnapCenter等跟踪VM及其ONTAP快照的备份应用程序。
-
++ * 通常不需要也不建议将 Storage DRS 与 ONTAP 存储系统结合使用。* ONTAP 提供其自身的存储效率功能，例如重复数据删除、数据压缩和数据压实，这些功能可能会受到 Storage DRS 的影响。* 如果您使用 ONTAP 快照，则存储 vMotion 会在快照中留下虚拟机的副本，这可能会增加存储利用率，并可能影响诸如 NetApp SnapCenter 等跟踪虚拟机及其 ONTAP 快照的备份应用程序。
 
 ====
 image::../media/vmsc_3_9.png[存储 DRS,528,94]
